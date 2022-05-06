@@ -4,9 +4,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.nameGC
 
 class PredicateTest {
-    private val nameGC ="Giovanni"
     private val predicateEmpty = mockkClass(Predicate::class){
         every{ name } returns ""
         every { arguments } returns emptyList()

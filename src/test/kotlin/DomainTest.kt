@@ -3,10 +3,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
-import kotlin.test.*
+import resources.res.nameGC
 
 class DomainTest {
-    val nameGC:String = "Giovanni"
     private val domainEmpty = mockkClass(Domain::class){
         every{ name } returns ""
         every { predicates } returns emptySet()

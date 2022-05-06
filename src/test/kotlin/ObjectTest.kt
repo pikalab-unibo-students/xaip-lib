@@ -2,9 +2,9 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.nameGC
 
 class ObjectTest {
-    private val nameGC ="Giovanni"
     private val objEmpty = mockkClass(Object::class) {
         every { representation } returns ""
     }

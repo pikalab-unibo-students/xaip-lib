@@ -3,11 +3,11 @@ import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
-import io.mockk.mockkObject
+import resources.res.nameGC
 import kotlin.test.Test
 
 class ActionCreation {
-    private val nameGC ="Giovanni"
+
     private val actionEmpty = mockkClass(Action::class){
         every{ name } returns ""
         every { parameters } returns emptyMap()

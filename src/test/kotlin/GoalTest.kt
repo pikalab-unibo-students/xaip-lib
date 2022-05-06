@@ -1,11 +1,10 @@
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.state
 
 class GoalTest {
-    val state= mockk<State>()
     private val goalSatisfied: Goal= mockkClass(Goal::class){
         every { isStatisfiedBy(state) } returns true
     }

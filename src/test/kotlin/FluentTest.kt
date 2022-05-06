@@ -4,10 +4,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.nameGC
+import resources.res.predicate
 
 class FluentTest {
-    private val nameGC ="Giovanni"
-    private val predicate= mockk<Predicate>(relaxed = false)
+
     private val fluentEmpty = mockkClass(Fluent::class){
         every{ name } returns ""
         every { args } returns emptyList()

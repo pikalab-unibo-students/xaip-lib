@@ -23,11 +23,3 @@ class FluentBasedGoalTest{
     }
 
 }
-/*
-    @Test//ok
-    fun fluentBasedGoalCreation(){
-        val fluentBasedGoal: FluentBasedGoal= TODO ("instantiate it")
-        assertTrue (fluentBasedGoal is Goal)
-        assertEquals (fluentBasedGoal.fluent, setfluent)
-    }
-*/

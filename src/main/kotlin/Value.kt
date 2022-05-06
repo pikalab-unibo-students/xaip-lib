@@ -1,5 +1,3 @@
-package tmp
-
 interface Value
 
 interface Var: Value

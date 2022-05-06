@@ -1,5 +1,3 @@
-import tmp.Value
-
 interface Fluent {
     val name: String
     val args: List<Value>

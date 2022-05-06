@@ -1,5 +1,3 @@
-import tmp.Var
-
 interface Action {
     val name: String
     val parameters: Map<Var, Type>

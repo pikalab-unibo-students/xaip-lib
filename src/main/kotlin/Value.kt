@@ -2,8 +2,12 @@
 interface Value
 
 //TODO scrivi qualcosa di sensato
-interface Var: Value
+interface Var: Value {
+    val name: String
+}
 
 //TODO scrivi qualcosa di sensato
-interface Object: Value
+interface Object: Value{
+    val representation: String
+}
 

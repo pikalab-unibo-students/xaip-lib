@@ -1,4 +1,9 @@
+/**
+ * An effect consists of a conjunctive logical expression ([fluent]],
+ * which defines which values should be set to true or false ([isPositive])
+ * if an action is applied.
+ */
 interface Effect {
     val fluent: Fluent
-    fun isPositive():Boolean
+    val isPositive:Boolean
 }

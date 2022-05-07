@@ -24,7 +24,7 @@ class FluentBasedGoalTest{
     @Test
     fun testNotEmptyCreation(){
         fluentBasedGoalNotEmpty.fluent.isEmpty() shouldBe false
-        fluentBasedGoalEmpty.isStatisfiedBy(state) shouldBe true
+        fluentBasedGoalNotEmpty.isStatisfiedBy(state) shouldBe true
     }
 
 }

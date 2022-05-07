@@ -16,12 +16,12 @@ class PredicateTest {
         every { arguments } returns mockk(relaxed = true)
     }
     @Test
-    fun testPredicateEmptyCreation() {
+    fun testEmptyCreation() {
         predicateEmpty.name shouldBe ""
         predicateEmpty.arguments.isEmpty() shouldBe true
     }
     @Test
-    fun testPredicateNotEmptyCreation() {
+    fun testNotEmptyCreation() {
         predicateNotEmpty.name shouldBe nameGC
         predicateNotEmpty.arguments.isEmpty() shouldNotBe true
     }

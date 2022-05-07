@@ -22,7 +22,7 @@ class DomainTest {
     }
 
     @Test
-    fun testDomainEmptyCreation() {
+    fun testEmptyCreation() {
         domainEmpty.name shouldBe ""
         domainEmpty.predicates.isEmpty() shouldBe true
         domainEmpty.actions.isEmpty() shouldBe true
@@ -30,7 +30,7 @@ class DomainTest {
         domainEmpty.axioms.isEmpty() shouldBe true
     }
     @Test
-    fun testDomainNotEmptyCreation() {
+    fun testNotEmptyCreation() {
         domainNotEmpty.name shouldBe nameGC
         domainNotEmpty.predicates.isEmpty() shouldBe false
         domainNotEmpty.actions.isEmpty() shouldBe false

@@ -17,14 +17,14 @@ class StateTest {
         //every { apply(state)} returns action
     }
     @Test
-    fun testActionEmptyCreation() {
+    fun testEmptyCreation() {
         stateEmpty.fluents.isEmpty() shouldBe true
         stateEmpty.isApplicable(action) shouldBe false
         //stateEmpty.apply(action) shouldBe state
     }
 
     @Test
-    fun testActionNotEmptyCreation() {
+    fun testNotEmptyCreation() {
         stateNotEmpty.fluents.isEmpty() shouldBe false
         stateNotEmpty.isApplicable(action) shouldBe true
         //assertEquals(stateEmpty.apply(action), state)

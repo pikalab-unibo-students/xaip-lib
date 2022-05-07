@@ -16,12 +16,12 @@ class EffectTest {
         every { isPositive } returns true
     }
     @Test
-    fun testEffectEmptyCreation() {
+    fun testEmptyCreation() {
         effectEmpty.fluent shouldBe fluentEmpty
         effectEmpty.isPositive shouldBe false
     }
     @Test
-    fun testEffectNotEmptyCreation() {
+    fun testNotEmptyCreation() {
         effectNotEmpty.fluent shouldNotBe fluentEmpty
         effectNotEmpty.isPositive shouldBe true
     }

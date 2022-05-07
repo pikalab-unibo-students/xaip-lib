@@ -23,14 +23,14 @@ class FluentTest {
     }
 
     @Test
-    fun testActionEmptyCreation() {
+    fun testEmptyCreation() {
         fluentEmpty.name shouldBe ""
         fluentEmpty.args.isEmpty() shouldBe true
         fluentEmpty.instanceOf shouldBe predicate
         fluentEmpty.isNegated shouldBe false
     }
     @Test
-    fun testActionNotEmptyCreation() {
+    fun testNotEmptyCreation() {
         fluentNotEmpty.name shouldBe nameGC
         fluentNotEmpty.args.isEmpty() shouldBe false
         fluentNotEmpty.instanceOf shouldNotBe predicate

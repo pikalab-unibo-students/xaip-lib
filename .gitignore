@@ -1,3 +1,14 @@
 .idea/
 build/
 .gradle/
+
+.DS_Store
+*.iml
+node_modules/
+.rpt2_cache/
+libraries/tools/kotlin-test-js-runner/lib/
+local.properties
+buildSrcTmp/
+distTmp/
+outTmp/
+kotlin-ide/

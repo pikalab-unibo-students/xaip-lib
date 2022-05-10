@@ -5,3 +5,9 @@
 interface Goal {
     fun isStatisfiedBy(state: State):Boolean
 }
+
+class GoalImpl : Goal {
+    override fun isStatisfiedBy(state: State): Boolean {
+        TODO("Not yet implemented")
+    }
+}

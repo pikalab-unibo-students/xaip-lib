@@ -9,3 +9,11 @@ interface Fluent {
     val isNegated: Boolean
 }
 
+
+class FluentImpl(
+    override val name: String,
+    override val args: List<Value>,
+    override val instanceOf: Predicate,
+    override val isNegated: Boolean
+) : Fluent
+

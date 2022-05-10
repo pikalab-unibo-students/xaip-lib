@@ -14,7 +14,11 @@ interface Action {
 }
 
 // TODO Chiedi se ha senso tenere tutto come val oppure se dovrebbero essere var
-class ActionImpl(override val name: String, override val parameters: Map<Var, Type>, override val preconditions: Set<Fluent>, override val effects: Set<Effect>): Action
+class ActionImpl(
+    override val name: String,
+    override val parameters: Map<Var, Type>,
+    override val preconditions: Set<Fluent>,
+    override val effects: Set<Effect>): Action
 
 
 

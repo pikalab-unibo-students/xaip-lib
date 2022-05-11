@@ -9,22 +9,22 @@ class FluentBasedGoalTest{
 
     private val fluentBasedGoalEmpty: FluentBasedGoal= mockkClass(FluentBasedGoal::class){
         every { fluent } returns emptySet()
-        every { isStatisfiedBy(state) } returns false
+        every { isSatisfiedBy(state) } returns false
     }
 
     private val fluentBasedGoalNotEmpty: FluentBasedGoal= mockkClass(FluentBasedGoal::class){
         every { fluent } returns mockk(relaxed=true)
-        every { isStatisfiedBy(state) } returns true
+        every { isSatisfiedBy(state) } returns true
     }
     @Test
     fun testEmptyCreation(){
         fluentBasedGoalEmpty.fluent.isEmpty() shouldBe true
-        fluentBasedGoalEmpty.isStatisfiedBy(state) shouldBe false
+        fluentBasedGoalEmpty.isSatisfiedBy(state) shouldBe false
     }
     @Test
     fun testNotEmptyCreation(){
         fluentBasedGoalNotEmpty.fluent.isEmpty() shouldBe false
-        fluentBasedGoalNotEmpty.isStatisfiedBy(state) shouldBe true
+        fluentBasedGoalNotEmpty.isSatisfiedBy(state) shouldBe true
     }
 
 }

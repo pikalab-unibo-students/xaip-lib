@@ -6,19 +6,19 @@ import resources.res.state
 
 class GoalTest {
     private val goalSatisfied: Goal= mockkClass(Goal::class){
-        every { isStatisfiedBy(state) } returns true
+        every { isSatisfiedBy(state) } returns true
     }
     private val goalNotSatisfied: Goal= mockkClass(Goal::class){
-        every { isStatisfiedBy(state) } returns false
+        every { isSatisfiedBy(state) } returns false
     }
 
     @Test
     fun testCreation1(){
-        goalSatisfied.isStatisfiedBy(state) shouldBe true
+        goalSatisfied.isSatisfiedBy(state) shouldBe true
     }
     @Test
     fun testCreation2(){
-        goalNotSatisfied.isStatisfiedBy(state) shouldBe false
+        goalNotSatisfied.isSatisfiedBy(state) shouldBe false
     }
 
 

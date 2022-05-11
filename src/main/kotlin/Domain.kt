@@ -13,10 +13,3 @@ interface Domain {
     val axioms: Set<Axiom>
 }
 
-class DomainImpl(
-    override val name: String,
-    override val predicates: Set<Predicate>,
-    override val actions: Set<Action>,
-    override val types: Set<Type>,
-    override val axioms: Set<Axiom>
-) : Domain

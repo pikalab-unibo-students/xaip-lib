@@ -9,8 +9,3 @@ interface Axiom {
     val implies: Set<Fluent>
 }
 
-class AxiomImpl(
-    override val parameters: Map<Var, Type>,
-    override val context: Set<Fluent>,
-    override val implies: Set<Fluent>
-):Axiom

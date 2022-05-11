@@ -1,8 +1,6 @@
 package resources
 
 import Action
-import Fluent
-import Predicate
 import State
 import impl.*
 import io.mockk.mockk
@@ -10,7 +8,6 @@ import io.mockk.mockk
 object res {
     const val nameGC ="Giovanni"
     val state= mockk<State>()
-    val action = mockk<Action>()
 
     val value1 = ValueImpl()
     val type1 = TypeImpl()

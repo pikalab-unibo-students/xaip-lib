@@ -1,8 +1,8 @@
+import impl.TypeImpl
+import impl.PredicateImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkClass
+
 import org.junit.Test
 import resources.res.nameGC
 

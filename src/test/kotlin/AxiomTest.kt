@@ -1,21 +1,9 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkClass
 import org.junit.Test
-
+import resources.res.axiomEmpty
+import resources.res.axiomNotEmpty
 class AxiomTest {
-    private val axiomEmpty = mockkClass(Axiom::class){
-        every { parameters } returns emptyMap()
-        every{ context} returns emptySet()
-        every{ implies} returns emptySet()
-    }
-    private val axiomNotEmpty = mockkClass(Axiom::class){
-        every {parameters } returns mockk(relaxed =true)
-        every{context} returns mockk( relaxed = true)
-        every{implies} returns mockk( relaxed = true)
-    }
 
     @Test
     fun testEmptyCreation() {

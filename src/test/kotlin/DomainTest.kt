@@ -1,25 +1,15 @@
+import impl.DomainImpl
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.actionNotEmpty
+import resources.res.axiomNotEmpty
 import resources.res.nameGC
+import resources.res.predicateNotEmpty
+import resources.res.type1
 
 class DomainTest {
-    private val domainEmpty = mockkClass(Domain::class){
-        every{ name } returns ""
-        every { predicates } returns emptySet()
-        every { actions } returns emptySet()
-        every { types } returns emptySet()
-        every { axioms } returns emptySet()
-    }
-    private val domainNotEmpty = mockkClass(Domain::class){
-        every{ name } returns nameGC
-        every { predicates } returns mockk(relaxed = true)
-        every { actions } returns mockk(relaxed = true)
-        every { types } returns mockk(relaxed = true)
-        every { axioms } returns mockk(relaxed = true)
-    }
+    private val domainEmpty = DomainImpl("", emptySet(), emptySet(),emptySet(), emptySet())
+    private val domainNotEmpty = DomainImpl(nameGC, setOf(predicateNotEmpty), setOf(actionNotEmpty),setOf(type1), setOf(axiomNotEmpty))
 
     @Test
     fun testEmptyCreation() {

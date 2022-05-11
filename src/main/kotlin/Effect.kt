@@ -7,7 +7,3 @@ interface Effect {
     val fluent: Fluent
     val isPositive:Boolean
 }
-
-class EffectImpl(
-    override val fluent: Fluent,
-    override val isPositive: Boolean) : Effect

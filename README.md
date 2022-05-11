@@ -10,3 +10,4 @@
 
 ## TO FIX
 Overloading apply function (State interface + test)
+Var VS Val (ex Action)

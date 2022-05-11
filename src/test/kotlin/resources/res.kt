@@ -9,12 +9,13 @@ import io.mockk.mockk
 
 object res {
     const val nameGC ="Giovanni"
-    val predicate= mockk<Predicate>()
     val state= mockk<State>()
     val action = mockk<Action>()
 
     val value1 = ValueImpl()
     val type1 = TypeImpl()
+    val objEmpty= ObjectImpl("")
+    val objNotEmpty=ObjectImpl(nameGC)
     val variableEmpty = VarImpl("")
     val variableNotEmpty = VarImpl(nameGC)
     val predicateEmpty = PredicateImpl("", emptyList())
@@ -28,4 +29,7 @@ object res {
     val actionEmpty= ActionImpl("", emptyMap(), emptySet(), emptySet())
     val actionNotEmpty =ActionImpl(nameGC, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(
         effectNotEmpty))
+    val domainEmpty = DomainImpl("", emptySet(), emptySet(),emptySet(), emptySet())
+    val domainNotEmpty = DomainImpl(nameGC, setOf(predicateNotEmpty), setOf(actionNotEmpty),setOf(type1), setOf(axiomNotEmpty))
+
 }

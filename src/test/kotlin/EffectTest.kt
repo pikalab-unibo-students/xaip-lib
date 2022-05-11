@@ -1,4 +1,3 @@
-import impl.EffectImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.Test

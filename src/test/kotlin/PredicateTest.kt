@@ -7,14 +7,10 @@ import org.junit.Test
 import resources.res.nameGC
 
 class PredicateTest {
-    private val predicateEmpty = mockkClass(Predicate::class){
-        every{ name } returns ""
-        every { arguments } returns emptyList()
-    }
-    private val predicateNotEmpty = mockkClass(Predicate::class){
-        every{ name } returns nameGC
-        every { arguments } returns mockk(relaxed = true)
-    }
+    private val type1= TypeImpl()
+    private val predicateEmpty = PredicateImpl("", emptyList())
+    private val predicateNotEmpty = PredicateImpl(nameGC, listOf(type1))
+
     @Test
     fun testEmptyCreation() {
         predicateEmpty.name shouldBe ""

@@ -1,20 +1,14 @@
+import impl.EffectImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkClass
 import org.junit.Test
+import resources.res.effectEmpty
+import resources.res.effectNotEmpty
 import resources.res.fluentEmpty
+import resources.res.fluentNotEmpty
 
 class EffectTest {
-    private val effectEmpty = mockkClass(Effect::class){
-        every{ fluent } returns fluentEmpty
-        every { isPositive } returns false
-    }
-    private val effectNotEmpty = mockkClass(Effect::class){
-        every{ fluent } returns mockk(relaxed = true)
-        every { isPositive } returns true
-    }
+
     @Test
     fun testEmptyCreation() {
         effectEmpty.fluent shouldBe fluentEmpty
@@ -22,7 +16,7 @@ class EffectTest {
     }
     @Test
     fun testNotEmptyCreation() {
-        effectNotEmpty.fluent shouldNotBe fluentEmpty
+        effectNotEmpty.fluent shouldNotBe fluentNotEmpty
         effectNotEmpty.isPositive shouldBe true
     }
 }

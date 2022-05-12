@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.res.nameGC
-import resources.res.objEmpty
-import resources.res.objNotEmpty
+import resources.Res.name
+import resources.Res.objEmpty
+import resources.Res.objNotEmpty
 
 class ObjectTest {
     @Test
@@ -12,6 +12,6 @@ class ObjectTest {
 
     @Test
     fun testNotEmptyCreation() {
-        objNotEmpty.representation shouldBe nameGC
+        objNotEmpty.representation shouldBe name
     }
 }

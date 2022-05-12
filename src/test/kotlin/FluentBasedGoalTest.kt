@@ -3,7 +3,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
-import resources.res.state
+import resources.Res.state
 
 class FluentBasedGoalTest{
 

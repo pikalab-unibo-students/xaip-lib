@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.Test
-import resources.res.axiomEmpty
-import resources.res.axiomNotEmpty
+import resources.Res.axiomEmpty
+import resources.Res.axiomNotEmpty
 class AxiomTest {
 
     @Test

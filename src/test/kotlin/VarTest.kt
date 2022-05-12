@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.res.variableEmpty
-import resources.res.variableNotEmpty
-import resources.res.nameGC
+import resources.Res.variableEmpty
+import resources.Res.variableNotEmpty
+import resources.Res.name
 import kotlin.test.assertEquals
 
 class VarTest {
@@ -12,6 +12,6 @@ class VarTest {
     }
     @Test
     fun varNotEmptyCreation(){
-        variableNotEmpty.name shouldBe nameGC
+        variableNotEmpty.name shouldBe name
     }
 }

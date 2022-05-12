@@ -1,12 +1,25 @@
+import impl.FluentImpl
 import io.kotest.matchers.shouldBe
+import org.junit.Before
 import org.junit.Test
-import resources.res.fluentEmpty
-import resources.res.fluentNotEmpty
-import resources.res.nameGC
-import resources.res.predicateEmpty
-import resources.res.predicateNotEmpty
+import resources.Res
+import resources.Res.fluentEmpty
+import resources.Res.fluentNotEmpty
+import resources.Res.getRandomInt
+import resources.Res.name
+import resources.Res.predicateEmpty
+import resources.Res.predicateNotEmpty
+import resources.Res.size
+import resources.Res.value1
 
 class FluentTest {
+    @Before
+    fun init() {
+        size = getRandomInt(5, 10)
+        name= Res.getRandomString(size)
+        fluentNotEmpty = FluentImpl(name, List<Value>(size){value1}, predicateNotEmpty, true)
+    }
+
     @Test
     fun testEmptyCreation() {
         fluentEmpty.name shouldBe ""
@@ -16,8 +29,10 @@ class FluentTest {
     }
     @Test
     fun testNotEmptyCreation() {
-        fluentNotEmpty.name shouldBe nameGC
+        fluentNotEmpty.name shouldBe name
         fluentNotEmpty.args.isEmpty() shouldBe false
+        fluentNotEmpty.args.size shouldBe size
+        fluentNotEmpty.args.forEach{it shouldBe value1}
         (fluentNotEmpty.instanceOf == predicateNotEmpty) shouldBe true
         fluentNotEmpty.isNegated shouldBe true
     }

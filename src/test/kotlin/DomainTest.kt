@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.res.domainEmpty
-import resources.res.domainNotEmpty
-import resources.res.nameGC
+import resources.Res.domainEmpty
+import resources.Res.domainNotEmpty
+import resources.Res.name
 
 class DomainTest {
     @Test
@@ -15,7 +15,7 @@ class DomainTest {
     }
     @Test
     fun testNotEmptyCreation() {
-        domainNotEmpty.name shouldBe nameGC
+        domainNotEmpty.name shouldBe name
         domainNotEmpty.predicates.isEmpty() shouldBe false
         domainNotEmpty.actions.isEmpty() shouldBe false
         domainNotEmpty.types.isEmpty() shouldBe false

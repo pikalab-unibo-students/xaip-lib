@@ -1,10 +1,10 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.Test
-import resources.res.effectEmpty
-import resources.res.effectNotEmpty
-import resources.res.fluentEmpty
-import resources.res.fluentNotEmpty
+import resources.Res.effectEmpty
+import resources.Res.effectNotEmpty
+import resources.Res.fluentEmpty
+import resources.Res.fluentNotEmpty
 
 class EffectTest {
 

@@ -2,7 +2,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockkClass
 import org.junit.Test
-import resources.res.state
+import resources.Res.state
 
 class GoalTest {
     private val goalSatisfied: Goal= mockkClass(Goal::class){

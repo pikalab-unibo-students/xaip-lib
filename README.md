@@ -10,6 +10,8 @@
 
 ## TO FIX
 - Overloading apply function (State interface + test)
+- add test
+
 - check StateImpl
 - finish substitutionimpl, fluentimpl, ProblemImpl, plan, planner
 - Concepts without companion object

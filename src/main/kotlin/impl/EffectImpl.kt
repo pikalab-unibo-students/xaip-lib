@@ -4,7 +4,7 @@ import Effect
 import Fluent
 import Substitution
 
-data class EffectImpl(
+internal data class EffectImpl(
     override val fluent: Fluent,
     override val isPositive: Boolean) : Effect {
 

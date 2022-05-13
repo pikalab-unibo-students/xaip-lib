@@ -5,7 +5,7 @@ import Fluent
 import Type
 import Var
 
-data class AxiomImpl(
+internal data class AxiomImpl(
     override val parameters: Map<Var, Type>,
     override val context: Set<Fluent>,
     override val implies: Set<Fluent>

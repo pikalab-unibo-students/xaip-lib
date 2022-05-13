@@ -6,7 +6,7 @@
  * The [preconditions] is a goal description that must be satisfied before the action is applied.
  * The [effects] describe the effects of the action.
  * */
-interface Action {
+interface Action : Applicable<Action> {
     val name: String
     val parameters: Map<Var, Type>
     val preconditions: Set<Fluent>

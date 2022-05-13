@@ -2,7 +2,7 @@
 /**
  *
  */
-interface FluentBasedGoal: Goal {
+interface FluentBasedGoal : Goal, Applicable<FluentBasedGoal> {
     val fluent: Set<Fluent>
 }
 

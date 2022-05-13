@@ -1,0 +1,2 @@
+interface Plan : List<Action> {
+}

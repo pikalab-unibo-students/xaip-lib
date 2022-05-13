@@ -1,0 +1,1 @@
+interface ObjectSet : Map<Type, Set<Constant>>

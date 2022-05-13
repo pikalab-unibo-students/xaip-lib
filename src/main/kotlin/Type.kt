@@ -1,2 +1,4 @@
 //TODO scrivi qualcosa di sensato
-interface Type
+interface Type {
+    val superType: Type?
+}

@@ -6,7 +6,7 @@ import Domain
 import Predicate
 import Type
 
-class DomainImpl(
+data class DomainImpl(
     override val name: String,
     override val predicates: Set<Predicate>,
     override val actions: Set<Action>,

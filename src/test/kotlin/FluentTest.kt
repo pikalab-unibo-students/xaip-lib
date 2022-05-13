@@ -10,14 +10,14 @@ import resources.Res.name
 import resources.Res.predicateEmpty
 import resources.Res.predicateNotEmpty
 import resources.Res.size
-import resources.Res.value1
+import resources.Res.variableNotEmpty
 
 class FluentTest {
     @Before
     fun init() {
         size = getRandomInt(5, 10)
         name= Res.getRandomString(size)
-        fluentNotEmpty = FluentImpl(name, List<Value>(size){value1}, predicateNotEmpty, true)
+        fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty}, predicateNotEmpty, true)
     }
 
     @Test
@@ -32,7 +32,7 @@ class FluentTest {
         fluentNotEmpty.name shouldBe name
         fluentNotEmpty.args.isEmpty() shouldBe false
         fluentNotEmpty.args.size shouldBe size
-        fluentNotEmpty.args.forEach{it shouldBe value1}
+        fluentNotEmpty.args.forEach{it shouldBe variableNotEmpty}
         (fluentNotEmpty.instanceOf == predicateNotEmpty) shouldBe true
         fluentNotEmpty.isNegated shouldBe true
     }

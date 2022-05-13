@@ -13,7 +13,7 @@ import resources.Res.name
 import resources.Res.predicateNotEmpty
 import resources.Res.size
 import resources.Res.type1
-import resources.Res.value1
+import resources.Res.variableNotEmpty
 import kotlin.test.Test
 
 class ActionTest {
@@ -21,7 +21,7 @@ class ActionTest {
     fun init() {
         size = getRandomInt(5, 10)
         name= Res.getRandomString(size)
-        fluentNotEmpty = FluentImpl(name, List<Value>(size){ value1 }, predicateNotEmpty, true)
+        fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty }, predicateNotEmpty, true)
         actionNotEmpty = ActionImpl(name, mapOf(Res.variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
     }
 

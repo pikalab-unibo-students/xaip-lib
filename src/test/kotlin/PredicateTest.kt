@@ -11,7 +11,7 @@ import resources.Res.type1
 class PredicateTest {
     @Test
     fun testEmptyCreation() {
-        predicateEmpty.name shouldBe ""
+        predicateEmpty.name.isEmpty() shouldBe true
         predicateEmpty.arguments.isEmpty() shouldBe true
     }
     @Test

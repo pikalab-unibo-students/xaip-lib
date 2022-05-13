@@ -7,7 +7,7 @@ import resources.Res.name
 class DomainTest {
     @Test
     fun testEmptyCreation() {
-        domainEmpty.name shouldBe ""
+        domainEmpty.name.isEmpty() shouldBe true
         domainEmpty.predicates.isEmpty() shouldBe true
         domainEmpty.actions.isEmpty() shouldBe true
         domainEmpty.types.isEmpty() shouldBe true

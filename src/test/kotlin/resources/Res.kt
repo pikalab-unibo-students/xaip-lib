@@ -18,32 +18,30 @@ object Res {
     var name ="Giovanni"
     var size = 5
     val state= mockk<State>()
+    val type1 = Type.of(name, null)
 
-    val value1 = ValueImpl()
-    val type1 = TypeImpl()
+    //val objEmpty= ObjectImpl("")
+    //val objNotEmpty=ObjectImpl(name)
 
-    val objEmpty= ObjectImpl("")
-    val objNotEmpty=ObjectImpl(name)
+    val variableEmpty = Var.of("")
+    val variableNotEmpty = Var.of(name)
 
-    val variableEmpty = VarImpl("")
-    val variableNotEmpty = VarImpl(name)
+    val predicateEmpty = Predicate.of("", emptyList())
+    val predicateNotEmpty = Predicate.of(name, List<Type>(size){type1})
 
-    val predicateEmpty = PredicateImpl("", emptyList())
-    val predicateNotEmpty = PredicateImpl(name, List<Type>(size){type1})
+    val fluentEmpty = Fluent.of("", emptyList(), predicateEmpty, false)
+    var fluentNotEmpty = Fluent.of(name, List<Value>(size){ variableNotEmpty}, predicateNotEmpty, true)
 
-    val fluentEmpty = FluentImpl("", emptyList(), predicateEmpty, false)
-    var fluentNotEmpty = FluentImpl(name, List<Value>(size){value1}, predicateNotEmpty, true)
+    val effectEmpty= Effect.of(fluentEmpty, false)
+    val effectNotEmpty= Effect.of(fluentNotEmpty, true)
 
-    val effectEmpty= EffectImpl(fluentEmpty, false)
-    val effectNotEmpty= EffectImpl(fluentNotEmpty, true)
+    val axiomEmpty = Axiom.of(emptyMap(), emptySet(), emptySet())
+    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1 ), setOf(fluentNotEmpty), setOf(fluentNotEmpty))
 
-    val axiomEmpty = AxiomImpl(emptyMap(), emptySet(), emptySet())
-    val axiomNotEmpty = AxiomImpl(mapOf(variableNotEmpty to type1 ), setOf(fluentNotEmpty), setOf(fluentNotEmpty))
+    val actionEmpty= Action.of("", emptyMap(), emptySet(), emptySet())
+    var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
 
-    val actionEmpty= ActionImpl("", emptyMap(), emptySet(), emptySet())
-    var actionNotEmpty = ActionImpl(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
-
-    val domainEmpty = DomainImpl("", emptySet(), emptySet(),emptySet(), emptySet())
-    val domainNotEmpty = DomainImpl(name, setOf(predicateNotEmpty), setOf(actionNotEmpty),setOf(type1), setOf(axiomNotEmpty))
+    val domainEmpty = Domain.of("", emptySet(), emptySet(),emptySet(), emptySet())
+    val domainNotEmpty = Domain.of(name, setOf(predicateNotEmpty), setOf(actionNotEmpty),setOf(type1), setOf(axiomNotEmpty))
 
 }

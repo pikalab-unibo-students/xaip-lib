@@ -32,6 +32,4 @@ data class FluentImpl(
 
     override fun apply(substitution: Substitution): Fluent =
         copy(args = args.map { it.apply(substitution) })
-
-
 }

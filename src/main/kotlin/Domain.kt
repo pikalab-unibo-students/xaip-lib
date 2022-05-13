@@ -1,3 +1,6 @@
+import impl.DomainImpl
+import impl.VarImpl
+
 /**
  * The domain definition establishes the context of the world.
  * It determines what sorts of details the states can include.
@@ -11,5 +14,13 @@ interface Domain {
     val actions: Set<Action>
     val types: Set<Type>
     val axioms: Set<Axiom>
+    companion object {
+        fun of(name: String,
+               predicates: Set<Predicate>,
+               actions: Set<Action>,
+               types: Set<Type>,
+               axioms: Set<Axiom>
+        ): Domain = DomainImpl(name, predicates, actions, types, axioms)
+    }
 }
 

@@ -1,3 +1,6 @@
+import impl.ActionImpl
+import impl.VarImpl
+
 /**
  * An action represents a way for changing the state of the world.
  *
@@ -11,6 +14,13 @@ interface Action : Applicable<Action> {
     val parameters: Map<Var, Type>
     val preconditions: Set<Fluent>
     val effects: Set<Effect>
+    companion object {
+        fun of(name: String,
+               parameters: Map<Var, Type>,
+               preconditions: Set<Fluent>,
+               effects: Set<Effect>
+        ): Action = ActionImpl(name, parameters, preconditions, effects)
+    }
 }
 
 

@@ -2,4 +2,4 @@ package impl
 
 import Type
 
-class TypeImpl: Type
+data class TypeImpl(override val name: String, override val superType: Type? = null): Type

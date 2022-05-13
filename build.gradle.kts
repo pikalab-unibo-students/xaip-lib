@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.6.21"
     id("io.kotest") version "0.3.8"
 }
 
@@ -14,13 +14,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    //testImplementation("org.mockito:mockito-core:3.+")
     testImplementation("io.mockk:mockk:1.12.3")
-    //testImplementation("io.kotest:kotest-assertions-core-jvm:$version")
-    //testImplementation("io.kotest:kotest-framework-engine-jvm:$version")
-    compileOnly("io.kotest:kotest-framework-api-jvm:4.4.3")
-    implementation("io.kotest:kotest-framework-engine-jvm:4.4.3")
-    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+    implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
+    compileOnly("io.kotest:kotest-framework-api-jvm:5.3.0")
+    implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
 }
 
 tasks.test {
@@ -28,5 +25,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "13"
+    kotlinOptions.jvmTarget = "11"
 }

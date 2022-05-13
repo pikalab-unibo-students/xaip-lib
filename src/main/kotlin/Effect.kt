@@ -5,5 +5,5 @@
  */
 interface Effect : Applicable<Effect> {
     val fluent: Fluent
-    val isPositive:Boolean
+    val isPositive: Boolean
 }

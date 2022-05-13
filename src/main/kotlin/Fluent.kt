@@ -7,4 +7,9 @@ interface Fluent : Applicable<Fluent> {
     val args: List<Value>
     val instanceOf: Predicate
     val isNegated: Boolean
+
+    val isGround: Boolean
+
+    fun match(other: Fluent): Boolean
+    fun mgu(other: Fluent): Substitution
 }

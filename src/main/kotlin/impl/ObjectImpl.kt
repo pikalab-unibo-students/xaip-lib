@@ -2,4 +2,4 @@ package impl
 
 import Object
 
-class ObjectImpl(override val representation: String) : Object
+data class ObjectImpl(override val representation: String) : Object

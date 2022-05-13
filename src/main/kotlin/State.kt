@@ -3,8 +3,8 @@
  * functionless atoms TODO controlla sta cosa.
  *
  */
-interface State {
-    val fluents:Set<Fluent>
+interface State : Applicable<State> {
+    val fluents: Set<Fluent>
     fun apply(action: Action): State
     fun isApplicable(action: Action): Boolean
 }

@@ -1,0 +1,1 @@
+interface Substitution : Map<Var, Value>

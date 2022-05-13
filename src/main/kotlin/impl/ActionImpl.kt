@@ -6,7 +6,7 @@ import Fluent
 import Type
 import Var
 
-class ActionImpl(
+data class ActionImpl(
     override val name: String,
     override val parameters: Map<Var, Type>,
     override val preconditions: Set<Fluent>,

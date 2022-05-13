@@ -11,5 +11,5 @@ interface Fluent : Applicable<Fluent> {
     val isGround: Boolean
 
     fun match(other: Fluent): Boolean
-    fun mgu(other: Fluent): Substitution
+    fun mostGeneralUnifier(other: Fluent): Substitution
 }

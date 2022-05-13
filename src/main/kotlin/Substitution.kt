@@ -1,1 +1,3 @@
-interface Substitution : Map<Var, Value>
+interface Substitution : Map<Var, Value> {
+    fun merge(other: Substitution): Substitution
+}

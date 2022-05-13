@@ -6,7 +6,7 @@ import ObjectSet
 import Problem
 import State
 
-class ProblemImpl(override val domain: Domain,
+internal data class ProblemImpl(override val domain: Domain,
                   override val objects: ObjectSet,
                   override val initialState: State,
                   override val goal: Goal

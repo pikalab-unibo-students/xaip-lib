@@ -4,7 +4,7 @@ import Object
 import Substitution
 import it.unibo.tuprolog.core.Atom
 
-data class ObjectImpl(internal val delegate: Atom) : Object {
+internal data class ObjectImpl(internal val delegate: Atom) : Object {
     override val representation: String
         get() = delegate.value
 

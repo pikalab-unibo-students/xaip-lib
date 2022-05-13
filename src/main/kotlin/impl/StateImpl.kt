@@ -5,7 +5,7 @@ import Fluent
 import State
 import Substitution
 
-data class StateImpl(override val fluents: Set<Fluent>) : State {
+internal data class StateImpl(override val fluents: Set<Fluent>) : State {
 
     init {
         require(fluents.all { it.isGround })

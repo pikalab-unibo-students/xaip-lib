@@ -7,7 +7,7 @@ import Substitution
 import Type
 import Var
 
-data class ActionImpl(
+internal data class ActionImpl(
     override val name: String,
     override val parameters: Map<Var, Type>,
     override val preconditions: Set<Fluent>,

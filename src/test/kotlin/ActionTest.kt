@@ -28,7 +28,7 @@ class ActionTest {
 
     @Test
     fun testEmptyCreation() {
-        actionEmpty.name shouldBe ""
+        actionEmpty.name.isEmpty() shouldBe true
         actionEmpty.parameters.isEmpty() shouldBe true
         actionEmpty.preconditions.isEmpty() shouldBe true
         actionEmpty.effects.isEmpty() shouldBe true

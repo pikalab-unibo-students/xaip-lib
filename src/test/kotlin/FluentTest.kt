@@ -22,7 +22,7 @@ class FluentTest {
 
     @Test
     fun testEmptyCreation() {
-        fluentEmpty.name shouldBe ""
+        fluentEmpty.name.isEmpty() shouldBe true
         fluentEmpty.args.isEmpty() shouldBe true
         (fluentEmpty.instanceOf == predicateEmpty) shouldBe true
         fluentEmpty.isNegated shouldBe false

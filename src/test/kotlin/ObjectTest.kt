@@ -8,7 +8,7 @@ class ObjectTest {
     /*
     @Test
     fun testEmptyCreation() {
-        objEmpty.representation shouldBe ""
+        objEmpty.representation.isEmpty() shouldBe true
     }
 
     @Test

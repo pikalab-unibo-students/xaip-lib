@@ -1,4 +1,5 @@
 import io.kotest.matchers.shouldBe
+import it.unibo.tuprolog.core.toVar
 import org.junit.Test
 import resources.Res.variableEmpty
 import resources.Res.variableNotEmpty
@@ -8,7 +9,7 @@ import kotlin.test.assertEquals
 class VarTest {
     @Test
     fun varEmptyCreation(){
-        assertEquals ( variableEmpty.name, "")
+         variableEmpty.name.isEmpty() shouldBe true
     }
     @Test
     fun varNotEmptyCreation(){

@@ -1,5 +1,4 @@
 import impl.PlannerImpl
-import impl.StateImpl
 
 interface Planner {
     fun plan(problem: Problem): Plan

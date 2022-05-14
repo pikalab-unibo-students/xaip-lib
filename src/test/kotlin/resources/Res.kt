@@ -47,4 +47,7 @@ object Res {
 
     val objectSetEmpty= ObjectSet.of(emptyMap())
     val objectSetNotEmpty= ObjectSet.of(mapOf(type1 to setOf(objNotEmpty)))
+
+    val planEmpty = Plan.of(emptyList())
+    val planNotEmpty = Plan.of(listOf(actionNotEmpty))
 }

@@ -3,9 +3,10 @@ package resources
 import State
 import Type
 import Value
+import Object
 import impl.*
 import io.mockk.mockk
-
+import it.unibo.tuprolog.core.Atom
 object Res {
     fun getRandomInt(min: Int, max: Int): Int= (min..max).random()
     fun getRandomString(length: Int) : String {
@@ -20,8 +21,8 @@ object Res {
     val state= mockk<State>()
     val type1 = Type.of(name, null)
 
-    //val objEmpty= ObjectImpl("")
-    //val objNotEmpty=ObjectImpl(name)
+    val objEmpty= Object.of(Atom.of(""))
+    val objNotEmpty=Object.of(Atom.of(name))
 
     val variableEmpty = Var.of("")
     val variableNotEmpty = Var.of(name)

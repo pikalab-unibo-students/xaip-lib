@@ -34,4 +34,9 @@ _ metodo satisfy*()
 - PlanImpl
 - PlannerImpl 
 - ProblemImpl
-- 
+
+## Interfacce cambiate 
+### rispetto all'implementazione di @gciatto 
+- ObjectSetIMpl
+- Plan
+(forse non ho capito nulla, probabile, ma il fatto che la prima estendesse da  `Map<Type, Set<Object>>` e la seconda da `List<Action>` non mi tornava)

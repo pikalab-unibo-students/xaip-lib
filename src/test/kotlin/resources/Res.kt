@@ -1,11 +1,14 @@
 package resources
 
+import Goal
 import State
 import Type
 import Value
 import Object
 import impl.*
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkClass
 import it.unibo.tuprolog.core.Atom
 object Res {
     fun getRandomInt(min: Int, max: Int): Int= (min..max).random()
@@ -14,6 +17,14 @@ object Res {
 
         return List(length) { charset.random() }
             .joinToString("")
+    }
+
+    val goalSatisfied: Goal= mockkClass(Goal::class){
+        every { isSatisfiedBy(state) } returns true
+    }
+
+    val goalNotSatisfied: Goal= mockkClass(Goal::class){
+        every { isSatisfiedBy(state) } returns false
     }
 
     var name ="Giovanni"
@@ -50,4 +61,7 @@ object Res {
 
     val planEmpty = Plan.of(emptyList())
     val planNotEmpty = Plan.of(listOf(actionNotEmpty))
+
+    val problemEmpty= Problem.of(domainEmpty, objectSetEmpty, state, goalNotSatisfied)
+    val problemNotEmpty= Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
 }

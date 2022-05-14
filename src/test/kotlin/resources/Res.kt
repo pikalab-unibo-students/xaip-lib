@@ -5,7 +5,6 @@ import State
 import Type
 import Value
 import Object
-import impl.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
@@ -64,4 +63,6 @@ object Res {
 
     val problemEmpty= Problem.of(domainEmpty, objectSetEmpty, state, goalNotSatisfied)
     val problemNotEmpty= Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
+
+    val planner = Planner.of()
 }

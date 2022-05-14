@@ -1,5 +1,6 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import it.unibo.tuprolog.core.TermFormatter
 import org.junit.Test
 import resources.Res.effectEmpty
 import resources.Res.effectNotEmpty
@@ -15,7 +16,7 @@ class EffectTest {
     }
     @Test
     fun testNotEmptyCreation() {
-        effectNotEmpty.fluent shouldNotBe fluentNotEmpty
+        effectNotEmpty.fluent shouldBe fluentNotEmpty
         effectNotEmpty.isPositive shouldBe true
     }
 }

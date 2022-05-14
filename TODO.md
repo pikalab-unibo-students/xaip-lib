@@ -9,6 +9,7 @@
 ## TO FIX
 - Overloading apply function (State interface + test)
 - add test
+- run kotest local events not received
 
 - check StateImpl
 - finish substitutionimpl, fluentimpl, ProblemImpl, plan, planner

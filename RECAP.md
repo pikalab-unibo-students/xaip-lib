@@ -11,12 +11,11 @@
 - StateImpl
   - https://github.com/pikalab-unibo/ise-2122-project-brugnatti/blob/develop/src/main/kotlin/impl/StateImpl.kt
 - SubstitutionImpl
-- https://github.com/pikalab-unibo/ise-2122-project-brugnatti/blob/develop/src/main/kotlin/impl/SubstitutionImpl.kt
-
-
-_ metodo satisfy*()
-    - GoalImpl
+  - https://github.com/pikalab-unibo/ise-2122-project-brugnatti/blob/develop/src/main/kotlin/impl/SubstitutionImpl.kt
+- GoalImpl
       - https://github.com/pikalab-unibo/ise-2122-project-brugnatti/blob/develop/src/main/kotlin/impl/GoalImpl.kt
+- Object
+  
 ## Da finire
 - SubstitutionImpl
     - https://github.com/pikalab-unibo/ise-2122-project-brugnatti/blob/develop/src/main/kotlin/impl/SubstitutionImpl.kt

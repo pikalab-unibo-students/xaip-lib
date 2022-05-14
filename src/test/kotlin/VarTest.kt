@@ -16,8 +16,6 @@ class VarTest {
 
     @Test
     fun varEmptyCreation(){
-        //val term: Term = Atom.of(variableEmpty.name.replace("'", ""))
-
         formatter.format(variableEmpty.toTerm()).replace("`", "") shouldBe ""
     }
     @Test

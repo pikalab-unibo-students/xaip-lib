@@ -8,7 +8,6 @@ import resources.Res.name
 import it.unibo.tuprolog.core.*
 
 class VarTest {
-
     /**
      * Supports formatting a term in user-friendly Prolog syntax
      */

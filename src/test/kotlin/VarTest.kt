@@ -1,18 +1,27 @@
+import impl.toTerm
 import io.kotest.matchers.shouldBe
-import it.unibo.tuprolog.core.toVar
 import org.junit.Test
 import resources.Res.variableEmpty
 import resources.Res.variableNotEmpty
 import resources.Res.name
-import kotlin.test.assertEquals
+
+import it.unibo.tuprolog.core.*
 
 class VarTest {
+
+    /**
+     * Supports formatting a term in user-friendly Prolog syntax
+     */
+    private val formatter = TermFormatter.prettyVariables()
+
     @Test
     fun varEmptyCreation(){
-         variableEmpty.name.isEmpty() shouldBe true
+        //val term: Term = Atom.of(variableEmpty.name.replace("'", ""))
+
+        formatter.format(variableEmpty.toTerm()).replace("`", "") shouldBe ""
     }
     @Test
     fun varNotEmptyCreation(){
-        variableNotEmpty.name shouldBe name
+        formatter.format(variableNotEmpty.toTerm()) shouldBe name
     }
 }

@@ -10,7 +10,7 @@ class StateTest {
     private val stateEmpty: State = mockkClass(State::class){
         every { fluents } returns emptySet()
         every { isApplicable(actionEmpty)} returns false
-        //every { apply(state)} returns action
+        //every { apply(state) of State} returns action
     }
     private val stateNotEmpty: State = mockkClass(State::class){
         every { fluents } returns mockk(relaxed =true)

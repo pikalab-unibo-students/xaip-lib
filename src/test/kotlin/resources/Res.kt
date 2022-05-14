@@ -45,4 +45,6 @@ object Res {
     val domainEmpty = Domain.of("", emptySet(), emptySet(),emptySet(), emptySet())
     val domainNotEmpty = Domain.of(name, setOf(predicateNotEmpty), setOf(actionNotEmpty),setOf(type1), setOf(axiomNotEmpty))
 
+    val objectSetEmpty= ObjectSet.of(emptyMap())
+    val objectSetNotEmpty= ObjectSet.of(mapOf(type1 to setOf(objNotEmpty)))
 }

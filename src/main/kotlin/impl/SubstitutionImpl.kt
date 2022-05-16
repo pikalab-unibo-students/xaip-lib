@@ -3,6 +3,8 @@ package impl
 import Substitution
 import Value
 import Var
+import impl.res.toTerm
+import impl.res.toValue
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
 class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution {

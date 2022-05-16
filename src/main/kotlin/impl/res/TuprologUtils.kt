@@ -1,9 +1,12 @@
-package impl
+package impl.res
 
 import Value
 import Var
 import Object
 import Substitution
+import impl.ObjectImpl
+import impl.SubstitutionImpl
+import impl.VarImpl
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Term
 import it.unibo.tuprolog.core.Var as LogicVar

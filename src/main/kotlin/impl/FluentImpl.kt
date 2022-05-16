@@ -20,15 +20,6 @@ internal data class FluentImpl(
     override fun mostGeneralUnifier(other: Fluent): Substitution {
         TODO("Not yet implemented")
     }
-    /*{
-        for( localArg in args){
-            for (inputArg in other.args){
-                if()
-            }
-        }
-    }
-
-     */
 
     override fun apply(substitution: Substitution): Fluent =
         copy(args = args.map { it.apply(substitution) })

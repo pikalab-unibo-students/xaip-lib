@@ -24,7 +24,7 @@ class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution 
 
     override fun isEmpty(): Boolean = delegate.isEmpty()
 
-// Non go capito cosa io debba fare
+// Non ho capito cosa io debba fare
     override fun merge(other: Substitution): Substitution {
         TODO("Not yet implemented")
     }

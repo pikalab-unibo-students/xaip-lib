@@ -23,19 +23,17 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         var fluents = mutableSetOf<Fluent>()
         while (fluentsIterator.hasNext())
             for (toBeRemoved in removeList) {
-                var fluent= fluentsIterator.next()
+                val fluent= fluentsIterator.next()
                 if (fluent == toBeRemoved) {
                     fluentsIterator.remove()
                 }
                 else if (fluent.match(toBeRemoved)) {
                     fluentsIterator.remove()
-                    val substitution = fluent.mostGeneralUnifier(toBeRemoved)
                     //  apply to substitution all fluents
                     fluents = fluentsIterator.asSequence().toMutableSet()
-                    fluents.forEach { it -> it.apply(substitution) }
+                    fluents.forEach { it -> it.apply(fluent.mostGeneralUnifier(toBeRemoved)) }
                 }
         }
-
         //aggiungere ai $fluents tutti gli effetti positivi
         fluents.addAll(addList)
         return copy(fluents=fluents)

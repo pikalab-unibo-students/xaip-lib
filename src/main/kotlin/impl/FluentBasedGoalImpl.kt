@@ -10,7 +10,6 @@ internal data class FluentBasedGoalImpl(override val fluent: Set<Fluent>) : Flue
         TODO("Not yet implemented")
     }
 
-    override fun apply(substitution: Substitution): FluentBasedGoal {
-        TODO("Not yet implemented")
-    }
+    override fun apply(substitution: Substitution): FluentBasedGoal =
+        FluentBasedGoal.of(fluent.map { it-> it.apply(substitution) }.toSet())
 }

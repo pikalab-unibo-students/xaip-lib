@@ -8,5 +8,6 @@ internal data class EffectImpl(
     override val fluent: Fluent,
     override val isPositive: Boolean) : Effect {
 
-    override fun apply(substitution: Substitution): Effect = copy(fluent = fluent.apply(substitution))
+    override fun apply(substitution: Substitution): Effect =
+        copy(fluent = fluent.apply(substitution))
 }

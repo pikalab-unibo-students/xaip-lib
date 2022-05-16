@@ -9,7 +9,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import it.unibo.tuprolog.core.Atom
-object Res {
+object TestUtils {
     fun getRandomInt(min: Int, max: Int): Int= (min..max).random()
     fun getRandomString(length: Int) : String {
         val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')

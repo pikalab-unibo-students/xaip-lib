@@ -1,9 +1,9 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.Res.objNotEmpty
-import resources.Res.objectSetEmpty
-import resources.Res.objectSetNotEmpty
-import resources.Res.type1
+import resources.TestUtils.objNotEmpty
+import resources.TestUtils.objectSetEmpty
+import resources.TestUtils.objectSetNotEmpty
+import resources.TestUtils.type1
 
 class ObjectSetTest {
 

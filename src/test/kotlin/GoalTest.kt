@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.Res.goalNotSatisfied
-import resources.Res.goalSatisfied
-import resources.Res.state
+import resources.TestUtils.goalNotSatisfied
+import resources.TestUtils.goalSatisfied
+import resources.TestUtils.state
 
 class GoalTest {
 

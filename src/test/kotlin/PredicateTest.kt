@@ -2,11 +2,11 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 import org.junit.Test
-import resources.Res.name
-import resources.Res.predicateEmpty
-import resources.Res.predicateNotEmpty
-import resources.Res.size
-import resources.Res.type1
+import resources.TestUtils.name
+import resources.TestUtils.predicateEmpty
+import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.size
+import resources.TestUtils.type1
 
 class PredicateTest {
     @Test

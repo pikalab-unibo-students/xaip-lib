@@ -3,26 +3,26 @@ import impl.FluentImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.Before
-import resources.Res
-import resources.Res.actionEmpty
-import resources.Res.actionNotEmpty
-import resources.Res.effectNotEmpty
-import resources.Res.fluentNotEmpty
-import resources.Res.getRandomInt
-import resources.Res.name
-import resources.Res.predicateNotEmpty
-import resources.Res.size
-import resources.Res.type1
-import resources.Res.variableNotEmpty
+import resources.TestUtils
+import resources.TestUtils.actionEmpty
+import resources.TestUtils.actionNotEmpty
+import resources.TestUtils.effectNotEmpty
+import resources.TestUtils.fluentNotEmpty
+import resources.TestUtils.getRandomInt
+import resources.TestUtils.name
+import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.size
+import resources.TestUtils.type1
+import resources.TestUtils.variableNotEmpty
 import kotlin.test.Test
 
 class ActionTest {
     @Before
     fun init() {
         size = getRandomInt(5, 10)
-        name= Res.getRandomString(size)
+        name= TestUtils.getRandomString(size)
         fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty }, predicateNotEmpty, true)
-        actionNotEmpty = ActionImpl(name, mapOf(Res.variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
+        actionNotEmpty = ActionImpl(name, mapOf(TestUtils.variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
     }
 
 

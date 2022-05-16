@@ -2,21 +2,21 @@ import impl.FluentImpl
 import io.kotest.matchers.shouldBe
 import org.junit.Before
 import org.junit.Test
-import resources.Res
-import resources.Res.fluentEmpty
-import resources.Res.fluentNotEmpty
-import resources.Res.getRandomInt
-import resources.Res.name
-import resources.Res.predicateEmpty
-import resources.Res.predicateNotEmpty
-import resources.Res.size
-import resources.Res.variableNotEmpty
+import resources.TestUtils
+import resources.TestUtils.fluentEmpty
+import resources.TestUtils.fluentNotEmpty
+import resources.TestUtils.getRandomInt
+import resources.TestUtils.name
+import resources.TestUtils.predicateEmpty
+import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.size
+import resources.TestUtils.variableNotEmpty
 
 class FluentTest {
     @Before
     fun init() {
         size = getRandomInt(5, 10)
-        name= Res.getRandomString(size)
+        name= TestUtils.getRandomString(size)
         fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty}, predicateNotEmpty, true)
     }
 

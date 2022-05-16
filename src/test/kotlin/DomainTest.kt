@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.Res.domainEmpty
-import resources.Res.domainNotEmpty
-import resources.Res.name
+import resources.TestUtils.domainEmpty
+import resources.TestUtils.domainNotEmpty
+import resources.TestUtils.name
 
 class DomainTest {
     @Test

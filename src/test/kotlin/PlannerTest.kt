@@ -1,10 +1,10 @@
 import io.kotest.matchers.shouldBe
 import org.junit.Test
-import resources.Res.planEmpty
-import resources.Res.planNotEmpty
-import resources.Res.planner
-import resources.Res.problemEmpty
-import resources.Res.problemNotEmpty
+import resources.TestUtils.planEmpty
+import resources.TestUtils.planNotEmpty
+import resources.TestUtils.planner
+import resources.TestUtils.problemEmpty
+import resources.TestUtils.problemNotEmpty
 
 class PlannerTest {
     @Test

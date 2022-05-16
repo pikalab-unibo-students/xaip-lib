@@ -1,13 +1,13 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.Test
-import resources.Res.domainEmpty
-import resources.Res.domainNotEmpty
-import resources.Res.objectSetEmpty
-import resources.Res.objectSetNotEmpty
-import resources.Res.problemEmpty
-import resources.Res.problemNotEmpty
-import resources.Res.state
+import resources.TestUtils.domainEmpty
+import resources.TestUtils.domainNotEmpty
+import resources.TestUtils.objectSetEmpty
+import resources.TestUtils.objectSetNotEmpty
+import resources.TestUtils.problemEmpty
+import resources.TestUtils.problemNotEmpty
+import resources.TestUtils.state
 
 class ProblemTest {
     @Test

@@ -19,18 +19,19 @@ class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution 
         get() = delegate.values.map { it.toValue() }
 
     override fun containsKey(key: Var): Boolean = key.toTerm() in delegate.keys
-//Di qui erano da finire
+
+    //Di qui erano da finire
     override fun containsValue(value: Value): Boolean = value.toTerm() in delegate.values
 
     override fun get(key: Var): Value = delegate.getValue(key.toTerm()).toValue()
 
     override fun isEmpty(): Boolean = delegate.isEmpty()
 
-// Non ho capito cosa io debba fare
+    // Non ho capito cosa io debba fare
     override fun merge(other: Substitution): Substitution {
         TODO("Not yet implemented")
     }
-//  TODO: fixa questa porcheria; quell'entry non so perché ci sia
+    //  TODO: fixa questa porcheria; quell'entry non so perché ci sia
     override val entries: Set<Map.Entry<Var, Value>>
         get() = delegate.entries.map {
             mapOf(it.key.toValue() to it.value.toValue())

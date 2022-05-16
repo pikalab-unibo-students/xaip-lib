@@ -3,8 +3,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.junit.Test
-import resources.Res.actionEmpty
-import resources.Res.actionNotEmpty
+import resources.TestUtils.actionEmpty
+import resources.TestUtils.actionNotEmpty
 
 class StateTest {
     private val stateEmpty: State = mockkClass(State::class){

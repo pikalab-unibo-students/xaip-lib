@@ -4,6 +4,9 @@ import Substitution
 import Value
 import it.unibo.tuprolog.core.Var as LogicVar
 import Var
+import impl.res.toLogic
+import impl.res.toTerm
+import impl.res.toValue
 
 internal data class VarImpl(internal val delegate: LogicVar) : Var {
 

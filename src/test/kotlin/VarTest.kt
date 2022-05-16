@@ -1,4 +1,4 @@
-import impl.toTerm
+import impl.res.toTerm
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 import resources.Res.variableEmpty

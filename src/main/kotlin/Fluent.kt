@@ -12,6 +12,8 @@ interface Fluent : Applicable<Fluent> {
     val isNegated: Boolean
     val isGround: Boolean
 
+    operator fun not(): Fluent
+
     fun match(other: Fluent): Boolean
     fun mostGeneralUnifier(other: Fluent): Substitution
     companion object {

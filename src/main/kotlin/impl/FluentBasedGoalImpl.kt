@@ -5,11 +5,11 @@ import FluentBasedGoal
 import State
 import Substitution
 
-internal data class FluentBasedGoalImpl(override val fluent: Set<Fluent>) : FluentBasedGoal {
-    override fun isSatisfiedBy(state: State): Boolean {
-        TODO("Not yet implemented")
-    }
+internal data class FluentBasedGoalImpl(override val targets: Set<Fluent>) : FluentBasedGoal {
+    override fun isSatisfiedBy(state: State): Boolean =
+        targets.all { state.fluents.any(it::match) }
 
     override fun apply(substitution: Substitution): FluentBasedGoal =
-        FluentBasedGoal.of(fluent.map { it-> it.apply(substitution) }.toSet())
+        FluentBasedGoal.of(targets.map { it.apply(substitution) }.toSet())
+
 }

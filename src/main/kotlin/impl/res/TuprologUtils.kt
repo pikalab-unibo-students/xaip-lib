@@ -1,13 +1,16 @@
 package impl.res
 
+import Fluent
 import Value
 import Var
 import Object
+import Predicate
 import Substitution
 import impl.ObjectImpl
 import impl.SubstitutionImpl
 import impl.VarImpl
 import it.unibo.tuprolog.core.Atom
+import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.core.Term
 import it.unibo.tuprolog.core.Var as LogicVar
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
@@ -30,6 +33,21 @@ internal fun Value.toTerm(): Term = when (this) {
 
 internal fun LogicSubstitution.toPddl(): Substitution = SubstitutionImpl(this)
 
+private val negationFunctors = setOf("not", "\\+")
+
+internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
+    when {
+        arity == 1 && functor in negationFunctors && args[0] is Struct -> {
+            (args[0] as Struct).toFluent(instanceOf).not()
+        }
+        arity == instanceOf.arguments.size && functor == instanceOf.name -> {
+            Fluent.of(functor, args.map { it.toValue() }, instanceOf, false)
+        }
+        else -> {
+            error("Cannot convert $this to ${Fluent::class.simpleName}: it is not matching $instanceOf")
+        }
+    }
+
 internal fun Var.toTerm(): LogicVar =
     (this as? VarImpl)?.delegate ?: error("Cannot convert ${this::class} into ${LogicVar::class}")
 
@@ -38,3 +56,5 @@ internal fun Object.toTerm(): Atom =
 
 internal fun Substitution.toLogic(): LogicSubstitution =
     (this as? SubstitutionImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Substitution::class}")
+
+internal fun Fluent.toTerm(): Struct = Struct.of(name, args.map { it.toTerm() })

@@ -11,6 +11,9 @@ internal data class FluentImpl(
     override val instanceOf: Predicate,
     override val isNegated: Boolean
 ) : Fluent {
+
+    override fun not(): Fluent = copy(isNegated = !isNegated)
+
     override val isGround: Boolean
         get() = args.all { it.isGround }
 

@@ -1,9 +1,14 @@
 package impl
 
 import Fluent
+import NotUnifiableException
 import Predicate
 import Substitution
 import Value
+import impl.res.toPddl
+import impl.res.toTerm
+import it.unibo.tuprolog.unify.Unificator
+import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
 internal data class FluentImpl(
     override val name: String,
@@ -17,12 +22,14 @@ internal data class FluentImpl(
     override val isGround: Boolean
         get() = args.all { it.isGround }
 
-    //Non essendo modellato il fallimento della sostituzione direi che questa è la cosa più sensata(non c'è Substitution.failed())
-    override fun match(other: Fluent): Boolean = !mostGeneralUnifier(other).isEmpty()
+    override fun match(other: Fluent): Boolean =
+        Unificator.default.match(this.toTerm(), other.toTerm())
 
-    override fun mostGeneralUnifier(other: Fluent): Substitution {
-        TODO("Not yet implemented")
-    }
+    override fun mostGeneralUnifier(other: Fluent): Substitution =
+        when (val logicSubstitution = Unificator.default.mgu(this.toTerm(), other.toTerm())) {
+            is LogicSubstitution.Unifier -> logicSubstitution.toPddl()
+            else -> throw NotUnifiableException(this, other)
+        }
 
     override fun apply(substitution: Substitution): Fluent =
         copy(args = args.map { it.apply(substitution) })

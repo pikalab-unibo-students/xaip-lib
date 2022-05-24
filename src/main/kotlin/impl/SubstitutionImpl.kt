@@ -5,6 +5,7 @@ import Value
 import Var
 import impl.res.toTerm
 import impl.res.toValue
+import java.util.AbstractMap
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
 class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution {
@@ -31,9 +32,7 @@ class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution 
     override fun merge(other: Substitution): Substitution {
         TODO("Not yet implemented")
     }
-    //  TODO: fixa questa porcheria; quell'entry non so perché ci sia
-    override val entries: Set<Map.Entry<Var, Value>>
-        get() = delegate.entries.map {
-            mapOf(it.key.toValue() to it.value.toValue())
-        }.toSet() as Set<Map.Entry<Var, Value>>
+
+    override val entries: Set<Map.Entry<Var, Value>> =
+        delegate.entries.map { (k, v) -> AbstractMap.SimpleEntry(k.toValue(), v.toValue()) }.toSet()
 }

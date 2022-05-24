@@ -3,6 +3,8 @@ package impl
 import Substitution
 import Value
 import Var
+import impl.res.toLogic
+import impl.res.toPddl
 import impl.res.toTerm
 import impl.res.toValue
 import java.util.AbstractMap
@@ -21,17 +23,14 @@ class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution 
 
     override fun containsKey(key: Var): Boolean = key.toTerm() in delegate.keys
 
-    //Di qui erano da finire
     override fun containsValue(value: Value): Boolean = value.toTerm() in delegate.values
 
     override fun get(key: Var): Value = delegate.getValue(key.toTerm()).toValue()
 
     override fun isEmpty(): Boolean = delegate.isEmpty()
 
-    // Non ho capito cosa io debba fare
-    override fun merge(other: Substitution): Substitution {
-        TODO("Not yet implemented")
-    }
+    override fun merge(other: Substitution): Substitution =
+        (this.toLogic() + other.toLogic()).toPddl()
 
     override val entries: Set<Map.Entry<Var, Value>> =
         delegate.entries.map { (k, v) -> AbstractMap.SimpleEntry(k.toValue(), v.toValue()) }.toSet()

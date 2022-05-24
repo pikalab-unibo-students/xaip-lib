@@ -1,7 +1,7 @@
 import impl.FluentImpl
 import io.kotest.matchers.shouldBe
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import resources.TestUtils
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
@@ -13,7 +13,7 @@ import resources.TestUtils.size
 import resources.TestUtils.variableNotEmpty
 
 class FluentTest {
-    @Before
+    @BeforeTest
     fun init() {
         size = getRandomInt(5, 10)
         name= TestUtils.getRandomString(size)

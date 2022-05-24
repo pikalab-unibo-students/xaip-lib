@@ -1,6 +1,6 @@
 import impl.res.toTerm
 import io.kotest.matchers.shouldBe
-import org.junit.Test
+import kotlin.test.Test
 import resources.TestUtils.variableEmpty
 import resources.TestUtils.variableNotEmpty
 import resources.TestUtils.name

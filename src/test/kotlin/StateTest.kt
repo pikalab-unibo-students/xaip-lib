@@ -2,7 +2,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
-import org.junit.Test
+import kotlin.test.Test
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
 

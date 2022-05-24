@@ -1,6 +1,5 @@
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
-import org.junit.Test
+import kotlin.test.Test
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.objectSetEmpty

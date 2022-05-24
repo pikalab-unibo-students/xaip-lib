@@ -1,7 +1,7 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-import org.junit.Test
+import kotlin.test.Test
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty

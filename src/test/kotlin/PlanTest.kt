@@ -1,5 +1,5 @@
 import io.kotest.matchers.shouldBe
-import org.junit.Test
+import kotlin.test.Test
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty

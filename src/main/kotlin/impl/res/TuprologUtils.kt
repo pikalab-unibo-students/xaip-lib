@@ -5,9 +5,9 @@ import Value
 import Variable
 import Object
 import Predicate
-import Substitution
+import VariableAssignment
 import impl.ObjectImpl
-import impl.SubstitutionImpl
+import impl.VariableAssignmentImpl
 import impl.VariableImpl
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Struct
@@ -31,7 +31,7 @@ internal fun Value.toTerm(): Term = when (this) {
     else -> error("Cannot convert ${this::class} into ${Term::class}")
 }
 
-internal fun LogicSubstitution.toPddl(): Substitution = SubstitutionImpl(this)
+internal fun LogicSubstitution.toPddl(): VariableAssignment = VariableAssignmentImpl(this)
 
 private val negationFunctors = setOf("not", "\\+")
 
@@ -54,7 +54,7 @@ internal fun Variable.toTerm(): LogicVar =
 internal fun Object.toTerm(): Atom =
     (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Atom::class}")
 
-internal fun Substitution.toLogic(): LogicSubstitution =
-    (this as? SubstitutionImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Substitution::class}")
+internal fun VariableAssignment.toLogic(): LogicSubstitution =
+    (this as? VariableAssignmentImpl)?.delegate ?: error("Cannot convert ${this::class} into ${VariableAssignment::class}")
 
 internal fun Fluent.toTerm(): Struct = Struct.of(name, args.map { it.toTerm() })

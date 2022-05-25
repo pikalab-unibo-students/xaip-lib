@@ -1,6 +1,6 @@
 package impl
 
-import Substitution
+import VariableAssignment
 import Value
 import Variable
 import impl.res.toLogic
@@ -10,7 +10,7 @@ import impl.res.toValue
 import java.util.AbstractMap
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
-class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution {
+class VariableAssignmentImpl(internal val delegate: LogicSubstitution) : VariableAssignment {
 
     override val keys: Set<Variable>
         get() = delegate.keys.map { it.toValue() }.toSet()
@@ -29,7 +29,7 @@ class SubstitutionImpl(internal val delegate: LogicSubstitution) : Substitution 
 
     override fun isEmpty(): Boolean = delegate.isEmpty()
 
-    override fun merge(other: Substitution): Substitution =
+    override fun merge(other: VariableAssignment): VariableAssignment =
         (this.toLogic() + other.toLogic()).toPddl()
 
     override val entries: Set<Map.Entry<Variable, Value>> =

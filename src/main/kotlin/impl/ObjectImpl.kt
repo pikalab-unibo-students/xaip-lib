@@ -1,14 +1,14 @@
 package impl
 
 import Object
-import Substitution
+import VariableAssignment
 import it.unibo.tuprolog.core.Atom
 
 internal data class ObjectImpl(internal val delegate: Atom) : Object {
     override val representation: String
         get() = delegate.value
 
-    override fun apply(substitution: Substitution): Object = this
+    override fun apply(substitution: VariableAssignment): Object = this
 
     override val isGround: Boolean
         get() = true

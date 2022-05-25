@@ -1,5 +1,4 @@
 import impl.AxiomImpl
-import impl.VarImpl
 
 /**
  * Axioms are logical formulas that assert relationships among propositions
@@ -7,11 +6,11 @@ import impl.VarImpl
  *
  */
 interface Axiom {
-    val parameters: Map<Var, Type>
+    val parameters: Map<Variable, Type>
     val context: Set<Fluent>
     val implies: Set<Fluent>
     companion object {
-        fun of(parameters: Map<Var, Type>,
+        fun of(parameters: Map<Variable, Type>,
                context: Set<Fluent>,
                implies: Set<Fluent>): Axiom = AxiomImpl(parameters, context, implies)
     }

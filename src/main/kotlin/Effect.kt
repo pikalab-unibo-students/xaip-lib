@@ -1,5 +1,4 @@
 import impl.EffectImpl
-import impl.VarImpl
 
 /**
  * An effect consists of a conjunctive logical expression ([fluent]],

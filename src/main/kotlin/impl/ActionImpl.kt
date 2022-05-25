@@ -5,11 +5,11 @@ import Effect
 import Fluent
 import Substitution
 import Type
-import Var
+import Variable
 
 internal data class ActionImpl(
     override val name: String,
-    override val parameters: Map<Var, Type>,
+    override val parameters: Map<Variable, Type>,
     override val preconditions: Set<Fluent>,
     override val effects: Set<Effect>
 ): Action {

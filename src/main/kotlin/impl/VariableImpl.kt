@@ -3,12 +3,12 @@ package impl
 import Substitution
 import Value
 import it.unibo.tuprolog.core.Var as LogicVar
-import Var
+import Variable
 import impl.res.toLogic
 import impl.res.toTerm
 import impl.res.toValue
 
-internal data class VarImpl(internal val delegate: LogicVar) : Var {
+internal data class VariableImpl(internal val delegate: LogicVar) : Variable {
 
     constructor(name: String) : this(LogicVar.of(name))
 

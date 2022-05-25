@@ -2,13 +2,13 @@ package impl.res
 
 import Fluent
 import Value
-import Var
+import Variable
 import Object
 import Predicate
 import Substitution
 import impl.ObjectImpl
 import impl.SubstitutionImpl
-import impl.VarImpl
+import impl.VariableImpl
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.core.Term
@@ -21,12 +21,12 @@ internal fun Term.toValue(): Value = when (this) {
     else -> error("Cannot convert ${this::class} into ${Value::class}")
 }
 
-internal fun LogicVar.toValue(): Var = VarImpl(this)
+internal fun LogicVar.toValue(): Variable = VariableImpl(this)
 
 internal fun Atom.toValue(): Object = ObjectImpl(this)
 
 internal fun Value.toTerm(): Term = when (this) {
-    is Var -> toTerm()
+    is Variable -> toTerm()
     is Object -> toTerm()
     else -> error("Cannot convert ${this::class} into ${Term::class}")
 }
@@ -48,8 +48,8 @@ internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
         }
     }
 
-internal fun Var.toTerm(): LogicVar =
-    (this as? VarImpl)?.delegate ?: error("Cannot convert ${this::class} into ${LogicVar::class}")
+internal fun Variable.toTerm(): LogicVar =
+    (this as? VariableImpl)?.delegate ?: error("Cannot convert ${this::class} into ${LogicVar::class}")
 
 internal fun Object.toTerm(): Atom =
     (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Atom::class}")

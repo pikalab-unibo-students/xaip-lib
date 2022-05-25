@@ -1,5 +1,4 @@
 import impl.DomainImpl
-import impl.VarImpl
 
 /**
  * The domain definition establishes the context of the world.

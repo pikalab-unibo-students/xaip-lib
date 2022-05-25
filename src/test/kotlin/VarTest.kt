@@ -15,10 +15,10 @@ class VarTest {
 
     @Test
     fun varEmptyCreation(){
-        formatter.format(variableEmpty.toTerm()).replace("`", "") shouldBe ""
+        variableEmpty.name.replace("_[0-9]".toRegex(), "") shouldBe ""
     }
     @Test
     fun varNotEmptyCreation(){
-        variableNotEmpty.name.replace("_", "").replace("[0-9]".toRegex(), "") shouldBe name
+        variableNotEmpty.name.replace("_[0-9]".toRegex(), "") shouldBe name
     }
 }

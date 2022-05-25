@@ -5,7 +5,6 @@ import resources.TestUtils.objEmpty
 import resources.TestUtils.objNotEmpty
 
 class ObjectTest {
-
     @Test
     fun testEmptyCreation() {
         objEmpty.representation.isEmpty() shouldBe true

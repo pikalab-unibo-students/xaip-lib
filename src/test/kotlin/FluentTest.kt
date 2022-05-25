@@ -13,12 +13,6 @@ import resources.TestUtils.size
 import resources.TestUtils.variableNotEmpty
 
 class FluentTest {
-    @BeforeTest
-    fun init() {
-        size = getRandomInt(5, 10)
-        name= TestUtils.getRandomString(size)
-        fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty}, predicateNotEmpty, true)
-    }
 
     @Test
     fun testEmptyCreation() {

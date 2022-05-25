@@ -19,6 +19,6 @@ class VarTest {
     }
     @Test
     fun varNotEmptyCreation(){
-        formatter.format(variableNotEmpty.toTerm()) shouldBe name
+        variableNotEmpty.name.replace("_", "").replace("[0-9]".toRegex(), "") shouldBe name
     }
 }

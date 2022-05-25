@@ -17,10 +17,11 @@ import resources.TestUtils.variableNotEmpty
 import kotlin.test.Test
 
 class ActionTest {
+    var localName=""
     @Before
     fun init() {
         size = getRandomInt(5, 10)
-        name= TestUtils.getRandomString(size)
+        localName= TestUtils.getRandomString(size)
         fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty }, predicateNotEmpty, true)
         actionNotEmpty = ActionImpl(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
     }

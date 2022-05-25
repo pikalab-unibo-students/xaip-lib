@@ -3,7 +3,7 @@ package impl
 import Action
 import Fluent
 import State
-import Substitution
+import VariableAssignment
 
 internal data class StateImpl(override val fluents: Set<Fluent>) : State {
 
@@ -39,7 +39,7 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         return copy(fluents=fluents)
     }
 
-    override fun apply(substitution: Substitution): State =
+    override fun apply(substitution: VariableAssignment): State =
         copy(fluents = fluents.map { it.apply(substitution) }.toSet())
 
     override fun isApplicable(action: Action): Boolean =
@@ -47,11 +47,11 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
             fluents.any { precondition.match(it) }
         }
 
-    private fun mguForActionPreconditions(action: Action): Substitution =
+    private fun mguForActionPreconditions(action: Action): VariableAssignment =
         action.preconditions.map { precondition ->
             fluents.firstOrNull { precondition.match(it) }?.mostGeneralUnifier(precondition) ?:
                 error("Action $action is not applicable to state $this")
-        }.reduce(Substitution::merge)
+        }.reduce(VariableAssignment::merge)
 
     private fun Action.getAddAndRemoveLists(): Pair<Set<Fluent>, Set<Fluent>> {
         val addList: MutableSet<Fluent> = mutableSetOf()

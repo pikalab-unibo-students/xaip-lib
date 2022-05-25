@@ -1,6 +1,6 @@
 package impl
 
-import Substitution
+import VariableAssignment
 import Value
 import it.unibo.tuprolog.core.Var as LogicVar
 import Variable
@@ -18,6 +18,6 @@ internal data class VariableImpl(internal val delegate: LogicVar) : Variable {
     override val isGround: Boolean
         get() = false
 
-    override fun apply(substitution: Substitution): Value =
+    override fun apply(substitution: VariableAssignment): Value =
         toTerm().apply(substitution.toLogic()).toValue()
 }

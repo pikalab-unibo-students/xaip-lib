@@ -3,7 +3,7 @@ package impl
 import Fluent
 import NotUnifiableException
 import Predicate
-import Substitution
+import VariableAssignment
 import Value
 import impl.res.toPddl
 import impl.res.toTerm
@@ -25,12 +25,12 @@ internal data class FluentImpl(
     override fun match(other: Fluent): Boolean =
         Unificator.default.match(this.toTerm(), other.toTerm())
 
-    override fun mostGeneralUnifier(other: Fluent): Substitution =
+    override fun mostGeneralUnifier(other: Fluent): VariableAssignment =
         when (val logicSubstitution = Unificator.default.mgu(this.toTerm(), other.toTerm())) {
             is LogicSubstitution.Unifier -> logicSubstitution.toPddl()
             else -> throw NotUnifiableException(this, other)
         }
 
-    override fun apply(substitution: Substitution): Fluent =
+    override fun apply(substitution: VariableAssignment): Fluent =
         copy(args = args.map { it.apply(substitution) })
 }

@@ -1,5 +1,4 @@
 import impl.FluentImpl
-import impl.TypeImpl
 
 /**
  * A fluent represents a predicate ([instanceOf]) at runtime.
@@ -15,7 +14,7 @@ interface Fluent : Applicable<Fluent> {
     operator fun not(): Fluent
 
     fun match(other: Fluent): Boolean
-    fun mostGeneralUnifier(other: Fluent): Substitution
+    fun mostGeneralUnifier(other: Fluent): VariableAssignment
     companion object {
         fun of(name: String,
                args: List<Value>,

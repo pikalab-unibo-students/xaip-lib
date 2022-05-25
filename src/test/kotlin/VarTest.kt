@@ -12,13 +12,15 @@ class VarTest {
      * Supports formatting a term in user-friendly Prolog syntax
      */
     private val formatter = TermFormatter.prettyVariables()
+    val variableEmpty1 = Variable.of("")
+    val variableNotEmpty1 = Variable.of(name)
 
     @Test
     fun varEmptyCreation(){
-        variableEmpty.name.replace("_[0-9]".toRegex(), "") shouldBe ""
+        variableEmpty1.name.replace("_[0-9]".toRegex(), "") shouldBe ""
     }
     @Test
     fun varNotEmptyCreation(){
-        variableNotEmpty.name.replace("_[0-9]".toRegex(), "") shouldBe name
+        variableNotEmpty1.name.replace("_[0-9]".toRegex(), "") shouldBe name
     }
 }

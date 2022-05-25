@@ -13,6 +13,6 @@ class ObjectTest {
 
     @Test
     fun testNotEmptyCreation() {
-        objNotEmpty.representation shouldBe name
+        objNotEmpty.representation.replace("_[0-9]".toRegex(), "") shouldBe name
     }
 }

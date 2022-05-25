@@ -8,12 +8,8 @@ import resources.TestUtils.name
 import it.unibo.tuprolog.core.*
 
 class VarTest {
-    /**
-     * Supports formatting a term in user-friendly Prolog syntax
-     */
-    private val formatter = TermFormatter.prettyVariables()
-    val variableEmpty1 = Variable.of("")
-    val variableNotEmpty1 = Variable.of(name)
+    private val variableEmpty1 = Variable.of("")
+    private val variableNotEmpty1 = Variable.of(name)
 
     @Test
     fun varEmptyCreation(){

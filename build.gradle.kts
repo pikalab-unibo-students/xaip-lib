@@ -18,7 +18,7 @@ dependencies {
     implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
     compileOnly("io.kotest:kotest-framework-api-jvm:5.3.0")
     implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.2")
 }
 
 tasks.test {

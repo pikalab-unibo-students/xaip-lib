@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .gradle/
 .idea/
 .DS_Store
@@ -65,6 +66,13 @@ build/
 .idea/csv-plugin.xml
 .idea/libraries-with-intellij-classes.xml
 .idea/misc.xml
+=======
+.idea/
+build/
+.gradle/
+.DS_Store
+*.iml
+>>>>>>> a8291ff2d817ec665512de875bfd6af8bbe07e52
 node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-js-runner/lib/
@@ -72,6 +80,9 @@ local.properties
 buildSrcTmp/
 distTmp/
 outTmp/
+<<<<<<< HEAD
 /test.output
 /kotlin-native/dist
+=======
+>>>>>>> a8291ff2d817ec665512de875bfd6af8bbe07e52
 kotlin-ide/

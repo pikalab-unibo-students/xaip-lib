@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
-    id("io.kotest") version "0.3.8"
+    id("io.kotest") version "0.3.9"
 }
 
 group = "me.giuliabrugnatti"

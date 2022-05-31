@@ -18,9 +18,7 @@ class FluentTest {
             predicateNotEmpty, true)
     private val fluent2:Fluent= Fluent.of(name,
         List<Value>(size){ variable},
-        predicateNotEmpty,
-        true
-    )
+        predicateNotEmpty, true)
     private val substitution1=
         VariableAssignment.of(variableNotEmpty, variable)
 
@@ -31,6 +29,7 @@ class FluentTest {
         (fluentEmpty.instanceOf == predicateEmpty) shouldBe true
         fluentEmpty.isNegated shouldBe false
     }
+
     @Test
     fun testNotEmptyCreation() {
         fluentNotEmpty.name shouldBe name
@@ -40,6 +39,7 @@ class FluentTest {
         (fluentNotEmpty.instanceOf == predicateNotEmpty) shouldBe true
         fluentNotEmpty.isNegated shouldBe true
     }
+
     @Test
     fun testCommonBehaviour(){
         fluentNotEmpty.match(fluentEmpty) shouldBe false

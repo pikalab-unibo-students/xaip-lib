@@ -41,13 +41,16 @@ class FluentTest {
     }
 
     @Test
-    fun testCommonBehaviour(){
+    fun testCommonBehaviour() {
         fluentNotEmpty.match(fluentEmpty) shouldBe false
         fluentNotEmpty.match(fluentNotEmpty) shouldBe true
 
         fluentNotEmpty.isGround shouldBe false
         fluentNotEmpty.not().isNegated shouldBe false
+    }
 
+    @Test
+    fun testApplyWorksAsExpected(){
         fluent1.apply(substitution) shouldBe fluentNotEmpty
         fluent1.apply(substitution1) shouldBe fluent2
     }

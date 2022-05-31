@@ -16,11 +16,13 @@ class FluentBasedGoalTest{
         every { targets } returns mockk(relaxed=true)
         every { isSatisfiedBy(state) } returns true
     }
+
     @Test
     fun testEmptyCreation(){
         fluentBasedGoalEmpty.targets.isEmpty() shouldBe true
         fluentBasedGoalEmpty.isSatisfiedBy(state) shouldBe false
     }
+
     @Test
     fun testNotEmptyCreation(){
         fluentBasedGoalNotEmpty.targets.isEmpty() shouldBe false

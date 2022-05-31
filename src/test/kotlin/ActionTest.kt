@@ -10,8 +10,10 @@ import resources.TestUtils.effectNotEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.getRandomInt
 import resources.TestUtils.name
+import resources.TestUtils.objNotEmpty
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
+import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
 import kotlin.test.Test
@@ -34,12 +36,20 @@ class ActionTest {
         actionEmpty.preconditions.isEmpty() shouldBe true
         actionEmpty.effects.isEmpty() shouldBe true
     }
+
     @Test
     fun testNotEmptyCreation() {
+        val substitution2=
+            VariableAssignment.of(Variable.of("prova"),
+                objNotEmpty)
+
         actionNotEmpty.name shouldBe name
         actionNotEmpty.parameters.isEmpty() shouldNotBe true
         actionNotEmpty.parameters.forEach{it.value shouldBe type1}
         actionNotEmpty.preconditions.isEmpty() shouldNotBe true
         actionNotEmpty.effects.isEmpty() shouldNotBe true
+        //Boh sta cosa del perché non cambia mai nulla non mi è chiarissima
+        actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
+        actionNotEmpty.apply(substitution2) shouldBe actionNotEmpty
     }
 }

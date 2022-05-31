@@ -13,6 +13,7 @@ interface Action : Applicable<Action> {
     val parameters: Map<Variable, Type>
     val preconditions: Set<Fluent>
     val effects: Set<Effect>
+
     companion object {
         fun of(name: String,
                parameters: Map<Variable, Type>,

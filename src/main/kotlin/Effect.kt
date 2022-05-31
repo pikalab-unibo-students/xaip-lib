@@ -8,6 +8,7 @@ import impl.EffectImpl
 interface Effect : Applicable<Effect> {
     val fluent: Fluent
     val isPositive: Boolean
+
     companion object {
         fun of(fluent: Fluent, isPositive:Boolean): Effect = EffectImpl(fluent, isPositive)
     }

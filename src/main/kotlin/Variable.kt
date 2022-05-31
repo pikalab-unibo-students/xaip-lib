@@ -4,7 +4,6 @@ import impl.VariableImpl
 interface Variable: Value {
     val name: String
 
-
     companion object {
         fun of(name: String): Variable = VariableImpl(name)
     }

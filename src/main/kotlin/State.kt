@@ -8,6 +8,7 @@ interface State : Applicable<State> {
     val fluents: Set<Fluent>
     fun apply(action: Action): State
     fun isApplicable(action: Action): Boolean
+
     companion object {
         fun of(fluents: Set<Fluent>): State = StateImpl(fluents)
     }

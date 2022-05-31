@@ -9,6 +9,7 @@ interface Axiom {
     val parameters: Map<Variable, Type>
     val context: Set<Fluent>
     val implies: Set<Fluent>
+
     companion object {
         fun of(parameters: Map<Variable, Type>,
                context: Set<Fluent>,

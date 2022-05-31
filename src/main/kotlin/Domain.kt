@@ -13,6 +13,7 @@ interface Domain {
     val actions: Set<Action>
     val types: Set<Type>
     val axioms: Set<Axiom>
+
     companion object {
         fun of(name: String,
                predicates: Set<Predicate>,

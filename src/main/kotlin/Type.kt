@@ -6,6 +6,7 @@ import impl.TypeImpl
 interface Type {
     val name: String
     val superType: Type?
+
     companion object {
         fun of(name: String, superType: Type?): Type = TypeImpl(name, superType)
     }

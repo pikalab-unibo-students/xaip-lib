@@ -5,6 +5,7 @@ import impl.FluentBasedGoalImpl
  */
 interface FluentBasedGoal : Goal, Applicable<FluentBasedGoal> {
     val targets: Set<Fluent>
+
     companion object {
         fun of(fluent: Set<Fluent>): FluentBasedGoal = FluentBasedGoalImpl(fluent)
     }

@@ -15,6 +15,7 @@ interface Fluent : Applicable<Fluent> {
 
     fun match(other: Fluent): Boolean
     fun mostGeneralUnifier(other: Fluent): VariableAssignment
+
     companion object {
         fun of(name: String,
                args: List<Value>,

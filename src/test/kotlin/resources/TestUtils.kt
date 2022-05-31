@@ -28,7 +28,7 @@ object TestUtils {
 
     var name ="X"
     var size = 5
-    val state= mockk<State>()
+
     val type1 = Type.of(name, null)
 
     val objEmpty= Object.of(Atom.of(""))
@@ -59,6 +59,8 @@ object TestUtils {
 
     val planEmpty = Plan.of(emptyList())
     val planNotEmpty = Plan.of(listOf(actionNotEmpty))
+
+    val state= State.of(setOf(fluentEmpty))
 
     val problemEmpty= Problem.of(domainEmpty, objectSetEmpty, state, goalNotSatisfied)
     val problemNotEmpty= Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)

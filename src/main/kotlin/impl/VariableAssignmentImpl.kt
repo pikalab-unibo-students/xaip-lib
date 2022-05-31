@@ -7,10 +7,12 @@ import impl.res.toLogic
 import impl.res.toPddl
 import impl.res.toTerm
 import impl.res.toValue
-import java.util.AbstractMap
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
+import java.util.AbstractMap
 
 data class VariableAssignmentImpl(internal val delegate: LogicSubstitution) : VariableAssignment {
+
+    constructor(variable: Variable, value: Value) : this(LogicSubstitution.of(variable.toTerm(),value.toTerm()))
 
     override val keys: Set<Variable>
         get() = delegate.keys.map { it.toValue() }.toSet()

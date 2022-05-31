@@ -65,4 +65,7 @@ object TestUtils {
     val problemNotEmpty= Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
 
     val planner = Planner.of()
+
+    val substitution= VariableAssignment.of(variableNotEmpty, variableNotEmpty)
+
 }

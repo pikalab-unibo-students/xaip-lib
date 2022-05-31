@@ -3,6 +3,7 @@ import kotlin.test.Test
 import resources.TestUtils.name
 import resources.TestUtils.objEmpty
 import resources.TestUtils.objNotEmpty
+import resources.TestUtils.substitution
 
 class ObjectTest {
     @Test
@@ -13,5 +14,14 @@ class ObjectTest {
     @Test
     fun testNotEmptyCreation() {
         objNotEmpty.representation.replace("_[0-9]".toRegex(), "") shouldBe name
+    }
+
+    @Test
+    fun testCommonProperties(){
+        objEmpty.apply(substitution) shouldBe objEmpty
+        objEmpty.isGround shouldBe true
+
+        objNotEmpty.apply(substitution) shouldBe objNotEmpty
+        objNotEmpty.isGround shouldBe true
     }
 }

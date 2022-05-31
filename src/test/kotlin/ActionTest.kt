@@ -49,10 +49,13 @@ class ActionTest {
     fun testNotEmptyCreation() {
         actionNotEmpty.name shouldBe name
         actionNotEmpty.parameters.isEmpty() shouldNotBe true
-        actionNotEmpty.parameters.forEach{it.value shouldBe type1}
+        actionNotEmpty.parameters.forEach { it.value shouldBe type1 }
         actionNotEmpty.preconditions.isEmpty() shouldNotBe true
         actionNotEmpty.effects.isEmpty() shouldNotBe true
+    }
 
+    @Test
+    fun testApplyWorksAsExpected(){
         actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
         actionNotEmpty.apply(substitution2) shouldBe action
     }

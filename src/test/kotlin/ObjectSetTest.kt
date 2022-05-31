@@ -6,7 +6,7 @@ import resources.TestUtils.objectSetNotEmpty
 import resources.TestUtils.type1
 
 class ObjectSetTest {
-
+    private val regex= Regex("[^A-Za-z0-9()=']")
     @Test
     fun testEmptyCreation(){
         objectSetEmpty.map.isEmpty() shouldBe true
@@ -17,7 +17,7 @@ class ObjectSetTest {
         objectSetNotEmpty.map.isNotEmpty() shouldBe true
         objectSetNotEmpty.map.size shouldBe 1
         objectSetNotEmpty.map.keys.forEach { it shouldBe type1 }
-        objectSetNotEmpty.map.values.forEach { it.toString().replace("[", "").replace("]", "") shouldBe objNotEmpty.toString() }
+        objectSetNotEmpty.map.values.forEach { it.toString().replace(regex, "") shouldBe objNotEmpty.toString() }
 
     }
 }

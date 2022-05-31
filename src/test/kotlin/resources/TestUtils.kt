@@ -26,7 +26,7 @@ object TestUtils {
         every { isSatisfiedBy(state) } returns false
     }
 
-    var name ="Giovanni"
+    var name ="X"
     var size = 5
     val state= mockk<State>()
     val type1 = Type.of(name, null)
@@ -34,7 +34,6 @@ object TestUtils {
     val objEmpty= Object.of(Atom.of(""))
     val objNotEmpty=Object.of(Atom.of(name))
 
-    val variableEmpty = Variable.of("")
     val variableNotEmpty = Variable.of(name)
 
     val predicateEmpty = Predicate.of("", emptyList())

@@ -3,7 +3,6 @@ import it.unibo.tuprolog.core.Substitution
 import kotlin.test.Test
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
-import resources.TestUtils.getRandomString
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
@@ -13,6 +12,17 @@ import resources.TestUtils.variableNotEmpty
 import kotlin.test.assertFailsWith
 
 class FluentTest {
+    private val variable=Variable.of("different value")
+    private val fluent1:Fluent = Fluent.of(name,
+            List<Value>(size){ variableNotEmpty},
+            predicateNotEmpty, true)
+    private val fluent2:Fluent= Fluent.of(name,
+        List<Value>(size){ variable},
+        predicateNotEmpty,
+        true
+    )
+    private val substitution1=
+        VariableAssignment.of(variableNotEmpty, variable)
 
     @Test
     fun testEmptyCreation() {
@@ -34,22 +44,17 @@ class FluentTest {
     fun testCommonBehaviour(){
         fluentNotEmpty.match(fluentEmpty) shouldBe false
         fluentNotEmpty.match(fluentNotEmpty) shouldBe true
+
         fluentNotEmpty.isGround shouldBe false
         fluentNotEmpty.not().isNegated shouldBe false
-        fluentNotEmpty.apply(substitution) shouldBe fluentNotEmpty //se non sono uguali resta quella originale why
+
+        fluent1.apply(substitution) shouldBe fluentNotEmpty
+        fluent1.apply(substitution1) shouldBe fluent2
     }
 
     @Test
     fun testMgu(){
-        val variable=Variable.of(getRandomString(size))
-        val fluent:Fluent =
-            Fluent.of(name,
-                List<Value>(size){ variable},
-                predicateNotEmpty, false)
-
-        fluent.mostGeneralUnifier(fluentNotEmpty) shouldBe
-                VariableAssignment.of(variable, variableNotEmpty)
-
+        fluent1.mostGeneralUnifier(fluentNotEmpty) shouldBe substitution
         fluentNotEmpty.mostGeneralUnifier(fluentNotEmpty) shouldBe Substitution.empty()
     }
 

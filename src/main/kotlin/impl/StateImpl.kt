@@ -48,11 +48,30 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         }
 
     private fun mguForActionPreconditions(action: Action): VariableAssignment =
+        //ho un set di precondizioni
         action.preconditions.map { precondition ->
-            fluents.firstOrNull { precondition.match(it) }?.mostGeneralUnifier(precondition) ?:
+            //ognuna ha un set di fluent
+            fluents.firstOrNull {
+                //becco il primo che match con la precondizione e di questo calcolo l'mgu
+                precondition.match(it) }?.mostGeneralUnifier(precondition) ?:
                 error("Action $action is not applicable to state $this")
+            //arrivata qui ho una sostituzione logica per ogni precondition e vado a fare la merge che me ne restituisce una sola
         }.reduce(VariableAssignment::merge)
 
+
+    private fun mguForActionPreconditionsSeq(action: Action): Sequence<VariableAssignment> {
+        val substitutionOut: Sequence<VariableAssignment> = emptySequence()
+        action.preconditions.map { precondition ->
+            val substitutions: List<VariableAssignment> = emptyList()
+            fluents.forEach {
+                if (precondition.match(it)) {
+                    substitutions.plus(it.mostGeneralUnifier(precondition))
+                }
+            }
+            substitutionOut.plus(substitutions.reduce(VariableAssignment::merge))
+        }
+        return substitutionOut
+    }
     private fun Action.getAddAndRemoveLists(): Pair<Set<Fluent>, Set<Fluent>> {
         val addList: MutableSet<Fluent> = mutableSetOf()
         val removeList: MutableSet<Fluent> = mutableSetOf()

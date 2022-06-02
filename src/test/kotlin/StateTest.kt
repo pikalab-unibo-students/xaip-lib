@@ -16,7 +16,7 @@ class StateTest {
         TestUtils.predicateNotEmpty,
         true
     )
-    val state1= State.of(setOf(fluent))
+    private val state1= State.of(setOf(fluent))
 
     private val action= Action.of(
         name,
@@ -42,11 +42,8 @@ class StateTest {
     fun testApplyWorksAsExpected(){
         state.apply(substitution) shouldBe state
         /*
-        finisci il caso di sostituzione sensata:
-        non capisco come conciliare che lo stato debba avere tutti i fluent ground
-         ossia che non debbano contenere nessuna variabile con il fatto che per
-         essere applicabile devo fare match tra le precondiizoni e i fluent dello stato
-         */
+            finisci il caso di sostituzione sensata:
+        */
     }
 
     @Test

@@ -15,7 +15,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.12.4")
-    implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
+    implementation("it.unibo.tuprolog:unify-jvm:0.20.7")
     compileOnly("io.kotest:kotest-framework-api-jvm:5.3.0")
     implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
     testImplementation("junit:junit:4.13.2")

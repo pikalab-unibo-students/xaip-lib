@@ -59,16 +59,27 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         }.reduce(VariableAssignment::merge)
 
 
-    private fun mguForActionPreconditionsSeq(action: Action): Sequence<VariableAssignment> {
-        val substitutionOut: Sequence<VariableAssignment> = emptySequence()
+    fun mguForActionPreconditionsAsSequence(action: Action) =
         action.preconditions.map { precondition ->
-            val substitutions: List<VariableAssignment> = emptyList()
+            fluents.filter {
+                precondition.match(it)}.map {
+                it.mostGeneralUnifier(precondition)
+                }.reduce(VariableAssignment::merge)
+            }
+
+    fun mguForActionPreconditionsSet(action: Action): Set<VariableAssignment> {
+        val substitutionOut: MutableSet<VariableAssignment> = mutableSetOf()
+        action.preconditions.map { precondition ->
+            val substitutions: MutableList<VariableAssignment> =  mutableListOf<VariableAssignment>()
             fluents.forEach {
                 if (precondition.match(it)) {
-                    substitutions.plus(it.mostGeneralUnifier(precondition))
+                    substitutions.add(
+                        it.mostGeneralUnifier(precondition)
+                    )
                 }
             }
-            substitutionOut.plus(substitutions.reduce(VariableAssignment::merge))
+            substitutionOut.add(
+                substitutions.reduce(VariableAssignment::merge))
         }
         return substitutionOut
     }
@@ -84,4 +95,5 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         }
         return addList to removeList
     }
+
 }

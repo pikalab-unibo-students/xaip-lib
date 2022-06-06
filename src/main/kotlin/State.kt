@@ -7,7 +7,7 @@ import impl.StateImpl
  */
 interface State : Applicable<State> {
     val fluents: Set<Fluent>
-    fun apply(action: Action): State
+    fun apply(action: Action): Sequence<State>
     fun isApplicable(action: Action): Boolean
 
     companion object {

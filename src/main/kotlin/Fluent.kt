@@ -35,9 +35,9 @@ interface Fluent : Applicable<Fluent> {
             FluentImpl(instanceOf, isNegated, listOf(*args))
 
         fun positive(instanceOf: Predicate, vararg args: Value): Fluent =
-            FluentImpl(instanceOf, true, listOf(*args))
+            FluentImpl(instanceOf, false, listOf(*args))
 
         fun negative(instanceOf: Predicate, vararg args: Value): Fluent =
-            FluentImpl(instanceOf, false, listOf(*args))
+            FluentImpl(instanceOf, true, listOf(*args))
     }
 }

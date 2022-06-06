@@ -11,5 +11,6 @@ interface State : Applicable<State> {
 
     companion object {
         fun of(fluents: Set<Fluent>): State = StateImpl(fluents)
+        fun of(vararg fluents: Fluent): State = of(setOf(*fluents))
     }
 }

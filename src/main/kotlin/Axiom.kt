@@ -11,9 +11,11 @@ interface Axiom {
     val implies: Set<Fluent>
 
     companion object {
-        fun of(parameters: Map<Variable, Type>,
-               context: Set<Fluent>,
-               implies: Set<Fluent>): Axiom = AxiomImpl(parameters, context, implies)
+        fun of(
+            parameters: Map<Variable, Type>,
+            context: Set<Fluent>,
+            implies: Set<Fluent>
+        ): Axiom = AxiomImpl(parameters, context, implies)
     }
 }
 

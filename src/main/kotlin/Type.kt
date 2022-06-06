@@ -8,6 +8,7 @@ interface Type {
     val superType: Type?
 
     companion object {
-        fun of(name: String, superType: Type?): Type = TypeImpl(name, superType)
+        @JvmOverloads
+        fun of(name: String, superType: Type? = null): Type = TypeImpl(name, superType)
     }
 }

@@ -10,6 +10,8 @@ interface Effect : Applicable<Effect> {
     val isPositive: Boolean
 
     companion object {
-        fun of(fluent: Fluent, isPositive:Boolean): Effect = EffectImpl(fluent, isPositive)
+        fun of(fluent: Fluent, isPositive: Boolean = true): Effect = EffectImpl(fluent, isPositive)
+        fun positive(fluent: Fluent): Effect = EffectImpl(fluent, true)
+        fun negative(fluent: Fluent): Effect = EffectImpl(fluent, false)
     }
 }

@@ -9,6 +9,7 @@ interface Predicate {
 
     companion object {
         fun of(name: String, arguments: List<Type>): Predicate = PredicateImpl(name, arguments)
+        fun of(name: String, vararg arguments: Type): Predicate = PredicateImpl(name, listOf(*arguments))
     }
 }
 

@@ -1,10 +1,10 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.name
-import kotlin.test.Test
 
-class DomainTest {
+class DomainTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
         domainEmpty.name.isEmpty() shouldBe true

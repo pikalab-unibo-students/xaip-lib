@@ -1,6 +1,6 @@
 import impl.StateImpl
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import org.junit.Ignore
 import resources.TestUtils
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
@@ -11,9 +11,8 @@ import resources.TestUtils.state
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
-import kotlin.test.Test
 
-class StateTest {
+class StateTest : AnnotationSpec() {
     private val stateEmpty: State = State.of(setOf(fluentEmpty))
 
     private val fluent = Fluent.of(

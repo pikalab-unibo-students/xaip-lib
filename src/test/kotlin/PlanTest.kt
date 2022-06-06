@@ -1,10 +1,10 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
-import kotlin.test.Test
 
-class PlanTest {
+class PlanTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
         planEmpty.actions.isEmpty() shouldBe true

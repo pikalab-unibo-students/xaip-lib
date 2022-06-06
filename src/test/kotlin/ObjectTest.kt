@@ -1,11 +1,11 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.name
 import resources.TestUtils.objEmpty
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.substitution
-import kotlin.test.Test
 
-class ObjectTest {
+class ObjectTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
         objEmpty.representation.isEmpty() shouldBe true

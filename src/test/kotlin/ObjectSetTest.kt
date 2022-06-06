@@ -1,11 +1,11 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.objectSetEmpty
 import resources.TestUtils.objectSetNotEmpty
 import resources.TestUtils.type1
-import kotlin.test.Test
 
-class ObjectSetTest {
+class ObjectSetTest : AnnotationSpec() {
     private val regex = Regex("[^A-Za-z0-9()=']")
 
     @Test

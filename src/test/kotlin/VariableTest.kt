@@ -1,10 +1,10 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.getRandomInt
 import resources.TestUtils.getRandomString
-import kotlin.test.Test
 
-class VariableTest {
+class VariableTest : AnnotationSpec() {
     private val localName = getRandomString(getRandomInt(3, 10))
     private val localVariableEmpty = Variable.of("")
     private val localVariableNotEmpty = Variable.of(localName)

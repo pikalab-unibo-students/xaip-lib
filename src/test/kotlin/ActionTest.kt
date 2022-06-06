@@ -1,3 +1,4 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.actionEmpty
@@ -8,10 +9,8 @@ import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
-class ActionTest {
+class ActionTest : AnnotationSpec() {
     var localName = ""
     private val variable = Variable.of("different value")
     private val substitution2 = VariableAssignment.of(variableNotEmpty, variable)
@@ -25,7 +24,7 @@ class ActionTest {
         setOf(Effect.of(fluent, true))
     )
 
-    @BeforeTest
+    @BeforeEach
     fun init() {
 //        val size = getRandomInt(5, 10)
 //        localName= TestUtils.getRandomString(size)

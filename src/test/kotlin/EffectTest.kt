@@ -1,3 +1,4 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils
 import resources.TestUtils.effectEmpty
@@ -5,9 +6,8 @@ import resources.TestUtils.effectNotEmpty
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.substitution
-import kotlin.test.Test
 
-class EffectTest {
+class EffectTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
 
     private val substitution2 = VariableAssignment.of(TestUtils.variableNotEmpty, variable)

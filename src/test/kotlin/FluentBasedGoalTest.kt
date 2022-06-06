@@ -1,11 +1,11 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import resources.TestUtils.state
-import kotlin.test.Test
 
-class FluentBasedGoalTest {
+class FluentBasedGoalTest : AnnotationSpec() {
 
     private val fluentBasedGoalEmpty: FluentBasedGoal = mockkClass(FluentBasedGoal::class) {
         every { targets } returns emptySet()

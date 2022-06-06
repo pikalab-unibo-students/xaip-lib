@@ -1,3 +1,4 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
@@ -6,9 +7,8 @@ import resources.TestUtils.objectSetNotEmpty
 import resources.TestUtils.problemEmpty
 import resources.TestUtils.problemNotEmpty
 import resources.TestUtils.state
-import kotlin.test.Test
 
-class ProblemTest {
+class ProblemTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
         problemEmpty.domain shouldBe domainEmpty

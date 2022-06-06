@@ -1,3 +1,5 @@
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import it.unibo.tuprolog.core.Substitution
 import resources.TestUtils.fluentEmpty
@@ -8,10 +10,8 @@ import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.variableNotEmpty
-import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
-class FluentTest {
+class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
     private val fluent1: Fluent = Fluent.of(
         name,
@@ -67,10 +67,8 @@ class FluentTest {
 
     @Test
     fun testNotUnifiableFluent() {
-        assertFailsWith(
-            exceptionClass = NotUnifiableException::class,
-            message = "No exception found",
-            block = { fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed() }
-        )
+        shouldThrow<NotUnifiableException> {
+            fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed()
+        }
     }
 }

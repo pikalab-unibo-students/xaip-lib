@@ -1,10 +1,10 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.axiomEmpty
 import resources.TestUtils.axiomNotEmpty
-import kotlin.test.Test
 
-class AxiomTest {
+class AxiomTest : AnnotationSpec() {
 
     @Test
     fun testEmptyCreation() {

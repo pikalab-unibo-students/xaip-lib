@@ -1,3 +1,4 @@
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.name
@@ -5,9 +6,8 @@ import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.type1
-import kotlin.test.Test
 
-class PredicateTest {
+class PredicateTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
         predicateEmpty.name.isEmpty() shouldBe true

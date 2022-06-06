@@ -1,6 +1,5 @@
 import io.kotest.matchers.shouldBe
 import it.unibo.tuprolog.core.Substitution
-import kotlin.test.Test
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.name
@@ -9,17 +8,22 @@ import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.variableNotEmpty
+import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class FluentTest {
-    private val variable=Variable.of("different value")
-    private val fluent1:Fluent = Fluent.of(name,
-            List<Value>(size){ variableNotEmpty},
-            predicateNotEmpty, true)
-    private val fluent2:Fluent= Fluent.of(name,
-        List<Value>(size){ variable},
-        predicateNotEmpty, true)
-    private val substitution1=
+    private val variable = Variable.of("different value")
+    private val fluent1: Fluent = Fluent.of(
+        name,
+        List<Value>(size) { variableNotEmpty },
+        predicateNotEmpty, true
+    )
+    private val fluent2: Fluent = Fluent.of(
+        name,
+        List<Value>(size) { variable },
+        predicateNotEmpty, true
+    )
+    private val substitution1 =
         VariableAssignment.of(variableNotEmpty, variable)
 
     @Test
@@ -50,13 +54,13 @@ class FluentTest {
     }
 
     @Test
-    fun testApplyWorksAsExpected(){
+    fun testApplyWorksAsExpected() {
         fluent1.apply(substitution) shouldBe fluentNotEmpty
         fluent1.apply(substitution1) shouldBe fluent2
     }
 
     @Test
-    fun testMgu(){
+    fun testMgu() {
         fluent1.mostGeneralUnifier(fluentNotEmpty) shouldBe substitution
         fluentNotEmpty.mostGeneralUnifier(fluentNotEmpty) shouldBe Substitution.empty()
     }
@@ -64,9 +68,9 @@ class FluentTest {
     @Test
     fun testNotUnifiableFluent() {
         assertFailsWith(
-            exceptionClass=NotUnifiableException::class,
-            message="No exception found",
-            block={fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed()}
+            exceptionClass = NotUnifiableException::class,
+            message = "No exception found",
+            block = { fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed() }
         )
     }
 }

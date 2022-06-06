@@ -1,5 +1,4 @@
 import impl.ProblemImpl
-import impl.TypeImpl
 
 interface Problem {
     val domain: Domain

@@ -1,4 +1,5 @@
 import impl.StateImpl
+
 /**
  * A state is represented as a conjunction of [fluents] that are ground,
  * functionless atoms TODO controlla sta cosa.

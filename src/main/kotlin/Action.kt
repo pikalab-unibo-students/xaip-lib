@@ -15,10 +15,11 @@ interface Action : Applicable<Action> {
     val effects: Set<Effect>
 
     companion object {
-        fun of(name: String,
-               parameters: Map<Variable, Type>,
-               preconditions: Set<Fluent>,
-               effects: Set<Effect>
+        fun of(
+            name: String,
+            parameters: Map<Variable, Type>,
+            preconditions: Set<Fluent>,
+            effects: Set<Effect>
         ): Action = ActionImpl(name, parameters, preconditions, effects)
     }
 }

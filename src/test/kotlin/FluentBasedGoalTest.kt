@@ -2,29 +2,29 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
-import kotlin.test.Test
 import resources.TestUtils.state
+import kotlin.test.Test
 
-class FluentBasedGoalTest{
+class FluentBasedGoalTest {
 
-    private val fluentBasedGoalEmpty: FluentBasedGoal= mockkClass(FluentBasedGoal::class){
+    private val fluentBasedGoalEmpty: FluentBasedGoal = mockkClass(FluentBasedGoal::class) {
         every { targets } returns emptySet()
         every { isSatisfiedBy(state) } returns false
     }
 
-    private val fluentBasedGoalNotEmpty: FluentBasedGoal= mockkClass(FluentBasedGoal::class){
-        every { targets } returns mockk(relaxed=true)
+    private val fluentBasedGoalNotEmpty: FluentBasedGoal = mockkClass(FluentBasedGoal::class) {
+        every { targets } returns mockk(relaxed = true)
         every { isSatisfiedBy(state) } returns true
     }
 
     @Test
-    fun testEmptyCreation(){
+    fun testEmptyCreation() {
         fluentBasedGoalEmpty.targets.isEmpty() shouldBe true
         fluentBasedGoalEmpty.isSatisfiedBy(state) shouldBe false
     }
 
     @Test
-    fun testNotEmptyCreation(){
+    fun testNotEmptyCreation() {
         fluentBasedGoalNotEmpty.targets.isEmpty() shouldBe false
         fluentBasedGoalNotEmpty.isSatisfiedBy(state) shouldBe true
     }

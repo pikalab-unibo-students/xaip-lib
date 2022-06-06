@@ -1,22 +1,22 @@
 import io.kotest.matchers.shouldBe
-import kotlin.test.Test
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
 import resources.TestUtils.planner
 import resources.TestUtils.problemEmpty
 import resources.TestUtils.problemNotEmpty
 import kotlin.test.Ignore
+import kotlin.test.Test
 
 class PlannerTest {
     @Test
     @Ignore
-    fun testEmptyCreation(){
+    fun testEmptyCreation() {
         planner.plan(problemEmpty) shouldBe planEmpty
     }
 
     @Test
     @Ignore
-    fun testNotEmptyCreation(){
+    fun testNotEmptyCreation() {
         planner.plan(problemNotEmpty) shouldBe planNotEmpty
     }
 }

@@ -1,8 +1,8 @@
 import io.kotest.matchers.shouldBe
-import kotlin.test.Test
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.name
+import kotlin.test.Test
 
 class DomainTest {
     @Test
@@ -13,6 +13,7 @@ class DomainTest {
         domainEmpty.types.isEmpty() shouldBe true
         domainEmpty.axioms.isEmpty() shouldBe true
     }
+
     @Test
     fun testNotEmptyCreation() {
         domainNotEmpty.name shouldBe name

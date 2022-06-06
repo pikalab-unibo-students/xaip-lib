@@ -1,7 +1,7 @@
 import impl.VariableImpl
 
 //TODO scrivi qualcosa di sensato
-interface Variable: Value {
+interface Variable : Value {
     val name: String
 
     companion object {

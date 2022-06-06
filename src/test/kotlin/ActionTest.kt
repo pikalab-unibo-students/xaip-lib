@@ -1,32 +1,29 @@
-import impl.ActionImpl
-import impl.FluentImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlin.test.BeforeTest
-import resources.TestUtils
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
-import resources.TestUtils.effectNotEmpty
-import resources.TestUtils.fluentNotEmpty
-import resources.TestUtils.getRandomInt
 import resources.TestUtils.name
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class ActionTest {
-    var localName=""
-    private val variable=Variable.of("different value")
-    private val substitution2= VariableAssignment.of(variableNotEmpty, variable)
-    private val fluent= Fluent.of(
-        name, List<Value>(size){variable}, predicateNotEmpty, true)
-    private val action= Action.of(name,
+    var localName = ""
+    private val variable = Variable.of("different value")
+    private val substitution2 = VariableAssignment.of(variableNotEmpty, variable)
+    private val fluent = Fluent.of(
+        name, List<Value>(size) { variable }, predicateNotEmpty, true
+    )
+    private val action = Action.of(
+        name,
         mapOf(variableNotEmpty to type1),
         setOf(fluent),
-        setOf(Effect.of(fluent, true)))
+        setOf(Effect.of(fluent, true))
+    )
 
     @BeforeTest
     fun init() {
@@ -56,7 +53,7 @@ class ActionTest {
     }
 
     @Test
-    fun testApplyWorksAsExpected(){
+    fun testApplyWorksAsExpected() {
         actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
         actionNotEmpty.apply(substitution2) shouldBe action
     }

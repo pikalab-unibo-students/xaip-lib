@@ -15,11 +15,12 @@ interface Domain {
     val axioms: Set<Axiom>
 
     companion object {
-        fun of(name: String,
-               predicates: Set<Predicate>,
-               actions: Set<Action>,
-               types: Set<Type>,
-               axioms: Set<Axiom>
+        fun of(
+            name: String,
+            predicates: Set<Predicate>,
+            actions: Set<Action>,
+            types: Set<Type>,
+            axioms: Set<Axiom>
         ): Domain = DomainImpl(name, predicates, actions, types, axioms)
     }
 }

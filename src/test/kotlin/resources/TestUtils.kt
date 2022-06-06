@@ -1,10 +1,23 @@
 package resources
 
+import Action
+import Axiom
+import Domain
+import Effect
+import Fluent
+import FluentBasedGoal
 import Goal
+import Object
+import ObjectSet
+import Plan
+import Planner
+import Predicate
+import Problem
 import State
 import Type
 import Value
-import Object
+import Variable
+import VariableAssignment
 import io.mockk.every
 import io.mockk.mockkClass
 

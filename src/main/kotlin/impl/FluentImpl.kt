@@ -3,8 +3,8 @@ package impl
 import Fluent
 import NotUnifiableException
 import Predicate
-import VariableAssignment
 import Value
+import VariableAssignment
 import impl.res.toPddl
 import impl.res.toTerm
 import it.unibo.tuprolog.unify.Unificator

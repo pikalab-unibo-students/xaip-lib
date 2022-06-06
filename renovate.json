@@ -23,7 +23,9 @@
       "semanticCommitType": "ci"
     },
     {
-      "matchPackageNames": ["net.sourceforge.plantuml:plantuml"],
+      "matchPackageNames": [
+        "net.sourceforge.plantuml:plantuml"
+      ],
       "allowedVersions": "/^1\\./"
     }
   ],

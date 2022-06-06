@@ -1,12 +1,11 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-
-import kotlin.test.Test
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.type1
+import kotlin.test.Test
 
 class PredicateTest {
     @Test
@@ -14,11 +13,12 @@ class PredicateTest {
         predicateEmpty.name.isEmpty() shouldBe true
         predicateEmpty.arguments.isEmpty() shouldBe true
     }
+
     @Test
     fun testNotEmptyCreation() {
         predicateNotEmpty.name shouldBe name
         predicateNotEmpty.arguments.isEmpty() shouldNotBe true
         predicateNotEmpty.arguments.size shouldBe size
-        predicateNotEmpty.arguments.forEach {it shouldBe type1}
+        predicateNotEmpty.arguments.forEach { it shouldBe type1 }
     }
 }

@@ -1,22 +1,17 @@
 import impl.StateImpl
-import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import org.junit.Ignore
 import resources.TestUtils
 import resources.TestUtils.actionEmpty
-import kotlin.test.Test
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.effectNotEmpty
 import resources.TestUtils.fluentEmpty
-import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.name
-import resources.TestUtils.objEmpty
-import resources.TestUtils.objNotEmpty
-import resources.TestUtils.predicateEmpty
 import resources.TestUtils.state
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
+import kotlin.test.Test
 
 class StateTest {
     private val stateEmpty: State = State.of(setOf(fluentEmpty))
@@ -28,9 +23,9 @@ class StateTest {
         true
     )
 
-    private val state1= State.of(setOf(fluent))
+    private val state1 = State.of(setOf(fluent))
 
-    private val action= Action.of(
+    private val action = Action.of(
         name,
         mapOf(variableNotEmpty to type1),
         setOf(fluent),
@@ -47,12 +42,12 @@ class StateTest {
     @Ignore
     fun testNotEmptyCreation() {
         state.fluents.isEmpty() shouldBe false
-        state.fluents.forEach{it.isGround shouldBe true}
+        state.fluents.forEach { it.isGround shouldBe true }
     }
 
     @Test
     @Ignore
-    fun testApplyWorksAsExpected(){
+    fun testApplyWorksAsExpected() {
         state.apply(substitution) shouldBe state
         /*
             finisci il caso di sostituzione sensata:
@@ -61,7 +56,7 @@ class StateTest {
 
     @Test
     @Ignore
-    fun testIsApplicableWorkAsExpected(){
+    fun testIsApplicableWorkAsExpected() {
         state.isApplicable(actionNotEmpty) shouldBe false
         state.isApplicable(actionEmpty) shouldBe true
         state1.isApplicable(action) shouldBe true
@@ -69,19 +64,21 @@ class StateTest {
 
     @Test
     @Ignore
-    fun testMguForActionPreconditionsAsSequenceWorkAsExpected(){
-        val fluent1:Fluent = Fluent.of(name,
-            List<Value>(TestUtils.size){ variableNotEmpty},
-            TestUtils.predicateNotEmpty, true)
+    fun testMguForActionPreconditionsAsSequenceWorkAsExpected() {
+        val fluent1: Fluent = Fluent.of(
+            name,
+            List<Value>(TestUtils.size) { variableNotEmpty },
+            TestUtils.predicateNotEmpty, true
+        )
 
-        val action= Action.of(
+        val action = Action.of(
             name,
             mapOf(variableNotEmpty to type1),
             setOf(fluent1),
             setOf(effectNotEmpty)
         )
 
-        val stateTemp= StateImpl(setOf(fluent1))
+        val stateTemp = StateImpl(setOf(fluent1))
 
         stateTemp.mguForActionPreconditionsSet(action) shouldBe true
     }

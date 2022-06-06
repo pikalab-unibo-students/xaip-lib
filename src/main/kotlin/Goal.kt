@@ -3,6 +3,6 @@
  * in order for a plan to be considered a solution.
  */
 interface Goal {
-    fun isSatisfiedBy(state: State):Boolean
+    fun isSatisfiedBy(state: State): Boolean
 }
 

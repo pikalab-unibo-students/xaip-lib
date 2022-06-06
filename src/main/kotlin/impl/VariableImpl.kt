@@ -1,12 +1,12 @@
 package impl
 
-import VariableAssignment
 import Value
-import it.unibo.tuprolog.core.Var as LogicVar
 import Variable
+import VariableAssignment
 import impl.res.toLogic
 import impl.res.toTerm
 import impl.res.toValue
+import it.unibo.tuprolog.core.Var as LogicVar
 
 internal data class VariableImpl(internal val delegate: LogicVar) : Variable {
 

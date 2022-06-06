@@ -21,24 +21,23 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
 
         val (addList, removeList) = specificAction.getAddAndRemoveLists()
 
-        val fluentsIterator= fluents.toMutableSet().iterator()
+        val fluentsIterator = fluents.toMutableSet().iterator()
         var fluents = mutableSetOf<Fluent>()
         while (fluentsIterator.hasNext())
             for (toBeRemoved in removeList) {
-                val fluent= fluentsIterator.next()
+                val fluent = fluentsIterator.next()
                 if (fluent == toBeRemoved) {
                     fluentsIterator.remove()
-                }
-                else if (fluent.match(toBeRemoved)) {
+                } else if (fluent.match(toBeRemoved)) {
                     fluentsIterator.remove()
                     //  apply to substitution all fluents
                     fluents = fluentsIterator.asSequence().toMutableSet()
                     fluents.forEach { it -> it.apply(fluent.mostGeneralUnifier(toBeRemoved)) }
                 }
-        }
+            }
         //aggiungere ai $fluents tutti gli effetti positivi
         fluents.addAll(addList)
-        return copy(fluents=fluents)
+        return copy(fluents = fluents)
     }
 
     override fun apply(substitution: VariableAssignment): State =
@@ -55,8 +54,8 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
             //ognuna ha un set di fluent
             fluents.firstOrNull {
                 //becco il primo che match con la precondizione e di questo calcolo l'mgu
-                precondition.match(it) }?.mostGeneralUnifier(precondition) ?:
-                error("Action $action is not applicable to state $this")
+                precondition.match(it)
+            }?.mostGeneralUnifier(precondition) ?: error("Action $action is not applicable to state $this")
             //arrivata qui ho una sostituzione logica per ogni precondition e vado a fare la merge che me ne restituisce una sola
         }.reduce(VariableAssignment::merge)
 
@@ -64,15 +63,16 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
     fun mguForActionPreconditionsAsSequence(action: Action) =
         action.preconditions.map { precondition ->
             fluents.filter {
-                precondition.match(it)}.map {
+                precondition.match(it)
+            }.map {
                 it.mostGeneralUnifier(precondition)
-                }.reduce(VariableAssignment::merge)
-            }
+            }.reduce(VariableAssignment::merge)
+        }
 
     fun mguForActionPreconditionsSet(action: Action): Set<VariableAssignment> {
         val substitutionOut: MutableSet<VariableAssignment> = mutableSetOf()
         action.preconditions.map { precondition ->
-            val substitutions: MutableList<VariableAssignment> =  mutableListOf<VariableAssignment>()
+            val substitutions: MutableList<VariableAssignment> = mutableListOf<VariableAssignment>()
             fluents.forEach {
                 if (precondition.match(it)) {
                     substitutions.add(
@@ -81,10 +81,12 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
                 }
             }
             substitutionOut.add(
-                substitutions.reduce(VariableAssignment::merge))
+                substitutions.reduce(VariableAssignment::merge)
+            )
         }
         return substitutionOut
     }
+
     private fun Action.getAddAndRemoveLists(): Pair<Set<Fluent>, Set<Fluent>> {
         val addList: MutableSet<Fluent> = mutableSetOf()
         val removeList: MutableSet<Fluent> = mutableSetOf()

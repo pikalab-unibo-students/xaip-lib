@@ -2,7 +2,7 @@ import impl.ActionImpl
 import impl.FluentImpl
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import org.junit.Before
+import kotlin.test.BeforeTest
 import resources.TestUtils
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
@@ -28,12 +28,13 @@ class ActionTest {
         setOf(fluent),
         setOf(Effect.of(fluent, true)))
 
-    @Before
+    @BeforeTest
     fun init() {
-        size = getRandomInt(5, 10)
-        localName= TestUtils.getRandomString(size)
-        fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty }, predicateNotEmpty, true)
-        actionNotEmpty = ActionImpl(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
+//        val size = getRandomInt(5, 10)
+//        localName= TestUtils.getRandomString(size)
+//        fluentNotEmpty = FluentImpl(name, List<Value>(size){ variableNotEmpty }, predicateNotEmpty, true)
+//        actionNotEmpty = ActionImpl(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
+        TODO("Impostare il test in maniera deterministica (i.e. senza random e senza property mutevoli)")
     }
 
 

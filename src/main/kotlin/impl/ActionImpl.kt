@@ -23,4 +23,19 @@ internal data class ActionImpl(
             preconditions = preconditions.map { it.apply(substitution) }.toSet(),
             effects = effects.map { it.apply(substitution) }.toSet()
         )
+
+    private val positiveEffects: Iterable<Fluent>
+        get() = effects.filter { it.isPositive }.map { it.fluent }
+
+    private val negativeEffects: Iterable<Fluent>
+        get() = effects.filterNot { it.isPositive }.map { it.fluent }
+
+    private fun Iterable<Fluent>.pretty(functor: String) =
+        map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
+
+    override fun toString(): String =
+        "action($name, " +
+                "${preconditions.pretty("if")}, " +
+                "${positiveEffects.pretty("addList")}, " +
+                "${negativeEffects.pretty("removeList")})"
 }

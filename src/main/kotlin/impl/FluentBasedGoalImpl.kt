@@ -12,4 +12,6 @@ internal data class FluentBasedGoalImpl(override val targets: Set<Fluent>) : Flu
     override fun apply(substitution: VariableAssignment): FluentBasedGoal =
         FluentBasedGoal.of(targets.map { it.apply(substitution) }.toSet())
 
+    override fun toString(): String =
+        targets.map { it.toString() }.sorted().joinToString(", ", "goal(", ")")
 }

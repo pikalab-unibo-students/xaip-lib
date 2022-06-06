@@ -8,7 +8,9 @@ import VariableAssignment
 internal data class StateImpl(override val fluents: Set<Fluent>) : State {
 
     init {
-        require(fluents.all { it.isGround })
+        require(fluents.all { it.isGround }) {
+            "States cannot contain non-ground fluents, while the following fluents were provided: $fluents"
+        }
     }
 
     override fun apply(action: Action): State {

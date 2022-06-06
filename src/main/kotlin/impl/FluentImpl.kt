@@ -33,4 +33,6 @@ internal data class FluentImpl(
 
     override fun apply(substitution: VariableAssignment): Fluent =
         copy(args = args.map { it.apply(substitution) })
+
+    override fun toString(): String = (if (isNegated) "~" else "") + this.toTerm().toString()
 }

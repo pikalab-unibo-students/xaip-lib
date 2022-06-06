@@ -20,4 +20,6 @@ internal data class VariableImpl(internal val delegate: LogicVar) : Variable {
 
     override fun apply(substitution: VariableAssignment): Value =
         toTerm().apply(substitution.toLogic()).toValue()
+
+    override fun toString(): String = delegate.toString()
 }

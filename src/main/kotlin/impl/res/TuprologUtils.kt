@@ -10,6 +10,7 @@ import impl.ObjectImpl
 import impl.VariableAssignmentImpl
 import impl.VariableImpl
 import it.unibo.tuprolog.core.Atom
+import it.unibo.tuprolog.core.Constant
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.core.Term
 import it.unibo.tuprolog.core.Var as LogicVar
@@ -51,8 +52,8 @@ internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
 internal fun Variable.toTerm(): LogicVar =
     (this as? VariableImpl)?.delegate ?: error("Cannot convert ${this::class} into ${LogicVar::class}")
 
-internal fun Object.toTerm(): Atom =
-    (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Atom::class}")
+internal fun Object.toTerm(): Constant =
+    (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Constant::class}")
 
 internal fun VariableAssignment.toLogic(): LogicSubstitution =
     (this as? VariableAssignmentImpl)?.delegate ?: error("Cannot convert ${this::class} into ${VariableAssignment::class}")

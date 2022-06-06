@@ -11,13 +11,22 @@ import it.unibo.tuprolog.unify.Unificator
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
 internal data class FluentImpl(
-    override val name: String,
-    override val args: List<Value>,
     override val instanceOf: Predicate,
-    override val isNegated: Boolean
+    override val isNegated: Boolean,
+    override val args: List<Value>
 ) : Fluent {
 
+    init {
+        require(args.size == instanceOf.arguments.size) {
+            "An instance of predicate $instanceOf should be provided with exactly ${instanceOf.arguments.size} " +
+                    "arguments, while ${args.size} were actually provided: $args"
+        }
+    }
+
     override fun not(): Fluent = copy(isNegated = !isNegated)
+
+    override val name: String
+        get() = instanceOf.name
 
     override val isGround: Boolean
         get() = args.all { it.isGround }

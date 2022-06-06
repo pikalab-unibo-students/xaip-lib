@@ -9,4 +9,8 @@ internal data class AxiomImpl(
     override val parameters: Map<Variable, Type>,
     override val context: Set<Fluent>,
     override val implies: Set<Fluent>
-):Axiom
+) : Axiom {
+    override fun toString(): String =
+        "forall " + parameters.entries.joinToString(", ") { (v, t) -> "$v in $t" } + " : " +
+                context.joinToString(" /\\") + " -> " + implies.joinToString(" /\\")
+}

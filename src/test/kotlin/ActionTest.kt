@@ -75,5 +75,17 @@ class ActionTest : AnnotationSpec() {
                         Effect.negative(TestUtils.Fluents.clearX)
                     )
                 )
+        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
+                Action.of(
+                    "pick", mapOf(
+                        Values.X to TestUtils.Types.blocks),
+                    setOf(TestUtils.Fluents.atYFloor, TestUtils.Fluents.armEmpty, TestUtils.Fluents.clearY),
+                    setOf(
+                        Effect.of(TestUtils.Fluents.atYArm),
+                        Effect.negative(TestUtils.Fluents.atYFloor),
+                        Effect.negative(TestUtils.Fluents.armEmpty),
+                        Effect.negative(TestUtils.Fluents.clearY)
+                    )
+                )
     }
 }

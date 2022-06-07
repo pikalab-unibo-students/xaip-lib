@@ -40,6 +40,9 @@ object TestUtils {
     const val name = "f"
     const val size = 5
 
+    val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
+    val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
+
     object Types {
         val anything = Type.of("anything")
         val strings = Type.of("strings", anything)

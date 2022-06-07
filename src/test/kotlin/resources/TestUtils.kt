@@ -94,6 +94,7 @@ object TestUtils {
         val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
         val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
         val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
+        val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 
 
@@ -103,9 +104,11 @@ object TestUtils {
         val clearX = Fluent.positive(Predicates.clear, Values.X)
         val clearY = Fluent.positive(Predicates.clear, Values.Y)
         val clearZ = Fluent.positive(Predicates.clear, Values.Z)
+        val clearW = Fluent.positive(Predicates.clear, Values.Z)
 
         val onXY = Fluent.positive(Predicates.on, Values.X, Values.Y)
         val onWZ = Fluent.positive(Predicates.on, Values.W, Values.Z)
+        val onZW = Fluent.positive(Predicates.on, Values.Z, Values.W)
     }
 
     object Actions {
@@ -140,7 +143,14 @@ object TestUtils {
     }
 
     object Axioms {
-        //TODO immaginare un axiom per il dominio dei blocchi
+        val axiom1 = Axiom.of(
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
+            setOf(Fluents.onXY, Fluents.atXFloor),
+            setOf(Fluents.clearY))
+        val axiom2 = Axiom.of(
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
+            setOf(Fluents.onZW, Fluents.atZFloor),
+            setOf(Fluents.clearW))
     }
 
     object States {

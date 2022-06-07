@@ -3,6 +3,8 @@ import impl.AxiomImpl
 /**
  * Axioms are logical formulas that assert relationships among propositions
  * that hold within a situation.
+ * [parameters]: is the field that contains all the variables that appear in
+ * the axiom along with their type.
  *
  */
 interface Axiom {

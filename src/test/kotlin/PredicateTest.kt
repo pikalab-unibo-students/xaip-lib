@@ -3,7 +3,8 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Predicates
-import resources.TestUtils.Types
+import resources.TestUtils.types
+import resources.TestUtils.predicates
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
@@ -27,10 +28,8 @@ class PredicateTest : AnnotationSpec() {
 
     @Test
     fun testPredicateObjectWorksAsExpected() {
-        val names= arrayOf("at", "on", "arm_empty", "clear")
-        val types = arrayOf(Types.blocks.name, Types.locations.name, Types.numbers.name, Types.strings.name, Types.anything.name )
-        Predicates.at.name shouldBeIn names
+        Predicates.at shouldBeIn predicates
         Predicates.at.arguments.isEmpty() shouldNotBe  true
-        Predicates.at.arguments.forEach{it.name shouldBeIn types}
+        Predicates.at.arguments.forEach{it shouldBeIn types}
     }
 }

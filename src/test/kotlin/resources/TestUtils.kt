@@ -40,8 +40,11 @@ object TestUtils {
     const val name = "f"
     const val size = 5
 
+    val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
+    val actions = arrayOf(Actions.pick, Actions.stack)
     val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
+    val predicates= arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
 
     object Types {
         val anything = Type.of("anything")
@@ -176,7 +179,7 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = emptySet() // TODO aggiungere axioms
+            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
         )
     }
 

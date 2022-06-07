@@ -14,14 +14,15 @@ import resources.TestUtils.variableNotEmpty
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
     private val fluent1: Fluent = Fluent.of(
-        name,
-        List<Value>(size) { variableNotEmpty },
-        predicateNotEmpty, true
+        predicateNotEmpty,
+        true,
+        List<Value>(size) { variableNotEmpty }
+
     )
     private val fluent2: Fluent = Fluent.of(
-        name,
-        List<Value>(size) { variable },
-        predicateNotEmpty, true
+        predicateNotEmpty,
+        true,
+        List<Value>(size) { variable }
     )
     private val substitution1 =
         VariableAssignment.of(variableNotEmpty, variable)

@@ -28,6 +28,7 @@ interface Fluent : Applicable<Fluent> {
             return FluentImpl(instanceOf, isNegated, args)
         }
 
+
         fun of(instanceOf: Predicate, isNegated: Boolean = false, args: List<Value>): Fluent =
             FluentImpl(instanceOf, isNegated, args)
 

@@ -12,7 +12,7 @@ class EffectTest : AnnotationSpec() {
 
     private val substitution2 = VariableAssignment.of(TestUtils.variableNotEmpty, variable)
     private val fluent = Fluent.of(
-        TestUtils.name, List<Value>(TestUtils.size) { variable }, TestUtils.predicateNotEmpty, true
+        TestUtils.predicateNotEmpty,true,  List<Value>(TestUtils.size) { variable },
     )
 
     private val effect = Effect.of(fluent, true)

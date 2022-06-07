@@ -202,8 +202,8 @@ object TestUtils {
     val predicateEmpty = Predicate.of("", emptyList())
     val predicateNotEmpty = Predicate.of(name, List<Type>(size) { type1 })
 
-    val fluentEmpty = Fluent.of("", emptyList(), predicateEmpty, false)
-    var fluentNotEmpty = Fluent.of(name, List<Value>(size) { variableNotEmpty }, predicateNotEmpty, true)
+    val fluentEmpty = Fluent.of( predicateEmpty, false, emptyList())
+    var fluentNotEmpty = Fluent.of(predicateNotEmpty, true, List<Value>(size) { variableNotEmpty })
 
     val effectEmpty = Effect.of(fluentEmpty, false)
     val effectNotEmpty = Effect.of(fluentNotEmpty, true)

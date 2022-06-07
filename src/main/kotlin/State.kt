@@ -5,7 +5,7 @@ import impl.StateImpl
  * functionless atoms TODO controlla sta cosa.
  *
  */
-interface State : Applicable<State> {
+interface State {
     val fluents: Set<Fluent>
     fun apply(action: Action): Sequence<State>
     fun isApplicable(action: Action): Boolean

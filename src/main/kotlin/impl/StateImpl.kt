@@ -27,7 +27,7 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
             State.of(fluents)
         }
 
-    override fun apply(substitution: VariableAssignment): State =
+    fun apply(substitution: VariableAssignment): State =
         copy(fluents = fluents.map { it.apply(substitution) }.toSet())
 
     override fun isApplicable(action: Action): Boolean =

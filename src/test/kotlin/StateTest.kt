@@ -1,7 +1,6 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils
-import resources.TestUtils.substitution
 
 class StateTest : AnnotationSpec() {
 
@@ -27,16 +26,6 @@ class StateTest : AnnotationSpec() {
     fun testNotEmptyCreation() {
         state.fluents.isEmpty() shouldBe false
         state.fluents.forEach { it.isGround shouldBe true }
-    }
-
-    @Test
-    @Ignore
-    fun testApplyWorksAsExpected() {
-        state.apply(substitution) shouldBe state
-        TODO(
-            "effettivamente non serve applicare una sostituzione allo stato se è ground... direi che possiamo " +
-                    "togliere Applicable dai supertipi di State, e quindi questo test"
-        )
     }
 
     @Test

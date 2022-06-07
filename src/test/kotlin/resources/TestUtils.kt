@@ -140,7 +140,7 @@ object TestUtils {
     }
 
     object Axioms {
-        // TODO immaginare un axiom per il dominio dei blocchi
+        //TODO immaginare un axiom per il dominio dei blocchi
     }
 
     object States {
@@ -167,7 +167,7 @@ object TestUtils {
         )
     }
 
-    object Problemes {
+    object Problems {
         val stackAny = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

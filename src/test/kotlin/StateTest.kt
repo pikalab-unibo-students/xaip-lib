@@ -50,7 +50,6 @@ class StateTest : AnnotationSpec() {
 
         States.atAArm.isApplicable(Actions.stack) shouldBe true
         States.atAArm.isApplicable(Actions.pick) shouldBe false
-        val qualcosa= States.atAArm.apply(Actions.pick)
-        States.atAArm.apply(Actions.pick).equals(sequenceOf(States.atAArm)
+        States.atAArm.apply(Actions.pick).equals(sequenceOf(States.atAArm))
     }
 }

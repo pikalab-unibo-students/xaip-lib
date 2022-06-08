@@ -1,6 +1,9 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import resources.TestUtils
+import resources.TestUtils.States
+import resources.TestUtils.Actions
 
 class StateTest : AnnotationSpec() {
 
@@ -38,5 +41,16 @@ class StateTest : AnnotationSpec() {
     fun testActionApplication() {
         val actual = state.apply(applicableAction).toSet()
         actual shouldBe destinationStates
+    }
+
+    @Test
+    fun testStateObjectWorksAsExpected() {
+        States.atAArm.fluents.isEmpty() shouldNotBe true
+        States.atAArm.fluents.forEach { it.isGround shouldBe true }
+
+        States.atAArm.isApplicable(Actions.stack) shouldBe true
+        States.atAArm.isApplicable(Actions.pick) shouldBe false
+        val qualcosa= States.atAArm.apply(Actions.pick)
+        States.atAArm.apply(Actions.pick).equals(sequenceOf(States.atAArm)
     }
 }

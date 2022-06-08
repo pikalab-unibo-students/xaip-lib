@@ -1,7 +1,9 @@
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import it.unibo.tuprolog.core.Substitution
+import resources.TestUtils
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.name
@@ -10,6 +12,10 @@ import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.variableNotEmpty
+import resources.TestUtils.Fluents
+import resources.TestUtils.Predicates
+import resources.TestUtils.predicates
+import resources.TestUtils.Values
 
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
@@ -65,10 +71,28 @@ class FluentTest : AnnotationSpec() {
         fluent1.mostGeneralUnifier(fluentNotEmpty) shouldBe substitution
         fluentNotEmpty.mostGeneralUnifier(fluentNotEmpty) shouldBe Substitution.empty()
     }
+    @Test
+    fun testActionObjectWorksAsExpected() {
+        val localFluentAtXArm= Fluents.atXArm
+        val atA = Fluent.positive(Predicates.at, Values.Y, Values.arm)
 
+        Fluents.atXArm.args.isEmpty() shouldBe false
+        Fluents.atXArm.args shouldBe arrayOf(Values.X, Values.arm)
+        Fluents.atXArm.instanceOf shouldBeIn predicates
+        Fluents.atXArm.isNegated shouldBe false
+        Fluents.atXArm.isGround shouldBe false
+        Fluents.atXArm.match(Fluents.atXFloor) shouldBe false
+        localFluentAtXArm.match(Fluents.atXArm) shouldBe true
+        Fluents.atXArm.apply(VariableAssignment.of(Values.X, Values.X)) shouldBe Fluents.atXArm
+        Fluents.atXArm.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe Fluents.atYArm
+        Fluents.atXArm.mostGeneralUnifier(Fluents.atXArm) shouldBe Substitution.empty()
+        Fluents.atXArm.mostGeneralUnifier(atA) shouldBe VariableAssignment.of(Values.X, Values.Y)
+
+    }
     @Test
     fun testNotUnifiableFluent() {
         shouldThrow<NotUnifiableException> {
+            Fluents.atXArm.mostGeneralUnifier(Fluents.onXY) shouldBe Substitution.failed()
             fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed()
         }
     }

@@ -1,11 +1,15 @@
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldBeIn
+import io.kotest.matchers.collections.shouldBeOneOf
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils.getRandomInt
-import resources.TestUtils.getRandomString
+import io.mockk.InternalPlatformDsl.toArray
+import resources.TestUtils.Values
+import resources.TestUtils.variables
+import resources.TestUtils.name
 
 class VariableTest : AnnotationSpec() {
-    private val localName = getRandomString(getRandomInt(3, 10))
+    private val localName = name
     private val localVariableEmpty = Variable.of("")
     private val localVariableNotEmpty = Variable.of(localName)
     private fun removePostfix(string: String) = string.replace("_[0-9]".toRegex(), "")
@@ -27,5 +31,10 @@ class VariableTest : AnnotationSpec() {
         removePostfix(localVariableNotEmpty.name) shouldBe removePostfix(localVariableNotEmpty.name)
     }
 
+    @Test
+    fun testVariableObjectWorksAsExpected() {
+        Values.X shouldBeIn  variables
+        Values.X.name shouldBeIn variables.map { it.name }
+    }
 
 }

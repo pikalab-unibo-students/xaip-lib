@@ -1,9 +1,13 @@
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.objectSetEmpty
 import resources.TestUtils.objectSetNotEmpty
 import resources.TestUtils.type1
+import resources.TestUtils.ObjectSets
+import resources.TestUtils.objects
+import resources.TestUtils.types
 
 class ObjectSetTest : AnnotationSpec() {
     private val regex = Regex("[^A-Za-z0-9()=']")
@@ -19,6 +23,12 @@ class ObjectSetTest : AnnotationSpec() {
         objectSetNotEmpty.map.size shouldBe 1
         objectSetNotEmpty.map.keys.forEach { it shouldBe type1 }
         objectSetNotEmpty.map.values.forEach { it.toString().replace(regex, "") shouldBe objNotEmpty.toString() }
+    }
 
+    @Test
+    fun testObjectSetObjectWorksAsExpected() {
+        ObjectSets.all.map.isEmpty() shouldBe false
+        ObjectSets.all.map.keys.forEach { it shouldBeIn types }
+        ObjectSets.all.map.values.forEach{it.forEach { it shouldBeIn objects}}
     }
 }

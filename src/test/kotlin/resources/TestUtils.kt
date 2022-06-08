@@ -45,7 +45,7 @@ object TestUtils {
     val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
     val predicates= arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
-
+    val objects = arrayOf(Object.of("a"), Object.of("b"), Object.of("c") , Object.of("floor"), Object.of("arm"), Object.of(0), Object.of(1) , Object.of(2))
     object Types {
         val anything = Type.of("anything")
         val strings = Type.of("strings", anything)

@@ -55,6 +55,13 @@ object TestUtils {
         val locations = Type.of("locations", strings)
     }
 
+    object VariableAssignments{
+        val y2x = VariableAssignment.of(Values.Y, Values.X)
+        val x2floor = VariableAssignment.of(Values.X, Values.floor)
+        val x2arm= VariableAssignment.of(Values.X, Values.arm)
+
+    }
+
     object Values {
         val a = Object.of("a")
         val b = Object.of("b")

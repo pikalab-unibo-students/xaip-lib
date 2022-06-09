@@ -87,8 +87,8 @@ class FluentTest : AnnotationSpec() {
         Fluents.atXArm.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe Fluents.atYArm
         Fluents.atXArm.mostGeneralUnifier(Fluents.atXArm) shouldBe Substitution.empty()
         Fluents.atXArm.mostGeneralUnifier(atA) shouldBe VariableAssignment.of(Values.X, Values.Y)
-
     }
+
     @Test
     fun testNotUnifiableFluent() {
         shouldThrow<NotUnifiableException> {

@@ -167,20 +167,6 @@ object TestUtils {
             setOf(Fluents.clearW))
     }
 
-    object States {
-        val initial = State.of(
-            Fluents.atAFloor, Fluents.atBFloor, Fluents.atCFloor, Fluents.armEmpty,
-            Fluents.clearA, Fluents.clearB, Fluents.clearC
-        )
-        val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
-        val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
-        val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
-    }
-
-    object Goals {
-        val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-    }
-
     object Domains {
         val blockWorld = Domain.of(
             name = "block_world",
@@ -189,6 +175,15 @@ object TestUtils {
             types = setOf(Types.blocks, Types.locations),
             axioms = setOf(Axioms.axiom1, Axioms.axiom2)
         )
+    }
+
+    object Effects{
+        val atXFloor= Effect.of(Fluents.atXFloor,true)
+        val armEmpty= Effect.of(Fluents.armEmpty,true)
+    }
+
+    object Goals {
+        val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
     }
 
     object Problems {
@@ -200,9 +195,23 @@ object TestUtils {
         )
     }
 
-    object Effects{
-        val atXFloor= Effect.of(Fluents.atXFloor,true)
-        val armEmpty= Effect.of(Fluents.armEmpty,true)
+    object Plans {
+        val emptyPlan = Plan.of(emptyList())
+        val dummyPlan= Plan.of(listOf(Actions.pick, Actions.stack))
+    }
+
+    object Planners{
+        val dummyPlanner= Planner.of()
+    }
+
+    object States {
+        val initial = State.of(
+            Fluents.atAFloor, Fluents.atBFloor, Fluents.atCFloor, Fluents.armEmpty,
+            Fluents.clearA, Fluents.clearB, Fluents.clearC
+        )
+        val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
+        val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
+        val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
     }
 
     val type1 = Type.of(name, null)
@@ -242,8 +251,7 @@ object TestUtils {
     val problemEmpty = Problem.of(domainEmpty, objectSetEmpty, state, goalNotSatisfied)
     val problemNotEmpty = Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
 
-    val planner = Planner.of()
-
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 
+    val planner = Planner.of()
 }

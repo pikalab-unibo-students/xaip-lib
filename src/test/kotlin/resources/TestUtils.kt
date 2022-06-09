@@ -200,6 +200,11 @@ object TestUtils {
         )
     }
 
+    object Effects{
+        val atXFloor= Effect.of(Fluents.atXFloor,true)
+        val armEmpty= Effect.of(Fluents.armEmpty,true)
+    }
+
     val type1 = Type.of(name, null)
 
     val objEmpty = Object.of("")

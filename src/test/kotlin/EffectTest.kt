@@ -6,6 +6,11 @@ import resources.TestUtils.effectNotEmpty
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.substitution
+import resources.TestUtils.Effects
+import resources.TestUtils.Fluents
+import resources.TestUtils.Values
+import resources.TestUtils.Predicates
+import resources.TestUtils.VariableAssignments
 
 class EffectTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
@@ -34,5 +39,13 @@ class EffectTest : AnnotationSpec() {
     fun testApplyWorksAsExpected() {
         effectNotEmpty.apply(substitution) shouldBe effectNotEmpty
         effectNotEmpty.apply(substitution2) shouldBe effect
+    }
+
+    @Test
+    fun testEffectObjectWorksAsExpected() {
+        Effects.atXFloor.fluent shouldBe Fluents.atXFloor
+        Effects.atXFloor.isPositive shouldBe true
+        Effects.atXFloor.apply(VariableAssignments.x2arm) shouldBe
+                Effect.of(Fluent.of(Predicates.at, true, Values.arm, Values.floor))
     }
 }

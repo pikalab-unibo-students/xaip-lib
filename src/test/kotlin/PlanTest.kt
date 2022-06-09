@@ -1,4 +1,5 @@
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import resources.TestUtils
 import resources.TestUtils.actionNotEmpty
@@ -25,6 +26,6 @@ class PlanTest : AnnotationSpec() {
         Plans.emptyPlan.actions.isEmpty() shouldBe true
 
         Plans.dummyPlan.actions.isNotEmpty() shouldBe true
-        Plans.dummyPlan.actions.forEach { it shouldBe actions }
+        Plans.dummyPlan.actions.forEach { it shouldBeIn actions }
     }
 }

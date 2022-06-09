@@ -182,6 +182,10 @@ object TestUtils {
         val armEmpty= Effect.of(Fluents.armEmpty,true)
     }
 
+    object FluentBasedGoals{
+        val f1= FluentBasedGoal.of(setOf(Fluents.atAArm))
+    }
+
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
     }

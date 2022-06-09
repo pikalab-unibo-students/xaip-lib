@@ -17,17 +17,6 @@ interface Fluent : Applicable<Fluent> {
     fun mostGeneralUnifier(other: Fluent): VariableAssignment
 
     companion object {
-        @Deprecated("No need to provide a name: it can be inferred from the predicate")
-        fun of(
-            name: String,
-            args: List<Value>,
-            instanceOf: Predicate,
-            isNegated: Boolean
-        ): Fluent {
-            require(name == instanceOf.name)
-            return FluentImpl(instanceOf, isNegated, args)
-        }
-
 
         fun of(instanceOf: Predicate, isNegated: Boolean = false, args: List<Value>): Fluent =
             FluentImpl(instanceOf, isNegated, args)

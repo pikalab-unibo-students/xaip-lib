@@ -9,8 +9,6 @@ interface Object : Value {
     override fun apply(substitution: VariableAssignment): Object
 
     companion object {
-        @Deprecated("Così esponi il dettaglio tecnico che dietro le quinte usi 2P-Kt")
-        fun of(delegate: Atom): Object = ObjectImpl(delegate)
 
         fun of(value: String): Object = ObjectImpl(Atom.of(value))
 

@@ -41,13 +41,12 @@ class EffectTest : AnnotationSpec() {
         effectNotEmpty.apply(substitution2) shouldBe effect
     }
 
-    //TODO fix last test
-    @Ignore
+
     @Test
     fun testEffectObjectWorksAsExpected() {
         Effects.atXFloor.fluent shouldBe Fluents.atXFloor
         Effects.atXFloor.isPositive shouldBe true
         Effects.atXFloor.apply(VariableAssignments.x2arm) shouldBe
-                Effect.of(Fluent.of(Predicates.at, true, Values.arm, Values.floor))
+                Effect.of(Fluent.of(Predicates.at, false, Values.arm, Values.floor))
     }
 }

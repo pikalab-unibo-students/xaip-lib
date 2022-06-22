@@ -1,9 +1,9 @@
-import impl.PlannerImpl
+import impl.StripsPlanner
 
 interface Planner {
-    fun plan(problem: Problem): Plan
+    fun plan(problem: Problem): Sequence<Plan>
 
     companion object {
-        fun of(): Planner = PlannerImpl()
+        fun strips(): Planner = StripsPlanner()
     }
 }

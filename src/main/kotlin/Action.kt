@@ -14,6 +14,9 @@ interface Action : Applicable<Action> {
     val preconditions: Set<Fluent>
     val effects: Set<Effect>
 
+    val positiveEffects: Set<Effect>
+    val negativeEffects: Set<Effect>
+
     companion object {
         fun of(
             name: String,

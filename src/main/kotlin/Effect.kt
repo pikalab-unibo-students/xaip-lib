@@ -9,6 +9,9 @@ interface Effect : Applicable<Effect> {
     val fluent: Fluent
     val isPositive: Boolean
 
+    fun match(other: Effect): Boolean = fluent.match(other.fluent)
+    fun mostGeneralUnifier(other: Effect): VariableAssignment = fluent.mostGeneralUnifier(other.fluent)
+
     companion object {
         fun of(fluent: Fluent, isPositive: Boolean = true): Effect = EffectImpl(fluent, isPositive)
         fun positive(fluent: Fluent): Effect = EffectImpl(fluent, true)

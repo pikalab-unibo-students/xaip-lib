@@ -24,18 +24,16 @@ internal data class ActionImpl(
             effects = effects.map { it.apply(substitution) }.toSet()
         )
 
-    private val positiveEffects: Iterable<Fluent>
-        get() = effects.filter { it.isPositive }.map { it.fluent }
+    override val positiveEffects: Set<Effect> by lazy { effects.filter { it.isPositive }.toSet() }
 
-    private val negativeEffects: Iterable<Fluent>
-        get() = effects.filterNot { it.isPositive }.map { it.fluent }
+    override val negativeEffects: Set<Effect> by lazy { effects.filterNot { it.isPositive }.toSet() }
 
     private fun Iterable<Fluent>.pretty(functor: String) =
-        map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
+       map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
 
     override fun toString(): String =
         "action($name, " +
                 "${preconditions.pretty("if")}, " +
-                "${positiveEffects.pretty("addList")}, " +
-                "${negativeEffects.pretty("removeList")})"
+                "${positiveEffects.map { it.fluent }.pretty("addList")}, " +
+                "${negativeEffects.map { it.fluent }.pretty("removeList")})"
 }

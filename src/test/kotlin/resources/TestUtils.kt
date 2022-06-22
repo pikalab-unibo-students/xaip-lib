@@ -204,8 +204,8 @@ object TestUtils {
         val dummyPlan= Plan.of(listOf(Actions.pick, Actions.stack))
     }
 
-    object Planners{
-        val dummyPlanner= Planner.of()
+    object Planners {
+        val dummyPlanner= Planner.strips()
     }
 
     object States {
@@ -257,5 +257,5 @@ object TestUtils {
 
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 
-    val planner = Planner.of()
+    val planner = Planner.strips()
 }

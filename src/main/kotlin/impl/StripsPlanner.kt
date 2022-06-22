@@ -15,39 +15,43 @@ internal class StripsPlanner : Planner {
         return plan(
             problem.initialState,
             problem.domain.actions,
-            problem.goal as FluentBasedGoal,
-            emptyList()
+            problem.goal as FluentBasedGoal
         )
     }
 
     private fun plan(
-        currentState: State,
+        initialState: State,
         actions: Set<Action>,
-        goal: FluentBasedGoal,
-        partialPlan: List<Action>
+        goal: FluentBasedGoal
     ): Sequence<Plan> = sequence {
+        var currentState = initialState
         val stack = Stack<Any>().also { it.push(goal) }
+        val plan = mutableListOf<Action>()
         while (stack.isNotEmpty()) {
             when (val head = stack.peek()) {
                 head is Fluent && currentState.fluents.any { it.match(head) } -> {
-                    TODO()
+                    TODO("applica la sostituzione a tutto lo stack")
                 }
                 head is Effect && actions.any { a -> a.positiveEffects.any { it.match(head) } } -> {
-                    TODO()
+                    TODO("retrieve dell'azione")
+                    TODO("push dell'azione")
+                    TODO("push delle precondizioni dell'azione")
                 }
                 head is FluentBasedGoal -> {
                     stack.pop()
-                    for (fluent in head.targets) {
-
+                    for (fluent in (head as FluentBasedGoal).targets) {
+                        stack.push(fluent)
                     }
                 }
                 head is Action -> {
-                    TODO()
+                    TODO("applicare l'azione a currentState e aggiornarlo")
+                    plan.add(head as Action)
                 }
                 else -> {
                     // do nothing
                 }
             }
         }
+        yield(Plan.of(plan))
     }
 }

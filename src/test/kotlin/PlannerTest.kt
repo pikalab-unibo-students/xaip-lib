@@ -28,4 +28,13 @@ class PlannerTest : AnnotationSpec() {
     fun testPlannerObjectWorksAsExpected() {
         Planners.dummyPlanner.plan(Problems.stackAny)
     }
+
+    @Test
+    fun testPlanner() {
+        val prova=Planners.dummyPlanner.plan(Problems.stackAny)
+        val p= Plan.of(listOf(TestUtils.Actions.pick, TestUtils.Actions.stack, TestUtils.Actions.pick))
+
+        val elem=prova.toList()[0]
+        elem shouldBe p
+    }
 }

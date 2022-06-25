@@ -188,6 +188,7 @@ object TestUtils {
 
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
+        val onFlooratAandBatCarm= FluentBasedGoal.of(Fluents.atBFloor, Fluents.atCArm, Fluents.atAFloor)
     }
 
     object Problems {
@@ -196,6 +197,12 @@ object TestUtils {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atXArmAndAtYFloorAndOnWZ
+        )
+        val stack = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onFlooratAandBatCarm
         )
     }
 
@@ -206,6 +213,7 @@ object TestUtils {
 
     object Planners {
         val dummyPlanner= Planner.strips()
+        val floorPlanner= Planner.strips().plan(Problems.stack)
     }
 
     object States {

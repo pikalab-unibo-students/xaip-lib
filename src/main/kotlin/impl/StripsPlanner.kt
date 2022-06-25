@@ -30,8 +30,8 @@ internal class StripsPlanner : Planner {
         val stack = Stack<Any>().also { it.push(goal) }
         val plan = mutableListOf<Action>()
         while (stack.isNotEmpty()) {
-            when (val head = stack.peek()) {
-                head is Fluent && currentState.fluents.any { it.match(head) } -> {
+            val head = stack.peek()
+            if(head is Fluent && currentState.fluents.any{ it.match(head) }) {
                     var substitution= VariableAssignment.empty()
                     currentState.fluents.forEach {
                         if(it.match(head as Fluent)){
@@ -46,7 +46,7 @@ internal class StripsPlanner : Planner {
                     }
                     TODO("applica la sostituzione a tutto lo stack")
                 }
-                head is Effect && actions.any { a -> a.positiveEffects.any { it.match(head) } } -> {
+           else if (head is Effect && actions.any { a -> a.positiveEffects.any { it.match(head) } })  {
                     stack.pop()
                     actions.forEach { a ->
                         a.positiveEffects.forEach {
@@ -66,23 +66,24 @@ internal class StripsPlanner : Planner {
                         TODO("push delle precondizioni dell'azione")
                     }
                 }
-                head is FluentBasedGoalImpl -> {//non entra sebbene la testa dovrebbe essere un fluentBasedGoalImpl
+               else if( head is FluentBasedGoal)  {//non entra sebbene la testa dovrebbe essere un fluentBasedGoalImpl
                     stack.pop()
                     for (fluent in (head as FluentBasedGoal).targets) {
                         stack.push(fluent)
                     }
                 }
-                head is Action -> {
+              else if(  head is Action ) {
+                  stack.pop()
                     //perché non devo rimuovere l'azione? Come faccio a terminare senza rimuoverla?
                     currentState.apply(head as Action)
                     //in che senso aggiornarlo
                     plan.add(head)
                     TODO("applicare l'azione a currentState e aggiornarlo")
                 }
-                else -> {
+                else  {
                     // do nothing
                 }
-            }
+
         }
         yield(Plan.of(plan))
     }

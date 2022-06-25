@@ -221,6 +221,7 @@ object TestUtils {
             Fluents.atAFloor, Fluents.atBFloor, Fluents.atCFloor, Fluents.armEmpty,
             Fluents.clearA, Fluents.clearB, Fluents.clearC
         )
+
         val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
         val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
         val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)

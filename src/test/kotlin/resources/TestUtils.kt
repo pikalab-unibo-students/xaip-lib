@@ -106,8 +106,10 @@ object TestUtils {
 
         val atXFloor = Fluent.positive(Predicates.at, Values.X, Values.floor)
         val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
+
         val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
         val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
+
         val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 

@@ -31,7 +31,7 @@ class PlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanner() {
-        val prova=Planners.dummyPlanner.plan(Problems.stackAny)
+        val prova=Planners.dummyPlanner.plan(Problems.stack)
         val p= Plan.of(listOf(TestUtils.Actions.pick, TestUtils.Actions.stack, TestUtils.Actions.pick))
 
         val elem=prova.toList()[0]

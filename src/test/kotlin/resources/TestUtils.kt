@@ -160,7 +160,7 @@ object TestUtils {
 
     object Planners {
         val dummyPlanner= Planner.strips()
-        val floorPlanner= Planner.strips().plan(Problems.stack)
+        val floorPlanner= Planner.strips().plan(Problems.stackAny)
     }
 
     object Predicates {
@@ -237,7 +237,7 @@ object TestUtils {
     val variableNotEmpty = Variable.of(name)
 
     val predicateEmpty = Predicate.of("", emptyList())
-    val predicateNotEmpty = Predicate.of(name, List<Type>(size) { type1 })
+    val predicateNotEmpty = Predicate.of(name, List(size) { type1 })
 
     val fluentEmpty = Fluent.of( predicateEmpty, false, emptyList())
     var fluentNotEmpty = Fluent.of(predicateNotEmpty, true, List<Value>(size) { variableNotEmpty })
@@ -267,6 +267,4 @@ object TestUtils {
     val problemNotEmpty = Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
 
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
-
-    val planner = Planner.strips()
 }

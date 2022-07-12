@@ -11,18 +11,6 @@ import resources.TestUtils.Problems
 
 class PlannerTest : AnnotationSpec() {
 
-    @Test
-    @Ignore
-    fun testEmptyCreation() {
-        planner.plan(problemEmpty) shouldBe planEmpty
-    }
-
-    @Test
-    @Ignore
-    fun testNotEmptyCreation() {
-        planner.plan(problemNotEmpty) shouldBe planNotEmpty
-    }
-
     @Ignore
     @Test
     fun testPlannerObjectWorksAsExpected() {
@@ -31,7 +19,7 @@ class PlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanner() {
-        val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).toList()[0]
+        val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).first()
         val plan2check= Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))
 
         generatedPlan shouldBe plan2check

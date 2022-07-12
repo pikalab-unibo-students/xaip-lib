@@ -32,7 +32,7 @@ class PlannerTest : AnnotationSpec() {
     @Test
     fun testPlanner() {
         val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).toList()[0]
-        val plan2check= Plan.of(listOf(TestUtils.Actions.pick))
+        val plan2check= Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))
 
         generatedPlan shouldBe plan2check
     }

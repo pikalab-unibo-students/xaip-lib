@@ -49,26 +49,19 @@ internal class StripsPlanner : Planner {
                         //TODO("applica la sostituzione a tutto lo stack")
                     } else {//terzo giro C non fa match con lo stato iniziale (dovrebbe essere a terra ma nel goal è nel braccio), arrivata qui ho solo quello sullo stack
                         val h = Effect.of(head)
-                        //actions.any { a -> a.positiveEffects.any { it.match(h) } } {
                         stack.pop()// la pop la devo fare prima se no rimuovo quello che carico
-                        actions.forEach { a ->
-                            a.positiveEffects.forEach {
-                                if (it.match(h)) {// it a questo punto dovrebbe essere l'effetto (post condizione A nelle slide)
-                                    stack.push(a)
-                                    a.preconditions.forEach { p -> stack.push(p) }
-                                    if (it.match(h))
-                                        stack.push(it)
-                                    stack.forEach{elem->elem.apply(h.mostGeneralUnifier(it))}//θ = mgu(H, A) is applied to Stack
-                                }
-                            }
-                            //TODO("retrieve dell'azione")
-                            //TODO("push dell'azione")
-                            //TODO("push delle precondizioni dell'azione")
-
+                        val action = actions.first { a -> a.positiveEffects.any { p -> p.match(h) } }
+                        stack.push(action)
+                        for(p in action.preconditions){
+                            stack.push(p)
                         }
+                        val effect = action.positiveEffects.first { p -> p.match(h) }
+                        stack.apply(h.mostGeneralUnifier(effect))
+                        //TODO("retrieve dell'azione")
+                        //TODO("push dell'azione")
+                        //TODO("push delle precondizioni dell'azione")
                     }
                 }
-
                 (head is FluentBasedGoal) -> {//prima iterazione entra qui goal-> fluent sullo stack
                     stack.pop()//cava il fluentBasedGoal prima di mettere i Fluents
                     for (fluent in head.targets) {
@@ -77,7 +70,8 @@ internal class StripsPlanner : Planner {
                 }
                 (head is Action) -> {
                     stack.pop()
-                    currentState = currentState.apply(head).toList()[0]
+                    //if H matches some action name; DOMANDA: azioni sullo stack?
+                    currentState = currentState.apply(head).first()
                     plan.add(head)
                     //TODO("applicare l'azione a currentState e aggiornarlo")
                 }

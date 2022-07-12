@@ -44,34 +44,31 @@ internal class StripsPlanner : Planner {
                     if (currentState.fluents.any { it.match(head) }) {//secondo giro entra, terzo giro a (c, arm) non fa match nulla passa ad effect
                         val substitution =
                             currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
-                        stack.pop()//rimuovo la testa prima di applicare la sostituzione allo stack
+                        stack.pop()//rimuovo la testa prima di applicare la sostituzione allo stack; primo giro se ne va A
                         stack.apply(substitution.first())
                         //TODO("applica la sostituzione a tutto lo stack")
-                    } else {
+                    } else {//terzo giro C non fa match con lo stato iniziale (dovrebbe essere a terra ma nel goal è nel braccio), arrivata qui ho solo quello sullo stack
                         val h = Effect.of(head)
                         //actions.any { a -> a.positiveEffects.any { it.match(h) } } {
                         stack.pop()// la pop la devo fare prima se no rimuovo quello che carico
                         actions.forEach { a ->
                             a.positiveEffects.forEach {
-                                if (it.match(h)) {
+                                if (it.match(h)) {// it a questo punto dovrebbe essere l'effetto (post condizione A nelle slide)
                                     stack.push(a)
                                     a.preconditions.forEach { p -> stack.push(p) }
-                                    if (it.match(h)) {
+                                    if (it.match(h))
                                         stack.push(it)
-                                    }
+                                    stack.forEach{elem->elem.apply(h.mostGeneralUnifier(it))}//θ = mgu(H, A) is applied to Stack
                                 }
-                                for (elem in stack)
-                                    if (elem is FluentBasedGoal)
-                                        elem.apply(it.mostGeneralUnifier(h))
                             }
-                            /*TODO("retrieve dell'azione")
-                    TODO("push dell'azione")
-                    TODO("push delle precondizioni dell'azione")
-                     */
-                        }
+                            //TODO("retrieve dell'azione")
+                            //TODO("push dell'azione")
+                            //TODO("push delle precondizioni dell'azione")
 
+                        }
                     }
                 }
+
                 (head is FluentBasedGoal) -> {//prima iterazione entra qui goal-> fluent sullo stack
                     stack.pop()//cava il fluentBasedGoal prima di mettere i Fluents
                     for (fluent in head.targets) {

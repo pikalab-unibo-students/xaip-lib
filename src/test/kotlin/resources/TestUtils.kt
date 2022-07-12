@@ -47,86 +47,6 @@ object TestUtils {
     val predicates= arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
     val objects = arrayOf(Object.of("a"), Object.of("b"), Object.of("c") , Object.of("floor"), Object.of("arm"), Object.of(0), Object.of(1) , Object.of(2))
 
-    object Types {
-        val anything = Type.of("anything")
-        val strings = Type.of("strings", anything)
-        val numbers = Type.of("numbers", anything)
-        val blocks = Type.of("blocks", strings)
-        val locations = Type.of("locations", strings)
-    }
-
-    object VariableAssignments{
-        val y2x = VariableAssignment.of(Values.Y, Values.X)
-        val x2floor = VariableAssignment.of(Values.X, Values.floor)
-        val x2arm= VariableAssignment.of(Values.X, Values.arm)
-
-    }
-
-    object Values {
-        val a = Object.of("a")
-        val b = Object.of("b")
-        val c = Object.of("c")
-
-        val floor = Object.of("floor")
-        val arm = Object.of("arm")
-
-        val zero = Object.of(0)
-        val one = Object.of(1)
-        val two = Object.of(2)
-
-        val W = Variable.of("W")
-        val X = Variable.of("X")
-        val Y = Variable.of("Y")
-        val Z = Variable.of("Z")
-    }
-
-    object ObjectSets {
-        val all = ObjectSet.of(
-            Types.blocks to setOf(Values.a, Values.b, Values.c),
-            Types.locations to setOf(Values.floor, Values.arm),
-            Types.numbers to setOf(Values.one, Values.two, Values.zero)
-        )
-    }
-
-    object Predicates {
-        val at = Predicate.of("at", Types.blocks, Types.locations)
-        val on = Predicate.of("on", Types.blocks, Types.blocks)
-        val armEmpty = Predicate.of("arm_empty")
-        val clear = Predicate.of("clear", Types.blocks)
-    }
-
-    object Fluents {
-        val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
-        val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
-        val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
-
-        val atAArm = Fluent.positive(Predicates.at, Values.a, Values.arm)
-        val atBArm = Fluent.positive(Predicates.at, Values.b, Values.arm)
-        val atCArm = Fluent.positive(Predicates.at, Values.c, Values.arm)
-
-        val atXFloor = Fluent.positive(Predicates.at, Values.X, Values.floor)
-        val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
-
-        val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
-        val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
-
-        val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
-        val armEmpty = Fluent.positive(Predicates.armEmpty)
-
-
-        val clearA = Fluent.positive(Predicates.clear, Values.a)
-        val clearB = Fluent.positive(Predicates.clear, Values.b)
-        val clearC = Fluent.positive(Predicates.clear, Values.c)
-        val clearX = Fluent.positive(Predicates.clear, Values.X)
-        val clearY = Fluent.positive(Predicates.clear, Values.Y)
-        val clearZ = Fluent.positive(Predicates.clear, Values.Z)
-        val clearW = Fluent.positive(Predicates.clear, Values.Z)
-
-        val onXY = Fluent.positive(Predicates.on, Values.X, Values.Y)
-        val onWZ = Fluent.positive(Predicates.on, Values.W, Values.Z)
-        val onZW = Fluent.positive(Predicates.on, Values.Z, Values.W)
-    }
-
     object Actions {
         val pick = Action.of(
             name = "pick",
@@ -188,9 +108,66 @@ object TestUtils {
         val f1= FluentBasedGoal.of(setOf(Fluents.atAArm))
     }
 
+    object Fluents {
+        val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
+        val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
+        val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
+
+        val atAArm = Fluent.positive(Predicates.at, Values.a, Values.arm)
+        val atBArm = Fluent.positive(Predicates.at, Values.b, Values.arm)
+        val atCArm = Fluent.positive(Predicates.at, Values.c, Values.arm)
+
+        val atXFloor = Fluent.positive(Predicates.at, Values.X, Values.floor)
+        val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
+
+        val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
+        val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
+
+        val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
+        val armEmpty = Fluent.positive(Predicates.armEmpty)
+
+
+        val clearA = Fluent.positive(Predicates.clear, Values.a)
+        val clearB = Fluent.positive(Predicates.clear, Values.b)
+        val clearC = Fluent.positive(Predicates.clear, Values.c)
+        val clearX = Fluent.positive(Predicates.clear, Values.X)
+        val clearY = Fluent.positive(Predicates.clear, Values.Y)
+        val clearZ = Fluent.positive(Predicates.clear, Values.Z)
+        val clearW = Fluent.positive(Predicates.clear, Values.Z)
+
+        val onXY = Fluent.positive(Predicates.on, Values.X, Values.Y)
+        val onWZ = Fluent.positive(Predicates.on, Values.W, Values.Z)
+        val onZW = Fluent.positive(Predicates.on, Values.Z, Values.W)
+    }
+
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-        val onFlooratAandBatCarm= FluentBasedGoal.of(Fluents.atBFloor, Fluents.atCArm, Fluents.atAFloor)
+        val onFlooratAandBatCarm= FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
+    }
+
+    object ObjectSets {
+        val all = ObjectSet.of(
+            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.locations to setOf(Values.floor, Values.arm),
+            Types.numbers to setOf(Values.one, Values.two, Values.zero)
+        )
+    }
+
+    object Plans {
+        val emptyPlan = Plan.of(emptyList())
+        val dummyPlan= Plan.of(listOf(Actions.pick, Actions.stack))
+    }
+
+    object Planners {
+        val dummyPlanner= Planner.strips()
+        val floorPlanner= Planner.strips().plan(Problems.stack)
+    }
+
+    object Predicates {
+        val at = Predicate.of("at", Types.blocks, Types.locations)
+        val on = Predicate.of("on", Types.blocks, Types.blocks)
+        val armEmpty = Predicate.of("arm_empty")
+        val clear = Predicate.of("clear", Types.blocks)
     }
 
     object Problems {
@@ -208,16 +185,6 @@ object TestUtils {
         )
     }
 
-    object Plans {
-        val emptyPlan = Plan.of(emptyList())
-        val dummyPlan= Plan.of(listOf(Actions.pick, Actions.stack))
-    }
-
-    object Planners {
-        val dummyPlanner= Planner.strips()
-        val floorPlanner= Planner.strips().plan(Problems.stack)
-    }
-
     object States {
         val initial = State.of(
             Fluents.atAFloor, Fluents.atBFloor, Fluents.atCFloor, Fluents.armEmpty,
@@ -227,6 +194,39 @@ object TestUtils {
         val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
         val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
         val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
+    }
+
+    object Types {
+        val anything = Type.of("anything")
+        val strings = Type.of("strings", anything)
+        val numbers = Type.of("numbers", anything)
+        val blocks = Type.of("blocks", strings)
+        val locations = Type.of("locations", strings)
+    }
+
+    object Values {
+        val a = Object.of("a")
+        val b = Object.of("b")
+        val c = Object.of("c")
+
+        val floor = Object.of("floor")
+        val arm = Object.of("arm")
+
+        val zero = Object.of(0)
+        val one = Object.of(1)
+        val two = Object.of(2)
+
+        val W = Variable.of("W")
+        val X = Variable.of("X")
+        val Y = Variable.of("Y")
+        val Z = Variable.of("Z")
+    }
+
+    object VariableAssignments{
+        val y2x = VariableAssignment.of(Values.Y, Values.X)
+        val x2floor = VariableAssignment.of(Values.X, Values.floor)
+        val x2arm= VariableAssignment.of(Values.X, Values.arm)
+
     }
 
     val type1 = Type.of(name, null)

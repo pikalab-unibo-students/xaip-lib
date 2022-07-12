@@ -31,10 +31,9 @@ class PlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanner() {
-        val prova=Planners.dummyPlanner.plan(Problems.stack)
-        val p= Plan.of(listOf(TestUtils.Actions.pick, TestUtils.Actions.stack, TestUtils.Actions.pick))
+        val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).toList()[0]
+        val plan2check= Plan.of(listOf(TestUtils.Actions.pick))
 
-        val elem=prova.toList()[0]
-        elem shouldBe p
+        generatedPlan shouldBe plan2check
     }
 }

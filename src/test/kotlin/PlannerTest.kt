@@ -8,11 +8,6 @@ class PlannerTest : AnnotationSpec() {
 
     @Ignore
     @Test
-    fun testPlannerObjectWorksAsExpected() {
-        Planners.dummyPlanner.plan(Problems.stackAny)
-    }
-
-    @Test
     fun testPlanner() {
         val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).first()
         val plan2check= Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))

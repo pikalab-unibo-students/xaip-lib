@@ -76,6 +76,20 @@ object TestUtils {
                 Effect.negative(Fluents.clearY)
             )
         )
+
+        val unStack = Action.of(
+            name = "unStack",
+            parameters = mapOf(
+                Values.X to Types.blocks,
+                Values.Y to Types.locations
+            ),
+            preconditions = setOf(Fluents.onXY, Fluents.clearX),
+            effects = setOf(
+                Effect.of(Fluents.atXFloor),
+                Effect.of(Fluents.armEmpty),
+                Effect.negative(Fluents.clearY)
+            )
+        )
     }
 
     object Axioms {
@@ -123,9 +137,11 @@ object TestUtils {
         val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
         val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
 
+        val atWFloor= Fluent.positive(Predicates.at, Values.W, Values.floor)
         val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
         val armEmpty = Fluent.positive(Predicates.armEmpty)
-
+    //aggiunto
+        val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
@@ -142,7 +158,10 @@ object TestUtils {
 
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-        val onFlooratAandBatCarm= FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
+        val onFlooratAandBatCarm=
+            FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
+    //aggiunto
+        val onAatBandBonFloor= FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
     }
 
     object ObjectSets {
@@ -182,6 +201,12 @@ object TestUtils {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onFlooratAandBatCarm
+        )
+        val stackAB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onAatBandBonFloor
         )
     }
 

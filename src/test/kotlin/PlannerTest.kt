@@ -5,14 +5,13 @@ import resources.TestUtils.Planners
 import resources.TestUtils.Problems
 
 class PlannerTest : AnnotationSpec() {
-
-    @Ignore
     @Test
     fun testPlanner() {
         val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).first()
         val plan2check= Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))
         generatedPlan shouldBe plan2check
     }
+
     @Ignore
     @Test
     fun testPlanSequence(){
@@ -26,6 +25,6 @@ class PlannerTest : AnnotationSpec() {
         val plan2check= sequenceOf(
             Plan.of(listOf(pickA,stackAB,pickC)),
             Plan.of(listOf(pickA, stackAB)))
-        generatedPlans.take(2).toSet() shouldBe plan2check
+        generatedPlans.take(2).toSet() shouldBe plan2check.toSet()
     }
 }

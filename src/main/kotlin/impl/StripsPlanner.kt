@@ -10,6 +10,7 @@ import Planner
 import Problem
 import State
 import VariableAssignment
+import it.unibo.tuprolog.utils.subsequences
 import java.util.*
 
 internal class StripsPlanner : Planner {
@@ -46,40 +47,37 @@ internal class StripsPlanner : Planner {
                 when {
                     head is Fluent -> {
                         if (currentState.fluents.any { it.match(head) }) {
-                            val substitutions =
+                            val substitutions=
                                 currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
                             stack.pop()
                             val substitution= substitutions.first()
-                            substitutions.drop(1)
-                            for (elem in substitutions) {
-                                val stackCopy=stack
+                            for (elem in substitutions.subList(1, substitutions.size)) {
+                                val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
                                 stackCopy.apply(elem)
                                 choicePoints.add(ChoicePoint(stackCopy, currentState))
                             }
                             stack.apply(substitution)
                             //TODO("applica la sostituzione a tutto lo stack")
-                        } else {
+                        } else {//2
                             val h = Effect.of(head)
                             stack.pop()
                             val actionsMatched=
-                                actions.filter{a -> a.positiveEffects.any { p -> p.match(h) }}
-                            //val action = actions.first { a -> a.positiveEffects.any { p -> p.match(h) } }
+                                actions.filter{action -> action.positiveEffects.any { effect -> effect.match(h) }}//2.i
                             val action=actionsMatched.first()
-                            actionsMatched.drop(1)
-                            for(elem in actionsMatched){
-                                val stackCopy=stack
+                            for(elem in actionsMatched.subList(1, actionsMatched.size)){//2.iii.a
+                                val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
                                 stackCopy.push(elem)
+                                stackCopy.addAll(elem.preconditions)
                                 choicePoints.add(ChoicePoint(stackCopy, currentState))
                             }
-                            stack.push(action)
-                            stack.addAll(action.preconditions)
+                            stack.push(action)//2.ii
+                            stack.addAll(action.preconditions) //2.iv
+
                             val effectsMatched=
-                                action.positiveEffects.filter { p -> p.match(h) }
-                            //val effect = action.positiveEffects.first { p -> p.match(h) }
+                                action.positiveEffects.filter { effect -> effect.match(h) }
                             val effect= effectsMatched.first()
-                            effectsMatched.drop(1)
-                            for(elem in effectsMatched){
-                                val stackCopy=stack
+                            for(elem in effectsMatched.subList(1, effectsMatched.size)){
+                                val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
                                 stackCopy.apply(h.mostGeneralUnifier(elem))
                                 choicePoints.add(ChoicePoint(stackCopy, currentState))
                             }
@@ -94,11 +92,9 @@ internal class StripsPlanner : Planner {
                     }
                     (head is Action) -> {
                         stack.pop()
-                        //currentState = currentState.apply(head).first()
                         val states = currentState.apply(head).toList()// necessario perché se no si arrabbia e mi dice la seq può essere iterata solo una volta
                         currentState=states.first()
-                        states.drop(1)
-                        for (elem in states){
+                        for (elem in states.subList(1, states.size)){
                             choicePoints.add(ChoicePoint(stack, elem))
                         }
                         plan.add(head)
@@ -109,9 +105,10 @@ internal class StripsPlanner : Planner {
                     }
                 }
             }
+
             yield(Plan.of(plan))
-            //STO grigio non ci dovrebbe essere
-            if(choicePoints.peekFirst()!=null) {
+
+            if(!choicePoints.isEmpty()) {
                 val choicePoint=choicePoints.pollFirst()
                 stack = choicePoint.stack
                 currentState = choicePoint.state

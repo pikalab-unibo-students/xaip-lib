@@ -142,6 +142,7 @@ object TestUtils {
         val armEmpty = Fluent.positive(Predicates.armEmpty)
     //aggiunto
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
+        val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
@@ -162,6 +163,7 @@ object TestUtils {
             FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
     //aggiunto
         val onAatBandBonFloor= FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
+        val onAX= FluentBasedGoal.of(Fluents.onAX)
     }
 
     object ObjectSets {
@@ -207,6 +209,12 @@ object TestUtils {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onAatBandBonFloor
+        )
+        val stackAX = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onAX
         )
     }
 

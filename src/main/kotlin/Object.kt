@@ -2,11 +2,15 @@ import impl.ObjectImpl
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Integer
 import it.unibo.tuprolog.core.Real
+import it.unibo.tuprolog.core.Scope
 
 //TODO scrivi qualcosa di sensato
 interface Object : Value {
     val representation: String
+
     override fun apply(substitution: VariableAssignment): Object
+
+    override fun refresh(scope: Scope): Object
 
     companion object {
 

@@ -39,45 +39,42 @@ internal class StripsPlanner : Planner {
     ): Sequence<Plan> = sequence<Plan> {
         var currentState = initialState
         var stack = Stack<Applicable<*>>().also { it.push(goal) }
-
         val choicePoints : Deque<ChoicePoint> = LinkedList()
-
         var plan= mutableListOf<Action>()
+
         while(true){
             while (stack.isNotEmpty()) {
                 val head = stack.peek()
                 when {
-                    head is Fluent -> {
+                    head is Fluent -> {//TODO("applica la sostituzione a tutto lo stack")
                         if (currentState.fluents.any { it.match(head) }) {
-                            val substitutions=
-                                currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
+                            val substitutions= currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
                             stack.pop()
                             val substitution= substitutions.first()
-                            for (elem in substitutions.subList(1, substitutions.size)) {
+                            for (substitution in substitutions.subList(1, substitutions.size)) {//sostituzioni possibile= variabile con a,b,c
                                 val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
-                                stackCopy.apply(elem)
+                                stackCopy.apply(substitution)
                                 choicePoints.add(ChoicePoint(stackCopy, currentState, mutableListOf<Action>().apply{addAll(plan) }))
                             }
                             stack.apply(substitution)
-                            //TODO("applica la sostituzione a tutto lo stack")
-                        } else {//2
+                        } else {
                             val h = Effect.of(head)
                             stack.pop()
-                            val actionsMatched=
-                                actions.map { it.refresh() }
-                                    .filter{action -> action.positiveEffects.any { effect -> effect.match(h) }}//2.i
+
+                            val actionsMatched= actions.map { it.refresh() }.filter{action -> action.positiveEffects.any { effect -> effect.match(h) }}
+
                             val action=actionsMatched.first()
-                            for(elem in actionsMatched.subList(1, actionsMatched.size)){//2.iii.a
+                            for(elem in actionsMatched.subList(1, actionsMatched.size)){
                                 val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
                                 stackCopy.push(elem)
                                 stackCopy.addAll(elem.preconditions)
                                 choicePoints.add(ChoicePoint(stackCopy, currentState, mutableListOf<Action>().apply{addAll(plan) }))
                             }
-                            stack.push(action)//2.ii
-                            stack.addAll(action.preconditions) //2.iv
 
-                            val effectsMatched=
-                                action.positiveEffects.filter { effect -> effect.match(h) }
+                            stack.push(action)
+                            stack.addAll(action.preconditions)
+
+                            val effectsMatched= action.positiveEffects.filter { effect -> effect.match(h) }
                             val effect= effectsMatched.first()
                             for(elem in effectsMatched.subList(1, effectsMatched.size)){
                                 val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
@@ -97,7 +94,7 @@ internal class StripsPlanner : Planner {
                         stack.pop()
 //                        println(currentState)
 //                        println(head)
-                        val states = currentState.apply(head).toList()// necessario perché se no si arrabbia e mi dice la seq può essere iterata solo una volta
+                        val states = currentState.apply(head).toList()
                         if (states.isEmpty()) {
                             if(!choicePoints.isEmpty()) {
                                 val choicePoint=choicePoints.pollFirst()
@@ -109,8 +106,8 @@ internal class StripsPlanner : Planner {
                             }
                         } else {
                             currentState = states.first()
-                            for (elem in states.subList(1, states.size)) {
-                                choicePoints.add(ChoicePoint(stack, elem, mutableListOf<Action>().apply{addAll(plan) }))
+                            for (state in states.subList(1, states.size)) {
+                                choicePoints.add(ChoicePoint(stack, state, plan ))
                             }
                             plan.add(head)
                             //TODO("applicare l'azione a currentState e aggiornarlo")

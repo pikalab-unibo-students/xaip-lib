@@ -37,4 +37,10 @@ class VariableTest : AnnotationSpec() {
         Values.X.name shouldBeIn variables.map { it.name }
     }
 
+    @Test
+    fun testRefreshVariableWorksAsExpected() {
+        localVariableNotEmpty shouldBe localVariableNotEmpty
+        localVariableNotEmpty shouldNotBe localVariableNotEmpty.refresh()
+    }
+
 }

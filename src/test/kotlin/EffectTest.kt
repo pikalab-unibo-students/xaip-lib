@@ -1,5 +1,6 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import resources.TestUtils
 import resources.TestUtils.effectEmpty
 import resources.TestUtils.effectNotEmpty
@@ -48,5 +49,11 @@ class EffectTest : AnnotationSpec() {
         Effects.atXFloor.isPositive shouldBe true
         Effects.atXFloor.apply(VariableAssignments.x2arm) shouldBe
                 Effect.of(Fluent.of(Predicates.at, false, Values.arm, Values.floor))
+    }
+
+    @Test
+    fun testRefreshVariableWorksAsExpected() {
+        effectNotEmpty shouldBe effectNotEmpty
+        effectNotEmpty shouldNotBe effectNotEmpty.refresh()
     }
 }

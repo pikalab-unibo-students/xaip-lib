@@ -56,7 +56,7 @@ class ActionTest : AnnotationSpec() {
     }
 
     @Test
-    fun testRefreshVariableWorksAsExpected() {
+    fun testRefreshWorksAsExpected() {
         actionNotEmpty == actionNotEmpty
         actionNotEmpty shouldNotBe actionNotEmpty.refresh()
     }

@@ -52,7 +52,7 @@ class ActionTest : AnnotationSpec() {
     @Test
     fun testApplyWorksAsExpected() {
         actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
-        actionNotEmpty.apply(substitution2) shouldBe action
+        actionNotEmpty.apply(substitution2) === action
     }
 
     @Test
@@ -78,7 +78,7 @@ class ActionTest : AnnotationSpec() {
                         Effect.negative(Fluents.clearX)
                     )
                 )
-        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
+        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) ===
                 Action.of(
                     "pick", mapOf(
                         Values.X to Types.blocks),

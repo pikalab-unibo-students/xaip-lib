@@ -52,7 +52,7 @@ class EffectTest : AnnotationSpec() {
     }
 
     @Test
-    fun testRefreshVariableWorksAsExpected() {
+    fun testRefreshWorksAsExpected() {
         effectNotEmpty shouldBe effectNotEmpty
         effectNotEmpty shouldNotBe effectNotEmpty.refresh()
     }

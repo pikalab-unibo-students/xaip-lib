@@ -55,5 +55,6 @@ class EffectTest : AnnotationSpec() {
     fun testRefreshWorksAsExpected() {
         effectNotEmpty shouldBe effectNotEmpty
         effectNotEmpty shouldNotBe effectNotEmpty.refresh()
+        g
     }
 }

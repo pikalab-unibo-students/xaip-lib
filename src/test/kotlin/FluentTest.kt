@@ -2,6 +2,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
 import resources.TestUtils
 import resources.TestUtils.fluentEmpty
@@ -95,5 +96,11 @@ class FluentTest : AnnotationSpec() {
             Fluents.atXArm.mostGeneralUnifier(Fluents.onXY) shouldBe Substitution.failed()
             fluentNotEmpty.mostGeneralUnifier(fluentEmpty) shouldBe Substitution.failed()
         }
+    }
+
+    @Test
+    fun testRefreshVariableWorksAsExpected() {
+        fluentNotEmpty shouldBe fluentNotEmpty
+        fluentNotEmpty shouldNotBe fluentNotEmpty.refresh()
     }
 }

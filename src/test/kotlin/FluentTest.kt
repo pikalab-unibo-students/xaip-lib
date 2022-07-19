@@ -99,7 +99,7 @@ class FluentTest : AnnotationSpec() {
     }
 
     @Test
-    fun testRefreshVariableWorksAsExpected() {
+    fun testRefreshWorksAsExpected() {
         fluentNotEmpty shouldBe fluentNotEmpty
         fluentNotEmpty shouldNotBe fluentNotEmpty.refresh()
     }

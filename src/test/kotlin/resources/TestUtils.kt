@@ -29,14 +29,6 @@ object TestUtils {
         return List(length) { charset.random() }.joinToString("")
     }
 
-    private val goalSatisfied: Goal = mockkClass(Goal::class) {
-        every { isSatisfiedBy(state) } returns true
-    }
-
-    private val goalNotSatisfied: Goal = mockkClass(Goal::class) {
-        every { isSatisfiedBy(state) } returns false
-    }
-
     const val name = "f"
     const val size = 5
 
@@ -337,9 +329,6 @@ object TestUtils {
     val planNotEmpty = Plan.of(listOf(actionNotEmpty))
 
     val state = State.of(setOf(fluentEmpty))
-
-    val problemEmpty = Problem.of(domainEmpty, objectSetEmpty, state, goalNotSatisfied)
-    val problemNotEmpty = Problem.of(domainNotEmpty, objectSetNotEmpty, state, goalSatisfied)
 
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 }

@@ -15,20 +15,7 @@ import resources.TestUtils.States
 import resources.TestUtils.Goals
 
 class ProblemTest : AnnotationSpec() {
-    @Test
-    fun testEmptyCreation() {
-        problemEmpty.domain shouldBe domainEmpty
-        problemEmpty.objects shouldBe objectSetEmpty
-        //problemEmpty.initialState.fluents.isEmpty() shouldBe true
-    }
 
-    @Test
-    fun testNotEmptyCreation() {
-        problemNotEmpty.domain shouldBe domainNotEmpty
-        problemNotEmpty.objects shouldBe objectSetNotEmpty
-        problemNotEmpty.initialState shouldBe state
-        //problemEmpty.initialState.fluents.isNotEmpty() shouldBe true
-    }
 
     @Test
     fun testProblemObjectWorksAsExpected() {

@@ -36,10 +36,9 @@ class DomainTest : AnnotationSpec() {
         Domains.blockWorld.predicates.isEmpty() shouldNotBe true
         Domains.blockWorld.actions.isEmpty() shouldBe false
         Domains.blockWorld.types.isEmpty() shouldBe false
-        Domains.blockWorld.axioms.isEmpty() shouldBe false
+        Domains.blockWorld.axioms.isEmpty() shouldBe true
         Domains.blockWorld.predicates.forEach { it shouldBeIn predicates }
         Domains.blockWorld.actions.forEach { it shouldBeIn actions }
         Domains.blockWorld.types.forEach { it shouldBeIn types }
-        Domains.blockWorld.axioms.forEach { it shouldBeIn axioms }
     }
 }

@@ -112,7 +112,7 @@ object TestUtils {
             axioms = emptySet()
         )
         val blockWorldConstrained = Domain.of(
-            name = "block_world",
+            name = "block_world_constrained",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),

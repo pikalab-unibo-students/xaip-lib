@@ -94,10 +94,14 @@ object TestUtils {
 
     object Axioms {
         val axiom1 = Axiom.of(
-            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
-            setOf(Fluents.onXY, Fluents.atYFloor),
-            setOf(Fluents.clearY))
-    }
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,//variabili che possono apparire nella regola
+            setOf(Fluents.atXArm), //cosa dice della regola
+            setOf(Fluents.onXY))//conseguenze sempre vere della regola sopra
+        val axiom2 = Axiom.of(
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,//variabili che possono apparire nella regola
+            setOf(Fluents.atYFloor), //cosa dice della regola
+            setOf(Fluents.onXY))//conseguenze sempre vere della regola sopra
+    }//es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
 
     object Domains {
         val blockWorld = Domain.of(
@@ -105,7 +109,14 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = setOf(Axioms.axiom1)
+            axioms = emptySet()
+        )
+        val blockWorldConstrained = Domain.of(
+            name = "block_world",
+            predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
+            actions = setOf(Actions.pick, Actions.stack),
+            types = setOf(Types.blocks, Types.locations),
+            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
         )
     }
 

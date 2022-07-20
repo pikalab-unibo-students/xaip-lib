@@ -10,10 +10,10 @@ class StripsPlannerTest : AnnotationSpec() {
     fun testPlanner() {
         val generatedPlan=Planners.dummyPlanner.plan(Problems.stack).first()
         val plan2check= Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))
-        generatedPlan === plan2check //Le stupide dataclass controllano il riferimento non la dannata struttura
+        generatedPlan === plan2check
     }
 
-    @Ignore
+    //@Ignore
     @Test
     fun testPlanSequence(){
         val pickA= TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))

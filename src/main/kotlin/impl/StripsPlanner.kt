@@ -53,7 +53,7 @@ internal class StripsPlanner : Planner {
             while (stack.isNotEmpty()) {
                 val head = stack.peek()
                 when {
-                    head is Fluent -> {//TODO("applica la sostituzione a tutto lo stack")
+                    head is Fluent -> {//"applica la sostituzione a tutto lo stack"
                         if (currentState.fluents.any { it.match(head) }) {
                             val substitutions= currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
                             stack.pop()
@@ -64,7 +64,7 @@ internal class StripsPlanner : Planner {
                                 choicePoints.add(ChoicePoint(stackCopy, currentState, mutableListOf<Action>().apply{addAll(plan) }))
                             }
                             stack.apply(substitution)
-                        } else {
+                        } else {//"retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
                             val h = Effect.of(head)
                             stack.pop()
 
@@ -89,7 +89,6 @@ internal class StripsPlanner : Planner {
                                 choicePoints.add(ChoicePoint(stackCopy, currentState,  mutableListOf<Action>().apply{addAll(plan) }))
                             }
                             stack.apply(h.mostGeneralUnifier(effect))
-                            //TODO("retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione")
                         }
                     }
                     (head is FluentBasedGoal) -> {
@@ -97,7 +96,7 @@ internal class StripsPlanner : Planner {
                         for (fluent in head.targets)
                             stack.push(fluent)
                     }
-                    (head is Action) -> {
+                    (head is Action) -> {//applicare l'azione a currentState e aggiornarlo"
                         stack.pop()
                         val states = currentState.apply(head).toList()
                         if (states.isEmpty()) {
@@ -118,7 +117,6 @@ internal class StripsPlanner : Planner {
                             if(plan.size>maxdepth){
                                 break
                             }
-                            //TODO("applicare l'azione a currentState e aggiornarlo")
                         }
                     }
                     else -> {

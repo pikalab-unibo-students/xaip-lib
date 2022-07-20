@@ -14,12 +14,18 @@ import it.unibo.tuprolog.utils.subsequences
 import java.util.*
 
 internal class StripsPlanner : Planner {
-    override fun plan(problem: Problem): Sequence<Plan> {
-        return plan(
-            problem.initialState,
-            problem.domain.actions,
-            problem.goal as FluentBasedGoal
-        )
+    override fun plan(problem: Problem): Sequence<Plan> = sequence {
+        var i = 1
+        while(true){
+            yieldAll(
+                plan(
+                    problem.initialState,
+                    problem.domain.actions,
+                    problem.goal as FluentBasedGoal,
+                    i++
+                )
+            )
+        }
     }
 
     private fun Stack<Applicable<*>>.apply(substitution: VariableAssignment){
@@ -35,7 +41,8 @@ internal class StripsPlanner : Planner {
     private fun plan(
         initialState: State,
         actions: Set<Action>,
-        goal: FluentBasedGoal
+        goal: FluentBasedGoal,
+        maxdepth: Int
     ): Sequence<Plan> = sequence<Plan> {
         var currentState = initialState
         var stack = Stack<Applicable<*>>().also { it.push(goal) }
@@ -92,8 +99,6 @@ internal class StripsPlanner : Planner {
                     }
                     (head is Action) -> {
                         stack.pop()
-//                        println(currentState)
-//                        println(head)
                         val states = currentState.apply(head).toList()
                         if (states.isEmpty()) {
                             if(!choicePoints.isEmpty()) {
@@ -110,6 +115,9 @@ internal class StripsPlanner : Planner {
                                 choicePoints.add(ChoicePoint(stack, state, plan ))
                             }
                             plan.add(head)
+                            if(plan.size>maxdepth){
+                                break
+                            }
                             //TODO("applicare l'azione a currentState e aggiornarlo")
                         }
                     }

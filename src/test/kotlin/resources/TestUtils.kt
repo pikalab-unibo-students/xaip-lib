@@ -40,7 +40,7 @@ object TestUtils {
     const val name = "f"
     const val size = 5
 
-    val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
+    val axioms = arrayOf(Axioms.axiom1)
     val actions = arrayOf(Actions.pick, Actions.stack)
     val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
@@ -97,11 +97,6 @@ object TestUtils {
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
             setOf(Fluents.onXY, Fluents.atYFloor),
             setOf(Fluents.clearY))
-
-        val axiom2 = Axiom.of(
-            mapOf(Values.X to Types.blocks) ,
-            setOf(Fluents.atXArm),
-            setOf(Fluents.clearX))
     }
 
     object Domains {
@@ -110,7 +105,7 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
+            axioms = setOf(Axioms.axiom1)
         )
     }
 

@@ -52,13 +52,7 @@ class ActionTest : AnnotationSpec() {
     @Test
     fun testApplyWorksAsExpected() {
         actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
-        actionNotEmpty.apply(substitution2) === action
-    }
-
-    @Test
-    fun testRefreshWorksAsExpected() {
-        actionNotEmpty == actionNotEmpty
-        actionNotEmpty shouldNotBe actionNotEmpty.refresh()
+        actionNotEmpty.apply(substitution2) shouldBe action
     }
 
     @Test
@@ -75,7 +69,7 @@ class ActionTest : AnnotationSpec() {
         Actions.pick.apply(VariableAssignment.of(Values.X, Values.X)) shouldBe
                 Action.of(
                     "pick", mapOf(
-                    Values.X to Types.blocks),
+                        Values.X to Types.blocks),
                     setOf(Fluents.atXFloor, Fluents.armEmpty, Fluents.clearX),
                     setOf(
                         Effect.of(Fluents.atXArm),
@@ -84,7 +78,7 @@ class ActionTest : AnnotationSpec() {
                         Effect.negative(Fluents.clearX)
                     )
                 )
-        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) ===
+        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
                 Action.of(
                     "pick", mapOf(
                         Values.X to Types.blocks),

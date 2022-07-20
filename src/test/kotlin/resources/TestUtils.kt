@@ -95,12 +95,13 @@ object TestUtils {
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
-            setOf(Fluents.onXY, Fluents.atXFloor),
+            setOf(Fluents.onXY, Fluents.atYFloor),
             setOf(Fluents.clearY))
+
         val axiom2 = Axiom.of(
-            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,
-            setOf(Fluents.onZW, Fluents.atZFloor),
-            setOf(Fluents.clearW))
+            mapOf(Values.X to Types.blocks) ,
+            setOf(Fluents.atXArm),
+            setOf(Fluents.clearX))
     }
 
     object Domains {
@@ -138,9 +139,11 @@ object TestUtils {
         val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
 
         val atWFloor= Fluent.positive(Predicates.at, Values.W, Values.floor)
+        val atWArm = Fluent.positive(Predicates.at, Values.W, Values.arm)
+
         val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
         val armEmpty = Fluent.positive(Predicates.armEmpty)
-    //aggiunto
+
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
         val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
 
@@ -161,9 +164,12 @@ object TestUtils {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val onFlooratAandBatCarm=
             FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
-    //aggiunto
         val onAatBandBonFloor= FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX= FluentBasedGoal.of(Fluents.onAX)
+        val pickX = FluentBasedGoal.of(Fluents.atXArm)
+        val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
+        val onXY = FluentBasedGoal.of(Fluents.onXY)
+        val onXYatW = FluentBasedGoal.of(Fluents.atWArm, Fluents.onXY)//caso sfigato
     }
 
     object ObjectSets {
@@ -198,23 +204,53 @@ object TestUtils {
             initialState = States.initial,
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
+
         val stack = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onFlooratAandBatCarm
         )
+
         val stackAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onAatBandBonFloor
         )
+
         val stackAX = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onAX
+        )
+
+        val pickX = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.pickX
+        )
+
+        val pickXfloorY = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.pickXfloorY
+        )
+
+        val stackXY = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onXY
+        )
+        val stackXYpickW = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onXYatW
         )
     }
 

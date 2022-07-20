@@ -35,18 +35,20 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
             fluents.any { precondition.match(it) }
         }
 
+    /***
+     * Convert the current state into a Prolog theory where each fluent is a fact
+     * Convert the current action into a Prolog goal where each precondition is a sub-goal
+     * Then create a Prolog solver out of the aforementioned theory ...
+     * ... and query the solver with the aforementioned query ...
+     * ... then consider only positive answers ...
+     * ... and finally convert each answer's substitution into a VariableAssignment
+     */
     private fun mguForActionPreconditions(action: Action): Sequence<VariableAssignment> {
-        // Convert the current state into a Prolog theory where each fluent is a fact
         val stateAsTheory = Theory.of(fluents.map { it.toTerm() }.map { Fact.of(it) })
-        // Convert the current action into a Prolog goal where each precondition is a sub-goal
         val preconditionsAsQuery = Tuple.of(action.preconditions.map { it.toTerm() })
-        // Then create a Prolog solver out of the aforementioned theory ...
         return Solver.prolog.solverOf(stateAsTheory)
-            // ... and query the solver with the aforementioned query ...
             .solve(preconditionsAsQuery)
-            // ... then consider only positive answers ...
             .filterIsInstance<Solution.Yes>()
-            // ... and finally convert each answer's substitution into a VariableAssignment
             .map { it.substitution.toPddl() }
     }
 

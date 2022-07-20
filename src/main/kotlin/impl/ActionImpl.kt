@@ -31,7 +31,7 @@ internal data class ActionImpl(
 
     override fun refresh(scope: Scope): Action {
         return copy(
-            parameters = parameters.mapKeys { (k,_)-> k.refresh(scope) },
+            //parameters = parameters.mapKeys { (k,_)-> k.refresh(scope) },
             preconditions = preconditions.map { it.refresh(scope) }.toSet(),
             effects = effects.map { it.refresh(scope) }.toSet(),
             args = args.map { it.refresh(scope) }
@@ -53,4 +53,28 @@ internal data class ActionImpl(
                 "${negativeEffects.map { it.fluent }.pretty("removeList")})"
 
     override fun toString(): String = "$name(${args.joinToString(", ") {it.toString()}})"
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ActionImpl
+
+        if (name != other.name) return false
+        if (parameters != other.parameters) return false
+        if (preconditions != other.preconditions) return false
+        if (effects != other.effects) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + parameters.hashCode()
+        result = 31 * result + preconditions.hashCode()
+        result = 31 * result + effects.hashCode()
+        return result
+    }
+
+
 }

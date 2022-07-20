@@ -15,20 +15,35 @@ class PlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanSequence(){
-//        val generatedPlans= Planners.dummyPlanner.plan(Problems.stackAX).map { println(it) }
+        val pickA= TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
+        val pickB =TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.b))
+        val pickC=TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))
 
-        for (plan in Planners.dummyPlanner.plan(Problems.stackAX)) {
-            println(plan)
+        var stackAB= TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
+        stackAB = stackAB.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.b))
+        var stackAC = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
+        stackAC = stackAC.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.c))
+
+        val plansGenerated1= Planners.dummyPlanner.plan(Problems.stackAX)
+        val plansGenerated2= Planners.dummyPlanner.plan(Problems.pickX)
+        val pianoCheNonFunziona = Planners.dummyPlanner.plan(Problems.pickXfloorY).toList()
+        val plansGenerated4 = Planners.dummyPlanner.plan(Problems.stackXY)
+        val planGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW)
+
+        val plan2check1= listOf(
+            Plan.of(listOf(pickA,stackAB)),
+            Plan.of(listOf(pickA, stackAC)))
+
+        /*
+        plansGenerated1.toSet().size shouldBe 2
+        plansGenerated2.toSet().size shouldBe 3
+        plansGenerated4.toSet().size shouldBe 6
+*/
+        for (p in pianoCheNonFunziona) {
+            //pianoCheNonFunziona[0].actions[0] shouldBe pianoCheNonFunziona[1].actions[0]
+            println(p)
         }
 
-//        val pickA= TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
-//        var stackAB= TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
-//        stackAB = stackAB.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.b))
-//        val pickC=TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))
-//
-//        val plan2check= sequenceOf(
-//            Plan.of(listOf(pickA,stackAB,pickC)),
-//            Plan.of(listOf(pickA, stackAB)))
-//        generatedPlans.take(2).toSet() shouldBe plan2check.toSet()
+        plansGenerated1.toSet() shouldBe plan2check1.toSet()
     }
 }

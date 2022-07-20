@@ -51,9 +51,9 @@ internal class StripsPlanner : Planner {
                             val substitutions= currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
                             stack.pop()
                             val substitution= substitutions.first()
-                            for (substitution in substitutions.subList(1, substitutions.size)) {//sostituzioni possibile= variabile con a,b,c
+                            for (s in substitutions.subList(1, substitutions.size)) {//sostituzioni possibile= variabile con a,b,c
                                 val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
-                                stackCopy.apply(substitution)
+                                stackCopy.apply(s)
                                 choicePoints.add(ChoicePoint(stackCopy, currentState, mutableListOf<Action>().apply{addAll(plan) }))
                             }
                             stack.apply(substitution)

@@ -1,13 +1,5 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils
-import resources.TestUtils.domainEmpty
-import resources.TestUtils.domainNotEmpty
-import resources.TestUtils.objectSetEmpty
-import resources.TestUtils.objectSetNotEmpty
-import resources.TestUtils.problemEmpty
-import resources.TestUtils.problemNotEmpty
-import resources.TestUtils.state
 import resources.TestUtils.Problems
 import resources.TestUtils.Domains
 import resources.TestUtils.ObjectSets

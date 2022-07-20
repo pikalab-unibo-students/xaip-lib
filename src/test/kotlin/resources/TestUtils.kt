@@ -18,16 +18,8 @@ import Type
 import Value
 import Variable
 import VariableAssignment
-import io.mockk.every
-import io.mockk.mockkClass
 
 object TestUtils {
-    fun getRandomInt(min: Int, max: Int): Int = (min..max).random()
-
-    fun getRandomString(length: Int): String {
-        val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        return List(length) { charset.random() }.joinToString("")
-    }
 
     const val name = "f"
     const val size = 5

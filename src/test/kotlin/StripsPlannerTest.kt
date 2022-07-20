@@ -4,7 +4,7 @@ import resources.TestUtils
 import resources.TestUtils.Planners
 import resources.TestUtils.Problems
 
-class PlannerTest : AnnotationSpec() {
+class StripsPlannerTest : AnnotationSpec() {
     @Ignore
     @Test
     fun testPlanner() {

@@ -16,13 +16,16 @@ internal class StripsPlanner : Planner {
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
         var i = 1
         var goOn = true
-        var set= emptySet<List<Action>>()
+        var set= emptySet<Plan>()
         while (goOn) {
             goOn = true
             for (p in plan(problem.initialState, problem.domain.actions, problem.goal as FluentBasedGoal, i++)) {
                 yield(p)
-                set.plus(p)
-                if(set.size == set.plus(p).size) goOn = false
+                val count=set.size
+                set=set.plus(p)
+                if(count != set.plus(p).size){
+                    goOn = false
+                }
             }
         }
     }

@@ -8,7 +8,6 @@ import resources.TestUtils.Goals
 
 class ProblemTest : AnnotationSpec() {
 
-
     @Test
     fun testProblemObjectWorksAsExpected() {
         Problems.stackAny.domain shouldBe Domains.blockWorld

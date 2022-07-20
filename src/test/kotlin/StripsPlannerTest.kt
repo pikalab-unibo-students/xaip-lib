@@ -25,22 +25,22 @@ class StripsPlannerTest : AnnotationSpec() {
         var stackAC = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
         stackAC = stackAC.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.c))
 
-        //val plansGenerated1= Planners.dummyPlanner.plan(Problems.stackAX)
+        val plansGenerated1= Planners.dummyPlanner.plan(Problems.stackAX)
         val plansGenerated2= Planners.dummyPlanner.plan(Problems.pickX)
-        //val plansGenerated3 = Planners.dummyPlanner.plan(Problems.pickXfloorY).toList()
-        //val plansGenerated4 = Planners.dummyPlanner.plan(Problems.stackXY)
-        //val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW)
+        val plansGenerated3 = Planners.dummyPlanner.plan(Problems.pickXfloorY)
+        val plansGenerated4 = Planners.dummyPlanner.plan(Problems.stackXY)
+        val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW)
 
         val plan2check1= listOf(
             Plan.of(listOf(pickA,stackAB)),
             Plan.of(listOf(pickA, stackAC)))
 
         //plansGenerated1.toSet().size shouldBe 2
-        plansGenerated2.toSet().take(2).size shouldBe 3
-        //plansGenerated3.toSet().size shouldBe 3
+        plansGenerated2.toSet().size shouldBe 3
+        plansGenerated3.toSet().size shouldBe 3
         //plansGenerated4.toSet().size shouldBe 6
         //plansGenerated5.toSet().size shouldBe 6
 
-        //plansGenerated1.toSet() shouldBe plan2check1.toSet()
+        plansGenerated1.toSet() shouldBe plan2check1.toSet()
     }
 }

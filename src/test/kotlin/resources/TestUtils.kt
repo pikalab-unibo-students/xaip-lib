@@ -24,7 +24,7 @@ object TestUtils {
     const val name = "f"
     const val size = 5
 
-    val axioms = arrayOf(Axioms.axiom1)
+    val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack)
     val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
@@ -95,8 +95,9 @@ object TestUtils {
             types = setOf(Types.blocks, Types.locations),
             axioms = emptySet()
         )
-        val blockWorldConstrained = Domain.of(
-            name = "block_world_constrained",
+
+        val blockWorldAxiomException= Domain.of(
+            name = "block_world_axiom_exception",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
@@ -177,7 +178,6 @@ object TestUtils {
 
     object Planners {
         val dummyPlanner= Planner.strips()
-        val floorPlanner= Planner.strips().plan(Problems.stackAny)
     }
 
     object Predicates {
@@ -236,8 +236,16 @@ object TestUtils {
             initialState = States.initial,
             goal = Goals.onXY
         )
+
         val stackXYpickW = Problem.of(
             domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onXYatW
+        )
+
+        val axiomException = Problem.of(
+            domain = Domains.blockWorldAxiomException,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXYatW
@@ -319,8 +327,6 @@ object TestUtils {
 
     val planEmpty = Plan.of(emptyList())
     val planNotEmpty = Plan.of(listOf(actionNotEmpty))
-
-    val state = State.of(setOf(fluentEmpty))
 
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 }

@@ -1,5 +1,8 @@
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import resources.TestUtils
 import resources.TestUtils.Planners
 import resources.TestUtils.Problems
@@ -13,7 +16,6 @@ class StripsPlannerTest : AnnotationSpec() {
         generatedPlan shouldBe plan2check
     }
 
-    //@Ignore
     @Test
     fun testPlanSequence(){
         val pickA= TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
@@ -43,4 +45,16 @@ class StripsPlannerTest : AnnotationSpec() {
 
         plansGenerated1.toSet() shouldBe plan2check1.toSet()
     }
+
+    @Test
+    fun testAxiomException(){
+        val plan= Planners.dummyPlanner.plan(Problems.axiomException)
+
+        val exception = shouldThrow<UnsupportedOperationException> {
+            plan.toSet().size shouldBe 0
+        }
+        exception.message shouldStartWith ("Axioms are not yet supported")
+
+    }
+
 }

@@ -75,6 +75,4 @@ internal data class ActionImpl(
         result = 31 * result + effects.hashCode()
         return result
     }
-
-
 }

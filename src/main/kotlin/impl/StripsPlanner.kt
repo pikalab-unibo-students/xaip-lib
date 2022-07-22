@@ -14,6 +14,9 @@ import java.util.*
 
 internal class StripsPlanner : Planner {
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
+        if(problem.domain.axioms.isNotEmpty()){
+            throw UnsupportedOperationException("Axioms are not yet supported")
+        }
         var i = 1
         var goOn = true
         var set= emptySet<Plan>()

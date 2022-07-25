@@ -25,7 +25,7 @@ object TestUtils {
     const val size = 5
 
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
-    val actions = arrayOf(Actions.pick, Actions.stack)
+    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
     val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
     val predicates= arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)

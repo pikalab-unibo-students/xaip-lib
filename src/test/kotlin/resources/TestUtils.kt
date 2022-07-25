@@ -91,7 +91,7 @@ object TestUtils {
         val blockWorld = Domain.of(
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
-            actions = setOf(Actions.pick, Actions.stack),
+            actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
             types = setOf(Types.blocks, Types.locations),
             axioms = emptySet()
         )

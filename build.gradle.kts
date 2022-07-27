@@ -64,16 +64,9 @@ val createClasspathManifest by tasks.registering {
     }
 }
 */
-// Add the classpath file to the test runtime classpath
-dependencies {
-    // This way "createClasspathManifest" is always executed before the tests!
-    // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
-    //testRuntimeOnly(files(createClasspathManifest))
-}
 
 tasks.jacocoTestReport {
     reports {
-        // xml.isEnabled = true
         html.required.set(true)
     }
 }
@@ -94,4 +87,8 @@ tasks.withType<KotlinCompile> {
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
     config = files(File(projectDir, "config/detekt.yml"))
+}
+
+ktlint {
+    disabledRules.set(setOf("no-wildcard-imports"))
 }

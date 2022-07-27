@@ -90,7 +90,7 @@ class StripsPlannerTest : AnnotationSpec() {
     fun testAxiomException() {
         val plan = Planners.dummyPlanner.plan(Problems.axiomException)
 
-        val exception = shouldThrow<UnsupportedOperationException> {
+        val exception = shouldThrow<IllegalStateException> {
             plan.toSet().size shouldBe 0
         }
         exception.message shouldStartWith ("Axioms are not yet supported")

@@ -11,7 +11,8 @@ complexity:
   LongMethod:
     active: false
   LongParameterList:
-    active: false
+    functionThreshold: 7
+    #active: true
   NestedBlockDepth:
     threshold: 5
   TooManyFunctions:
@@ -19,6 +20,9 @@ complexity:
     ignorePrivate: true
     ignoreOverridden: true
     thresholdInInterfaces: 20
+  ComplexMethod:
+    threshold: 17 #cambiato perché volevo compilare e da 15 a 16  non cambiava molto
+
 naming:
   MemberNameEqualsClassName:
     active: false

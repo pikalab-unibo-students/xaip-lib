@@ -41,7 +41,7 @@ internal class StripsPlanner : Planner {
     private data class ChoicePoint(val stack: Stack<Applicable<*>>, val state: State, val plan: MutableList<Action>)
 
     private fun updateStack(stack: Stack<Applicable<*>>, elem: Any, h: Any? = null): Stack<Applicable<*>> {
-        var stackCopy = Stack<Applicable<*>>().also { it.addAll(stack) }
+        val stackCopy = Stack<Applicable<*>>().also { it.addAll(stack) }
         when (elem) {
             is VariableAssignment -> {
                 stackCopy.apply(elem)
@@ -57,24 +57,26 @@ internal class StripsPlanner : Planner {
         return stackCopy
     }
 
-    private fun updateChoicePoints(
+    private fun updateChoicePoints( // Perché non devo ritornare i punti di scelta?
         list: List<Any>,
         stack: Stack<Applicable<*>>,
         choicePoints: Deque<ChoicePoint>,
         currentState: State,
         plan: List<Action>,
         h: Any? = null
-    ): Deque<ChoicePoint> {
+    ) {
         for (elem in list.subList(1, list.size)) {
             @Suppress("UNCHECKED_CAST")
-            var stackCopy = stack.clone() as Stack<Applicable<*>>
-            if (elem is VariableAssignment) {
-                stackCopy.apply(elem )
-            } else if (elem is Action) {
-                stackCopy.push(elem)
-                stackCopy.addAll((elem).preconditions)
-            } else if (elem is Effect) {
-                stackCopy.apply((h as Effect).mostGeneralUnifier(elem))
+            val stackCopy = stack.clone() as Stack<Applicable<*>>
+            when (elem) {
+                is VariableAssignment -> {
+                    stackCopy.apply(elem)
+                } is Action -> {
+                    stackCopy.push(elem)
+                    stackCopy.addAll((elem).preconditions)
+                } is Effect -> {
+                    stackCopy.apply((h as Effect).mostGeneralUnifier(elem))
+                }
             }
             choicePoints.add(
                 ChoicePoint(
@@ -84,7 +86,6 @@ internal class StripsPlanner : Planner {
                 )
             )
         }
-        return choicePoints
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -119,25 +120,25 @@ internal class StripsPlanner : Planner {
                         if (currentState.fluents.any { it.match(head) }) {
                             val substitutions =
                                 currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
-/*
-                            for (s in substitutions.subList(1, substitutions.size)) {
-                                val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
-                                stackCopy.apply(s)
-                                choicePoints.add(ChoicePoint(stackCopy, currentState, plan.toMutableList()))
-                            }
-                            */
-                            choicePoints = updateChoicePoints(substitutions, stack, choicePoints, currentState, plan)
+                            updateChoicePoints(substitutions, stack, choicePoints, currentState, plan)
                             stack = updateStack(stack, substitutions.first())
                         } else { // "retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
                             val h = Effect.of(head)
                             val actionsMatched = actions.map { it.refresh() }
                                 .filter { action -> action.positiveEffects.any { effect -> effect.match(h) } }
                             val action = actionsMatched.first()
-                            choicePoints = updateChoicePoints(actionsMatched, stack, choicePoints, currentState, plan)
+                            updateChoicePoints(actionsMatched, stack, choicePoints, currentState, plan)
                             stack = updateStack(stack, action, head)
 
                             val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
-                            choicePoints = updateChoicePoints(effectsMatched, stack, choicePoints, currentState, plan, h)
+                            updateChoicePoints(
+                                effectsMatched,
+                                stack,
+                                choicePoints,
+                                currentState,
+                                plan,
+                                h
+                            )
                             stack = updateStack(stack, effectsMatched.first(), h)
                         }
                     }

@@ -51,6 +51,7 @@ tasks.withType<Test> {
 }
 
 // This task creates a file with a classpath descriptor, to be used in tests
+/*
 val createClasspathManifest by tasks.registering {
     val outputDir = file("$buildDir/$name")
     inputs.files(sourceSets.main.get().runtimeClasspath)
@@ -62,12 +63,12 @@ val createClasspathManifest by tasks.registering {
         )
     }
 }
-
+*/
 // Add the classpath file to the test runtime classpath
 dependencies {
     // This way "createClasspathManifest" is always executed before the tests!
     // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
-    testRuntimeOnly(files(createClasspathManifest))
+    //testRuntimeOnly(files(createClasspathManifest))
 }
 
 tasks.jacocoTestReport {

@@ -3,13 +3,13 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Predicates
-import resources.TestUtils.types
-import resources.TestUtils.predicates
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.predicates
 import resources.TestUtils.size
 import resources.TestUtils.type1
+import resources.TestUtils.types
 
 class PredicateTest : AnnotationSpec() {
     @Test
@@ -29,7 +29,7 @@ class PredicateTest : AnnotationSpec() {
     @Test
     fun testPredicateObjectWorksAsExpected() {
         Predicates.at shouldBeIn predicates
-        Predicates.at.arguments.isEmpty() shouldNotBe  true
-        Predicates.at.arguments.forEach{it shouldBeIn types}
+        Predicates.at.arguments.isEmpty() shouldNotBe true
+        Predicates.at.arguments.forEach { it shouldBeIn types }
     }
 }

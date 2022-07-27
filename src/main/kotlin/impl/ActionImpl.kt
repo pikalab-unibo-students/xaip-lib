@@ -31,7 +31,7 @@ internal data class ActionImpl(
 
     override fun refresh(scope: Scope): Action {
         return copy(
-            //parameters = parameters.mapKeys { (k,_)-> k.refresh(scope) },
+            // parameters = parameters.mapKeys { (k,_)-> k.refresh(scope) },
             preconditions = preconditions.map { it.refresh(scope) }.toSet(),
             effects = effects.map { it.refresh(scope) }.toSet(),
             args = args.map { it.refresh(scope) }
@@ -43,14 +43,14 @@ internal data class ActionImpl(
     override val negativeEffects: Set<Effect> by lazy { effects.filterNot { it.isPositive }.toSet() }
 
     private fun Iterable<Fluent>.pretty(functor: String) =
-       map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
+        map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
 
     @Suppress("unused")
     val descriptor: String
         get() = "action($name, " +
-                "${preconditions.pretty("if")}, " +
-                "${positiveEffects.map { it.fluent }.pretty("addList")}, " +
-                "${negativeEffects.map { it.fluent }.pretty("removeList")})"
+            "${preconditions.pretty("if")}, " +
+            "${positiveEffects.map { it.fluent }.pretty("addList")}, " +
+            "${negativeEffects.map { it.fluent }.pretty("removeList")})"
 
     override fun toString(): String = "$name(${args.joinToString(", ") {it.toString()}})"
 

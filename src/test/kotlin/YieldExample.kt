@@ -1,7 +1,7 @@
 fun naturals(): Sequence<Int> = sequence {
     var i = 0
     while (true) {
-        yield((0 .. i).sum())
+        yield((0..i).sum())
     }
 }
 

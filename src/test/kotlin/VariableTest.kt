@@ -1,12 +1,10 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
-import io.kotest.matchers.collections.shouldBeOneOf
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.InternalPlatformDsl.toArray
 import resources.TestUtils.Values
-import resources.TestUtils.variables
 import resources.TestUtils.name
+import resources.TestUtils.variables
 
 class VariableTest : AnnotationSpec() {
     private val localName = name
@@ -33,7 +31,7 @@ class VariableTest : AnnotationSpec() {
 
     @Test
     fun testVariableObjectWorksAsExpected() {
-        Values.X shouldBeIn  variables
+        Values.X shouldBeIn variables
         Values.X.name shouldBeIn variables.map { it.name }
     }
 
@@ -42,5 +40,4 @@ class VariableTest : AnnotationSpec() {
         localVariableNotEmpty shouldBe localVariableNotEmpty
         localVariableNotEmpty shouldNotBe localVariableNotEmpty.refresh()
     }
-
 }

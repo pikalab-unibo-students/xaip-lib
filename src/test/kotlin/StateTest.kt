@@ -1,9 +1,8 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils
-import resources.TestUtils.States
 import resources.TestUtils.Actions
+import resources.TestUtils.States
 
 class StateTest : AnnotationSpec() {
 
@@ -14,10 +13,10 @@ class StateTest : AnnotationSpec() {
 
     @BeforeEach
     fun init() {
-        state = TestUtils.States.initial
-        applicableAction = TestUtils.Actions.pick
-        nonApplicableAction = TestUtils.Actions.stack
-        destinationStates = setOf(TestUtils.States.atAArm, TestUtils.States.atBArm, TestUtils.States.atCArm)
+        state = States.initial
+        applicableAction = Actions.pick
+        nonApplicableAction = Actions.stack
+        destinationStates = setOf(States.atAArm, States.atBArm, States.atCArm)
     }
 
     @Test
@@ -50,6 +49,6 @@ class StateTest : AnnotationSpec() {
 
         States.atAArm.isApplicable(Actions.stack) shouldBe true
         States.atAArm.isApplicable(Actions.pick) shouldBe false
-        States.atAArm.apply(Actions.pick).equals(sequenceOf(States.atAArm))
+        States.initial.apply(Actions.pick).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))
     }
 }

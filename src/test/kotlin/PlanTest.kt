@@ -1,12 +1,11 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import resources.TestUtils
+import resources.TestUtils.Plans
 import resources.TestUtils.actionNotEmpty
+import resources.TestUtils.actions
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
-import resources.TestUtils.Plans
-import resources.TestUtils.actions
 
 class PlanTest : AnnotationSpec() {
     @Test

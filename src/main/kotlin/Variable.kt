@@ -1,7 +1,7 @@
 import impl.VariableImpl
 import it.unibo.tuprolog.core.Scope
 
-//TODO scrivi qualcosa di sensato
+// scrivi qualcosa di sensato
 interface Variable : Value {
     val name: String
 

@@ -1,12 +1,12 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
+import resources.TestUtils.ObjectSets
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.objectSetEmpty
 import resources.TestUtils.objectSetNotEmpty
-import resources.TestUtils.type1
-import resources.TestUtils.ObjectSets
 import resources.TestUtils.objects
+import resources.TestUtils.type1
 import resources.TestUtils.types
 
 class ObjectSetTest : AnnotationSpec() {
@@ -29,6 +29,6 @@ class ObjectSetTest : AnnotationSpec() {
     fun testObjectSetObjectWorksAsExpected() {
         ObjectSets.all.map.isEmpty() shouldBe false
         ObjectSets.all.map.keys.forEach { it shouldBeIn types }
-        ObjectSets.all.map.values.forEach{it.forEach { it shouldBeIn objects}}
+        ObjectSets.all.map.values.forEach { it.forEach { it shouldBeIn objects } }
     }
 }

@@ -14,5 +14,4 @@ interface Problem {
             goal: Goal
         ): Problem = ProblemImpl(domain, objects, initialState, goal)
     }
-
 }

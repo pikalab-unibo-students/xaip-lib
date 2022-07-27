@@ -14,19 +14,19 @@ import java.util.*
 
 internal class StripsPlanner : Planner {
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
-        if(problem.domain.axioms.isNotEmpty()){
+        if (problem.domain.axioms.isNotEmpty()) {
             throw UnsupportedOperationException("Axioms are not yet supported")
         }
         var i = 1
         var goOn = true
-        var set= emptySet<Plan>()
+        var set = emptySet<Plan>()
         while (goOn) {
             goOn = true
             for (p in plan(problem.initialState, problem.domain.actions, problem.goal as FluentBasedGoal, i++)) {
                 yield(p)
-                val count=set.size
-                set=set.plus(p)
-                if(count != set.plus(p).size){
+                val count = set.size
+                set = set.plus(p)
+                if (count != set.plus(p).size) {
                     goOn = false
                 }
             }
@@ -70,7 +70,7 @@ internal class StripsPlanner : Planner {
             while (stack.isNotEmpty()) {
                 val head = stack.peek()
                 when {
-                    head is Fluent -> {//"applica la sostituzione a tutto lo stack"
+                    head is Fluent -> { // "applica la sostituzione a tutto lo stack"
                         if (currentState.fluents.any { it.match(head) }) {
                             val substitutions =
                                 currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
@@ -79,7 +79,7 @@ internal class StripsPlanner : Planner {
                             for (s in substitutions.subList(
                                 1,
                                 substitutions.size
-                            )) {//sostituzioni possibile= variabile con a,b,c
+                            )) { // sostituzioni possibile= variabile con a,b,c
                                 val stackCopy: Stack<Applicable<*>> = stack.clone() as Stack<Applicable<*>>
                                 stackCopy.apply(s)
                                 choicePoints.add(
@@ -91,7 +91,7 @@ internal class StripsPlanner : Planner {
                                 )
                             }
                             stack.apply(substitution)
-                        } else {//"retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
+                        } else { // "retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
                             val h = Effect.of(head)
                             stack.pop()
 
@@ -136,7 +136,7 @@ internal class StripsPlanner : Planner {
                         for (fluent in head.targets)
                             stack.push(fluent)
                     }
-                    (head is Action) -> {//applicare l'azione a currentState e aggiornarlo"
+                    (head is Action) -> { // applicare l'azione a currentState e aggiornarlo"
                         stack.pop()
                         val states = currentState.apply(head).toList()
                         if (states.isEmpty()) {

@@ -6,7 +6,6 @@ import Domain
 import Effect
 import Fluent
 import FluentBasedGoal
-import Goal
 import Object
 import ObjectSet
 import Plan
@@ -26,10 +25,10 @@ object TestUtils {
 
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
-    val variables= arrayOf(Values.W, Values.X, Values.Y, Values.Z)
-    val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything )
-    val predicates= arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
-    val objects = arrayOf(Object.of("a"), Object.of("b"), Object.of("c") , Object.of("floor"), Object.of("arm"), Object.of(0), Object.of(1) , Object.of(2))
+    val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
+    val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
+    val predicates = arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
+    val objects = arrayOf(Object.of("a"), Object.of("b"), Object.of("c"), Object.of("floor"), Object.of("arm"), Object.of(0), Object.of(1), Object.of(2))
 
     object Actions {
         val pick = Action.of(
@@ -60,7 +59,8 @@ object TestUtils {
                 Effect.negative(Fluents.clearY)
             )
         )
-//aggiunto
+
+// aggiunto
         val unStack = Action.of(
             name = "unStack",
             parameters = mapOf(
@@ -78,14 +78,16 @@ object TestUtils {
 
     object Axioms {
         val axiom1 = Axiom.of(
-            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,//variabili che possono apparire nella regola
-            setOf(Fluents.atXArm), //cosa dice della regola
-            setOf(Fluents.onXY))//conseguenze sempre vere della regola sopra
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
+            setOf(Fluents.atXArm), // cosa dice della regola
+            setOf(Fluents.onXY)
+        ) // conseguenze sempre vere della regola sopra
         val axiom2 = Axiom.of(
-            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks) ,//variabili che possono apparire nella regola
-            setOf(Fluents.atYFloor), //cosa dice della regola
-            setOf(Fluents.onXY))//conseguenze sempre vere della regola sopra
-    }//es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
+            mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
+            setOf(Fluents.atYFloor), // cosa dice della regola
+            setOf(Fluents.onXY)
+        ) // conseguenze sempre vere della regola sopra
+    } // es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
 
     object Domains {
         val blockWorld = Domain.of(
@@ -96,7 +98,7 @@ object TestUtils {
             axioms = emptySet()
         )
 
-        val blockWorldAxiomException= Domain.of(
+        val blockWorldAxiomException = Domain.of(
             name = "block_world_axiom_exception",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
@@ -105,13 +107,13 @@ object TestUtils {
         )
     }
 
-    object Effects{
-        val atXFloor= Effect.of(Fluents.atXFloor,true)
-        val armEmpty= Effect.of(Fluents.armEmpty,true)
+    object Effects {
+        val atXFloor = Effect.of(Fluents.atXFloor, true)
+        val armEmpty = Effect.of(Fluents.armEmpty, true)
     }
 
-    object FluentBasedGoals{
-        val f1= FluentBasedGoal.of(setOf(Fluents.atAArm))
+    object FluentBasedGoals {
+        val f1 = FluentBasedGoal.of(setOf(Fluents.atAArm))
     }
 
     object Fluents {
@@ -129,7 +131,7 @@ object TestUtils {
         val atYFloor = Fluent.positive(Predicates.at, Values.Y, Values.floor)
         val atYArm = Fluent.positive(Predicates.at, Values.Y, Values.arm)
 
-        val atWFloor= Fluent.positive(Predicates.at, Values.W, Values.floor)
+        val atWFloor = Fluent.positive(Predicates.at, Values.W, Values.floor)
         val atWArm = Fluent.positive(Predicates.at, Values.W, Values.arm)
 
         val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
@@ -153,14 +155,14 @@ object TestUtils {
 
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-        val onFlooratAandBatCarm=
+        val onFlooratAandBatCarm =
             FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
-        val onAatBandBonFloor= FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
-        val onAX= FluentBasedGoal.of(Fluents.onAX)
+        val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
+        val onAX = FluentBasedGoal.of(Fluents.onAX)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
-        val onXYatW = FluentBasedGoal.of(Fluents.atWArm, Fluents.onXY)//caso sfigato
+        val onXYatW = FluentBasedGoal.of(Fluents.atWArm, Fluents.onXY) // caso sfigato
     }
 
     object ObjectSets {
@@ -173,11 +175,11 @@ object TestUtils {
 
     object Plans {
         val emptyPlan = Plan.of(emptyList())
-        val dummyPlan= Plan.of(listOf(Actions.pick, Actions.stack))
+        val dummyPlan = Plan.of(listOf(Actions.pick, Actions.stack))
     }
 
     object Planners {
-        val dummyPlanner= Planner.strips()
+        val dummyPlanner = Planner.strips()
     }
 
     object Predicates {
@@ -254,8 +256,13 @@ object TestUtils {
 
     object States {
         val initial = State.of(
-            Fluents.atAFloor, Fluents.atBFloor, Fluents.atCFloor, Fluents.armEmpty,
-            Fluents.clearA, Fluents.clearB, Fluents.clearC
+            Fluents.atAFloor,
+            Fluents.atBFloor,
+            Fluents.atCFloor,
+            Fluents.armEmpty,
+            Fluents.clearA,
+            Fluents.clearB,
+            Fluents.clearC
         )
 
         val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
@@ -289,11 +296,10 @@ object TestUtils {
         val Z = Variable.of("Z")
     }
 
-    object VariableAssignments{
+    object VariableAssignments {
         val y2x = VariableAssignment.of(Values.Y, Values.X)
         val x2floor = VariableAssignment.of(Values.X, Values.floor)
-        val x2arm= VariableAssignment.of(Values.X, Values.arm)
-
+        val x2arm = VariableAssignment.of(Values.X, Values.arm)
     }
 
     val type1 = Type.of(name, null)
@@ -306,7 +312,7 @@ object TestUtils {
     val predicateEmpty = Predicate.of("", emptyList())
     val predicateNotEmpty = Predicate.of(name, List(size) { type1 })
 
-    val fluentEmpty = Fluent.of( predicateEmpty, false, emptyList())
+    val fluentEmpty = Fluent.of(predicateEmpty, false, emptyList())
     var fluentNotEmpty = Fluent.of(predicateNotEmpty, true, List<Value>(size) { variableNotEmpty })
 
     val effectEmpty = Effect.of(fluentEmpty, false)

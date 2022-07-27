@@ -2,14 +2,14 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import resources.TestUtils.Domains
+import resources.TestUtils.actions
+import resources.TestUtils.axioms
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.name
 import resources.TestUtils.predicates
-import resources.TestUtils.actions
-import resources.TestUtils.axioms
 import resources.TestUtils.types
-import resources.TestUtils.Domains
 
 class DomainTest : AnnotationSpec() {
     @Test

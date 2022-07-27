@@ -42,7 +42,7 @@ internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
             (args[0] as Struct).toFluent(instanceOf).not()
         }
         arity == instanceOf.arguments.size && functor == instanceOf.name -> {
-            Fluent.of( instanceOf, false, args.map { it.toValue() })
+            Fluent.of(instanceOf, false, args.map { it.toValue() })
         }
         else -> {
             error("Cannot convert $this to ${Fluent::class.simpleName}: it is not matching $instanceOf")

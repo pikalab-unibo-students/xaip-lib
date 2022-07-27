@@ -10,5 +10,4 @@ class FluentBasedGoalTest : AnnotationSpec() {
         FluentBasedGoals.f1.targets.isEmpty() shouldNotBe true
         FluentBasedGoals.f1.isSatisfiedBy(TestUtils.States.atAArm) shouldBe true
     }
-
 }

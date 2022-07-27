@@ -20,7 +20,7 @@ internal data class FluentImpl(
     init {
         require(args.size == instanceOf.arguments.size) {
             "An instance of predicate $instanceOf should be provided with exactly ${instanceOf.arguments.size} " +
-                    "arguments, while ${args.size} were actually provided: $args"
+                "arguments, while ${args.size} were actually provided: $args"
         }
     }
 
@@ -45,7 +45,7 @@ internal data class FluentImpl(
         copy(args = args.map { it.apply(substitution) })
 
     override fun refresh(scope: Scope): Fluent =
-        copy(args=args.map { it.refresh(scope) })
+        copy(args = args.map { it.refresh(scope) })
 
     override fun toString(): String = (if (isNegated) "~" else "") + this.toTerm().toString()
 }

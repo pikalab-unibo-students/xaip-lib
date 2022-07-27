@@ -4,19 +4,18 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
-import resources.TestUtils
+import resources.TestUtils.Fluents
+import resources.TestUtils.Predicates
+import resources.TestUtils.Values
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.predicates
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.variableNotEmpty
-import resources.TestUtils.Fluents
-import resources.TestUtils.Predicates
-import resources.TestUtils.predicates
-import resources.TestUtils.Values
 
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
@@ -72,9 +71,10 @@ class FluentTest : AnnotationSpec() {
         fluent1.mostGeneralUnifier(fluentNotEmpty) shouldBe substitution
         fluentNotEmpty.mostGeneralUnifier(fluentNotEmpty) shouldBe Substitution.empty()
     }
+
     @Test
     fun testActionObjectWorksAsExpected() {
-        val localFluentAtXArm= Fluents.atXArm
+        val localFluentAtXArm = Fluents.atXArm
         val atA = Fluent.positive(Predicates.at, Values.Y, Values.arm)
 
         Fluents.atXArm.args.isEmpty() shouldBe false

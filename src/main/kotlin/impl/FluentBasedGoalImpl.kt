@@ -14,7 +14,7 @@ internal data class FluentBasedGoalImpl(override val targets: Set<Fluent>) : Flu
         FluentBasedGoal.of(targets.map { it.apply(substitution) }.toSet())
 
     override fun refresh(scope: Scope): FluentBasedGoal {
-        return copy(targets=targets.map { it.refresh(scope) }.toSet())
+        return copy(targets = targets.map { it.refresh(scope) }.toSet())
     }
 
     override fun toString(): String =

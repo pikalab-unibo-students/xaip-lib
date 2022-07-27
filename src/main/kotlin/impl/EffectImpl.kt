@@ -14,6 +14,6 @@ internal data class EffectImpl(
         copy(fluent = fluent.apply(substitution))
 
     override fun refresh(scope: Scope): Effect {
-        return copy(fluent= fluent.refresh(scope))
+        return copy(fluent = fluent.refresh(scope))
     }
 }

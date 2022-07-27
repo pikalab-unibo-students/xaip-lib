@@ -6,8 +6,8 @@ import resources.TestUtils.VariableAssignments
 class VariableAssignmentTest : AnnotationSpec() {
     @Test
     fun testVariableAssignmentObjectWorksAsExpected() {
-        VariableAssignments.y2x.values shouldBe arrayOf( Values.X)
-        VariableAssignments.y2x.keys shouldBe arrayOf( Values.Y)
+        VariableAssignments.y2x.values shouldBe arrayOf(Values.X)
+        VariableAssignments.y2x.keys shouldBe arrayOf(Values.Y)
         VariableAssignments.y2x.isEmpty() shouldBe false
 
         VariableAssignments.x2floor.containsKey(Values.X) shouldBe true

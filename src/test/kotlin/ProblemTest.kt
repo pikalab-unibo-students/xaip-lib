@@ -1,10 +1,10 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Problems
 import resources.TestUtils.Domains
-import resources.TestUtils.ObjectSets
-import resources.TestUtils.States
 import resources.TestUtils.Goals
+import resources.TestUtils.ObjectSets
+import resources.TestUtils.Problems
+import resources.TestUtils.States
 
 class ProblemTest : AnnotationSpec() {
 

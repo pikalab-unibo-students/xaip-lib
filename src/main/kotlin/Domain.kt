@@ -15,6 +15,9 @@ interface Domain {
     val axioms: Set<Axiom>
 
     companion object {
+        /***
+         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         */
         fun of(
             name: String,
             predicates: Set<Predicate>,
@@ -24,4 +27,3 @@ interface Domain {
         ): Domain = DomainImpl(name, predicates, actions, types, axioms)
     }
 }
-

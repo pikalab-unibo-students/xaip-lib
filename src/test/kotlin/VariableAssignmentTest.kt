@@ -13,7 +13,10 @@ class VariableAssignmentTest : AnnotationSpec() {
         VariableAssignments.x2floor.containsKey(Values.X) shouldBe true
         VariableAssignments.x2floor.containsValue(Values.floor) shouldBe true
         VariableAssignments.x2floor[Values.X] shouldBe Values.floor
-        VariableAssignments.x2floor.merge(VariableAssignments.y2x) shouldBe VariableAssignment.of(Values.Y, Values.X).merge(VariableAssignment.of(Values.X, Values.floor))
+        VariableAssignments.x2floor.merge(VariableAssignments.y2x) shouldBe VariableAssignment.of(
+            Values.Y,
+            Values.X
+        ).merge(VariableAssignment.of(Values.X, Values.floor))
         VariableAssignments.x2floor.merge(VariableAssignments.x2arm) shouldBe VariableAssignment.empty()
     }
 }

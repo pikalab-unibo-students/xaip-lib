@@ -3,38 +3,40 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import resources.TestUtils
+import resources.TestUtils.Actions
 import resources.TestUtils.Planners
 import resources.TestUtils.Problems
+import resources.TestUtils.Values
 
 class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanner() {
         val generatedPlan = Planners.dummyPlanner.plan(Problems.stack).first()
-        val plan2check = Plan.of(listOf(TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))))
+        val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, TestUtils.Values.c))))
         generatedPlan shouldBe plan2check
     }
 
     @Test
     fun testPlanSequence() {
-        val pickA = TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
-        val pickB = TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.b))
-        val pickC = TestUtils.Actions.pick.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))
+        val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))
+        val pickB = Actions.pick.apply(VariableAssignment.of(Values.X, Values.b))
+        val pickC = Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))
 
-        var stackAB = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
-        stackAB = stackAB.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.b))
-        var stackAC = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.a))
-        stackAC = stackAC.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.c))
+        var stackAB = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
+        stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
+        var stackAC = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
+        stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
 
-        var stackBA = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.b))
-        stackBA = stackBA.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.a))
-        var stackBC = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.b))
-        stackBC = stackBC.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.c))
+        var stackBA = Actions.stack.apply(VariableAssignment.of(Values.X, Values.b))
+        stackBA = stackBA.apply(VariableAssignment.of(Values.Y, Values.a))
+        var stackBC = Actions.stack.apply(VariableAssignment.of(Values.X, Values.b))
+        stackBC = stackBC.apply(VariableAssignment.of(Values.Y, Values.c))
 
-        var stackCB = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))
-        stackCB = stackCB.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.b))
-        var stackCA = TestUtils.Actions.stack.apply(VariableAssignment.of(TestUtils.Values.X, TestUtils.Values.c))
-        stackCA = stackCA.apply(VariableAssignment.of(TestUtils.Values.Y, TestUtils.Values.a))
+        var stackCB = Actions.stack.apply(VariableAssignment.of(Values.X, Values.c))
+        stackCB = stackCB.apply(VariableAssignment.of(Values.Y, Values.b))
+        var stackCA = Actions.stack.apply(VariableAssignment.of(Values.X, Values.c))
+        stackCA = stackCA.apply(VariableAssignment.of(Values.Y, Values.a))
 
         val plansGenerated1 = Planners.dummyPlanner.plan(Problems.stackAX)
         val plansGenerated2 = Planners.dummyPlanner.plan(Problems.pickX)

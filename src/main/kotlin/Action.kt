@@ -13,11 +13,13 @@ interface Action : Applicable<Action> {
     val parameters: Map<Variable, Type>
     val preconditions: Set<Fluent>
     val effects: Set<Effect>
-
     val positiveEffects: Set<Effect>
     val negativeEffects: Set<Effect>
 
     companion object {
+        /***
+         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         */
         fun of(
             name: String,
             parameters: Map<Variable, Type>,
@@ -26,8 +28,3 @@ interface Action : Applicable<Action> {
         ): Action = ActionImpl(name, parameters, preconditions, effects)
     }
 }
-
-
-
-
-

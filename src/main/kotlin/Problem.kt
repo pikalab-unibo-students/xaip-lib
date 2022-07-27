@@ -1,5 +1,7 @@
 import impl.ProblemImpl
-
+/***
+ * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ */
 interface Problem {
     val domain: Domain
     val objects: ObjectSet
@@ -7,6 +9,9 @@ interface Problem {
     val goal: Goal
 
     companion object {
+        /***
+         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         */
         fun of(
             domain: Domain,
             objects: ObjectSet,

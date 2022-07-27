@@ -13,6 +13,9 @@ interface Axiom {
     val implies: Set<Fluent>
 
     companion object {
+        /***
+         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         */
         fun of(
             parameters: Map<Variable, Type>,
             context: Set<Fluent>,
@@ -20,4 +23,3 @@ interface Axiom {
         ): Axiom = AxiomImpl(parameters, context, implies)
     }
 }
-

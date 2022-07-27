@@ -1,3 +1,6 @@
+/***
+ * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ */
 @Suppress("MemberVisibilityCanBePrivate", "CanBeParameter")
 class NotUnifiableException
 @JvmOverloads

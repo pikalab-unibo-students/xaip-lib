@@ -1,12 +1,12 @@
 import impl.ActionImpl
 
 /**
- * An action represents a way for changing the state of the world.
+ * An [Action] represents a way for changing the state of the world.
  *
- * The [name] states the name of the action.
- * The [parameters] is a map of variables, (and their types) on which the particular rule operates.
- * The [preconditions] is a goal description that must be satisfied before the action is applied.
- * The [effects] describe the effects of the action.
+ * @property name: states the name of the action.
+ * @property parameters: is a map of variables, (and their types) on which the particular rule operates.
+ * @property preconditions: is a goal description that must be satisfied before the action is applied.
+ * @property effects: describe the effects of the action.
  * */
 interface Action : Applicable<Action> {
     val name: String
@@ -18,7 +18,7 @@ interface Action : Applicable<Action> {
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Action] creation.
          */
         fun of(
             name: String,

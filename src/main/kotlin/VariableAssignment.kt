@@ -1,21 +1,23 @@
 import impl.VariableAssignmentImpl
 import it.unibo.tuprolog.core.Substitution
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Entity responsible for performing logic substations.
  */
-interface VariableAssignment : Map<Variable, Value> { /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+interface VariableAssignment : Map<Variable, Value> {
+
+    /***
+     * Method resposible of performing the unification among two logic substitutions.
      */
     fun merge(other: VariableAssignment): VariableAssignment
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [VariableAssignment] creation.
          */
         fun of(variable: Variable, value: Value): VariableAssignment = VariableAssignmentImpl(variable, value)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Method that wraps an empty logic substation.
          */
         fun empty(): VariableAssignment = VariableAssignmentImpl(Substitution.empty())
     }

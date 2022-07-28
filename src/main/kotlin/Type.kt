@@ -1,7 +1,9 @@
 import impl.TypeImpl
 
 /**
- * A type in PDDL language should have a [name] and optionally a supertype if it is a subtype.
+ * Generic entity for the objects' types.
+ * @property name: [Type]'s name.
+ * @property superType: supertype of the current [Type], if it exists.
  */
 interface Type {
     val name: String
@@ -9,7 +11,7 @@ interface Type {
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Type] creation.
          */
         @JvmOverloads
         fun of(name: String, superType: Type? = null): Type = TypeImpl(name, superType)

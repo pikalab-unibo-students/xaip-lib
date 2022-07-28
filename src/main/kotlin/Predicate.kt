@@ -1,7 +1,7 @@
 import impl.PredicateImpl
 
 /**
- * A predicate should be as the fluents in strips.
+ * A [Predicate] are facts that are interested (e.g. properties of objects), which can be true or false.
  */
 interface Predicate {
     val name: String
@@ -9,12 +9,12 @@ interface Predicate {
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Predicate] creation.
          */
         fun of(name: String, arguments: List<Type>): Predicate = PredicateImpl(name, arguments)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Predicate] creation.
          */
         fun of(name: String, vararg arguments: Type): Predicate = PredicateImpl(name, listOf(*arguments))
     }

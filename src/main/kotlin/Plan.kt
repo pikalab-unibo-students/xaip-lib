@@ -1,13 +1,16 @@
 import impl.PlanImpl
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Method that represents the goal of the computation.
+ * A plan consists of the set of actions need to reach the goal.
+ *
+ * @property actions: list of actions to be executed to achieve the goal from the initial state.
  */
 interface Plan {
     val actions: List<Action>
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Plan] creation.
          */
         fun of(actions: List<Action>): Plan = PlanImpl(actions)
     }

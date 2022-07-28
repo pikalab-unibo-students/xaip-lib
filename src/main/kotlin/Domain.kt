@@ -1,11 +1,13 @@
 import impl.DomainImpl
 
 /**
- * The domain definition establishes the context of the world.
+ * The [Domain] definition establishes the context of the world.
  * It determines what sorts of details the states can include.
- * These are: facts that are interested ([predicates]), and
- * what can we do to move between states in the world ([actions]),
- * [types] and [axioms].
+ * @property name: name of the [Domain].
+ * @property predicates: facts allowed in the problem.
+ * @property actions: set of actions allowed to move among states.
+ * @property types: types user can use for the objects' definition.
+ * @property axioms: set of rules to be applied to the problem.
  */
 interface Domain {
     val name: String
@@ -16,7 +18,7 @@ interface Domain {
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Domain] creation.
          */
         fun of(
             name: String,

@@ -1,5 +1,5 @@
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Exception thrown by [Fluent] whenever a mgu cannot be found.
  */
 @Suppress("MemberVisibilityCanBePrivate", "CanBeParameter")
 class NotUnifiableException

@@ -9,8 +9,9 @@ import impl.res.toTerm
 import impl.res.toValue
 import java.util.*
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
-/***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+
+/**
+ * Implementation class for the [VariableAssignment] interface.
  */
 data class VariableAssignmentImpl(internal val delegate: LogicSubstitution) : VariableAssignment {
 

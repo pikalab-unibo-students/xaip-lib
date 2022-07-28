@@ -1,16 +1,15 @@
 import impl.StripsPlanner
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Interface that represents the algorithm to be used to solve the [Problem].
  */
 interface Planner {
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method used to compute the plan to reach the [Goal].
      */
     fun plan(problem: Problem): Sequence<Plan>
 
-    companion object {
-        /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+    companion object { /***
+         * Factory method for an [StripsPlanner] creation.
          */
         fun strips(): Planner = StripsPlanner()
     }

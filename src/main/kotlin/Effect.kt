@@ -1,37 +1,40 @@
 import impl.EffectImpl
 
 /**
- * An effect consists of a conjunctive logical expression ([fluent]],
- * which defines which values should be set to true or false ([isPositive])
- * if an action is applied.
+ * An [Effect] is an entity that represents the result of the application of an [Action] to a given [State].
+ * @property fluent: conjunctive logical expression.
+ * @property isPositive: boolean field that state is it is a positive [Effect], or a negative one.
  */
 interface Effect : Applicable<Effect> {
     val fluent: Fluent
     val isPositive: Boolean
 
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method that checks if two effects unify.
+     * @return true if they do or, false otherwise.
      */
     fun match(other: Effect): Boolean = fluent.match(other.fluent)
 
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method that look for the most general unifier among two effects.
+     * @return the mgu, if it finds one, or an exception if no mgu exists.
      */
     fun mostGeneralUnifier(other: Effect): VariableAssignment = fluent.mostGeneralUnifier(other.fluent)
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Effect] creation.
+         * It creates a positive [Effect] by default.
          */
         fun of(fluent: Fluent, isPositive: Boolean = true): Effect = EffectImpl(fluent, isPositive)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Method for the creation of a positive [Effect].
          */
         fun positive(fluent: Fluent): Effect = EffectImpl(fluent, true)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Method for the creation of a negative [Effect].
          */
         fun negative(fluent: Fluent): Effect = EffectImpl(fluent, false)
     }

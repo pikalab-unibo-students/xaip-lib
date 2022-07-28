@@ -9,11 +9,6 @@ import Variable
 import VariableAssignment
 import it.unibo.tuprolog.core.Scope
 
-/**
- * An action is a quartet ⟨N, M, P, D⟩; where N is the action name, P is a map of variables and their types,
- * P is a set of fluents representing pre-conditions,
- * E is a set of effect, representing positive/negative post-conditions a.k.a. Add List or Remove List.
- */
 internal data class ActionImpl(
     override val name: String,
     override val parameters: Map<Variable, Type>,

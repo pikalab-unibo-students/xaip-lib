@@ -1,10 +1,9 @@
 /**
- * The goal is a logical expression of predicates which must be satisfied
- * in order for a plan to be considered a solution.
+ * A generic interface for the [Goal] of a [Problem].
  */
 interface Goal {
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method that states if a state satisfy the given [Goal].
      */
     fun isSatisfiedBy(state: State): Boolean
 }

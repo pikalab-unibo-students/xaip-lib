@@ -1,18 +1,19 @@
 import impl.ObjectSetImpl
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Entity that wraps a set of [Object] and their [Type].
+ * * @property map: variable that contains the set of [Object] and their [Type].
  */
 interface ObjectSet {
     val map: Map<Type, Set<Object>>
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [ObjectSet] creation.
          */
         fun of(map: Map<Type, Set<Object>>): ObjectSet = ObjectSetImpl(map)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [ObjectSet] creation.
          */
         fun of(vararg map: Pair<Type, Set<Object>>): ObjectSet = of(map.toMap())
     }

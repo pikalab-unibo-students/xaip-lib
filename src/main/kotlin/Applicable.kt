@@ -1,15 +1,16 @@
 import it.unibo.tuprolog.core.Scope
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * Generic type for an applicable entity.
  */
 interface Applicable<Self : Applicable<Self>> {
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method responsible for the application of a logic substitution to the entity.
      */
     fun apply(substitution: VariableAssignment): Self
 
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method responsible for the refreshing of variables.
+     * Mainly used to avoid spurrious substitutions.
      */
     fun refresh(scope: Scope = Scope.empty()): Self
 }

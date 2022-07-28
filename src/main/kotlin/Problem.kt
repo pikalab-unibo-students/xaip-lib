@@ -1,6 +1,11 @@
 import impl.ProblemImpl
 /***
- * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+ * A [Problem] express the global worldly aspects of a problem planned.
+ *
+ * @property domain: [Domain] of the [Problem].
+ * @property objects: entities present in the [Problem].
+ * @property initialState: starting state of the [Problem].
+ * @property goal: objective of the [Problem].
  */
 interface Problem {
     val domain: Domain
@@ -10,7 +15,7 @@ interface Problem {
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Problem] creation.
          */
         fun of(
             domain: Domain,

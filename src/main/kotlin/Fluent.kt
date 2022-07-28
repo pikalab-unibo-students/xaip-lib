@@ -1,7 +1,7 @@
 import impl.FluentImpl
 
 /**
- * A fluent represents a predicate ([instanceOf]) at runtime.
+ * A [Fluent] represents a predicate ([instanceOf]) at runtime.
  * It states its truthiness/falseness.
  */
 interface Fluent : Applicable<Fluent> {
@@ -11,42 +11,44 @@ interface Fluent : Applicable<Fluent> {
     val isNegated: Boolean
     val isGround: Boolean
 
-    /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+    /**
+     * Capisci cosa fa.
      */
     operator fun not(): Fluent
 
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method that checks if two fluents unify.
+     * @return true if they do or, false otherwise.
      */
     fun match(other: Fluent): Boolean
 
     /***
-     * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+     * Method that look for the most general unifier among two fluents.
+     * @return the mgu, if it finds one, or an exception if no mgu exists.
      */
     fun mostGeneralUnifier(other: Fluent): VariableAssignment
 
     companion object {
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Fluent] creation.
          */
         fun of(instanceOf: Predicate, isNegated: Boolean = false, args: List<Value>): Fluent =
             FluentImpl(instanceOf, isNegated, args)
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Factory method for an [Fluent] creation.
          */
         fun of(instanceOf: Predicate, isNegated: Boolean = false, vararg args: Value): Fluent =
             FluentImpl(instanceOf, isNegated, listOf(*args))
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Method for the creation of a positive [Effect].
          */
         fun positive(instanceOf: Predicate, vararg args: Value): Fluent =
             FluentImpl(instanceOf, false, listOf(*args))
 
         /***
-         * Scrivi qualcosa di sensato in futuro ora basta che passi il checkstyle.
+         * Method for the creation of a negative [Fluent].
          */
         fun negative(instanceOf: Predicate, vararg args: Value): Fluent =
             FluentImpl(instanceOf, true, listOf(*args))

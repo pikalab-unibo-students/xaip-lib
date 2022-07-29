@@ -11,7 +11,7 @@ complexity:
   LongMethod:
     active: false
   LongParameterList:
-    functionThreshold: 7
+    functionThreshold: 8 #updated
     #active: true
   NestedBlockDepth:
     threshold: 5
@@ -26,6 +26,8 @@ complexity:
 naming:
   MemberNameEqualsClassName:
     active: false
+  FunctionNaming:
+    active: false #updated: rompe sugli spazi
 performance:
   SpreadOperator:
     active: false

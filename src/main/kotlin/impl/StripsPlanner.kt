@@ -38,6 +38,9 @@ internal class StripsPlanner : Planner {
         }
     }
 
+    private fun Set<Action>.`actions whose effects match head`(head: Effect) = this.map { it.refresh() }
+        .filter { action -> action.positiveEffects.any { effect -> effect.match(head) } }
+
     private data class ChoicePoint(val stack: Stack<Applicable<*>>, val state: State, val plan: MutableList<Action>)
 
     private fun updateStack(stack: Stack<Applicable<*>>, elem: Any, h: Any? = null): Stack<Applicable<*>> {
@@ -97,7 +100,7 @@ internal class StripsPlanner : Planner {
     ): Sequence<Plan> = sequence<Plan> {
         var currentState = initialState
         var stack = Stack<Applicable<*>>().also { it.push(goal) }
-        var choicePoints: Deque<ChoicePoint> = LinkedList()
+        val choicePoints: Deque<ChoicePoint> = LinkedList()
         var plan = mutableListOf<Action>()
 
         fun backtrackOrFail(): Boolean {
@@ -124,8 +127,7 @@ internal class StripsPlanner : Planner {
                             stack = updateStack(stack, substitutions.first())
                         } else { // "retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
                             val h = Effect.of(head)
-                            val actionsMatched = actions.map { it.refresh() }
-                                .filter { action -> action.positiveEffects.any { effect -> effect.match(h) } }
+                            val actionsMatched = actions.`actions whose effects match head`(h)
                             val action = actionsMatched.first()
                             updateChoicePoints(actionsMatched, stack, choicePoints, currentState, plan)
                             stack = updateStack(stack, action, head)

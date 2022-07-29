@@ -12,7 +12,7 @@ interface Fluent : Applicable<Fluent> {
     val isGround: Boolean
 
     /**
-     * Capisci cosa fa.
+     * Method responsible for the negation of the [isNegated] field.
      */
     operator fun not(): Fluent
 

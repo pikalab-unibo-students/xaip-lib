@@ -6,18 +6,23 @@ on:
   push:
     branches:
       - develop
-      - feature/strips
+      - feature/**
+      - master
     
   pull_request:
     branches:
       - master
-      - feature/strips
+      - develop
 
 jobs:
   build:
     name: build
-    runs-on: windows-latest
-    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v3
 

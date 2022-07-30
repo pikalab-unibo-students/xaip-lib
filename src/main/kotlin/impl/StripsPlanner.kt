@@ -16,11 +16,11 @@ internal class StripsPlanner : Planner {
 
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
         if (problem.domain.axioms.isNotEmpty()) error("Axioms are not yet supported")
-        var i = 1
+        var depth = 1
         var goOn = true
         var set = emptySet<Plan>()
         while (goOn) {
-            for (p in plan(problem.initialState, problem.domain.actions, problem.goal as FluentBasedGoal, i++)) {
+            for (p in plan(problem.initialState, problem.domain.actions, problem.goal as FluentBasedGoal, depth++)) {
                 yield(p)
                 if (set.size != set.plus(p).size) {
                     set = set.plus(p)
@@ -31,10 +31,10 @@ internal class StripsPlanner : Planner {
     }
 
     private fun Stack<Applicable<*>>.apply(substitution: VariableAssignment) {
-        val i = listIterator()
-        while (i.hasNext()) {
-            val x = i.next()
-            i.set(x.apply(substitution))
+        val iterator = listIterator()
+        while (iterator.hasNext()) {
+            val x = iterator.next()
+            iterator.set(x.apply(substitution))
         }
     }
 

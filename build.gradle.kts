@@ -27,12 +27,6 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
-/*
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-}
-
- */
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
@@ -49,21 +43,6 @@ tasks.withType<Test> {
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
-
-// This task creates a file with a classpath descriptor, to be used in tests
-/*
-val createClasspathManifest by tasks.registering {
-    val outputDir = file("$buildDir/$name")
-    inputs.files(sourceSets.main.get().runtimeClasspath)
-    outputs.dir(outputDir)
-    doLast {
-        outputDir.mkdirs()
-        File(outputDir, "plugin-classpath.txt").writeText(
-            sourceSets.main.get().runtimeClasspath.joinToString("\n")
-        )
-    }
-}
-*/
 
 tasks.jacocoTestReport {
     reports {

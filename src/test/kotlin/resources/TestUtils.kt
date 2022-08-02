@@ -23,7 +23,7 @@ object TestUtils {
     const val name = "f"
     const val size = 5
 
-    val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
+    // val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
@@ -85,6 +85,7 @@ object TestUtils {
         )
     }
 
+/*
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
@@ -97,7 +98,7 @@ object TestUtils {
             setOf(Fluents.onXY)
         ) // conseguenze sempre vere della regola sopra
     } // es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
-
+*/
     object Domains {
         val blockWorld = Domain.of(
             name = "block_world",
@@ -112,7 +113,7 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
+            axioms = emptySet() // setOf(Axioms.axiom1, Axioms.axiom2)
         )
     }
 
@@ -327,8 +328,8 @@ object TestUtils {
     val effectEmpty = Effect.of(fluentEmpty, false)
     val effectNotEmpty = Effect.of(fluentNotEmpty, true)
 
-    val axiomEmpty = Axiom.of(emptyMap(), emptySet(), emptySet())
-    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(fluentNotEmpty))
+    val axiomEmpty = Axiom.of(emptyMap(), emptyList(), emptyList())
+    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), listOf(fluentNotEmpty), listOf(fluentNotEmpty))
 
     val actionEmpty = Action.of("", emptyMap(), emptySet(), emptySet())
     var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))

@@ -86,6 +86,7 @@ class StripsPlannerTest : AnnotationSpec() {
         plansGenerated5.toSet() shouldBe plan2check5.toSet()
     }
 
+    @Ignore
     @Test
     fun testAxiomException() {
         val plan = Planners.dummyPlanner.plan(Problems.axiomException)

@@ -6,18 +6,19 @@ import Expression
 import Operand
 import Or
 
-class BinaryExpressionImpl(
+internal data class BinaryExpressionImpl(
     override val expression1: Expression,
     override val expression2: Expression,
     override val operand: Operand
-) :BinaryExpression {
-    override fun calculate(): Any={
-        when (operand){
-            is And->{
+) : BinaryExpression {
 
+    override fun calculate() {
+        when (this.operand) {
+            is And -> {
+                TODO("Not yet implemented")
             }
-            is Or->{
-
+            is Or -> {
+                TODO("Not yet implemented")
             }
         }
     }

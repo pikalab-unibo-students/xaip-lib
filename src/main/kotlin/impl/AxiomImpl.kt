@@ -2,7 +2,6 @@ package impl
 
 import Axiom
 import Expression
-import Fluent
 import Type
 import Variable
 

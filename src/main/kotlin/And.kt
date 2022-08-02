@@ -1,2 +1,4 @@
-interface And:Operand {
-}
+/**
+ * Interface for the && operand.
+ */
+sealed interface And : Operand

@@ -1,2 +1,4 @@
-sealed interface Not: Operand {
-}
+/**
+ * Interface for the ! operand.
+ */
+sealed interface Not : Operand

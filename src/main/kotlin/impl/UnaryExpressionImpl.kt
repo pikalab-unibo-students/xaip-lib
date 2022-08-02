@@ -5,16 +5,15 @@ import Not
 import Operand
 import UnaryExpression
 
-class UnaryExpressionImpl: UnaryExpression {
-    override val expression: Expression
-        get() = TODO("Not yet implemented")
+internal data class UnaryExpressionImpl(
+    override val expression: Expression,
     override val operand: Operand
-        get() = TODO("Not yet implemented")
+) : UnaryExpression {
 
     override fun calculate() {
-        when (operand){
-            is Not->{
-
+        when (this.operand) {
+            is Not -> {
+                TODO("Not yet implemented")
             }
         }
     }

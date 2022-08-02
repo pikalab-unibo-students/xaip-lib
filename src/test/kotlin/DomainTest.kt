@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Domains
 import resources.TestUtils.actions
-import resources.TestUtils.axioms
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.name
@@ -36,7 +35,7 @@ class DomainTest : AnnotationSpec() {
         Domains.blockWorld.predicates.isEmpty() shouldNotBe true
         Domains.blockWorld.actions.isEmpty() shouldBe false
         Domains.blockWorld.types.isEmpty() shouldBe false
-        Domains.blockWorld.axioms.isEmpty() shouldBe true
+        // Domains.blockWorld.axioms.isEmpty() shouldBe true
         Domains.blockWorld.predicates.forEach { it shouldBeIn predicates }
         Domains.blockWorld.actions.forEach { it shouldBeIn actions }
         Domains.blockWorld.types.forEach { it shouldBeIn types }

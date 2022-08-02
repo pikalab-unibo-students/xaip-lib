@@ -3,44 +3,28 @@ package impl.dsl
 import Domain
 import Predicate
 
-
-class DomainDSL{
+/**
+ * Class representing a [Domain] in the DSL.
+ */
+class DomainDSL {
     var name: String = "nome farlocco"
     var predicates: List<Predicate> = TODO()
 
-
+    /**
+     * Scrivi qualcosa di sensato quando fixi sta roba.
+     */
     fun predicates(f: PredicateDSL.() -> Unit) {
+        val ps = PredicateDSL()
 
-    val ps = PredicateDSL()
+        ps.f()
 
-    ps.f()
+        this.predicates = ps.predicates
+    }
 
-    this.predicates = ps.predicates
-
-  }
-
-
-
-  fun buildDomain(): Domain {
-
-      var predicates2: List<Predicate>
-
-
-      fun predicates(f: PredicateDSL.() -> Unit) {
-
-          val ps = PredicateDSL()
-
-          ps.f()
-
-          predicates2 = ps.predicates
-
-      }
-
-
-      fun buildDomain(): Domain{
-          TODO()
-      }
-      TODO()
-  }
-
+    /**
+     * Scrivi qualcosa di sensato quando fixi sta roba.
+     */
+    fun buildDomain(): Domain {
+        TODO()
+    }
 }

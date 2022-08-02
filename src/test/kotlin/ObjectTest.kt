@@ -20,10 +20,13 @@ class ObjectTest : AnnotationSpec() {
     }
 
     @Test
-    fun testCommonProperties() {
+    fun testCommonPropertiesObjectEmpty() {
         objEmpty.apply(substitution) shouldBe objEmpty
         objEmpty.isGround shouldBe true
+    }
 
+    @Test
+    fun testCommonPropertiesObjectNotEmpty() {
         objNotEmpty.apply(substitution) shouldBe objNotEmpty
         objNotEmpty.isGround shouldBe true
     }
@@ -31,10 +34,12 @@ class ObjectTest : AnnotationSpec() {
     @Test
     fun testObjectTestUtilObjectWorksAsExpected() {
         Values.arm shouldBeIn objects
+        Values.arm.isGround shouldBe true
+    }
 
+    @Test
+    fun testObjectTestUtilObjectVariableAssignmentWorksAsExpected() {
         Values.arm.apply(VariableAssignment.of(Values.X, Values.X)) shouldBe Values.arm
         Values.arm.apply(VariableAssignment.of(Values.X, Values.floor)) shouldBe Values.arm
-
-        Values.arm.isGround shouldBe true
     }
 }

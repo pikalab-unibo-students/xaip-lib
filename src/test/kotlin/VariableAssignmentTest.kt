@@ -5,11 +5,13 @@ import resources.TestUtils.VariableAssignments
 
 class VariableAssignmentTest : AnnotationSpec() {
     @Test
-    fun testVariableAssignmentObjectWorksAsExpected() {
+    fun testVariableAssignmentObjectY2XworksAsExpected() {
         VariableAssignments.y2x.values shouldBe arrayOf(Values.X)
         VariableAssignments.y2x.keys shouldBe arrayOf(Values.Y)
         VariableAssignments.y2x.isEmpty() shouldBe false
-
+    }
+    @Test
+    fun testVariableAssignmentObjectX2FloorWorksAsExpected() {
         VariableAssignments.x2floor.containsKey(Values.X) shouldBe true
         VariableAssignments.x2floor.containsValue(Values.floor) shouldBe true
         VariableAssignments.x2floor[Values.X] shouldBe Values.floor

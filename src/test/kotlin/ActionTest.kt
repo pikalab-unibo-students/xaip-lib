@@ -66,7 +66,10 @@ class ActionTest : AnnotationSpec() {
 
         Actions.pick.preconditions.isEmpty() shouldNotBe true
         Actions.pick.effects.isEmpty() shouldNotBe true
+    }
 
+    @Test
+    fun testActionObjectVariableAssignmentX2XworksAsExpected() {
         Actions.pick.apply(VariableAssignment.of(Values.X, Values.X)) shouldBe
             Action.of(
                 "pick",
@@ -81,6 +84,10 @@ class ActionTest : AnnotationSpec() {
                     Effect.negative(Fluents.clearX)
                 )
             )
+    }
+
+    @Test
+    fun testActionObjectVariableAssignmentX2YworksAsExpected() {
         Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
             Action.of(
                 "pick",

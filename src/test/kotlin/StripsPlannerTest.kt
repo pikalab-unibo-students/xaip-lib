@@ -18,6 +18,26 @@ class StripsPlannerTest : AnnotationSpec() {
     }
 
     @Test
+    fun testStackAX() {
+        val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))
+
+        var stackAB = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
+        stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
+        var stackAC = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
+        stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
+
+        val plansGenerated1 = Planners.dummyPlanner.plan(Problems.stackAX)
+        val plan2check1 = listOf(
+            Plan.of(listOf(pickA, stackAB)),
+            Plan.of(listOf(pickA, stackAC))
+        )
+
+        plansGenerated1.toSet().size shouldBe 2
+
+        plansGenerated1.toSet() shouldBe plan2check1.toSet()
+    }
+
+    @Test
     fun testPlanSequence() {
         val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))
         val pickB = Actions.pick.apply(VariableAssignment.of(Values.X, Values.b))

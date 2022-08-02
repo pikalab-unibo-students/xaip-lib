@@ -17,15 +17,17 @@ internal class StripsPlanner : Planner {
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
         if (problem.domain.axioms.isNotEmpty()) error("Axioms are not yet supported")
         var depth = 1
-        var goOn = true
-        var set = emptySet<Plan>()
-        while (goOn) {
+        val set = mutableSetOf<Plan>()
+        while (true) {
+            val originalSize = set.size
             for (p in plan(problem.initialState, problem.domain.actions, problem.goal as FluentBasedGoal, depth++)) {
-                yield(p)
-                if (set.size != set.plus(p).size) {
-                    set = set.plus(p)
-                    goOn = false
+                if (p !in set) {
+                    yield(p)
+                    set.add(p)
                 }
+            }
+            if (originalSize > 0 && set.size == originalSize) {
+                break
             }
         }
     }
@@ -38,55 +40,50 @@ internal class StripsPlanner : Planner {
         }
     }
 
-    private fun Set<Action>.`actions whose effects match head`(head: Effect) = this.map { it.refresh() }
-        .filter { action -> action.positiveEffects.any { effect -> effect.match(head) } }
+    private fun Set<Action>.`actions whose effects match head`(head: Effect) =
+        map { it.refresh() }.filter { action -> action.positiveEffects.any { effect -> effect.match(head) } }
 
     private data class ChoicePoint(val stack: Stack<Applicable<*>>, val state: State, val plan: MutableList<Action>)
 
-    private fun updateStack(stack: Stack<Applicable<*>>, elem: Any, h: Any? = null): Stack<Applicable<*>> {
-        val stackCopy = Stack<Applicable<*>>().also { it.addAll(stack) }
+    private fun Stack<Applicable<*>>.update(elem: Any, h: Effect? = null) {
         when (elem) {
             is VariableAssignment -> {
-                stackCopy.apply(elem)
+                this.apply(elem)
             }
             is Action -> {
-                stackCopy.push(elem)
-                stackCopy.addAll(elem.preconditions)
+                this.push(elem)
+                this.addAll(elem.preconditions)
             }
             is Effect -> {
-                stackCopy.apply((h as Effect).mostGeneralUnifier(elem))
+                this.apply(h!!.mostGeneralUnifier(elem))
             }
         }
-        return stackCopy
     }
 
-    private fun updateChoicePoints( // Perché non devo ritornare i punti di scelta?
-        list: List<Any>,
+    private fun Deque<ChoicePoint>.update( // Perché non devo ritornare i punti di scelta?
+        changes: List<Any>,
         stack: Stack<Applicable<*>>,
-        choicePoints: Deque<ChoicePoint>,
         currentState: State,
         plan: List<Action>,
-        h: Any? = null
+        effect: Effect? = null
     ) {
-        for (elem in list.subList(1, list.size)) {
+        for (elem in changes.asSequence().drop(1)) {
             @Suppress("UNCHECKED_CAST")
             val stackCopy = stack.clone() as Stack<Applicable<*>>
             when (elem) {
                 is VariableAssignment -> {
                     stackCopy.apply(elem)
-                } is Action -> {
+                }
+                is Action -> {
                     stackCopy.push(elem)
                     stackCopy.addAll((elem).preconditions)
-                } is Effect -> {
-                    stackCopy.apply((h as Effect).mostGeneralUnifier(elem))
+                }
+                is Effect -> {
+                    stackCopy.apply(effect!!.mostGeneralUnifier(elem))
                 }
             }
-            choicePoints.add(
-                ChoicePoint(
-                    stackCopy,
-                    currentState,
-                    plan.toMutableList()
-                )
+            this.addLast(
+                ChoicePoint(stackCopy, currentState, plan.toMutableList())
             )
         }
     }
@@ -123,25 +120,18 @@ internal class StripsPlanner : Planner {
                         if (currentState.fluents.any { it.match(head) }) {
                             val substitutions =
                                 currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
-                            updateChoicePoints(substitutions, stack, choicePoints, currentState, plan)
-                            stack = updateStack(stack, substitutions.first())
+                            choicePoints.update(substitutions, stack, currentState, plan)
+                            stack.update(substitutions.first())
                         } else { // "retrieve dell'azione - push dell'azione -push delle precondizioni dell'azione"
                             val h = Effect.of(head)
                             val actionsMatched = actions.`actions whose effects match head`(h)
                             val action = actionsMatched.first()
-                            updateChoicePoints(actionsMatched, stack, choicePoints, currentState, plan)
-                            stack = updateStack(stack, action, head)
+                            choicePoints.update(actionsMatched, stack, currentState, plan)
+                            stack.update(action, h)
 
                             val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
-                            updateChoicePoints(
-                                effectsMatched,
-                                stack,
-                                choicePoints,
-                                currentState,
-                                plan,
-                                h
-                            )
-                            stack = updateStack(stack, effectsMatched.first(), h)
+                            choicePoints.update(effectsMatched, stack, currentState, plan, h)
+                            stack.update(effectsMatched.first(), h)
                         }
                     }
                     (head is FluentBasedGoal) -> {
@@ -151,7 +141,7 @@ internal class StripsPlanner : Planner {
                         val states = currentState.apply(head).toList()
                         if (states.isNotEmpty()) {
                             currentState = states.first()
-                            updateChoicePoints(states, stack, choicePoints, currentState, plan)
+                            choicePoints.update(states, stack, currentState, plan)
                             plan.add(head)
                         }
                         if ((plan.size > maxDepth || states.isEmpty()) && (backtrackOrFail())) return@sequence

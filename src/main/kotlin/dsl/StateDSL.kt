@@ -1,4 +1,4 @@
-package impl.dsl
+package dsl
 /**
  * Class representing a [State] in the DSL.
  */

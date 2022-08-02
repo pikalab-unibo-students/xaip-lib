@@ -1,4 +1,4 @@
-package impl.dsl
+package dsl
 
 import Action
 import Axiom
@@ -11,10 +11,11 @@ import Type
  */
 class DomainDSL {
     var name: String = "nome farlocco"
-    var predicates: List<Predicate> = emptyList() // ma siamo sicuri che ci importi l'ordine?
-    var actions: List<Action> = emptyList()
-    var types: List<Type> = emptyList()
-    var axioms: List<Axiom> = emptyList()
+    var predicates: Set<Predicate> = emptySet()
+    var actions: Set<Action> = emptySet()
+    var types: Set<Type> = emptySet()
+    var axioms: Set<Axiom> = emptySet()
+    private var predicateProvider = PredicateProvider.of(this)
 
     /**Unit
      * Scrivi qualcosa di sensato quando fixi sta roba.
@@ -31,7 +32,7 @@ class DomainDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun actions(f: ActionsDSL.() -> Unit) {
-        val actionDSL = ActionsDSL()
+        val actionDSL = ActionsDSL(predicateProvider)
 
         actionDSL.f()
         this.actions = actionDSL.actions
@@ -58,14 +59,16 @@ class DomainDSL {
     }
 
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     *  Method responsible that build an instance of [DomainDSL] and converts it to a [Domain].
      */
     fun buildDomain(): Domain {
         TODO()
     }
 }
 
+/**
+ * Entry point for [DomainDSL] creation.
+ */
 fun domain(f: DomainDSL.() -> Unit): Domain {
     return DomainDSL().also(f).buildDomain()
 }
-

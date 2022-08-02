@@ -1,4 +1,4 @@
-package impl.dsl
+package dsl
 
 import Axiom
 
@@ -6,5 +6,5 @@ import Axiom
  * Class representing an [Axiom] in the DSL.
  */
 class AxiomDSL {
-    val axioms: List<Axiom> = emptyList()
+    val axioms: Set<Axiom> = emptySet()
 }

@@ -55,8 +55,7 @@ domain {
     }
     stack{
       parameters {
-        "X" ofType "block"
-        <variable> ofType <type>
+        "X" ofType "block" //<variable> ofType <type>
       }
       precondition = +fluents //sta roba non ho idea di come gestirla
       effect = +effects

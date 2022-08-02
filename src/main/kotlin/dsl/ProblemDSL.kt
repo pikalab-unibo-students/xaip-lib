@@ -1,4 +1,4 @@
-package impl.dsl
+package dsl
 
 import Domain
 import FluentBasedGoal

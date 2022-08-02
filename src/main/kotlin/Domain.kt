@@ -27,5 +27,12 @@ interface Domain {
             types: Set<Type>,
             axioms: Set<Axiom>
         ): Domain = DomainImpl(name, predicates, actions, types, axioms)
+        /*
+        {
+            if (axioms.isNotEmpty()) require(axioms.isEmpty()){"Axioms are not yet supported"}
+
+            return DomainImpl(name, predicates, actions, types, axioms)
+        }
+         */
     }
 }

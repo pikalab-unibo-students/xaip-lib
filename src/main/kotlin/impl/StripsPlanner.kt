@@ -1,14 +1,12 @@
 package impl
 
 import Action
-import Applicable
 import Fluent
 import FluentBasedGoal
 import Plan
 import Planner
 import Problem
 import State
-import java.util.*
 
 internal class StripsPlanner : Planner {
 

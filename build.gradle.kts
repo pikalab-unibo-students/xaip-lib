@@ -27,7 +27,6 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
-
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }

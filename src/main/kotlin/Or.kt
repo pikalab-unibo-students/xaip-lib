@@ -1,0 +1,2 @@
+interface Or:Operand {
+}

@@ -30,8 +30,8 @@ class DomainDSL {
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
-    fun actions(f: ActionDSL.() -> Unit) {
-        val actionDSL = ActionDSL()
+    fun actions(f: ActionsDSL.() -> Unit) {
+        val actionDSL = ActionsDSL()
 
         actionDSL.f()
         this.actions = actionDSL.actions
@@ -64,3 +64,8 @@ class DomainDSL {
         TODO()
     }
 }
+
+fun domain(f: DomainDSL.() -> Unit): Domain {
+    return DomainDSL().also(f).buildDomain()
+}
+

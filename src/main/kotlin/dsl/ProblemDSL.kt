@@ -10,7 +10,7 @@ import State
  * Class representing a [Problem] in the DSL.
  */
 class ProblemDSL {
-    var domain: Domain = TODO()
+    var domain: Domain = TODO("recupera un'istanza di domain creata")
     var objects: List<Object> = emptyList() // Object o ObjectSet???
     var state: State = TODO() // recupera lo stato iniziale
     var goals: List<FluentBasedGoal> = emptyList()
@@ -35,10 +35,22 @@ class ProblemDSL {
         this.goals = goalsDSL.goals
     }
 
+    fun initialState(f: StateDSL.() -> Unit) {
+        TODO()
+    }
+
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     *  Method responsible that build an instance of [PRoblemDSL] and converts it to a [Domain].
      */
     fun buildProblem(): Problem {
         TODO()
     }
 }
+
+/**
+ * Entry point for [ProblemDSL] creation.
+ */
+fun problem(f: ProblemDSL.() -> Unit): Problem {
+    return ProblemDSL().also(f).buildProblem()
+}
+

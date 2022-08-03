@@ -16,16 +16,16 @@ class DomainDSL {
     var types: Set<Type> = emptySet()
     var axioms: Set<Axiom> = emptySet()
     private var predicateProvider = PredicateProvider.of(this)
-
+    private var typesProvider = TypesProvider.of(this)
     /**Unit
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
-    fun predicates(f: PredicateDSL.() -> Unit) {
-        val predicateDSL = PredicateDSL()
+    fun predicates(f: PredicatesDSL.() -> Unit) {
+        val predicatesDSL = PredicatesDSL(typesProvider)
 
-        predicateDSL.f()
+        predicatesDSL.f()
 
-        this.predicates = predicateDSL.predicates
+        this.predicates = predicatesDSL.predicates
     }
 
     /**

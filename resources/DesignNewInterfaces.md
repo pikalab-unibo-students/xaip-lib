@@ -50,8 +50,11 @@ domain {
 
   action{//Aggiunto
     "pick"{
-      parameter = (variable, block)
-      if()
+      parameters {
+      "X" ofType "block" //<variable> ofType <type>
+      }
+      precondition = +fluents //sta roba non ho idea di come gestirla
+      effect = +effects
     }
     stack{
       parameters {

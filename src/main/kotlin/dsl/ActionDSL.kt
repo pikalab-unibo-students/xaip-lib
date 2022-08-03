@@ -12,12 +12,9 @@ import Variable
 class ActionDSL(
     private val predicateProvider: PredicateProvider
 ) {
-
     var parameters: Map<Variable, Type> = mapOf()
-
-    private var preconditions: MutableSet<Fluent> = mutableSetOf()
-
-    var effects: Set<Effect> = setOf()
+    var effects: MutableSet<Effect> = mutableSetOf()
+    var preconditions: MutableSet<Fluent> = mutableSetOf()
 
     /**
      * Method responsible for the creation of the action.
@@ -28,7 +25,7 @@ class ActionDSL(
     /**
      * Method responsible for the creation of the action's parameters.
      */
-    fun params(f: ParametersDSL.() -> Unit) {
+    fun parameters(f: ParametersDSL.() -> Unit) {
         parameters = ParametersDSL().also(f).parameters
     }
 
@@ -37,5 +34,12 @@ class ActionDSL(
      */
     fun preconditions(f: FluentDSL.() -> Unit) {
         preconditions += FluentDSL(predicateProvider).also(f).fluents
+    }
+
+    /**
+     * Method responsible for the creation of the action's effects.
+     */
+    fun effects(f: EffectsDSL.() -> Unit) {
+        // effects += effectsDSL().also(f).effects
     }
 }

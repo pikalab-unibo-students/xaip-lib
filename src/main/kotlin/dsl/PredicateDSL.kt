@@ -3,23 +3,19 @@ package dsl
 import Predicate
 import Type
 
-/**
- * Class representing a [Predicate] in the DSL.
- */
-class PredicateDSL {
-    val predicates = mutableSetOf<Predicate>()
+class PredicateDSL(private val typesProvider: TypesProvider) {
+    var predicates = mutableSetOf<Predicate>()
 
     /**
      * Method that updates the internal list of [predicates] adding the last one created.
      */
     operator fun Predicate.unaryPlus() {
-        // it il poverino non sa da dove prenderlo; mi sta bene l'utilizzo dell'overloading sugli operatori unari ma
-        // questo it dovrà pur saltare fuori da qualche parte
-        predicates.add(this)
+        predicates += this
     }
 
-    /**
-     * Method that allow to treat a [String] as it was a [Predicate].
-     */
-    operator fun String.invoke(vararg types: Type): Predicate = Predicate.of(this, *types)
+    fun toPredicate(name: String, vararg arguments: Type): Predicate {
+        for (type in arguments)
+            if (typesProvider.findProvider(type.name) == null) error("Type do not exist")
+        return Predicate.of(name, *arguments)
+    }
 }

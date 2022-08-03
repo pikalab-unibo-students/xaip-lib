@@ -8,7 +8,9 @@ on:
       - develop
       - feature/**
       - master
-    
+    branches-ignore:
+      - feature/dsl
+
   pull_request:
     branches:
       - master

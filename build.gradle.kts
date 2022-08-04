@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.10"
     id("io.kotest") version "0.3.9"
 
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"

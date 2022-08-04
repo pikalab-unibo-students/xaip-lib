@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("io.mockk:mockk:1.12.5")
 
     implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
     implementation("it.unibo.tuprolog:solve-classic-jvm:0.20.9")

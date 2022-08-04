@@ -19,7 +19,7 @@ repositories {
 dependencies {
     testImplementation("io.mockk:mockk:1.12.5")
 
-    implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
+    implementation("it.unibo.tuprolog:unify-jvm:0.20.9")
     implementation("it.unibo.tuprolog:solve-classic-jvm:0.20.9")
     testImplementation("io.kotest:kotest-framework-api-jvm:5.3.2")
     testImplementation("io.kotest:kotest-runner-junit5:5.3.2")

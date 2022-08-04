@@ -25,7 +25,9 @@ fun main() {
 
         }
         goals {
-            +"on"("a", "b")
+            +"on"("atAFloor"{
+
+            }, "b")
         }
     }
 }

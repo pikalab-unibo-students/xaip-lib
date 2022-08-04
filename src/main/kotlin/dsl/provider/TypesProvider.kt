@@ -1,6 +1,7 @@
-package dsl
+package dsl.provider
 
 import Type
+import dsl.DomainDSL
 
 /**
  * Provider of the types created in the instance of [DomainDSL].

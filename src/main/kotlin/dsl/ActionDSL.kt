@@ -5,6 +5,7 @@ import Effect
 import Fluent
 import Type
 import Variable
+import dsl.provider.PredicateProvider
 
 /**
  * Class representing a [Action] in the DSL.
@@ -19,8 +20,7 @@ class ActionDSL(
     /**
      * Method responsible for the creation of the action.
      */
-    fun toAction(name: String): Action = Action.of(name, parameters, preconditions, effects)
-    // TODO("FIXA È SBAGLIATO MA DETEKT SE NO  NON COMPILA")
+    fun toAction(name: String): Action = TODO("Quei metodi per la costruzione li devo chiamare da qui?")
 
     /**
      * Method responsible for the creation of the action's parameters.
@@ -40,6 +40,6 @@ class ActionDSL(
      * Method responsible for the creation of the action's effects.
      */
     fun effects(f: EffectsDSL.() -> Unit) {
-        // effects += effectsDSL().also(f).effects
+        TODO()
     }
 }

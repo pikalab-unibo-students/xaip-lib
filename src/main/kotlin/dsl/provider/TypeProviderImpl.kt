@@ -1,6 +1,7 @@
-package dsl
+package dsl.provider
 
 import Type
+import dsl.DomainDSL
 
 class TypeProviderImpl(private val domain: DomainDSL) : TypesProvider {
     private val types: Map<String, Type>

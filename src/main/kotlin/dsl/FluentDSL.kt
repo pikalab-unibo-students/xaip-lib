@@ -2,6 +2,8 @@ package dsl
 
 import Fluent
 import Object
+import dsl.provider.PredicateProvider
+
 /**
  * Class representing an [Fluent] in the DSL.
  */

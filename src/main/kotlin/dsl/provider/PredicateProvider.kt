@@ -1,6 +1,7 @@
-package dsl
+package dsl.provider
 
 import Predicate
+import dsl.DomainDSL
 
 /**
  * Provider of the predicates created in the instance of [DomainDSL].

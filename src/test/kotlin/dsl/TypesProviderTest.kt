@@ -2,7 +2,7 @@ package dsl
 
 import io.kotest.core.spec.style.AnnotationSpec
 
-class TypesProvider : AnnotationSpec() {
+class TypesProviderTest : AnnotationSpec() {
     @Test
     fun testTypeExists() {
         TODO()

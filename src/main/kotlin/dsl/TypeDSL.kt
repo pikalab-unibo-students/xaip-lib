@@ -18,7 +18,7 @@ class TypeDSL {
     /**
      * Method that updates the internal list of [types] adding the last one created.
      */
-    operator fun String.unaryPlus() {
+    operator fun String.unaryPlus() { // ma questa cosa perché è nevcessaria se abbiamo già la string.invoke che dalla stringa ci ritorna il tipo? Non bastava quello dopo
         types += Type.of(this)
     }
 

@@ -11,9 +11,9 @@ import State
  */
 class ProblemDSL {
     var domain: Domain = TODO("recupera un'istanza di domain creata")
-    var objects: List<Object> = emptyList() // Object o ObjectSet???
-    var state: State = TODO() // recupera lo stato iniziale
-    var goals: List<FluentBasedGoal> = emptyList()
+    var objects: MutableSet<Object> = mutableSetOf() // TODO("Object o ObjectSet???")
+    var state: State = TODO("ecupera lo stato iniziale")
+    var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
 
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
@@ -29,10 +29,7 @@ class ProblemDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun goals(f: GoalDSL.() -> Unit) {
-        val goalsDSL = GoalDSL()
-
-        goalsDSL.f()
-        this.goals = goalsDSL.goals
+        TODO()
     }
 
     fun initialState(f: StateDSL.() -> Unit) {
@@ -40,7 +37,7 @@ class ProblemDSL {
     }
 
     /**
-     *  Method responsible that build an instance of [PRoblemDSL] and converts it to a [Domain].
+     *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Domain].
      */
     fun buildProblem(): Problem {
         TODO()

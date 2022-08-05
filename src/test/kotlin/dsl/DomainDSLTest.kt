@@ -4,6 +4,7 @@ package dsl // ktlint-disable filename
  * Test for DomainDSL cereation.
  */
 fun main() {
+    /*
     domain {
         name = "block_world"
         types {
@@ -34,4 +35,6 @@ fun main() {
             // ma la DSL la devo fare anche per questi?
         }
     }
+
+     */
 }

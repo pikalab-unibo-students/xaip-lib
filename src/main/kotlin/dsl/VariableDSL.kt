@@ -2,13 +2,16 @@ package dsl
 
 import Variable
 
+/**
+ * */
 class VariableDSL {
     val variables: MutableSet<Variable> = mutableSetOf()
 
     /**
      * Method that allow to treat a [String] as it was a [Variable].
      */
-    operator fun String.invoke(name: String): Variable { // occhio che il costruttore ammette la creazione anche a partire dai numeri
+    operator fun String.invoke(name: String): Variable {
+        // occhio che il costruttore ammette la creazione anche a partire dai numeri
         return Variable.of(name)
     }
 

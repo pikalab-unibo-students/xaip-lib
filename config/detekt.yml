@@ -36,3 +36,5 @@ style:
     ignoreNumbers: ['-2', '-1', '0', '0.5', '1', '2', '3', '4', '10', '360.0']
   ForbiddenComment:
     allowedPatterns: 'TODO:'
+  UnusedPrivateMember:
+    active: false

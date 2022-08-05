@@ -32,6 +32,8 @@ class ProblemDSL {
         TODO()
     }
 
+    /**
+     * */
     fun initialState(f: StateDSL.() -> Unit) {
         TODO()
     }
@@ -50,4 +52,3 @@ class ProblemDSL {
 fun problem(f: ProblemDSL.() -> Unit): Problem {
     return ProblemDSL().also(f).buildProblem()
 }
-

@@ -7,6 +7,7 @@ plugins {
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "me.giuliabrugnatti"
@@ -25,6 +26,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.3.0")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
 }
 
 tasks.withType<KotlinCompile> {

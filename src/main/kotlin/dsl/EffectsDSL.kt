@@ -3,6 +3,8 @@ package dsl
 import Effect
 import dsl.provider.PredicateProvider
 
+/**
+ * */
 class EffectsDSL(
     private val predicateProvider: PredicateProvider
 ) {

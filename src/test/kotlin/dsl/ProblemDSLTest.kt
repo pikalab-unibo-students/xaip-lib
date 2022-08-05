@@ -1,10 +1,9 @@
-package dsl
-
-
+package dsl // ktlint-disable filename
 /**
  * Test for ProblemDSL cereation.
  */
 fun main() {
+    /*
     problem {
         domain = DomainDSL().buildDomain() //Sta cosa è da cambiare ma non sopporto quel giallo
         objects {
@@ -27,7 +26,9 @@ fun main() {
         goals {
             +"on"("atAFloor"{
 
-            }, "b")
+            },
+            "b")
         }
     }
+     */
 }

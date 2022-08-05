@@ -11,7 +11,8 @@ class ObjectDSL {
     /**
      * Method that allow to treat a [String] as it was a [Object].
      */
-    operator fun String.invoke(name: String): Object { // occhio che il costruttore ammette la creazione anche a partire dai numeri
+    operator fun String.invoke(name: String): Object {
+        // occhio che il costruttore ammette la creazione anche a partire dai numeri
         return Object.of(name)
     }
 

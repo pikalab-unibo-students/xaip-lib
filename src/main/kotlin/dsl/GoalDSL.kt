@@ -10,10 +10,14 @@ class GoalDSL(
     private val predicateProvider: PredicateProvider
 ) {
     var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
+
+    /**
+     * */
     operator fun String.invoke(vararg targets: String) {
         for (fluent in targets) {
             if (predicateProvider.findPredicate(this, 0) == null) error("Predicate does not exist")
-            // Problema io non so dove tirarmi fuori gli altri parametri per istanziare il Fluent, non ho l'arità, non ho i valori
+            // Problema io non so dove tirarmi fuori gli altri
+            // parametri per istanziare il Fluent, non ho l'arità, non ho i valori
             /*
             Fluent.of(
                 Predicate.of(this, ???),

@@ -9,8 +9,9 @@ import dsl.provider.TypesProvider
  */
 class PredicatesDSL(private val typesProvider: TypesProvider) {
     val predicates = mutableSetOf<Predicate>()
-
-    operator fun Predicate.unaryPlus() { // stessa domanda di type, così funziona o cè bisogno di una String.invoke
+    /**
+     * */
+    operator fun Predicate.unaryPlus() {
         if (typeExist(this.arguments)) predicates += this
     }
 

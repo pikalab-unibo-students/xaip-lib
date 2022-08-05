@@ -18,5 +18,4 @@ class ParametersDSL {
         val t = Type.of(type)
         parameters[variable] = t
     }
-
 }

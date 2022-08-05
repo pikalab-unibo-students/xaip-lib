@@ -1,8 +1,6 @@
 package dsl
 
 import Fluent
-import Object
-import Variable
 import dsl.provider.PredicateProvider
 
 /**
@@ -20,4 +18,3 @@ class FluentDSL(
         fluents += this
     }
 }
-

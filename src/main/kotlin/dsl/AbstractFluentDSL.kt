@@ -3,7 +3,8 @@ package dsl
 import Fluent
 import Object
 import dsl.provider.PredicateProvider
-
+/**
+ * */
 abstract class AbstractFluentDSL(
     private val predicateProvider: PredicateProvider
 ) {

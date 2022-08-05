@@ -10,10 +10,6 @@ interface UnaryExpression : Expression {
     val expression: Expression
     val operand: Operand
 
-    /**
-     * Method responsible for the elaboration of the result of the expression.
-     */
-    fun calculate(): Any
     companion object {
         /***
          * Factory method for an [UnaryExpression] creation.

@@ -10,21 +10,18 @@ import dsl.provider.TypesProvider
 class PredicatesDSL(private val typesProvider: TypesProvider) {
     val predicates = mutableSetOf<Predicate>()
 
-    /**
-     *
-     */
     operator fun Predicate.unaryPlus() { // stessa domanda di type, così funziona o cè bisogno di una String.invoke
         if (typeExist(this.arguments)) predicates += this
     }
 
-    private fun typeExist(types: List<Type>): Boolean {
+    private fun typeExist(types: Iterable<Type>): Boolean {
         for (type in types)
-            if (typesProvider.findProvider(type.name) == null) error("type non found")
+            if (typesProvider.findProvider(type.name) == null) error("Type non found: ${type.name}")
         return true
     }
 
     private fun typeConverter(vararg types: String): List<Type> {
-        var typesList = mutableListOf<Type>()
+        val typesList = mutableListOf<Type>()
         for (type in types) {
             typesList.add(Type.of(type))
         }
@@ -34,8 +31,12 @@ class PredicatesDSL(private val typesProvider: TypesProvider) {
     /**
      * Method that can be called on any instances of the class without a method name.
      */
-    operator fun String.invoke(vararg types: String) {
+    operator fun String.invoke(vararg types: String): Predicate {
         val typesList = typeConverter(*types)
-        if (typeExist(typesList)) predicates += Predicate.of(this, typesList)
+        if (typeExist(typesList)) {
+            return Predicate.of(this, typesList)
+        } else {
+            error("This should never happen")
+        }
     }
 }

@@ -1,25 +1,21 @@
 package dsl
 
 import Effect
+import Fluent
 import dsl.provider.PredicateProvider
 
 /**
  * */
 class EffectsDSL(
-    private val predicateProvider: PredicateProvider
-) {
+    predicateProvider: PredicateProvider
+): AbstractFluentDSL(predicateProvider) {
     var effects: MutableSet<Effect> = mutableSetOf()
 
-    var predicate: String = ""
-    var arity: Int = 0
-    var fluent: String = ""
-    var isPositive = true
+    operator fun Fluent.unaryPlus() = effects.add(Effect.positive(this))
+    
+    operator fun String.unaryPlus() = effects.add(Effect.positive(this()))
 
-    /**
-     * Method that allow to treat a [String] as it was a [Effect].
-     */
-    operator fun String.invoke() {
-        if (predicateProvider.findPredicate(predicate, arity) == null) error("Predicate does not exist")
-        effects += Effect.of(TODO())
-    }
+    operator fun Fluent.unaryMinus() = effects.add(Effect.negative(this))
+    
+    operator fun String.unaryMinus() = effects.add(Effect.negative(this()))
 }

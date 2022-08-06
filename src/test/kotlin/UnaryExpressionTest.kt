@@ -1,5 +1,6 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import resources.TestUtils.Operands
 import resources.TestUtils.Expressions
 import resources.TestUtils.Fluents
 
@@ -9,20 +10,20 @@ class UnaryExpressionTest : AnnotationSpec() {
     @Test
     fun testUnaryExpressionCreation() {
         unaryExpression.expression shouldBe Fluents.atXArm
-        unaryExpression.operand.name shouldBe "not"
+        unaryExpression.operand shouldBe Operands.not
     }
 
     @Test
     fun testExpressionObjectWorkAsExpected() {
         Expressions.unaryExpressionNotArmEmpty.expression shouldBe Fluents.armEmpty
-        Expressions.unaryExpressionNotArmEmpty.operand.name shouldBe "not"
+        Expressions.unaryExpressionNotArmEmpty.operand.name shouldBe Operands.not
     }
 
     @Test
     fun testComplexExpressionObjectWorkAsExpected() {
         val complexUnaryExpression = UnaryExpression.of(unaryExpression, Operand.of("not"))
         complexUnaryExpression.expression shouldBe unaryExpression
-        complexUnaryExpression.operand.name shouldBe "not"
+        complexUnaryExpression.operand.name shouldBe Operands.not
         (complexUnaryExpression.expression as UnaryExpression).expression shouldBe Fluents.atXArm
         (complexUnaryExpression.expression as UnaryExpression).operand.name shouldBe "not"
     }

@@ -6,7 +6,10 @@ import impl.OperandImpl
 interface Operand {
     val name: String
 
-    companion object{
+    companion object {
+        /**
+         *
+         */
         fun of(
             name: String
         ): Operand = OperandImpl(name)

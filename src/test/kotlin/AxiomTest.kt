@@ -1,9 +1,8 @@
-import io.kotest.core.spec.style.AnnotationSpec // ktlint-disable import-ordering
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Axioms
-// import resources.TestUtils.Fluents
 import resources.TestUtils.Predicates
 import resources.TestUtils.Types
 import resources.TestUtils.Values

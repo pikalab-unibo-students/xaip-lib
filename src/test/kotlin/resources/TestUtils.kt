@@ -87,13 +87,13 @@ object TestUtils {
 
     object Operands {
         val not = Operand.of("not")
-        val and = Operand.of("not")
-        val or = Operand.of("not")
+        val and = Operand.of("and")
+        val or = Operand.of("or")
     }
 
-    object Expressions{
+    object Expressions {
         val expession1 = Fluents.atAArm
-
+        val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, Operand.of("not"))
     }
     object Axioms {
         val axiom1 = Axiom.of(

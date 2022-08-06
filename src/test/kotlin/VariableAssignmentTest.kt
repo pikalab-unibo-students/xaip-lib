@@ -1,9 +1,7 @@
-import impl.res.toValue
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.Values
 import resources.TestUtils.VariableAssignments
-import java.util.AbstractMap
 
 class VariableAssignmentTest : AnnotationSpec() {
     @Test

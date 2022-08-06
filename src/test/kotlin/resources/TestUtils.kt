@@ -85,6 +85,16 @@ object TestUtils {
         )
     }
 
+    object Operands {
+        val not = Operand.of("not")
+        val and = Operand.of("not")
+        val or = Operand.of("not")
+    }
+
+    object Expressions{
+        val expession1 = Fluents.atAArm
+
+    }
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola

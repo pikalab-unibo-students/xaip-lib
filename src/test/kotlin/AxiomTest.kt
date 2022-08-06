@@ -1,9 +1,9 @@
-import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.core.spec.style.AnnotationSpec // ktlint-disable import-ordering
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Axioms
-import resources.TestUtils.Fluents
+// import resources.TestUtils.Fluents
 import resources.TestUtils.Predicates
 import resources.TestUtils.Types
 import resources.TestUtils.Values
@@ -46,7 +46,7 @@ class AxiomTest : AnnotationSpec() {
 
         Axioms.axiom1.implies.forEach { (it as Fluent).isNegated shouldBe false }
         Axioms.axiom1.implies.forEach { (it as Fluent).isGround shouldBe false }
-        //Axioms.axiom1.implies.forEach { (it as Fluent).instanceOf shouldBe Predicates.clear }
-        //Axioms.axiom1.implies.forEach { (it as Fluent).args shouldBe Fluents.clearY.args }
+        // Axioms.axiom1.implies.forEach { (it as Fluent).instanceOf shouldBe Predicates.clear }
+        // Axioms.axiom1.implies.forEach { (it as Fluent).args shouldBe Fluents.clearY.args }
     }
 }

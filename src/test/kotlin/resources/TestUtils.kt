@@ -101,6 +101,7 @@ object TestUtils {
             Operands.and
         )
     }
+
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
@@ -135,10 +136,6 @@ object TestUtils {
     object Effects {
         val atXFloor = Effect.of(Fluents.atXFloor, true)
         val armEmpty = Effect.of(Fluents.armEmpty, true)
-    }
-
-    object FluentBasedGoals {
-        val f1 = FluentBasedGoal.of(setOf(Fluents.atAArm))
     }
 
     object Fluents {
@@ -325,6 +322,7 @@ object TestUtils {
         val y2x = VariableAssignment.of(Values.Y, Values.X)
         val x2floor = VariableAssignment.of(Values.X, Values.floor)
         val x2arm = VariableAssignment.of(Values.X, Values.arm)
+        val x2a = VariableAssignment.of(Values.X, Values.a)
     }
 
     val type1 = Type.of(name, null)

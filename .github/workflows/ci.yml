@@ -7,7 +7,7 @@ on:
     branches:
       - develop
       #- feature/**
-      - feature/dsl
+      - feature/axiom
       #- master
 
   #pull_request:

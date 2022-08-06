@@ -1,7 +1,7 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Expressions.binaryExpression
 import resources.TestUtils.Expressions
+import resources.TestUtils.Expressions.binaryExpression
 import resources.TestUtils.Fluents
 import resources.TestUtils.Operands
 

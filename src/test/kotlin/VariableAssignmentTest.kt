@@ -1,12 +1,15 @@
+import impl.res.toValue
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.Values
 import resources.TestUtils.VariableAssignments
+import java.util.AbstractMap
 
 class VariableAssignmentTest : AnnotationSpec() {
     @Test
     fun testVariableAssignmentObjectWorksAsExpected() {
         VariableAssignments.y2x.values shouldBe arrayOf(Values.X)
+        VariableAssignments.y2x.size shouldBe 1
         VariableAssignments.y2x.keys shouldBe arrayOf(Values.Y)
         VariableAssignments.y2x.isEmpty() shouldBe false
 

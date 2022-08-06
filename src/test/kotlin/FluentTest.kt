@@ -105,5 +105,5 @@ class FluentTest : AnnotationSpec() {
         fluentNotEmpty shouldNotBe fluentNotEmpty.refresh()
     }
 
-    @Test fun testExpression() = Expressions.expession1 shouldBe Fluents.atAArm
+    @Test fun testExpression() = Expressions.expessionAtArm shouldBe Fluents.atAArm
 }

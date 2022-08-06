@@ -92,8 +92,14 @@ object TestUtils {
     }
 
     object Expressions {
-        val expession1 = Fluents.atAArm
+        val expessionAtArm = Fluents.atAArm
         val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, Operand.of("not"))
+        val unaryExpressionNotAFloor = UnaryExpression.of(Fluents.atAFloor, Operands.not)
+        val binaryExpression = BinaryExpression.of(
+            Fluents.atBFloor,
+            Expressions.unaryExpressionNotAFloor,
+            Operands.and
+        )
     }
     object Axioms {
         val axiom1 = Axiom.of(

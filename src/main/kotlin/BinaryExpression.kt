@@ -11,11 +11,6 @@ interface BinaryExpression : Expression {
     val expression2: Expression
     val operand: Operand
 
-    /**
-     * Method responsible for the elaboration of the result of the expression.
-     */
-    fun calculate(): Any
-
     companion object {
         /***
          * Factory method for an [BinaryExpression] creation.

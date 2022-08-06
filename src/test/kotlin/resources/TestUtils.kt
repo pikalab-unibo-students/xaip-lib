@@ -85,20 +85,19 @@ object TestUtils {
         )
     }
 
-/*
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            setOf(Fluents.atXArm), // cosa dice della regola
-            setOf(Fluents.onXY)
+            listOf(Fluents.atXArm), // cosa dice della regola
+            listOf(Fluents.onXY)
         ) // conseguenze sempre vere della regola sopra
         val axiom2 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            setOf(Fluents.atYFloor), // cosa dice della regola
-            setOf(Fluents.onXY)
+            listOf(Fluents.atYFloor), // cosa dice della regola
+            listOf(Fluents.onXY)
         ) // conseguenze sempre vere della regola sopra
     } // es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
-*/
+
     object Domains {
         val blockWorld = Domain.of(
             name = "block_world",

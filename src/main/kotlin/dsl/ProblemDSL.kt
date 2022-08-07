@@ -6,7 +6,6 @@ import Object
 import Problem
 import State
 import dsl.provider.PredicateProvider
-import dsl.provider.TypesProvider
 
 /**
  * Class representing a [Problem] in the DSL.

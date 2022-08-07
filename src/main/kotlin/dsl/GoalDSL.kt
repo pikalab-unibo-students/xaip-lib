@@ -1,6 +1,7 @@
 package dsl
 
 import FluentBasedGoal
+import Goal
 import dsl.provider.PredicateProvider
 
 /**
@@ -11,28 +12,25 @@ class GoalDSL(
 ) {
     var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
 
+/*
+/**
+     * Method responsible for the creation of the action's preconditions.
+     */
+    fun goals(f: FluentDSL.() -> Unit) {
+        goals += FluentDSL(predicateProvider).also(f).fluents
+    }
+
+ */
     /**
      * */
-    operator fun String.invoke(vararg targets: String) {
-        for (fluent in targets) {
-            if (predicateProvider.findPredicate(this, 0) == null) error("Predicate does not exist")
-            // Problema io non so dove tirarmi fuori gli altri
-            // parametri per istanziare il Fluent, non ho l'arità, non ho i valori
-            /*
-            Fluent.of(
-                Predicate.of(this, ???),
-                isNegated??
-                targets
-            )
-            */
-        }
-        TODO("Restituisci il Goal")
+    operator fun String.invoke(vararg targets: String):Goal {
+        TODO("implement this")
     }
 
     /**
      * Method that updates the internal list of [goals] adding the last one created.
      */
-    operator fun FluentBasedGoal.unaryPlus() {
-        goals += this
+    operator fun Goal.unaryPlus() {
+        TODO("implement this")
     }
 }

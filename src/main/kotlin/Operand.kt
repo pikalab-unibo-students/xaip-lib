@@ -8,7 +8,7 @@ interface Operand {
 
     companion object {
         /**
-         *
+         * Factory method for an [Operand] creation.
          */
         fun of(
             name: String

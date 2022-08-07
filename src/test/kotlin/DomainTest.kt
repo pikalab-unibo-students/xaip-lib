@@ -3,7 +3,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.string.shouldStartWith
 import resources.TestUtils.Domains
 import resources.TestUtils.actions
 import resources.TestUtils.domainEmpty
@@ -42,12 +41,10 @@ class DomainTest : AnnotationSpec() {
         Domains.blockWorld.types.forEach { it shouldBeIn types }
     }
 
-    @Ignore
     @Test
     fun testAxiomException() {
-        val exception = shouldThrow<IllegalArgumentException> {
-            Domains.blockWorldAxiomException.axioms.toSet().size shouldBe 2
+        shouldThrow<ExceptionInInitializerError> {
+            Domains.blockWorldAxiomException
         }
-        exception.message shouldStartWith ("Axioms are not yet supported")
     }
 }

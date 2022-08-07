@@ -129,7 +129,7 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = emptySet() // setOf(Axioms.axiom1, Axioms.axiom2)
+            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
         )
     }
 

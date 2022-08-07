@@ -5,22 +5,25 @@ import FluentBasedGoal
 import Object
 import Problem
 import State
+import dsl.provider.PredicateProvider
+import dsl.provider.TypesProvider
 
 /**
  * Class representing a [Problem] in the DSL.
  */
 class ProblemDSL {
-    var domain: Domain = TODO("recupera un'istanza di domain creata")
+    var domain: DomainDSL = TODO("recupera un'istanza di domain creata")
     var objects: MutableSet<Object> = mutableSetOf() // TODO("Object o ObjectSet???")
-    var state: State = TODO("ecupera lo stato iniziale")
+    var state: MutableSet<State> = mutableSetOf()
     var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
+    private var predicateProvider = PredicateProvider.of(domain)
+    private var typesProvider = TypesProvider.of(domain)
 
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun objects(f: ObjectDSL.() -> Unit) {
         val objectsDSL = ObjectDSL()
-
         objectsDSL.f()
         this.objects = objectsDSL.objects
     }
@@ -29,13 +32,17 @@ class ProblemDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun goals(f: GoalDSL.() -> Unit) {
-        TODO()
+        val goalsDSL = GoalDSL(predicateProvider)
+        goalsDSL.f()
+        this.goals = goalsDSL.goals
     }
 
     /**
      * */
     fun initialState(f: StateDSL.() -> Unit) {
-        TODO()
+        val statesDSL = StateDSL()
+        statesDSL.f()
+        this.state = statesDSL.states
     }
 
     /**

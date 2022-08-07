@@ -41,6 +41,6 @@ class ActionDSL(
      * Method responsible for the creation of the action's effects.
      */
     fun effects(f: EffectsDSL.() -> Unit) {
-        TODO()
+        effects += EffectsDSL(predicateProvider).also(f).effects
     }
 }

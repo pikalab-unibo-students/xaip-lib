@@ -13,9 +13,11 @@ internal data class DomainImpl(
     override val types: Set<Type>,
     override val axioms: Set<Axiom>
 ) : Domain {
+    /*
     init {
-        require(axioms.isEmpty()) {
+        require(axioms.size==0) {
             "Axioms are not yet supported"
         }
     }
+     */
 }

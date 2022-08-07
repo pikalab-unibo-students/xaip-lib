@@ -23,7 +23,7 @@ class GoalDSL(
  */
     /**
      * */
-    operator fun String.invoke(vararg targets: String):Goal {
+    operator fun String.invoke(vararg targets: String): Goal {
         TODO("implement this")
     }
 

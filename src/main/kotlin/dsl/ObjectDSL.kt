@@ -12,14 +12,14 @@ class ObjectDSL {
      * Method that allow to treat a [String] as it was a [Object].
      */
     operator fun String.invoke(name: String): Object {
-        // occhio che il costruttore ammette la creazione anche a partire dai numeri
+        // TODO("iL costruttore ammette la creazione anche a partire dai numeri")
         return Object.of(name)
     }
 
     /**
      * Method that updates the internal list of [objects] adding the last one created.
      */
-    operator fun String.unaryPlus() { // stesso discorso dei tipi
+    operator fun String.unaryPlus() {
         objects += Object.of(this)
     }
 

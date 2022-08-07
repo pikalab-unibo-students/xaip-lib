@@ -3,6 +3,7 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Axioms
+import resources.TestUtils.Fluents
 import resources.TestUtils.Predicates
 import resources.TestUtils.Types
 import resources.TestUtils.Values
@@ -34,18 +35,12 @@ class AxiomTest : AnnotationSpec() {
         Axioms.axiom1.parameters.forEach { it.key shouldBeIn setOf(Values.Y, Values.X) }
 
         Axioms.axiom1.context.forEach { (it as Fluent).isNegated shouldBe false }
-
         Axioms.axiom1.context.forEach { (it as Fluent).isGround shouldBe false }
         Axioms.axiom1.context.forEach { (it as Fluent).instanceOf shouldBeIn arrayOf(Predicates.on, Predicates.at) }
-        /*
-        Axioms.axiom1.context.forEach {
-            (it as Fluent).args shouldBeIn arrayOf(Fluents.onXY.args, Fluents.atXFloor.args)
-        }
-         */
+        Axioms.axiom1.context.first() shouldBe Fluents.atXArm
 
         Axioms.axiom1.implies.forEach { (it as Fluent).isNegated shouldBe false }
         Axioms.axiom1.implies.forEach { (it as Fluent).isGround shouldBe false }
-        // Axioms.axiom1.implies.forEach { (it as Fluent).instanceOf shouldBe Predicates.clear }
-        // Axioms.axiom1.implies.forEach { (it as Fluent).args shouldBe Fluents.clearY.args }
+        Axioms.axiom1.implies.first() shouldBe Fluents.onXY
     }
 }

@@ -1,9 +1,6 @@
 package dsl
 
 import Action
-import Effect
-import Type
-import Variable
 import dsl.provider.PredicateProvider
 
 /**

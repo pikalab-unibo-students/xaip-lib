@@ -7,7 +7,7 @@ on:
     branches:
       - develop
       #- feature/**
-      - feature/dsl
+      #- feature/dsl
       #- master
 
   #pull_request:

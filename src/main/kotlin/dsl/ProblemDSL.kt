@@ -17,7 +17,6 @@ class ProblemDSL {
     var state: MutableSet<State> = mutableSetOf()
     var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
     private var predicateProvider = PredicateProvider.of(domain)
-    private var typesProvider = TypesProvider.of(domain)
 
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.

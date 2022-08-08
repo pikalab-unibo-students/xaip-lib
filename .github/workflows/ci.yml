@@ -6,23 +6,25 @@ on:
   push:
     branches:
       - develop
-      - feature/**
-      - master
-    
-  pull_request:
-    branches:
-      - master
-      - develop
+      #- feature/**
+      - feature/axiom
+      #- master
+
+  #pull_request:
+  #  branches:
+  #    - master
+  #    - develop
 
 jobs:
   build:
     name: build
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    #strategy:
+    #  fail-fast: false
+    #  matrix:
+    #    os: [ windows-latest, ubuntu-latest, macos-latest ]
+    #runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
 
@@ -34,7 +36,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
@@ -43,7 +44,6 @@ jobs:
       - name: Run build
         run: |
           ./gradlew clean build
-
       - name: Archive test report
         uses: actions/upload-artifact@v3
         with:

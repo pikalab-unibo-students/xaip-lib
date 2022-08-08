@@ -1,6 +1,10 @@
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.shouldStartWith
+import resources.TestUtils
 import resources.TestUtils.Actions
 import resources.TestUtils.States
 
@@ -37,9 +41,10 @@ class StateTest : AnnotationSpec() {
     }
 
     @Test
-    fun testActionApplication() {
+    fun testActionApplicationWorksAsExpected() {
         val actual = state.apply(applicableAction).toSet()
         actual shouldBe destinationStates
+        actual.first().fluents.forEach { it shouldBeIn destinationStates.first().fluents }
     }
 
     @Test
@@ -50,5 +55,13 @@ class StateTest : AnnotationSpec() {
         States.atAArm.isApplicable(Actions.stack) shouldBe true
         States.atAArm.isApplicable(Actions.pick) shouldBe false
         States.initial.apply(Actions.pick).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))
+    }
+
+    @Test
+    fun testStateException() {
+        val exception = shouldThrow<IllegalArgumentException> {
+            State.of(Fluent.of(Predicate.of("error", TestUtils.Types.anything), false, TestUtils.Values.X))
+        }
+        exception.message shouldStartWith ("States cannot contain non-ground fluents")
     }
 }

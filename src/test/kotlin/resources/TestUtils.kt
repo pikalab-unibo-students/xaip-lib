@@ -85,20 +85,36 @@ object TestUtils {
         )
     }
 
-/*
+    object Operands {
+        val not = Operand.of("not")
+        val and = Operand.of("and")
+        val or = Operand.of("or")
+    }
+
+    object Expressions {
+        val expessionAtArm = Fluents.atAArm
+        val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, Operand.of("not"))
+        val unaryExpressionNotAFloor = UnaryExpression.of(Fluents.atAFloor, Operands.not)
+        val binaryExpression = BinaryExpression.of(
+            Fluents.atBFloor,
+            Expressions.unaryExpressionNotAFloor,
+            Operands.and
+        )
+    }
+
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            setOf(Fluents.atXArm), // cosa dice della regola
-            setOf(Fluents.onXY)
+            listOf(Fluents.atXArm), // cosa dice della regola
+            listOf(Fluents.onXY)
         ) // conseguenze sempre vere della regola sopra
         val axiom2 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            setOf(Fluents.atYFloor), // cosa dice della regola
-            setOf(Fluents.onXY)
+            listOf(Fluents.atYFloor), // cosa dice della regola
+            listOf(Fluents.onXY)
         ) // conseguenze sempre vere della regola sopra
     } // es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
-*/
+
     object Domains {
         val blockWorld = Domain.of(
             name = "block_world",
@@ -113,17 +129,13 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = emptySet() // setOf(Axioms.axiom1, Axioms.axiom2)
+            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
         )
     }
 
     object Effects {
         val atXFloor = Effect.of(Fluents.atXFloor, true)
         val armEmpty = Effect.of(Fluents.armEmpty, true)
-    }
-
-    object FluentBasedGoals {
-        val f1 = FluentBasedGoal.of(setOf(Fluents.atAArm))
     }
 
     object Fluents {
@@ -310,6 +322,7 @@ object TestUtils {
         val y2x = VariableAssignment.of(Values.Y, Values.X)
         val x2floor = VariableAssignment.of(Values.X, Values.floor)
         val x2arm = VariableAssignment.of(Values.X, Values.arm)
+        val x2a = VariableAssignment.of(Values.X, Values.a)
     }
 
     val type1 = Type.of(name, null)

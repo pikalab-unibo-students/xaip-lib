@@ -39,5 +39,4 @@ class DomainTest : AnnotationSpec() {
         Domains.blockWorld.actions.forEach { it shouldBeIn actions }
         Domains.blockWorld.types.forEach { it shouldBeIn types }
     }
-
 }

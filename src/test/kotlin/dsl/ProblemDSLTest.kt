@@ -4,7 +4,9 @@ package dsl // ktlint-disable filename
  */
 fun main() {
     problem {
-        domain = DomainDSL().buildDomain() // Sta cosa è da cambiare ma non sopporto quel giallo
+        domain {
+            // Sta cosa è da cambiare ma non sopporto quel giallo
+        }
         objects {
             +"blocks" to { // non sono per nulla convinta che sia sensato questo blocco
                 +"a"

@@ -17,6 +17,8 @@ import Type
 import Value
 import Variable
 import VariableAssignment
+import dsl.domain
+import dsl.problem
 
 object TestUtils {
 
@@ -38,6 +40,9 @@ object TestUtils {
         Object.of(1),
         Object.of(2)
     )
+
+    val domainDSL = domain {}
+    val problemDSL = problem {}
 
     object Actions {
         val pick = Action.of(

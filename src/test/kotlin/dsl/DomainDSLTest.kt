@@ -29,7 +29,7 @@ fun main() {
                     +"at"("X", "floor")
                     // TODO you should guarantee that the "X" variable created
                     //  here is the exact same instance declared in parameters
-                    -"handempty"
+                    -"armempty"
                 }
             }
         }

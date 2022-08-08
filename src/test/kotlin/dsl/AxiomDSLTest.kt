@@ -1,4 +1,11 @@
 package dsl
 
-class AxiomDSLTest {
+import io.kotest.core.spec.style.AnnotationSpec
+
+class AxiomDSLTest : AnnotationSpec() {
+    @Ignore
+    @Test
+    fun axiomDSLworksAsExpected() {
+        //
+    }
 }

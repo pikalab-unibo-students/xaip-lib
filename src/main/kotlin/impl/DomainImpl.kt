@@ -12,12 +12,4 @@ internal data class DomainImpl(
     override val actions: Set<Action>,
     override val types: Set<Type>,
     override val axioms: Set<Axiom>
-) : Domain {
-    /*
-    init {
-        require(axioms.size==0) {
-            "Axioms are not yet supported"
-        }
-    }
-     */
-}
+) : Domain

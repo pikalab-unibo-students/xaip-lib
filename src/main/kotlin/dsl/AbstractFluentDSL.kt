@@ -5,7 +5,7 @@ import Object
 import dsl.provider.PredicateProvider
 /**
  * */
-abstract class AbstractFluentDSL(
+class AbstractFluentDSL(
     private val predicateProvider: PredicateProvider
 ) {
     private fun String.isCapital(): Boolean =

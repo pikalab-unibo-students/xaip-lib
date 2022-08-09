@@ -3,6 +3,7 @@ package dsl // ktlint-disable filename
 /**
  * Test for DomainDSL cereation.
  */
+// TODO Make this an actual test asseting that the result of domain { .. } is an instance of Domain containing all the information provided via DSL
 fun main() {
     domain {
         name = "block_world"

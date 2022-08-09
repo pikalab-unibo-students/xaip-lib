@@ -11,10 +11,14 @@ import dsl.provider.PredicateProvider
  * Class representing a [Problem] in the DSL.
  */
 class ProblemDSL {
+    // TODO io non metterei un DomainDSL qui. quando crei il problem, il domain si suppone che tu ce lo abbia già. metterei un semplice riferimento a un'istanza di domain
     var domain: DomainDSL = TODO("recupera un'istanza di domain creata")
+    // TODO userei objectSet, perchè ti serve quello per costruire un problema
     var objects: MutableSet<Object> = mutableSetOf() // TODO("Object o ObjectSet???")
     var state: MutableSet<State> = mutableSetOf()
     var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
+
+    // TODO non fare campi che possono essere variabili locali. I provide sono oggetti lightweight. Non c'è problema a crearli on the fly quuando servono
     private var predicateProvider = PredicateProvider.of(domain)
 
     /**

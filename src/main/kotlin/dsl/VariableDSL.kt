@@ -3,6 +3,7 @@ package dsl
 import Variable
 
 /**
+ * TODO non sono sicuro che serva questa classe
  * */
 class VariableDSL {
     val variables: MutableSet<Variable> = mutableSetOf()

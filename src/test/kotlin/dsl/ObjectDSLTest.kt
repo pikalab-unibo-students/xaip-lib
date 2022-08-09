@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import resources.TestUtils.domainDSL
 import resources.TestUtils.Types
 
+// TODO imho thesing single dsl classes in this phase just wastes your time. I would start by test the DSL as a whole
 class ObjectDSLTest : AnnotationSpec() {
     @Ignore
     @Test

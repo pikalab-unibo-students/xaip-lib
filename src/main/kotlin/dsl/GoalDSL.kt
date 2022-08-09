@@ -1,5 +1,6 @@
 package dsl
 
+import Fluent
 import FluentBasedGoal
 import Goal
 import dsl.provider.PredicateProvider
@@ -13,7 +14,7 @@ class GoalDSL(
 ) {
 
     // TODO secondo me GoalDSL deve creare un unico FluentBaseGoal, composto di più fluent
-    var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
+    var goals: MutableSet<Fluent> = mutableSetOf()
 
     /**
      * */

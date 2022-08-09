@@ -21,7 +21,7 @@ class ActionDSL(
      * Method responsible for the creation of the action.
      */
     fun toAction(name: String): Action =
-        TODO("Quei metodi per la costruzione li devo chiamare da qui?")
+        Action.of(name, parameters.toMap(), preconditions.toSet(), effects.toSet())
 
     /**
      * Method responsible for the creation of the action's parameters.

@@ -25,9 +25,7 @@ class DomainDSL {
      */
     fun predicates(f: PredicatesDSL.() -> Unit) {
         val predicatesDSL = PredicatesDSL(typesProvider)
-
         predicatesDSL.f()
-
         this.predicates = predicatesDSL.predicates
     }
 
@@ -36,7 +34,6 @@ class DomainDSL {
      */
     fun actions(f: ActionsDSL.() -> Unit) {
         val actionDSL = ActionsDSL(predicateProvider)
-
         actionDSL.f()
         this.actions = actionDSL.actions
     }

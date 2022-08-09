@@ -9,7 +9,6 @@ class AbstractFluentDSLTest : AnnotationSpec() {
     @Ignore
     @Test
     fun abstractFluentDSLworksAsExpected() {
-        val fluents = domainDSL.predicates.first().arguments
-        Fluents.atAFloor shouldBeIn fluents
+        //val fluent= AbstractFluentDSL()
     }
 }

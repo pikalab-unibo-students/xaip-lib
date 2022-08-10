@@ -1,7 +1,9 @@
 package dsl
 
 import Domain
+import Fluent
 import FluentBasedGoal
+import Goal
 import Object
 import Problem
 import State
@@ -16,7 +18,7 @@ class ProblemDSL {
     // TODO userei objectSet, perchè ti serve quello per costruire un problema
     var objects: MutableSet<Object> = mutableSetOf() // TODO("Object o ObjectSet???")
     var state: MutableSet<State> = mutableSetOf()
-    var goals: MutableSet<FluentBasedGoal> = mutableSetOf()
+    var goal: Goal
 
     // TODO non fare campi che possono essere variabili locali. I provide sono oggetti lightweight. Non c'è problema a crearli on the fly quuando servono
     private var predicateProvider = PredicateProvider.of(domain)
@@ -33,10 +35,10 @@ class ProblemDSL {
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
-    fun goals(f: GoalsDSL.() -> Unit) {
-        val goalsDSL = GoalsDSL(predicateProvider)
-        goalsDSL.f()
-        this.goals = goalsDSL.goals
+    fun goals(f: GoalDSL.() -> Unit) {
+        val goalDSL = GoalDSL(predicateProvider)
+        goalDSL.f()
+        this.goal = goalDSL.toGoal()
     }
 
     /**

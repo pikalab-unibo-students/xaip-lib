@@ -1,11 +1,13 @@
 package dsl // ktlint-disable filename
 
+import io.kotest.matchers.shouldBe
+import resources.TestUtils.domainDSL
+
 /**
  * Test for DomainDSL cereation.
  */
-// TODO Make this an actual test asseting that the result of domain { .. } is an instance of Domain containing all the information provided via DSL
 fun main() {
-    domain {
+    val d = domain {
         name = "block_world"
         types {
             +"any"
@@ -38,4 +40,5 @@ fun main() {
             // TODO implemnet DSL for axioms too, if you can
         }
     }
+    d shouldBe domainDSL
 }

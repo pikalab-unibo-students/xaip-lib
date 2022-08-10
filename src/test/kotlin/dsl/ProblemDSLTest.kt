@@ -1,14 +1,17 @@
-package dsl // ktlint-disable filename
+package dsl
+
+import io.kotest.matchers.shouldBe
+import resources.TestUtils.domainDSL
+import resources.TestUtils.problemDSL
+
+// ktlint-disable filename
 /**
  * Test for ProblemDSL cereation.
  */
 // TODO Make this an actual test asseting that the result of problem { .. } is an instance of Problem containing all the information provided via DSL
 fun main() {
-    problem {
-        domain {
-            // Sta cosa è da cambiare ma non sopporto quel giallo
-            // TODO questo blocco non ha senso: qui vuoi probabilmente già avre un'instanza di domain, non vuoi crearla al volo
-        }
+    val p = problem {
+        domain = domainDSL
         objects {
             // TODO questo blocco non ha senso, confermo
             +"blocks" to { // non sono per nulla convinta che sia sensato questo blocco
@@ -18,8 +21,6 @@ fun main() {
             }
         }
         initialState {
-            // lo devo mettere il tag fluent prima?
-            // TODO scegli tu come modellare. io non lo metterei (rule of thumb: se una cosa va scritta sempre, che non ci sia o che sia concisa)
             +"at"("a", "floor")
             +"at"("b", "floor")
             +"at"("c", "floor")
@@ -32,4 +33,5 @@ fun main() {
             +"at"("b", "floor")
         }
     }
+    p shouldBe problemDSL
 }

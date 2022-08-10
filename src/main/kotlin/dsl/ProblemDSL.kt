@@ -33,8 +33,8 @@ class ProblemDSL {
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
-    fun goals(f: GoalDSL.() -> Unit) {
-        val goalsDSL = GoalDSL(predicateProvider)
+    fun goals(f: GoalsDSL.() -> Unit) {
+        val goalsDSL = GoalsDSL(predicateProvider)
         goalsDSL.f()
         this.goals = goalsDSL.goals
     }

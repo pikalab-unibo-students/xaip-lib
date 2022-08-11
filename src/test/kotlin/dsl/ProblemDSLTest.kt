@@ -13,7 +13,6 @@ fun main() {
     val p = problem {
         domain = domainDSL
         objects {
-            // TODO questo blocco non ha senso, confermo
             +"blocks"("a", "b")
         }
         initialState {

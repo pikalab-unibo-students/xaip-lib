@@ -7,6 +7,7 @@ import Type
 class ObjectSetDSL {
     private lateinit var map: MutableMap<Type, Set<Object>>
     lateinit var objectSet: ObjectSet
+
     operator fun String.unaryPlus() {
         map[Type.of(this)] = emptySet()
     }

@@ -10,8 +10,8 @@ import impl.AxiomImpl
  * */
 interface Axiom {
     val parameters: Map<Variable, Type>
-    val context: Set<Fluent>
-    val implies: Set<Fluent>
+    val context: List<Expression>
+    val implies: List<Expression>
 
     companion object {
         /***
@@ -19,8 +19,8 @@ interface Axiom {
          */
         fun of(
             parameters: Map<Variable, Type>,
-            context: Set<Fluent>,
-            implies: Set<Fluent>
+            context: List<Expression>,
+            implies: List<Expression>
         ): Axiom = AxiomImpl(parameters, context, implies)
     }
 }

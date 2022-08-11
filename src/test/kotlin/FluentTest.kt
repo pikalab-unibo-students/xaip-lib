@@ -4,6 +4,7 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
+import resources.TestUtils.Expressions
 import resources.TestUtils.Fluents
 import resources.TestUtils.Predicates
 import resources.TestUtils.Values
@@ -103,4 +104,6 @@ class FluentTest : AnnotationSpec() {
         fluentNotEmpty shouldBe fluentNotEmpty
         fluentNotEmpty shouldNotBe fluentNotEmpty.refresh()
     }
+
+    @Test fun testExpression() = Expressions.expessionAtArm shouldBe Fluents.atAArm
 }

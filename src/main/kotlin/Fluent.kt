@@ -4,7 +4,7 @@ import impl.FluentImpl
  * A [Fluent] represents a predicate ([instanceOf]) at runtime.
  * It states its truthiness/falseness.
  */
-interface Fluent : Applicable<Fluent> {
+interface Fluent : Applicable<Fluent>, Expression {
     val name: String
     val args: List<Value>
     val instanceOf: Predicate

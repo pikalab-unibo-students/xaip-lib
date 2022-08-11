@@ -15,7 +15,7 @@ class ProblemDSL(val domain: Domain) {
     // TODO io non metterei un DomainDSL qui. quando crei il problem, il domain si suppone che tu ce lo abbia già. metterei un semplice riferimento a un'istanza di domain
     // TODO userei objectSet, perchè ti serve quello per costruire un problema
     var objects: ObjectSet
-    var state: MutableSet<State> = mutableSetOf()
+    lateinit var state: State
     lateinit var goal: Goal
 
     // TODO non fare campi che possono essere variabili locali. I provide sono oggetti lightweight. Non c'è problema a crearli on the fly quuando servono
@@ -42,9 +42,9 @@ class ProblemDSL(val domain: Domain) {
     /**
      * */
     fun initialState(f: StateDSL.() -> Unit) {
-        val statesDSL = StateDSL()
-        statesDSL.f()
-        this.state = statesDSL.states
+        val stateDSL = StateDSL(predicateProvider)
+        stateDSL.f()
+        this.state = stateDSL.toState()
     }
 
     /**

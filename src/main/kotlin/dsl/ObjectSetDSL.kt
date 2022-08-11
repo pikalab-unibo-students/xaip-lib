@@ -1,8 +1,16 @@
 package dsl
 
+import Object
+import ObjectSet
 import Type
 
 class ObjectSetDSL {
-    lateinit var map: Map<Type, Set<Object>>
-
+    private lateinit var map: MutableMap<Type, Set<Object>>
+    lateinit var objectSet: ObjectSet
+    operator fun String.invoke(vararg args: String) {
+        map[Type.of(this)] = args.map {
+            Object.of(it)
+        }.toSet()
+        objectSet = ObjectSet.of(map)
+    }
 }

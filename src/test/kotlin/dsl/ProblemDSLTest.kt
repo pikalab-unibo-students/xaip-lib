@@ -14,11 +14,7 @@ fun main() {
         domain = domainDSL
         objects {
             // TODO questo blocco non ha senso, confermo
-            +"blocks" to { // non sono per nulla convinta che sia sensato questo blocco
-                +"a"
-                +"b"
-                +"c"
-            }
+            +"blocks"("a", "b")
         }
         initialState {
             +"at"("a", "floor")

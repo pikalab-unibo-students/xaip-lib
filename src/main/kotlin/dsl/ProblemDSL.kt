@@ -2,7 +2,6 @@ package dsl
 
 import Domain
 import Goal
-import Object
 import ObjectSet
 import Problem
 import State
@@ -13,8 +12,7 @@ import dsl.provider.PredicateProvider
  */
 class ProblemDSL(val domain: Domain) {
     // TODO io non metterei un DomainDSL qui. quando crei il problem, il domain si suppone che tu ce lo abbia già. metterei un semplice riferimento a un'istanza di domain
-    // TODO userei objectSet, perchè ti serve quello per costruire un problema
-    var objects: ObjectSet
+    lateinit var objects: ObjectSet
     lateinit var state: State
     lateinit var goal: Goal
 
@@ -24,10 +22,10 @@ class ProblemDSL(val domain: Domain) {
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
-    fun objects(f: ObjectDSL.() -> Unit) {
-        val objectsDSL = ObjectDSL()
+    fun objects(f: ObjectSetDSL.() -> Unit) {
+        val objectsDSL = ObjectSetDSL()
         objectsDSL.f()
-        this.objects = objectsDSL.objects
+        this.objects = objectsDSL.objectSet
     }
 
     /**
@@ -50,9 +48,9 @@ class ProblemDSL(val domain: Domain) {
     /**
      *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Domain].
      */
-    fun buildProblem(): Problem {
-        Problem.of(domain, objects.toMutableSet(), state,goal)
-    }
+    fun buildProblem(): Problem =
+        Problem.of(domain, objects, state,goal)
+
 }
 
 /**

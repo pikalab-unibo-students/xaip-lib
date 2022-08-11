@@ -1,10 +1,9 @@
 package dsl
 
 import Domain
-import Fluent
-import FluentBasedGoal
 import Goal
 import Object
+import ObjectSet
 import Problem
 import State
 import dsl.provider.PredicateProvider
@@ -12,13 +11,12 @@ import dsl.provider.PredicateProvider
 /**
  * Class representing a [Problem] in the DSL.
  */
-class ProblemDSL {
+class ProblemDSL(val domain: Domain) {
     // TODO io non metterei un DomainDSL qui. quando crei il problem, il domain si suppone che tu ce lo abbia già. metterei un semplice riferimento a un'istanza di domain
-    var domain: DomainDSL = TODO("recupera un'istanza di domain creata")
     // TODO userei objectSet, perchè ti serve quello per costruire un problema
-    var objects: MutableSet<Object> = mutableSetOf() // TODO("Object o ObjectSet???")
+    var objects: ObjectSet
     var state: MutableSet<State> = mutableSetOf()
-    var goal: Goal
+    lateinit var goal: Goal
 
     // TODO non fare campi che possono essere variabili locali. I provide sono oggetti lightweight. Non c'è problema a crearli on the fly quuando servono
     private var predicateProvider = PredicateProvider.of(domain)
@@ -53,7 +51,7 @@ class ProblemDSL {
      *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Domain].
      */
     fun buildProblem(): Problem {
-        TODO()
+        Problem.of(domain, objects.toMutableSet(), state,goal)
     }
 }
 
@@ -61,5 +59,5 @@ class ProblemDSL {
  * Entry point for [ProblemDSL] creation.
  */
 fun problem(f: ProblemDSL.() -> Unit): Problem {
-    return ProblemDSL().also(f).buildProblem()
+    //
 }

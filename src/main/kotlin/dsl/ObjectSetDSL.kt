@@ -9,7 +9,7 @@ class ObjectSetDSL {
     lateinit var objectSet: ObjectSet
 
     operator fun String.unaryPlus() {
-        map[Type.of(this)] = emptySet()
+        //
     }
 
     operator fun String.invoke(vararg args: String) {

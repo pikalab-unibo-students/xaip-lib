@@ -14,6 +14,7 @@ fun main() {
         domain = domainDSL
         objects {
             +"blocks"("a", "b")
+            +"any"
         }
         initialState {
             +"at"("a", "floor")

@@ -2,7 +2,6 @@ package dsl
 
 import Fluent
 import FluentBasedGoal
-import Goal
 import dsl.provider.PredicateProvider
 
 /**
@@ -10,7 +9,7 @@ import dsl.provider.PredicateProvider
  */
 
 class GoalDSL(
-    private val predicateProvider: PredicateProvider
+    predicateProvider: PredicateProvider
 ) : AbstractFluentDSL(predicateProvider) {
 
     var fluents: MutableSet<Fluent> = mutableSetOf()

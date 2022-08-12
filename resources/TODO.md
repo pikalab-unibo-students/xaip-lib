@@ -23,7 +23,7 @@
       - il provider
         - https://github.com/pikalab-unibo-students/ise-2122-project-brugnatti/commit/b10b7869f240dd56938f19bf0ce67436e56ba816#r80772504
 
-Rivedere catena di chaimate delle lamba
+- rivedere catena di chiamate delle lamba
 
 ### Relazione
 - rispondere

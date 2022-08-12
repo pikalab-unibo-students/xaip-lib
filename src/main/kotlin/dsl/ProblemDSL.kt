@@ -12,7 +12,7 @@ import dsl.provider.PredicateProvider
  */
 class ProblemDSL() {
     // TODO io non metterei un DomainDSL qui. quando crei il problem, il domain si suppone che tu ce lo abbia già. metterei un semplice riferimento a un'istanza di domain
-    lateinit var domain: Domain
+    lateinit var domain: DomainDSL
     lateinit var objects: ObjectSet
     lateinit var state: State
     lateinit var goal: Goal
@@ -50,7 +50,7 @@ class ProblemDSL() {
      *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Domain].
      */
     fun buildProblem(): Problem =
-        Problem.of(domain, objects, state,goal)
+        Problem.of(domain.buildDomain(), objects, state,goal)
 
 }
 

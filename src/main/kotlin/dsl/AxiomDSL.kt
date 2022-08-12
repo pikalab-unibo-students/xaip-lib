@@ -19,18 +19,4 @@ class AxiomDSL {
     fun parameters(f: ParametersDSL.() -> Unit) {
         parameters = ParametersDSL().also(f).parameters
     }
-
-    /**
-     * Method responsible for the creation of the axiom's contexts.
-     */
-    fun context(f: ExpressionDSL.() -> Unit) {
-        //
-    }
-
-    /**
-     * Method responsible for the creation of the axiom's contexts.
-     */
-    fun implies(f: ExpressionDSL.() -> Unit) {
-        //
-    }
 }

@@ -1,22 +1,28 @@
 package dsl.provider
 
 import Action
+import Axiom
 import Variable
-import dsl.DomainDSL
 
-class VariableProviderImpl(private val context: Any) {
-    private val types: Map<String, Variable> = emptyMap()
-    /*
-    var ctx
-        get() =
-            when(context) {
-                is Action->{
-                    ctx.variables.associateBy { it.name }
-                }
-                is Axiom->{
-                    ctx.variables.associateBy { it.name }
-                }
+class VariableProviderImpl(context: Any): VariableProvider {
+    private var variables: Map<String, Variable> = emptyMap()
+
+    init {
+        when (context) {
+            is Action -> {
+                variables = context.variables.associateBy { it.name }
             }
+            is Axiom -> {
+                variables = context.variables.associateBy { it.name }
+            }
+        }
 
-     */
+    }
+
+    override fun findVariable(name: String): Variable? {
+        return variables[name]
+    }
+
+    override fun getVariables(): Map<String, Variable> = this.variables
+
 }

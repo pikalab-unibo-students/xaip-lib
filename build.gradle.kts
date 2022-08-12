@@ -1,13 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.10"
     id("io.kotest") version "0.3.9"
 
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
-    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "me.giuliabrugnatti"
@@ -18,15 +17,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("io.mockk:mockk:1.12.5")
 
-    implementation("it.unibo.tuprolog:unify-jvm:0.20.4")
-    implementation("it.unibo.tuprolog:solve-classic-jvm:0.20.4")
-    testImplementation("io.kotest:kotest-framework-api-jvm:5.3.0")
-    testImplementation("io.kotest:kotest-runner-junit5:5.3.0")
+    implementation("it.unibo.tuprolog:unify-jvm:0.20.9")
+    implementation("it.unibo.tuprolog:solve-classic-jvm:0.20.9")
+    testImplementation("io.kotest:kotest-framework-api-jvm:5.4.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.4.1")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
 }
 
 tasks.withType<KotlinCompile> {

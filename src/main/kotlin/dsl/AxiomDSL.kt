@@ -4,16 +4,17 @@ import Axiom
 import Expression
 import Type
 import Variable
+import dsl.provider.PredicateProvider
 import dsl.provider.VariableProvider
 
 /**
  * Class representing an [Axiom] in the DSL.
  */
-class AxiomDSL {
+class AxiomDSL(predicateProvider: PredicateProvider) : AbstractFluentDSL(predicateProvider) {
     var parameters: Map<Variable, Type> = emptyMap()
-    val context: MutableSet<Expression> = mutableSetOf()
-    val implies: MutableSet<Expression> = mutableSetOf()
-    private val variableProvider: VariableProvider = VariableProvider.of(this)
+    lateinit var context: Expression
+    lateinit var implies: Expression
+    private val variableProvider: VariableProvider = VariableProvider.of()
 
     /**
      * Method responsible for the axiom of the action's parameters.

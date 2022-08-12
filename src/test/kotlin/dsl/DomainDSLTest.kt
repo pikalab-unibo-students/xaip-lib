@@ -40,14 +40,10 @@ fun main() {
             parameters {
                 "X" ofType "block"
             }
-            context{
-                +"not"("clear"("block"))
-                +"and"("on"("block", "block"))
-            }
-            implies{
-                +"not"("clear"("block"))
-                +"and"("on"("block", "block"))
-            }
+            context = "clear"("x") and "clear"("x")
+            // precondizioni
+            implies = "clear"("x") and "clear"("x")
+            // postcondizioni
         }
     }
     d shouldBe domainDSL

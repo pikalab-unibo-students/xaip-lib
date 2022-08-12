@@ -1,17 +1,14 @@
-package dsl
+package dsl // ktlint-disable filename
 
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.domainDSL
 import resources.TestUtils.problemDSL
 
-// ktlint-disable filename
 /**
  * Test for ProblemDSL cereation.
  */
-// TODO Make this an actual test asseting that the result of problem { .. } is an instance of Problem containing all the information provided via DSL
 fun main() {
-    val p = problem {
-        domain = domainDSL
+    val d = domain {}
+    val p = problem(d) {
         objects {
             +"blocks"("a", "b")
         }

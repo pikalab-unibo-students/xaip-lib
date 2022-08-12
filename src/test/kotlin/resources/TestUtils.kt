@@ -42,7 +42,7 @@ object TestUtils {
     )
 
     val domainDSL = domain {}
-    val problemDSL = problem {}
+    val problemDSL = problem(domainDSL) {}
 
     object Actions {
         val pick = Action.of(
@@ -90,33 +90,27 @@ object TestUtils {
         )
     }
 
-    object Operands {
-        val not = Operand.of("not")
-        val and = Operand.of("and")
-        val or = Operand.of("or")
-    }
-
     object Expressions {
         val expessionAtArm = Fluents.atAArm
-        val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, Operand.of("not"))
-        val unaryExpressionNotAFloor = UnaryExpression.of(Fluents.atAFloor, Operands.not)
+        val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, "not")
+        val unaryExpressionNotAFloor = UnaryExpression.of(Fluents.atAFloor, "not")
         val binaryExpression = BinaryExpression.of(
             Fluents.atBFloor,
             Expressions.unaryExpressionNotAFloor,
-            Operands.and
+            "and"
         )
     }
 
     object Axioms {
         val axiom1 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            listOf(Fluents.atXArm), // cosa dice della regola
-            listOf(Fluents.onXY)
+            Fluents.atXArm, // cosa dice della regola
+            Fluents.onXY
         ) // conseguenze sempre vere della regola sopra
         val axiom2 = Axiom.of(
             mapOf(Values.Y to Types.blocks, Values.X to Types.blocks), // variabili che possono apparire nella regola
-            listOf(Fluents.atYFloor), // cosa dice della regola
-            listOf(Fluents.onXY)
+            Fluents.atYFloor, // cosa dice della regola
+            Fluents.onXY
         ) // conseguenze sempre vere della regola sopra
     } // es XY si muovo sempre assieme-> se Xè sul braccio allora Y è sotto a X
 
@@ -346,8 +340,7 @@ object TestUtils {
     val effectEmpty = Effect.of(fluentEmpty, false)
     val effectNotEmpty = Effect.of(fluentNotEmpty, true)
 
-    val axiomEmpty = Axiom.of(emptyMap(), emptyList(), emptyList())
-    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), listOf(fluentNotEmpty), listOf(fluentNotEmpty))
+    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), fluentNotEmpty, fluentNotEmpty)
 
     val actionEmpty = Action.of("", emptyMap(), emptySet(), emptySet())
     var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))

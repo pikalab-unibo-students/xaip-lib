@@ -8,7 +8,7 @@ import impl.UnaryExpressionImpl
 
 interface UnaryExpression : Expression {
     val expression: Expression
-    val operand: Operand
+    val operand: String
 
     companion object {
         /***
@@ -16,7 +16,7 @@ interface UnaryExpression : Expression {
          */
         fun of(
             expression: Expression,
-            operand: Operand
+            operand: String
         ): UnaryExpression = UnaryExpressionImpl(expression, operand)
     }
 }

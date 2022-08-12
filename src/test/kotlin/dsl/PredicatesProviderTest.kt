@@ -17,6 +17,6 @@ class PredicatesProviderTest : AnnotationSpec() {
     @Ignore
     @Test
     fun testPredicateNotExists() {
-       TestUtils.Predicates.at shouldNotBeIn domainDSL.predicates
+        TestUtils.Predicates.at shouldNotBeIn domainDSL.predicates
     }
 }

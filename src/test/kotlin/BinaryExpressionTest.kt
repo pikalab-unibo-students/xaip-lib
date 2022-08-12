@@ -3,7 +3,6 @@ import io.kotest.matchers.shouldBe
 import resources.TestUtils.Expressions
 import resources.TestUtils.Expressions.binaryExpression
 import resources.TestUtils.Fluents
-import resources.TestUtils.Operands
 
 class BinaryExpressionTest : AnnotationSpec() {
 
@@ -11,6 +10,6 @@ class BinaryExpressionTest : AnnotationSpec() {
     fun testExpressionObjectWorkAsExpected() {
         binaryExpression.expression1 shouldBe Fluents.atBFloor
         binaryExpression.expression2 shouldBe Expressions.unaryExpressionNotAFloor
-        binaryExpression.operand shouldBe Operands.and
+        binaryExpression.operand shouldBe "and"
     }
 }

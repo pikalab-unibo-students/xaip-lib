@@ -14,7 +14,7 @@ interface Fluent : Applicable<Fluent>, Expression {
     /**
      * Method responsible for the negation of the [isNegated] field.
      */
-    operator fun not(): Fluent
+    override fun not(): Fluent
 
     /***
      * Method that checks if two fluents unify.

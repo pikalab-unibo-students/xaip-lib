@@ -12,7 +12,12 @@ class StateDSL(
 ) : AbstractFluentDSL(predicateProvider) {
 
     var fluents: MutableSet<Fluent> = mutableSetOf()
+
+    /**
+     * */
     operator fun Fluent.unaryPlus() = fluents.add(this)
 
+    /**
+     * */
     fun toState(): State = State.of(fluents)
 }

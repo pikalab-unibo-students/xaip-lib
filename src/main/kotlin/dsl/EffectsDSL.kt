@@ -3,13 +3,11 @@ package dsl
 import Effect
 import Fluent
 import dsl.provider.PredicateProvider
-import dsl.provider.VariableProvider
 
 /**
  * */
 class EffectsDSL(
-    predicateProvider: PredicateProvider,
-    variableProvider: VariableProvider
+    predicateProvider: PredicateProvider
 ) : AbstractFluentDSL(predicateProvider) {
     var effects: MutableSet<Effect> = mutableSetOf()
 

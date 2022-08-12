@@ -17,7 +17,7 @@ class ActionDSL(
     var parameters: Map<Variable, Type> = mapOf()
     var effects: MutableSet<Effect> = mutableSetOf()
     var preconditions: MutableSet<Fluent> = mutableSetOf()
-    private val variableProvider: VariableProvider = VariableProvider.of(this)
+    private val variableProvider: VariableProvider = VariableProvider.of()
 
     /**
      * Method responsible for the creation of the action.
@@ -43,6 +43,6 @@ class ActionDSL(
      * Method responsible for the creation of the action's effects.
      */
     fun effects(f: EffectsDSL.() -> Unit) {
-        effects += EffectsDSL(predicateProvider, variableProvider).also(f).effects
+        effects += EffectsDSL(predicateProvider).also(f).effects
     }
 }

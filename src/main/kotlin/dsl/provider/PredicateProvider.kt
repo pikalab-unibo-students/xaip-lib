@@ -1,5 +1,6 @@
 package dsl.provider
 
+import Domain
 import Predicate
 import dsl.DomainDSL
 
@@ -17,6 +18,12 @@ interface PredicateProvider {
          */
         fun of(
             domain: DomainDSL
-        ): PredicateProvider = PredicateProviderImpl(domain)
+        ): PredicateProvider = PredicateProviderImpl { domain.predicates }
+
+        /**
+         * */
+        fun of(
+            domain: Domain
+        ): PredicateProvider = PredicateProviderImpl { domain.predicates }
     }
 }

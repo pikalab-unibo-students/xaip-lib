@@ -9,7 +9,7 @@ import impl.BinaryExpressionImpl
 interface BinaryExpression : Expression {
     val expression1: Expression
     val expression2: Expression
-    val operand: Operand
+    val operand: String
 
     companion object {
         /***
@@ -18,7 +18,7 @@ interface BinaryExpression : Expression {
         fun of(
             expression1: Expression,
             expression2: Expression,
-            operand: Operand
+            operand: String
         ): BinaryExpression = BinaryExpressionImpl(expression1, expression2, operand)
     }
 }

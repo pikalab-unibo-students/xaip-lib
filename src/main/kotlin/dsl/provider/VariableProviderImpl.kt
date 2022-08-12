@@ -2,7 +2,10 @@ package dsl.provider
 
 import Variable
 
-class VariableProviderImpl(context: Any) : VariableProvider {
+/**
+ *
+ */
+class VariableProviderImpl : VariableProvider {
     private var variables: MutableMap<String, Variable> = mutableMapOf()
 
     override fun findVariable(name: String): Variable? {

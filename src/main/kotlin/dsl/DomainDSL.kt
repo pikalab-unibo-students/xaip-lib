@@ -12,13 +12,12 @@ import dsl.provider.TypesProvider
  * Class representing a [Domain] in the DSL.
  */
 class DomainDSL {
-    lateinit var name: String
+    var name: String = "" // tolto lateinit
     var predicates: Set<Predicate> = emptySet()
     var actions: Set<Action> = emptySet()
     var types: Set<Type> = emptySet()
     var axioms: Set<Axiom> = emptySet()
 
-    // TODO non fare campi che possono essere variabili locali. I provide sono oggetti lightweight. Non c'è problema a crearli on the fly quuando servono
     private var predicateProvider = PredicateProvider.of(this)
     private var typesProvider = TypesProvider.of(this)
 
@@ -54,7 +53,7 @@ class DomainDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun axioms(f: AxiomDSL.() -> Unit) {
-        val axiomsDSL = AxiomDSL()
+        val axiomsDSL = AxiomDSL(predicateProvider)
 
         axiomsDSL.f()
         // this.axioms = axiomsDSL.axioms

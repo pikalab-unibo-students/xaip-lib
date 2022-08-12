@@ -5,13 +5,15 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import resources.TestUtils.Types
 import resources.TestUtils.domainDSL
+import resources.TestUtils.types
 
 // TODO imho thesing single dsl classes in this phase just wastes your time. I would start by test the DSL as a whole
 class TypesProviderTest : AnnotationSpec() {
-    @Ignore
+    // @Ignore
     @Test
     fun testTypesExists() {
-        Types.blocks shouldBeIn domainDSL.types
+        for (type in domainDSL.types)
+            type shouldBeIn types
     }
 
     @Ignore

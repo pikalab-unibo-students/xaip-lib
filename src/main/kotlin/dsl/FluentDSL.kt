@@ -1,6 +1,7 @@
 package dsl
 
 import Fluent
+import Variable
 import dsl.provider.PredicateProvider
 import dsl.provider.VariableProvider
 
@@ -17,7 +18,11 @@ class FluentDSL(
      * Method that updates the internal list of [fluents] adding the last one created.
      */
     operator fun Fluent.unaryPlus() {
-        if (variableProvider.findVariable(this.name) != null) fluents += this
-        else error("Missing variable: $this")
+        for (arg in this.args) {
+            if (arg is Variable) {
+                if (variableProvider.findVariable(arg.name) == null) error("Missing variable: $this")
+            }
+        }
+        fluents += this
     }
 }

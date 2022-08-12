@@ -41,7 +41,52 @@ object TestUtils {
         Object.of(2)
     )
 
-    val domainDSL = domain {}
+    val domainDSL = domain {
+        name = "block_world"
+        types {
+            +"anything"
+            +"strings"("anything")
+            +"blocks"("strings")
+            +"locations"("strings")
+        }
+        predicates {
+            +"on"("blocks", "blocks")
+            +"at"("blocks", "locations")
+            +"clear"("blocks")
+            +"armEmpty"()
+        }
+        actions {
+            "stack" {
+                parameters {
+                    "X" ofType "blocks"
+                    "Y" to "locations"
+                }
+                preconditions {
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+                effects {
+                    +"on"("X", "Y")
+                    +"at"("X", "arm")
+                    +"armEmpty"
+                    -"at"("X", "arm")
+                    -"clear"("Y")
+                }
+            }
+        }
+        axioms {
+            parameters {
+                "X" ofType "blocks"
+                "Y" ofType "location"
+                "W" ofType "any"
+                "Z" ofType "string"
+            }
+            context = "clear"("X") and "clear"("Y")
+            // precondizioni
+            implies = "clear"("W") and "clear"("Z")
+            // postcondizioni
+        }
+    }
     val problemDSL = problem(domainDSL) {}
 
     object Actions {

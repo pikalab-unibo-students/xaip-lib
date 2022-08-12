@@ -27,9 +27,5 @@ class TypeDSL {
      */
     operator fun Type.unaryPlus() {
         types += this
-        /*
-        ma questa cosa perché è necessaria se abbiamo già la string.invoke che
-        dalla stringa ci ritorna il tipo? Non bastava quello dopo
-         */
     }
 }

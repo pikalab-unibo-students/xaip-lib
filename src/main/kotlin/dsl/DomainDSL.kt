@@ -44,7 +44,6 @@ class DomainDSL {
      */
     fun types(f: TypeDSL.() -> Unit) {
         val typesDSL = TypeDSL()
-
         typesDSL.f()
         this.types = typesDSL.types
     }

@@ -9,7 +9,7 @@ import dsl.provider.VariableProvider
  */
 class FluentDSL(
     predicateProvider: PredicateProvider,
-    val variableProvider: VariableProvider
+    private val variableProvider: VariableProvider
 ) : AbstractFluentDSL(predicateProvider) {
     val fluents: MutableSet<Fluent> = mutableSetOf()
 

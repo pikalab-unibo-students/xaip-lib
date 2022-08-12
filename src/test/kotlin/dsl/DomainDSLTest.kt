@@ -37,7 +37,17 @@ fun main() {
             }
         }
         axioms {
-            // TODO implemnet DSL for axioms too, if you can
+            parameters {
+                "X" ofType "block"
+            }
+            context{
+                +"not"("clear"("block"))
+                +"and"("on"("block", "block"))
+            }
+            implies{
+                +"not"("clear"("block"))
+                +"and"("on"("block", "block"))
+            }
         }
     }
     d shouldBe domainDSL

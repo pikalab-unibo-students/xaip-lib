@@ -1,7 +1,7 @@
 package dsl
 
 import Axiom
-import Fluent
+import Expression
 import Type
 import Variable
 
@@ -10,8 +10,9 @@ import Variable
  */
 class AxiomDSL {
     var parameters: Map<Variable, Type> = emptyMap()
-    val context: MutableSet<Fluent> = mutableSetOf()
-    val implies: MutableSet<Fluent> = mutableSetOf()
+    val context: MutableSet<Expression> = mutableSetOf()
+    val implies: MutableSet<Expression> = mutableSetOf()
+
     /**
      * Method responsible for the axiom of the action's parameters.
      */
@@ -19,11 +20,17 @@ class AxiomDSL {
         parameters = ParametersDSL().also(f).parameters
     }
 
+    /**
+     * Method responsible for the creation of the axiom's contexts.
+     */
+    fun context(f: ExpressionDSL.() -> Unit) {
+        //
+    }
 
     /**
-     * Method responsible for the creation of the action's preconditions.
+     * Method responsible for the creation of the axiom's contexts.
      */
-    fun preconditions(f: FluentDSL.() -> Unit) {
-        preconditions += FluentDSL(predicateProvider).also(f).fluents
+    fun implies(f: ExpressionDSL.() -> Unit) {
+        //
     }
 }

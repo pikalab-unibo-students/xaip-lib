@@ -57,7 +57,7 @@ class DomainDSL {
         val axiomsDSL = AxiomDSL()
 
         axiomsDSL.f()
-        this.axioms = axiomsDSL.axioms
+        // this.axioms = axiomsDSL.axioms
     }
 
     /**

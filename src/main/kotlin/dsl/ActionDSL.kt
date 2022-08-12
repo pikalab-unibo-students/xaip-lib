@@ -6,6 +6,7 @@ import Fluent
 import Type
 import Variable
 import dsl.provider.PredicateProvider
+import dsl.provider.VariableProvider
 
 /**
  * Class representing a [Action] in the DSL.
@@ -16,6 +17,7 @@ class ActionDSL(
     var parameters: Map<Variable, Type> = mapOf()
     var effects: MutableSet<Effect> = mutableSetOf()
     var preconditions: MutableSet<Fluent> = mutableSetOf()
+    val variableProvider: VariableProvider = VariableProvider.of(this)
 
     /**
      * Method responsible for the creation of the action.

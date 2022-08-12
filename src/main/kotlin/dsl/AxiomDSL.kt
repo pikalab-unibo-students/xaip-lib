@@ -17,6 +17,6 @@ class AxiomDSL {
      * Method responsible for the axiom of the action's parameters.
      */
     fun parameters(f: ParametersDSL.() -> Unit) {
-        parameters = ParametersDSL().also(f).parameters
+        parameters = ParametersDSL(variableProvider).also(f).parameters
     }
 }

@@ -29,20 +29,20 @@ class ActionDSL(
      * Method responsible for the creation of the action's parameters.
      */
     fun parameters(f: ParametersDSL.() -> Unit) {
-        parameters = ParametersDSL().also(f).parameters
+        parameters = ParametersDSL(variableProvider).also(f).parameters
     }
 
     /**
      * Method responsible for the creation of the action's preconditions.
      */
     fun preconditions(f: FluentDSL.() -> Unit) {
-        preconditions += FluentDSL(predicateProvider).also(f).fluents
+        preconditions += FluentDSL(predicateProvider, variableProvider).also(f).fluents
     }
 
     /**
      * Method responsible for the creation of the action's effects.
      */
     fun effects(f: EffectsDSL.() -> Unit) {
-        effects += EffectsDSL(predicateProvider).also(f).effects
+        effects += EffectsDSL(predicateProvider, variableProvider).also(f).effects
     }
 }

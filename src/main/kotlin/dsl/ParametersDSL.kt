@@ -2,11 +2,12 @@ package dsl
 
 import Type
 import Variable
+import dsl.provider.VariableProvider
 
 /**
  * Class representing the [parameters] of an [ActionDSL].
  */
-class ParametersDSL {
+class ParametersDSL(var variableProvider: VariableProvider) {
 
     val parameters: MutableMap<Variable, Type> = mutableMapOf()
 
@@ -15,6 +16,7 @@ class ParametersDSL {
      */
     infix fun String.ofType(type: String) {
         val variable = Variable.of(this)
+        variableProvider.addVariable(variable)
         val t = Type.of(type)
         parameters[variable] = t
     }

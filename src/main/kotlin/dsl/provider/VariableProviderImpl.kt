@@ -5,7 +5,7 @@ import Axiom
 import Variable
 
 class VariableProviderImpl(context: Any): VariableProvider {
-    private var variables: Map<String, Variable> = emptyMap()
+    private var variables: MutableMap<String, Variable> = mutableMapOf()
 
     init {
         when (context) {
@@ -24,5 +24,9 @@ class VariableProviderImpl(context: Any): VariableProvider {
     }
 
     override fun getVariables(): Map<String, Variable> = this.variables
+
+    override fun addVariable(variable: Variable) {
+        this.variables[variable.name] = variable
+    }
 
 }

@@ -9,7 +9,7 @@ import dsl.provider.VariableProvider
  */
 class FluentDSL(
     predicateProvider: PredicateProvider,
-    variableProvider: VariableProvider
+    val variableProvider: VariableProvider
 ) : AbstractFluentDSL(predicateProvider) {
     val fluents: MutableSet<Fluent> = mutableSetOf()
 
@@ -17,6 +17,7 @@ class FluentDSL(
      * Method that updates the internal list of [fluents] adding the last one created.
      */
     operator fun Fluent.unaryPlus() {
-        fluents += this
+        if (variableProvider.findVariable(this.name) != null) fluents += this
+        else error("Missing variable: $this")
     }
 }

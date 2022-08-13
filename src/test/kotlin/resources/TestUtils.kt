@@ -53,7 +53,7 @@ object TestUtils {
             +"on"("blocks", "blocks")
             +"at"("blocks", "locations")
             +"clear"("blocks")
-            +"armEmpty"()
+            +"arm_empty"()
         }
         actions {
             "stack" {
@@ -68,7 +68,7 @@ object TestUtils {
                 effects {
                     +"on"("X", "Y")
                     +"at"("X", "arm")
-                    +"armEmpty"
+                    +"arm_empty"
                     -"at"("X", "arm")
                     -"clear"("Y")
                 }
@@ -87,7 +87,20 @@ object TestUtils {
             // postcondizioni
         }
     }
-    val problemDSL = problem(domainDSL) {}
+    val problemDSL = problem(domainDSL) {
+        objects {
+            +"blocks"("a", "b")
+        }
+        initialState {
+            +"at"("a", "floor")
+            +"at"("b", "floor")
+            +"at"("c", "floor")
+            +"arm_empty"()
+            +"clear"("a")
+            +"clear"("b")
+            +"clear"("c")
+        }
+    }
 
     object Actions {
         val pick = Action.of(
@@ -119,7 +132,6 @@ object TestUtils {
             )
         )
 
-// aggiunto
         val unStack = Action.of(
             name = "unStack",
             parameters = mapOf(

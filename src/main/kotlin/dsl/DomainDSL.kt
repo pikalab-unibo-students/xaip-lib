@@ -53,7 +53,6 @@ class DomainDSL {
      */
     fun axioms(f: AxiomDSL.() -> Unit) {
         val axiomsDSL = AxiomDSL(predicateProvider)
-
         axiomsDSL.f()
         // this.axioms = axiomsDSL.axioms
     }

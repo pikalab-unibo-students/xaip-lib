@@ -25,5 +25,6 @@ fun main() {
             +"at"("b", "floor")
         }
     }
+
     p shouldBe problemDSL
 }

@@ -8,8 +8,7 @@ import Type
  *
  */
 class ObjectSetDSL {
-    private lateinit var map: MutableMap<Type, Set<Object>>
-    lateinit var objectSet: ObjectSet
+    var objectSet: ObjectSet = ObjectSet.of(emptyMap())
 
     /**
      *

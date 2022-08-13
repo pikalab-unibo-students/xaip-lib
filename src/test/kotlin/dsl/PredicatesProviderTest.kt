@@ -11,11 +11,11 @@ class PredicatesProviderTest : AnnotationSpec() {
     @Test
     fun testPredicateExists() {
         TestUtils.Predicates.armEmpty shouldBeIn domainDSL.predicates
-        TestUtils.Predicates.at shouldBeIn domainDSL.predicates
+        // TestUtils.Predicates.clear shouldBeIn domainDSL.predicates
     }
 
     @Test
     fun testPredicateNotExists() {
-        TestUtils.Predicates.at shouldNotBeIn domainDSL.predicates
+        Predicate.of("nothing", emptyList()) shouldNotBeIn domainDSL.predicates
     }
 }

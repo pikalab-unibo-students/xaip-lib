@@ -24,7 +24,9 @@ class PredicatesDSL(private val typesProvider: TypesProvider) {
     private fun typeConverter(vararg types: String): List<Type> {
         val typesList = mutableListOf<Type>()
         for (type in types) {
-            typesList.add(Type.of(type))
+            // trovare il supertype
+            val supertype = typesProvider.findProvider(type)?.superType
+            typesList.add(Type.of(type, supertype))
         }
         return typesList
     }

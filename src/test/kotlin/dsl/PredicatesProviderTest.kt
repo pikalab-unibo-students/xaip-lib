@@ -22,9 +22,12 @@ class PredicatesProviderTest : AnnotationSpec() {
         TestUtils.Predicates.on.name shouldBe domainDSL.predicates.first().name
         TestUtils.Predicates.on.arguments shouldBe domainDSL.predicates.first().arguments
         TestUtils.Predicates.on.arguments.first().name shouldBe domainDSL.predicates.first().arguments.first().name
-        TestUtils.Predicates.on.arguments.first().superType shouldBe domainDSL.predicates.first().arguments.first().superType
-        TestUtils.Predicates.on.arguments.last().name shouldBe domainDSL.predicates.first().arguments.last().name
-        TestUtils.Predicates.on.arguments.last().superType shouldBe domainDSL.predicates.first().arguments.last().superType
+        TestUtils.Predicates.on.arguments.first().superType shouldBe
+                domainDSL.predicates.first().arguments.first().superType
+        TestUtils.Predicates.on.arguments.last().name shouldBe
+                domainDSL.predicates.first().arguments.last().name
+        TestUtils.Predicates.on.arguments.last().superType shouldBe
+                domainDSL.predicates.first().arguments.last().superType
     }
 
     @Test

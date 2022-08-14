@@ -6,6 +6,7 @@ import ObjectSet
 import Problem
 import State
 import dsl.provider.PredicateProvider
+import dsl.provider.TypesProvider
 
 /**
  * Class representing a [Problem] in the DSL.
@@ -15,13 +16,13 @@ class ProblemDSL(val domain: Domain) {
     var state: State = State.of(emptySet())
     var goal: Goal = FluentBasedGoal.of()
 
-    private var predicateProvider = PredicateProvider.of(domain)
-
+    private var predicateProvider = PredicateProvider.of(domain.predicates)
+    private var typesProvider = TypesProvider.of(domain.types)
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun objects(f: ObjectSetDSL.() -> Unit) {
-        val objectsDSL = ObjectSetDSL()
+        val objectsDSL = ObjectSetDSL(typesProvider)
         objectsDSL.f()
         this.objects = objectsDSL.objectSet
     }

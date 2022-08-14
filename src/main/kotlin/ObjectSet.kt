@@ -4,7 +4,7 @@ import impl.ObjectSetImpl
  * * @property map: variable that contains the set of [Object] and their [Type].
  */
 interface ObjectSet {
-    val map: Map<Type, Set<Object>>
+    var map: Map<Type, Set<Object>>
 
     companion object {
         /***

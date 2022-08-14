@@ -1,13 +1,13 @@
 package dsl.provider
 
 import Type
-import dsl.DomainDSL
 
 /**
  * */
-class TypeProviderImpl(private val domain: DomainDSL) : TypesProvider {
+class TypeProviderImpl(private val typesProvider: () -> Iterable<Type>) : TypesProvider {
     private val types: Map<String, Type>
-        get() = domain.types.associateBy { it.name }
+        get() = typesProvider().associateBy { it.name }
+
     /**
      * */
     override fun findProvider(name: String): Type? {

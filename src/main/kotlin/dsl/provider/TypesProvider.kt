@@ -16,6 +16,10 @@ interface TypesProvider {
         /***
          * Factory method for an [PredicateProvider] creation.
          */
-        fun of(domain: DomainDSL): TypesProvider = TypeProviderImpl(domain)
+        fun of(domain: DomainDSL): TypesProvider = TypeProviderImpl { domain.types }
+
+        /**
+         * */
+        fun of(types: Set<Type>): TypesProvider = TypeProviderImpl { types }
     }
 }

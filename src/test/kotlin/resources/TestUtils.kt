@@ -99,6 +99,9 @@ object TestUtils {
             +"clear"("b")
             +"clear"("c")
         }
+        goals {
+            +"on"("a", "b")
+        }
     }
 
     object Actions {

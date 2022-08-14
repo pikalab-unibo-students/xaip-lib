@@ -25,5 +25,11 @@ interface PredicateProvider {
         fun of(
             domain: Domain
         ): PredicateProvider = PredicateProviderImpl { domain.predicates }
+
+        /**
+         * */
+        fun of(
+            predicates: Set<Predicate>
+        ): PredicateProvider = PredicateProviderImpl { predicates }
     }
 }

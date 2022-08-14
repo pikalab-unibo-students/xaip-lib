@@ -14,8 +14,6 @@ class PredicatesProviderTest : AnnotationSpec() {
         TestUtils.Predicates.armEmpty shouldBeIn domainDSL.predicates
         TestUtils.Predicates.armEmpty.name shouldBe domainDSL.predicates.last().name
         TestUtils.Predicates.armEmpty.arguments shouldBe domainDSL.predicates.last().arguments
-        TestUtils.Predicates.armEmpty.arguments.first().superType shouldBe
-            domainDSL.predicates.last().arguments.first().superType
     }
 
     @Test
@@ -23,10 +21,10 @@ class PredicatesProviderTest : AnnotationSpec() {
         TestUtils.Predicates.on shouldBeIn domainDSL.predicates
         TestUtils.Predicates.on.name shouldBe domainDSL.predicates.first().name
         TestUtils.Predicates.on.arguments shouldBe domainDSL.predicates.first().arguments
-        TestUtils.Predicates.on.arguments[1].name shouldBe domainDSL.predicates.first().arguments[1].name
-        TestUtils.Predicates.on.arguments[1].superType shouldBe domainDSL.predicates.first().arguments[1].superType
-        TestUtils.Predicates.on.arguments[2].name shouldBe domainDSL.predicates.first().arguments[2].name
-        TestUtils.Predicates.on.arguments[2].superType shouldBe domainDSL.predicates.first().arguments[2].superType
+        TestUtils.Predicates.on.arguments.first().name shouldBe domainDSL.predicates.first().arguments.first().name
+        TestUtils.Predicates.on.arguments.first().superType shouldBe domainDSL.predicates.first().arguments.first().superType
+        TestUtils.Predicates.on.arguments.last().name shouldBe domainDSL.predicates.first().arguments.last().name
+        TestUtils.Predicates.on.arguments.last().superType shouldBe domainDSL.predicates.first().arguments.last().superType
     }
 
     @Test

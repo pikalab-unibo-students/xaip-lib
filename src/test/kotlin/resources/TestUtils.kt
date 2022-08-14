@@ -50,16 +50,16 @@ object TestUtils {
             +"locations"("strings")
         }
         predicates {
-            +"arm_empty"()
             +"on"("blocks", "blocks")
             +"at"("blocks", "locations")
             +"clear"("blocks")
+            +"arm_empty"()
         }
         actions {
             "stack" {
                 parameters {
                     "X" ofType "blocks"
-                    "Y" ofType "locations"
+                    "Y" to "locations"
                 }
                 preconditions {
                     +"at"("X", "arm")

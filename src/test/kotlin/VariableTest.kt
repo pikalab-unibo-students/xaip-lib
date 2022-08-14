@@ -4,13 +4,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Values
 import resources.TestUtils.name
+import resources.TestUtils.removePostfix
 import resources.TestUtils.variables
 
 class VariableTest : AnnotationSpec() {
     private val localName = name
     private val localVariableEmpty = Variable.of("")
     private val localVariableNotEmpty = Variable.of(localName)
-    private fun removePostfix(string: String) = string.replace("_[0-9]".toRegex(), "")
 
     @Test
     fun basicBehavior() {

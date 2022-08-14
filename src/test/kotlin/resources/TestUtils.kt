@@ -21,6 +21,7 @@ import dsl.domain
 import dsl.problem
 
 object TestUtils {
+    fun removePostfix(string: String) = string.replace("_[0-9]".toRegex(), "")
 
     const val name = "f"
     const val size = 5
@@ -59,7 +60,7 @@ object TestUtils {
             "stack" {
                 parameters {
                     "X" ofType "blocks"
-                    "Y" to "locations"
+                    "Y" ofType "locations"
                 }
                 preconditions {
                     +"at"("X", "arm")

@@ -22,7 +22,6 @@ import dsl.problem
 
 object TestUtils {
     fun removePostfix(string: String) = string.replace("_[0-9]".toRegex(), "")
-
     const val name = "f"
     const val size = 5
 
@@ -70,7 +69,6 @@ object TestUtils {
                     +"on"("X", "Y")
                     +"at"("X", "arm")
                     +"arm_empty"
-                    -"at"("X", "arm")
                     -"clear"("Y")
                 }
             }
@@ -177,9 +175,8 @@ object TestUtils {
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
-            types = setOf(Types.blocks, Types.locations),
+            types = setOf(Types.blocks, Types.locations)
         )
-
         val blockWorldAxiomException = Domain.of(
             name = "block_world_axiom_exception",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
@@ -192,6 +189,7 @@ object TestUtils {
     object Effects {
         val atXFloor = Effect.of(Fluents.atXFloor, true)
         val armEmpty = Effect.of(Fluents.armEmpty, true)
+        val onXY = Effect.of(Fluents.onXY)
     }
 
     object Fluents {

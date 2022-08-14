@@ -11,7 +11,7 @@ import State
 internal class StripsPlanner : Planner {
 
     override fun plan(problem: Problem): Sequence<Plan> = sequence {
-        if (problem.domain.axioms.isNotEmpty()) error("Axioms are not yet supported")
+        if (problem.domain.axioms != null) error("Axioms are not yet supported")
         var depth = 1
         val set = mutableSetOf<Plan>()
         while (true) {

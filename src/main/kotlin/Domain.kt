@@ -14,7 +14,7 @@ interface Domain {
     val predicates: Set<Predicate>
     val actions: Set<Action>
     val types: Set<Type>
-    val axioms: Set<Axiom>
+    val axioms: Axiom?
 
     companion object {
         /***
@@ -25,7 +25,7 @@ interface Domain {
             predicates: Set<Predicate>,
             actions: Set<Action>,
             types: Set<Type>,
-            axioms: Set<Axiom>
+            axioms: Axiom? = null
         ): Domain = DomainImpl(name, predicates, actions, types, axioms)
     }
 }

@@ -177,7 +177,6 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = emptySet()
         )
 
         val blockWorldAxiomException = Domain.of(
@@ -185,7 +184,7 @@ object TestUtils {
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations),
-            axioms = setOf(Axioms.axiom1, Axioms.axiom2)
+            axioms = Axioms.axiom1
         )
     }
 
@@ -402,9 +401,9 @@ object TestUtils {
     val actionEmpty = Action.of("", emptyMap(), emptySet(), emptySet())
     var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
 
-    val domainEmpty = Domain.of("", emptySet(), emptySet(), emptySet(), emptySet())
+    val domainEmpty = Domain.of("", emptySet(), emptySet(), emptySet())
     val domainNotEmpty =
-        Domain.of(name, setOf(predicateNotEmpty), setOf(actionNotEmpty), setOf(type1), setOf(axiomNotEmpty))
+        Domain.of(name, setOf(predicateNotEmpty), setOf(actionNotEmpty), setOf(type1), axiomNotEmpty)
 
     val objectSetEmpty = ObjectSet.of(emptyMap())
     val objectSetNotEmpty = ObjectSet.of(mapOf(type1 to setOf(objNotEmpty)))

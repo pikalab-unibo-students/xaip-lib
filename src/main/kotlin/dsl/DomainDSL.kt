@@ -61,7 +61,7 @@ class DomainDSL {
      *  Method responsible that build an instance of [DomainDSL] and converts it to a [Domain].
      */
     fun buildDomain(): Domain =
-        Domain.of(name, predicates.toSet(), actions.toSet(), types.toSet(), axioms.toSet())
+        Domain.of(name, predicates.toSet(), actions.toSet(), types.toSet())
 }
 
 /**

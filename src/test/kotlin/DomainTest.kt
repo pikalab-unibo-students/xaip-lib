@@ -17,7 +17,7 @@ class DomainTest : AnnotationSpec() {
         domainEmpty.predicates.isEmpty() shouldBe true
         domainEmpty.actions.isEmpty() shouldBe true
         domainEmpty.types.isEmpty() shouldBe true
-        domainEmpty.axioms.isEmpty() shouldBe true
+        (domainEmpty.axioms == null) shouldBe true
     }
 
     @Test
@@ -26,7 +26,7 @@ class DomainTest : AnnotationSpec() {
         domainNotEmpty.predicates.isEmpty() shouldBe false
         domainNotEmpty.actions.isEmpty() shouldBe false
         domainNotEmpty.types.isEmpty() shouldBe false
-        domainNotEmpty.axioms.isEmpty() shouldBe false
+        (domainNotEmpty.axioms != null) shouldBe true
     }
 
     @Test

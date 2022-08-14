@@ -2,16 +2,35 @@ package dsl
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
-import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.collections.shouldNotBeIn
+import io.kotest.matchers.shouldBe
 import resources.TestUtils.Predicates
 import resources.TestUtils.domainDSL
 
-// TODO imho thesing single dsl classes in this phase just wastes your time. I would start by test the DSL as a whole
 class PredicateDSLTest : AnnotationSpec() {
-    @Ignore
     @Test
-    fun predicatesDSLworksAsExpected() {
-        domainDSL.predicates.size shouldNotBe 0
-        Predicates.at shouldBeIn domainDSL.predicates
+    fun testArmEmptyPredicateExists() {
+        Predicates.armEmpty shouldBeIn domainDSL.predicates
+        Predicates.armEmpty.name shouldBe domainDSL.predicates.last().name
+        Predicates.armEmpty.arguments shouldBe domainDSL.predicates.last().arguments
+    }
+
+    @Test
+    fun testOnPredicateExists() {
+        Predicates.on shouldBeIn domainDSL.predicates
+        Predicates.on.name shouldBe domainDSL.predicates.first().name
+        Predicates.on.arguments shouldBe domainDSL.predicates.first().arguments
+        Predicates.on.arguments.first().name shouldBe domainDSL.predicates.first().arguments.first().name
+        Predicates.on.arguments.first().superType shouldBe
+            domainDSL.predicates.first().arguments.first().superType
+        Predicates.on.arguments.last().name shouldBe
+            domainDSL.predicates.first().arguments.last().name
+        Predicates.on.arguments.last().superType shouldBe
+            domainDSL.predicates.first().arguments.last().superType
+    }
+
+    @Test
+    fun testPredicateNotExists() {
+        Predicate.of("nothing") shouldNotBeIn domainDSL.predicates
     }
 }

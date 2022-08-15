@@ -2,12 +2,12 @@ package dsl
 
 import Predicate
 import Type
-import dsl.provider.TypesProvider
+import dsl.provider.TypeProvider
 
 /**
  * Class representing a [Predicate] in the DSL.
  */
-class PredicatesDSL(private val typesProvider: TypesProvider) {
+class PredicatesDSL(private val typesProvider: TypeProvider) {
     val predicates = mutableSetOf<Predicate>()
     /**
      * */
@@ -17,14 +17,14 @@ class PredicatesDSL(private val typesProvider: TypesProvider) {
 
     private fun typeExist(types: Iterable<Type>): Boolean {
         for (type in types)
-            if (typesProvider.findProvider(type.name) == null) error("Type non found: ${type.name}")
+            if (typesProvider.findType(type.name) == null) error("Type non found: ${type.name}")
         return true
     }
 
     private fun typeConverter(vararg types: String): List<Type> {
         val typesList = mutableListOf<Type>()
         for (type in types) {
-            val supertype = typesProvider.findProvider(type)?.superType
+            val supertype = typesProvider.findType(type)?.superType
             typesList.add(Type.of(type, supertype))
         }
         return typesList

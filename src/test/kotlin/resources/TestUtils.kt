@@ -53,7 +53,7 @@ object TestUtils {
                 +"on"("blocks", "blocks")
                 +"at"("blocks", "locations")
                 +"clear"("blocks")
-                +"arm_empty"()
+                //+"arm_empty"()
             }
             actions {
                 "pick" {
@@ -239,7 +239,7 @@ object TestUtils {
     object Domains {
         val blockWorld = Domain.of(
             name = "block_world",
-            predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
+            predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
             actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
             types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
@@ -313,6 +313,10 @@ object TestUtils {
             Types.locations to setOf(Values.floor, Values.arm),
             Types.numbers to setOf(Values.one, Values.two, Values.zero)
         )
+        val objects = ObjectSet.of(
+            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.locations to setOf(Values.floor, Values.arm),
+        )
     }
 
     object Plans {
@@ -348,7 +352,7 @@ object TestUtils {
 
         val stackAB = Problem.of(
             domain = Domains.blockWorld,
-            objects = ObjectSets.all,
+            objects = ObjectSets.objects,
             initialState = States.initial,
             goal = Goals.onAatBandBonFloor
         )

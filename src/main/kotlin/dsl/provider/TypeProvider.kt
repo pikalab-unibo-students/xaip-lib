@@ -6,20 +6,20 @@ import dsl.DomainDSL
 /**
  * Provider of the types created in the instance of [DomainDSL].
  */
-interface TypesProvider {
+interface TypeProvider {
     /**
      * Method given a [name] of a [Type] retrieves it if it exists and returns null otherwise.
      */
-    fun findProvider(name: String): Type?
+    fun findType(name: String): Type?
 
     companion object {
         /***
          * Factory method for an [PredicateProvider] creation.
          */
-        fun of(domain: DomainDSL): TypesProvider = TypeProviderImpl { domain.types }
+        fun of(domain: DomainDSL): TypeProvider = TypeProviderImpl { domain.types }
 
         /**
          * */
-        fun of(types: Set<Type>): TypesProvider = TypeProviderImpl { types }
+        fun of(types: Set<Type>): TypeProvider = TypeProviderImpl { types }
     }
 }

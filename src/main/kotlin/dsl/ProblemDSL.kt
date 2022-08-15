@@ -6,7 +6,7 @@ import ObjectSet
 import Problem
 import State
 import dsl.provider.PredicateProvider
-import dsl.provider.TypesProvider
+import dsl.provider.TypeProvider
 
 /**
  * Class representing a [Problem] in the DSL.
@@ -17,7 +17,7 @@ class ProblemDSL(val domain: Domain) {
     var goal: Goal = FluentBasedGoal.of()
 
     private var predicateProvider = PredicateProvider.of(domain.predicates)
-    private var typesProvider = TypesProvider.of(domain.types)
+    private var typesProvider = TypeProvider.of(domain.types)
     /**
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */

@@ -3,12 +3,12 @@ package dsl
 import Object
 import ObjectSet
 import Type
-import dsl.provider.TypesProvider
+import dsl.provider.TypeProvider
 
 /**
  *
  */
-class ObjectSetDSL(private val typeProvider: TypesProvider) {
+class ObjectSetDSL(private val typeProvider: TypeProvider) {
     var objectSet: ObjectSet = ObjectSet.of(emptyMap())
     var map = emptyMap<Type, Set<Object>>()
 
@@ -22,7 +22,7 @@ class ObjectSetDSL(private val typeProvider: TypesProvider) {
     /**
      * */
     operator fun String.invoke(vararg args: String): Pair<Type, Set<Object>> {
-        val type = typeProvider.findProvider(this)
+        val type = typeProvider.findType(this)
         if (type != null) {
             return Pair(
                 type,

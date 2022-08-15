@@ -6,7 +6,7 @@ import Domain
 import Predicate
 import Type
 import dsl.provider.PredicateProvider
-import dsl.provider.TypesProvider
+import dsl.provider.TypeProvider
 
 /**
  * Class representing a [Domain] in the DSL.
@@ -19,7 +19,7 @@ class DomainDSL {
     var axioms: Set<Axiom> = emptySet()
 
     private var predicateProvider = PredicateProvider.of(this)
-    private var typesProvider = TypesProvider.of(this)
+    private var typesProvider = TypeProvider.of(this)
 
     /**Unit
      * Scrivi qualcosa di sensato quando fixi sta roba.

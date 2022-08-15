@@ -1,48 +1,24 @@
 package dsl // ktlint-disable filename
 
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.domainDSL
+import resources.TestUtils.DomainDSLs
+import resources.TestUtils.Domains
 
 /**
  * Test for DomainDSL cereation.
  */
-fun main() {
-    val d = domain {
-        name = "block_world"
-        types {
-            +"any"
-            +"string"("any")
-            +"block"("string")
-        }
-        predicates {
-            +"on"("block", "block")
-            +"at"("block", "location")
-            +"clear"("block")
-        }
-        actions {
-            "stack" {
-                parameters {
-                    "X" ofType "block"
-                }
-                preconditions {
-                    +"on"("a", "b")
-                    +"on"("a", "b")
-                }
-                effects {
-                    +"at"("X", "floor")
-                    -"armempty"
-                }
-            }
-        }
-        axioms {
-            parameters {
-                "X" ofType "block"
-            }
-            context = "clear"("x") and "clear"("x")
-            // precondizioni
-            implies = "clear"("x") and "clear"("x")
-            // postcondizioni
-        }
+class DomainDSLTest : AnnotationSpec() {
+    @Test
+    fun test() {
+        DomainDSLs.blockWorldXDomainDSL.name shouldBe Domains.blockWorld.name
+        DomainDSLs.blockWorldXDomainDSL.axioms shouldBe null
+        DomainDSLs.blockWorldXDomainDSL.types shouldBe Domains.blockWorld.types
+        DomainDSLs.blockWorldXDomainDSL.actions.first().name shouldBe Domains.blockWorld.actions.first().name
+        DomainDSLs.blockWorldXDomainDSL.actions.first().effects.size shouldBe Domains.blockWorld.actions.first().effects.size
+        DomainDSLs.blockWorldXDomainDSL.actions.first().parameters.size shouldBe Domains.blockWorld.actions.first().parameters.size
+        DomainDSLs.blockWorldXDomainDSL.actions.first().preconditions.size shouldBe Domains.blockWorld.actions.first().preconditions.size
+        DomainDSLs.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.last().name
+        DomainDSLs.blockWorldXDomainDSL.predicates.size shouldBe 4
     }
-    d shouldBe domainDSL
 }

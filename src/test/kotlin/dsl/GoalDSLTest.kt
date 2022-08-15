@@ -8,7 +8,6 @@ import resources.TestUtils.problemDSL
 class GoalDSLTest : AnnotationSpec() {
     @Test
     fun goalDSLworksAsExpected() {
-        val goals = problemDSL.goal
-        goals shouldBe FluentBasedGoal.of(Fluents.onAB)
+        problemDSL.goal shouldBe FluentBasedGoal.of(Fluents.onAB)
     }
 }

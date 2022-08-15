@@ -40,7 +40,70 @@ object TestUtils {
         Object.of(1),
         Object.of(2)
     )
-
+    object DomainDSLs {
+        val blockWorldXDomainDSL = domain {
+            name = "block_world"
+            types {
+                +"anything"
+                +"strings"("anything")
+                +"blocks"("strings")
+                +"locations"("strings")
+            }
+            predicates {
+                +"on"("blocks", "blocks")
+                +"at"("blocks", "locations")
+                +"clear"("blocks")
+                +"arm_empty"()
+            }
+            actions {
+                "pick" {
+                    parameters {
+                        "X" ofType "block"
+                    }
+                    preconditions {
+                        +"at"("X", "floor")
+                        +"arm_empty"()
+                        +"clear"("X")
+                    }
+                    effects {
+                        +"at"("X", "arm")
+                        -"arm_empty"
+                        -"at"("X", "floor")
+                        -"clear"("X")
+                    }
+                }
+                "stack" {
+                    parameters {
+                        "X" ofType "block"
+                        "Y" ofType "locations"
+                    }
+                    preconditions {
+                        +"on"("a", "b")
+                        +"on"("a", "b")
+                    }
+                    effects {
+                        +"at"("X", "floor")
+                        -"arm_empty"
+                    }
+                }
+                "unStack" {
+                    parameters {
+                        "X" ofType "block"
+                        "Y" ofType "locations"
+                    }
+                    preconditions {
+                        +"on"("a", "b")
+                        +"clear"("X")
+                    }
+                    effects {
+                        +"at"("X", "floor")
+                        -"arm_empty"
+                        -"clear"("Y")
+                    }
+                }
+            }
+        }
+    }
     val domainDSL = domain {
         name = "block_world"
         types {
@@ -178,7 +241,7 @@ object TestUtils {
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty),
             actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
-            types = setOf(Types.blocks, Types.locations)
+            types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
         val blockWorldAxiomException = Domain.of(
             name = "block_world_axiom_exception",

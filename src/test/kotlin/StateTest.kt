@@ -52,11 +52,13 @@ class StateTest : AnnotationSpec() {
         States.atAArm.fluents.isEmpty() shouldNotBe true
         States.atAArm.fluents.forEach { it.isGround shouldBe true }
     }
+
     @Test
     fun testStateObjectAtAArmIsApplicableWorksAsExpected() {
         States.atAArm.isApplicable(Actions.stack) shouldBe true
         States.atAArm.isApplicable(Actions.pick) shouldBe false
     }
+
     @Test
     fun testStateObjectAtAArmApplyWorksAsExpected() {
         States.initial.apply(Actions.pick).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))

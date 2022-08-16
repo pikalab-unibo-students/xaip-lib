@@ -12,7 +12,7 @@ interface BinaryExpression : Expression {
     val operand: String
 
     companion object {
-        /***
+        /**
          * Factory method for an [BinaryExpression] creation.
          */
         fun of(

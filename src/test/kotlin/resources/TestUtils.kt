@@ -216,10 +216,15 @@ object TestUtils {
         val expessionAtArm = Fluents.atAArm
         val unaryExpressionNotArmEmpty = UnaryExpression.of(Fluents.armEmpty, "not")
         val unaryExpressionNotAFloor = UnaryExpression.of(Fluents.atAFloor, "not")
-        val binaryExpression = BinaryExpression.of(
+        val binaryExpression1 = BinaryExpression.of(
             Fluents.atBFloor,
-            Expressions.unaryExpressionNotAFloor,
+            unaryExpressionNotAFloor,
             "and"
+        )
+        val binaryExpression2 = BinaryExpression.of(
+            Fluents.atBFloor,
+            unaryExpressionNotAFloor,
+            "or"
         )
     }
 

@@ -132,15 +132,11 @@ class ProblemDSLTest : AnnotationSpec() {
         p.objects shouldBe Problems.stackAB.objects
     }
 
+    @Ignore
     @Test
     fun testPlanner() {
         Planners.dummyPlanner.plan(p).toSet() shouldBe
             Planners.dummyPlanner.plan(Problems.stackAB).toSet()
     }
 
-    @Test
-    fun testPlannerDSL() {
-        Planners.dummyPlanner.plan(p).toSet() shouldBe
-            Planners.dummyPlanner.plan(Problems.stackAB).toSet()
-    }
 }

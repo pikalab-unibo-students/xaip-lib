@@ -32,7 +32,11 @@ internal data class ExecutionContext(
     }
 
     private fun Set<Action>.`actions whose effects match head`(head: Effect) =
-        map { it.refresh() }.filter { action -> action.positiveEffects.any { effect -> effect.match(head) } }
+        map { it.refresh() }.filter { action ->
+            action.positiveEffects.any { effect ->
+                effect.match(head)
+            }
+        }
 
     private fun Stack<Applicable<*>>.update(elem: Any, h: Effect? = null) {
         when (elem) {

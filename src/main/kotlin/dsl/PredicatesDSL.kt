@@ -15,6 +15,13 @@ class PredicatesDSL(private val typesProvider: TypeProvider) {
         if (typeExist(this.arguments)) predicates += this
     }
 
+    /**
+     *
+     */
+    operator fun String.unaryPlus() {
+        predicates += this()
+    }
+
     private fun typeExist(types: Iterable<Type>): Boolean {
         for (type in types)
             if (typesProvider.findType(type.name) == null) error("Type non found: ${type.name}")

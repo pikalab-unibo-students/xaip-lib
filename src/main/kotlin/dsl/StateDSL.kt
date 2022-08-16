@@ -18,6 +18,13 @@ class StateDSL(
     operator fun Fluent.unaryPlus() = fluents.add(this)
 
     /**
+     *
+     */
+    operator fun String.unaryPlus() {
+        fluents.add(this())
+    }
+
+    /**
      * */
     fun toState(): State = State.of(fluents)
 }

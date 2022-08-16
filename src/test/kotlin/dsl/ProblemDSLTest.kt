@@ -2,6 +2,7 @@ package dsl // ktlint-disable filename
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import resources.TestUtils.Domains
 import resources.TestUtils.Planners
 import resources.TestUtils.Problems
 
@@ -9,7 +10,7 @@ import resources.TestUtils.Problems
  * Test for DomainDSL cereation.
  */
 class ProblemDSLTest : AnnotationSpec() {
-    // private val d = TestUtils.Domains.blockWorld
+    private val d1 = Domains.blockWorld
 
     private val d = domain {
         name = "block_world"
@@ -22,7 +23,7 @@ class ProblemDSLTest : AnnotationSpec() {
         predicates {
             +"at"("blocks", "locations")
             +"on"("blocks", "blocks")
-            +"arm_empty"()
+            +"arm_empty"
             +"clear"("blocks")
         }
         actions {
@@ -32,7 +33,7 @@ class ProblemDSLTest : AnnotationSpec() {
                 }
                 preconditions {
                     +"at"("X", "floor")
-                    +"arm_empty"()
+                    +"arm_empty"
                     +"clear"("X")
                 }
                 effects {
@@ -58,7 +59,6 @@ class ProblemDSLTest : AnnotationSpec() {
                     -"clear"("Y")
                 }
             }
-            /*
             "unStack" {
                 parameters {
                     "X" ofType "block"
@@ -74,8 +74,6 @@ class ProblemDSLTest : AnnotationSpec() {
                     -"clear"("Y")
                 }
             }
-
-             */
         }
     }
 
@@ -98,14 +96,14 @@ class ProblemDSLTest : AnnotationSpec() {
             +"at"("a", "floor")
             +"at"("b", "floor")
             +"at"("c", "floor")
-            +"arm_empty"()
+            +"arm_empty"
             +"clear"("a")
             +"clear"("b")
             +"clear"("c")
         }
         goals {
-            +"on"("a", "b")
             +"at"("b", "floor")
+            +"on"("a", "b")
         }
     }
 
@@ -138,5 +136,4 @@ class ProblemDSLTest : AnnotationSpec() {
         Planners.dummyPlanner.plan(p).toSet() shouldBe
             Planners.dummyPlanner.plan(Problems.stackAB).toSet()
     }
-
 }

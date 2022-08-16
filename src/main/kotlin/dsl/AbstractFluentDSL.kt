@@ -3,6 +3,7 @@ package dsl
 import Fluent
 import Object
 import dsl.provider.PredicateProvider
+
 /**
  * */
 open class AbstractFluentDSL protected constructor(

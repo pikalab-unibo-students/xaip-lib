@@ -25,4 +25,11 @@ class FluentDSL(
         }
         fluents += this
     }
+
+    /**
+     *
+     */
+    operator fun String.unaryPlus() {
+        fluents += this()
+    }
 }

@@ -2,7 +2,6 @@ package dsl // ktlint-disable filename
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils
 import resources.TestUtils.Planners
 import resources.TestUtils.Problems
 
@@ -86,7 +85,7 @@ class ProblemDSLTest : AnnotationSpec() {
      */
 
     // DomainDSLs.blockWorldXDomainDSL
-    /*
+
     private val p = problem(d) {
         objects {
             +"blocks"("a", "b", "c")
@@ -105,8 +104,8 @@ class ProblemDSLTest : AnnotationSpec() {
             +"at"("b", "floor")
             +"on"("a", "b")
         }
-    }.
-*/
+    }
+
     @Test
     fun testDomain() {
         /*

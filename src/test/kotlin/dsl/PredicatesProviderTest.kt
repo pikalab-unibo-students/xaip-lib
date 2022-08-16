@@ -1,37 +1,24 @@
 package dsl
 
+import dsl.provider.PredicateProvider
 import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.collections.shouldBeIn
-import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Predicates
-import resources.TestUtils.domainDSL
 
 class PredicatesProviderTest : AnnotationSpec() {
+    private val predicateProvider = PredicateProvider.of(setOf(Predicates.on, Predicates.armEmpty))
 
     @Test
-    fun testArmEmptyPredicateExists() {
-        Predicates.armEmpty shouldBeIn domainDSL.predicates
-        Predicates.armEmpty.name shouldBe domainDSL.predicates.last().name
-        Predicates.armEmpty.arguments shouldBe domainDSL.predicates.last().arguments
-    }
-
-    @Test
-    fun testOnPredicateExists() {
-        Predicates.on shouldBeIn domainDSL.predicates
-        Predicates.on.name shouldBe domainDSL.predicates.first().name
-        Predicates.on.arguments shouldBe domainDSL.predicates.first().arguments
-        Predicates.on.arguments.first().name shouldBe domainDSL.predicates.first().arguments.first().name
-        Predicates.on.arguments.first().superType shouldBe
-            domainDSL.predicates.first().arguments.first().superType
-        Predicates.on.arguments.last().name shouldBe
-            domainDSL.predicates.first().arguments.last().name
-        Predicates.on.arguments.last().superType shouldBe
-            domainDSL.predicates.first().arguments.last().superType
+    fun testPredicateExists() {
+        predicateProvider.findPredicate(Predicates.on.name, Predicates.on.arguments.size) shouldNotBe null
+        predicateProvider.findPredicate(Predicates.armEmpty.name, Predicates.armEmpty.arguments.size) shouldNotBe null
     }
 
     @Test
     fun testPredicateNotExists() {
-        Predicate.of("nothing") shouldNotBeIn domainDSL.predicates
+        predicateProvider.findPredicate(Predicates.on.name, Predicates.on.arguments.size - 1) shouldBe null
+        predicateProvider.findPredicate(Predicates.armEmpty.name, Predicates.armEmpty.arguments.size + 1) shouldBe null
+        predicateProvider.findPredicate("nothing", 1) shouldBe null
     }
 }

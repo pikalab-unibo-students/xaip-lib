@@ -5,7 +5,7 @@ import Variable
 /**
  *
  */
-class VariableProviderImpl() : VariableProvider {
+class VariableProviderImpl : VariableProvider {
     private var variables: MutableMap<String, Variable> = mutableMapOf()
 
     override fun findVariable(name: String): Variable? {

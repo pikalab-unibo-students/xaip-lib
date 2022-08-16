@@ -58,6 +58,7 @@ class ProblemDSLTest : AnnotationSpec() {
                     -"clear"("Y")
                 }
             }
+            /*
             "unStack" {
                 parameters {
                     "X" ofType "block"
@@ -69,21 +70,23 @@ class ProblemDSLTest : AnnotationSpec() {
                 }
                 effects {
                     +"at"("X", "floor")
-                    -"arm_empty"
+                    +"arm_empty"
                     -"clear"("Y")
                 }
             }
+
+             */
         }
     }
-    /*private val p = Problem.of(
+
+/*
+    private val p = Problem.of(
         domain = d,
         objects = TestUtils.ObjectSets.objects,
         initialState = TestUtils.States.initial,
         goal = TestUtils.Goals.onAatBandBonFloor
     )
-
-     */
-
+    */
     // DomainDSLs.blockWorldXDomainDSL
 
     private val p = problem(d) {
@@ -101,8 +104,8 @@ class ProblemDSLTest : AnnotationSpec() {
             +"clear"("c")
         }
         goals {
-            +"at"("b", "floor")
             +"on"("a", "b")
+            +"at"("b", "floor")
         }
     }
 

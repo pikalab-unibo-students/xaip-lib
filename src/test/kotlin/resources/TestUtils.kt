@@ -53,7 +53,7 @@ object TestUtils {
                 +"on"("blocks", "blocks")
                 +"at"("blocks", "locations")
                 +"clear"("blocks")
-                //+"arm_empty"()
+                +"arm_empty"()
             }
             actions {
                 "pick" {
@@ -315,7 +315,7 @@ object TestUtils {
         )
         val objects = ObjectSet.of(
             Types.blocks to setOf(Values.a, Values.b, Values.c),
-            Types.locations to setOf(Values.floor, Values.arm),
+            Types.locations to setOf(Values.floor, Values.arm)
         )
     }
 

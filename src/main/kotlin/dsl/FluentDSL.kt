@@ -1,16 +1,13 @@
 package dsl
 
 import Fluent
-import Variable
 import dsl.provider.PredicateProvider
-import dsl.provider.VariableProvider
 
 /**
  * Class representing an [Fluent] in the DSL.
  */
 class FluentDSL(
-    predicateProvider: PredicateProvider,
-    private val variableProvider: VariableProvider
+    predicateProvider: PredicateProvider
 ) : AbstractFluentDSL(predicateProvider) {
     val fluents: MutableSet<Fluent> = mutableSetOf()
 

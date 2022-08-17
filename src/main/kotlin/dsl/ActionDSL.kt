@@ -36,7 +36,7 @@ class ActionDSL(
      * Method responsible for the creation of the action's preconditions.
      */
     fun preconditions(f: FluentDSL.() -> Unit) {
-        preconditions += FluentDSL(predicateProvider, variableProvider).also(f).fluents
+        preconditions += FluentDSL(predicateProvider).also(f).fluents
     }
 
     /**

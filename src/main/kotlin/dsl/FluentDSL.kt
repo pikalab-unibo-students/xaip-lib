@@ -18,11 +18,6 @@ class FluentDSL(
      * Method that updates the internal list of [fluents] adding the last one created.
      */
     operator fun Fluent.unaryPlus() {
-        for (arg in this.args) {
-            if (arg is Variable) {
-                if (variableProvider.findVariable(arg.name) == null) error("Missing variable: $this")
-            }
-        }
         fluents += this
     }
 

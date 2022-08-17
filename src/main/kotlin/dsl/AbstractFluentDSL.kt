@@ -9,9 +9,6 @@ import dsl.provider.PredicateProvider
 open class AbstractFluentDSL protected constructor(
     private val predicateProvider: PredicateProvider
 ) {
-    private fun String.isCapital(): Boolean =
-        isNotEmpty() && this[0] in 'A'..'Z'
-
     /**
      * Method that allow to treat a [String] as it was a [Fluent].
      */
@@ -21,7 +18,8 @@ open class AbstractFluentDSL protected constructor(
                 ?: error("Missing predicate: $this/${args.size}"),
             false,
             args.map {
-                if (isCapital()) Variable.of(it) else Object.of(it)
+                if (isNotEmpty() && it[0].isUpperCase()) Variable.of(it)
+                else Object.of(it)
             }
         )
 }

@@ -31,7 +31,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPlanner() {
         val generatedPlan = Planners.dummyPlanner.plan(Problems.stack).first()
-        val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, TestUtils.Values.c))))
+        val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))))
         generatedPlan shouldBe plan2check
     }
 
@@ -100,7 +100,6 @@ class StripsPlannerTest : AnnotationSpec() {
         plansGenerated5.toSet() shouldBe plan2check5.toSet()
     }
 
-    @Ignore
     @Test
     fun testAxiomException() {
         val plan = Planners.dummyPlanner.plan(Problems.axiomException)
@@ -108,5 +107,22 @@ class StripsPlannerTest : AnnotationSpec() {
             plan.toSet().size shouldBe 0
         }
         exception.message shouldStartWith ("Axioms are not yet supported")
+    }
+
+    @Test
+    fun testPlannerRelation() {
+        /*ObjectSet.of(
+            mapOf(
+                Type.of("anything") to emptySet(),
+                Type.of("strings", Type.of("anything")) to emptySet(),
+                Type.of("blocks", Type.of("strings")) to setOf(Object.of("a"), Object.of("b")),
+                Type.of("location", Type.of("strings")) to setOf(Object.of("floor"), Object.of("arm"))
+            )
+        )
+         State.of(setOf(Fluent.of()))
+
+         Planner.strips().plan()
+
+         */
     }
 }

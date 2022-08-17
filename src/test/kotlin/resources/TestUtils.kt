@@ -151,9 +151,9 @@ object TestUtils {
         axioms {
             parameters {
                 "X" ofType "blocks"
-                "Y" ofType "location"
-                "W" ofType "any"
-                "Z" ofType "string"
+                "Y" ofType "locations"
+                "W" ofType "anything"
+                "Z" ofType "strings"
             }
             context = "clear"("X") and "clear"("Y")
             // precondizioni

@@ -16,7 +16,7 @@ class DomainDSL {
     var predicates: Set<Predicate> = emptySet()
     var actions: Set<Action> = emptySet()
     var types: Set<Type> = emptySet()
-    lateinit var axiom: Axiom
+    var axiom: Axiom? = null
 
     private var predicateProvider = PredicateProvider.of(this)
     private var typesProvider = TypeProvider.of(this)

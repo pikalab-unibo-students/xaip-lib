@@ -26,11 +26,11 @@ class ProblemDSLTest : AnnotationSpec() {
         actions {
             "pick" {
                 parameters {
-                    "X" ofType "block"
+                    "X" ofType "blocks"
                 }
                 preconditions {
                     +"at"("X", "floor")
-                    +"arm_empty"()
+                    +"arm_empty"
                     +"clear"("X")
                 }
                 effects {
@@ -42,7 +42,7 @@ class ProblemDSLTest : AnnotationSpec() {
             }
             "stack" {
                 parameters {
-                    "X" ofType "block"
+                    "X" ofType "blocks"
                     "Y" ofType "locations"
                 }
                 preconditions {
@@ -58,7 +58,7 @@ class ProblemDSLTest : AnnotationSpec() {
             }
             "unStack" {
                 parameters {
-                    "X" ofType "block"
+                    "X" ofType "blocks"
                     "Y" ofType "locations"
                 }
                 preconditions {

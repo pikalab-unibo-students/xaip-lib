@@ -2,6 +2,7 @@ package dsl // ktlint-disable filename
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.DomainDSLs
 import resources.TestUtils.Domains
 
@@ -12,7 +13,7 @@ class DomainDSLTest : AnnotationSpec() {
     @Test
     fun test() {
         DomainDSLs.blockWorldXDomainDSL.name shouldBe Domains.blockWorld.name
-        DomainDSLs.blockWorldXDomainDSL.axioms shouldBe null
+        DomainDSLs.blockWorldXDomainDSL.axioms shouldNotBe null
         DomainDSLs.blockWorldXDomainDSL.types shouldBe Domains.blockWorld.types
         DomainDSLs.blockWorldXDomainDSL.actions.first().name shouldBe Domains.blockWorld.actions.first().name
         DomainDSLs.blockWorldXDomainDSL.actions.first().effects.size shouldBe

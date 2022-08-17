@@ -16,7 +16,7 @@ class DomainDSL {
     var predicates: Set<Predicate> = emptySet()
     var actions: Set<Action> = emptySet()
     var types: Set<Type> = emptySet()
-    var axioms: Set<Axiom> = emptySet()
+    lateinit var axiom: Axiom
 
     private var predicateProvider = PredicateProvider.of(this)
     private var typesProvider = TypeProvider.of(this)
@@ -34,7 +34,7 @@ class DomainDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun actions(f: ActionsDSL.() -> Unit) {
-        val actionDSL = ActionsDSL(predicateProvider)
+        val actionDSL = ActionsDSL(predicateProvider, typesProvider)
         actionDSL.f()
         this.actions = actionDSL.actions
     }
@@ -52,16 +52,16 @@ class DomainDSL {
      * Scrivi qualcosa di sensato quando fixi sta roba.
      */
     fun axioms(f: AxiomDSL.() -> Unit) {
-        val axiomsDSL = AxiomDSL(predicateProvider)
+        val axiomsDSL = AxiomDSL(predicateProvider, typesProvider)
         axiomsDSL.f()
-        // this.axioms = axiomsDSL.axioms
+        this.axiom = axiomsDSL.toAxiom()
     }
 
     /**
      *  Method responsible that build an instance of [DomainDSL] and converts it to a [Domain].
      */
     fun buildDomain(): Domain =
-        Domain.of(name, predicates.toSet(), actions.toSet(), types.toSet())
+        Domain.of(name, predicates.toSet(), actions.toSet(), types.toSet(), axiom)
 }
 
 /**

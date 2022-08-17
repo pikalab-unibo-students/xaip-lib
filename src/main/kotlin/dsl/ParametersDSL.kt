@@ -2,12 +2,14 @@ package dsl
 
 import Type
 import Variable
+import dsl.provider.TypeProvider
 import dsl.provider.VariableProvider
 
 /**
  * Class representing the [parameters] of an [ActionDSL].
  */
-class ParametersDSL(var variableProvider: VariableProvider) {
+class ParametersDSL(var variableProvider: VariableProvider,
+                    val typeProvider: TypeProvider) {
 
     val parameters: MutableMap<Variable, Type> = mutableMapOf()
 
@@ -17,7 +19,7 @@ class ParametersDSL(var variableProvider: VariableProvider) {
     infix fun String.ofType(type: String) {
         val variable = Variable.of(this)
         variableProvider.addVariable(variable)
-        val t = Type.of(type)
+        val t = typeProvider.findType(type) ?: error("message")
         parameters[variable] = t
     }
 }

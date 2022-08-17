@@ -58,7 +58,7 @@ object TestUtils {
             actions {
                 "pick" {
                     parameters {
-                        "X" ofType "block"
+                        "X" ofType "blocks"
                     }
                     preconditions {
                         +"at"("X", "floor")
@@ -74,7 +74,7 @@ object TestUtils {
                 }
                 "stack" {
                     parameters {
-                        "X" ofType "block"
+                        "X" ofType "blocks"
                         "Y" ofType "locations"
                     }
                     preconditions {
@@ -88,7 +88,7 @@ object TestUtils {
                 }
                 "unStack" {
                     parameters {
-                        "X" ofType "block"
+                        "X" ofType "blocks"
                         "Y" ofType "locations"
                     }
                     preconditions {
@@ -101,6 +101,18 @@ object TestUtils {
                         -"clear"("Y")
                     }
                 }
+            }
+            axioms {
+                parameters {
+                    "X" ofType "blocks"
+                    "Y" ofType "locations"
+                    "W" ofType "anything"
+                    "Z" ofType "strings"
+                }
+                context = "clear"("X") and "clear"("Y")
+                // precondizioni
+                implies = "clear"("W") and "clear"("Z")
+                // postcondizioni
             }
         }
     }

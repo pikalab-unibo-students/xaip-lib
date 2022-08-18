@@ -5,12 +5,13 @@ import Object
 import dsl.provider.PredicateProvider
 
 /**
+ * Class containing a useful method to be shared among subclasses.
  * */
 open class AbstractFluentDSL protected constructor(
     private val predicateProvider: PredicateProvider
 ) {
     /**
-     * Method that allow to treat a [String] as it was a [Fluent].
+     * Method that invoked on a [String] creates a [Fluent] from it and its arguments.
      */
     operator fun String.invoke(vararg args: String): Fluent =
         Fluent.of(

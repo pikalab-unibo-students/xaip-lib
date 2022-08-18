@@ -17,7 +17,7 @@ interface Action : Applicable<Action> {
     val negativeEffects: Set<Effect>
 
     companion object {
-        /***
+        /**
          * Factory method for an [Action] creation.
          */
         fun of(

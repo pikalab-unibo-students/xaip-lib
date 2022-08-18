@@ -19,7 +19,7 @@ class FluentDSL(
     }
 
     /**
-     *
+     * Method that create a [Fluent] from a [String] without arguments.
      */
     operator fun String.unaryPlus() {
         fluents += this()

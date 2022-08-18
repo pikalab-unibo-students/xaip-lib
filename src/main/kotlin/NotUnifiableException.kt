@@ -1,4 +1,4 @@
-/***
+/**
  * Exception thrown by [Fluent] whenever a mgu cannot be found.
  */
 @Suppress("MemberVisibilityCanBePrivate", "CanBeParameter")

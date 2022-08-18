@@ -1,5 +1,5 @@
 import impl.FluentBasedGoalImpl
-/***
+/**
  * A [FluentBasedGoal] is the entity representing the [Goal] of a [Problem].
  *
  * @property targets: set of fluents present in the [Goal] definitions. */

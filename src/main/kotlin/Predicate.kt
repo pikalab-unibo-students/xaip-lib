@@ -8,12 +8,12 @@ interface Predicate {
     val arguments: List<Type>
 
     companion object {
-        /***
+        /**
          * Factory method for an [Predicate] creation.
          */
         fun of(name: String, arguments: List<Type>): Predicate = PredicateImpl(name, arguments)
 
-        /***
+        /**
          * Factory method for an [Predicate] creation.
          */
         fun of(name: String, vararg arguments: Type): Predicate = PredicateImpl(name, listOf(*arguments))

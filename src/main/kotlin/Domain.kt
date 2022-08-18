@@ -17,7 +17,7 @@ interface Domain {
     val axioms: Axiom?
 
     companion object {
-        /***
+        /**
          * Factory method for an [Domain] creation.
          */
         fun of(

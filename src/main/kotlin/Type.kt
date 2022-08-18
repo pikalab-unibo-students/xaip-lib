@@ -10,7 +10,7 @@ interface Type {
     val superType: Type?
 
     companion object {
-        /***
+        /**
          * Factory method for an [Type] creation.
          */
         @JvmOverloads

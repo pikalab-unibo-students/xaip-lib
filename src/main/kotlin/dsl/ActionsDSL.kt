@@ -5,7 +5,7 @@ import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 
 /**
- * Class representing multiple actions in the DSL.
+ * Class representing multiple [Action]s in the DSL.
  */
 class ActionsDSL(
     private val predicateProvider: PredicateProvider,

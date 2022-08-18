@@ -11,7 +11,7 @@ interface UnaryExpression : Expression {
     val operand: String
 
     companion object {
-        /***
+        /**
          * Factory method for an [UnaryExpression] creation.
          */
         fun of(

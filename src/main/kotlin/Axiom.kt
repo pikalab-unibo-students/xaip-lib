@@ -14,7 +14,7 @@ interface Axiom {
     val implies: Expression
 
     companion object {
-        /***
+        /**
          * Factory method for an [Axiom] creation.
          */
         fun of(

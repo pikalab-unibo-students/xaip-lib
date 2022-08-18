@@ -21,8 +21,8 @@ class DomainDSL {
     private var predicateProvider = PredicateProvider.of(this)
     private var typesProvider = TypeProvider.of(this)
 
-    /**Unit
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+    /**
+     * Method that allows to call [PredicatesDSL] methods in an instance of a [DomainDSL] without any qualifiers.
      */
     fun predicates(f: PredicatesDSL.() -> Unit) {
         val predicatesDSL = PredicatesDSL(typesProvider)
@@ -31,7 +31,7 @@ class DomainDSL {
     }
 
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     * Method that allows to call [ActionsDSL] methods in an instance of a [DomainDSL] without any qualifiers.
      */
     fun actions(f: ActionsDSL.() -> Unit) {
         val actionDSL = ActionsDSL(predicateProvider, typesProvider)
@@ -40,16 +40,16 @@ class DomainDSL {
     }
 
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     * Method that allows to call [TypesDSL] methods in an instance of a [DomainDSL] without any qualifiers.
      */
-    fun types(f: TypeDSL.() -> Unit) {
-        val typesDSL = TypeDSL()
+    fun types(f: TypesDSL.() -> Unit) {
+        val typesDSL = TypesDSL()
         typesDSL.f()
         this.types = typesDSL.types
     }
 
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     * Method that allows to call [AxiomDSL] methods in an instance of a [DomainDSL] without any qualifiers.
      */
     fun axioms(f: AxiomDSL.() -> Unit) {
         val axiomsDSL = AxiomDSL(predicateProvider, typesProvider)

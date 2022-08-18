@@ -1,5 +1,5 @@
 import impl.ProblemImpl
-/***
+/**
  * A [Problem] express the global worldly aspects of a problem planned.
  *
  * @property domain: [Domain] of the [Problem].
@@ -14,7 +14,7 @@ interface Problem {
     val goal: Goal
 
     companion object {
-        /***
+        /**
          * Factory method for an [Problem] creation.
          */
         fun of(

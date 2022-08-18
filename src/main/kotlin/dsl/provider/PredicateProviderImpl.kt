@@ -3,7 +3,7 @@ package dsl.provider
 import Predicate
 
 /**
- * Class representing an istance of [PredicateProvider].
+ * Class representing an instance of [PredicateProvider].
  */
 class PredicateProviderImpl(private val predicateProvider: () -> Iterable<Predicate>) : PredicateProvider {
     private val predicates: Map<Pair<String, Int>, Predicate>

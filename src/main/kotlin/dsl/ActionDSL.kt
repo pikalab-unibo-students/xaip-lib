@@ -22,12 +22,6 @@ class ActionDSL(
     private val variableProvider: VariableProvider = VariableProvider.of()
 
     /**
-     * Method responsible for the creation of the action.
-     */
-    fun toAction(name: String): Action =
-        Action.of(name, parameters.toMap(), preconditions.toSet(), effects.toSet())
-
-    /**
      * Method responsible for the creation of the action's parameters.
      */
     fun parameters(f: ParametersDSL.() -> Unit) {
@@ -47,4 +41,10 @@ class ActionDSL(
     fun effects(f: EffectsDSL.() -> Unit) {
         effects += EffectsDSL(predicateProvider).also(f).effects
     }
+
+    /**
+     * Method responsible for the creation of the [Action].
+     */
+    fun toAction(name: String): Action =
+        Action.of(name, parameters.toMap(), preconditions.toSet(), effects.toSet())
 }

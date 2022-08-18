@@ -28,6 +28,7 @@ class AxiomDSL(
     }
 
     /**
+     * Method used to build the [Axiom].
      * */
     fun toAxiom() = Axiom.of(parameters, context, implies)
 }

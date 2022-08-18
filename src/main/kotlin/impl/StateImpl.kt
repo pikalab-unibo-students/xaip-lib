@@ -35,7 +35,7 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
             fluents.any { precondition.match(it) }
         }
 
-    /***
+    /**
      * Convert the current state into a Prolog theory where each fluent is a fact
      * Convert the current action into a Prolog goal where each precondition is a sub-goal
      * Then create a Prolog solver out of the aforementioned theory ...

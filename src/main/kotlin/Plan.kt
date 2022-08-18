@@ -1,5 +1,5 @@
 import impl.PlanImpl
-/***
+/**
  * Method that represents the goal of the computation.
  * A plan consists of the set of actions need to reach the goal.
  *
@@ -9,7 +9,7 @@ interface Plan {
     val actions: List<Action>
 
     companion object {
-        /***
+        /**
          * Factory method for an [Plan] creation.
          */
         fun of(actions: List<Action>): Plan = PlanImpl(actions)

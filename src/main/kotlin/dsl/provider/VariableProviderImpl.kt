@@ -3,7 +3,7 @@ package dsl.provider
 import Variable
 
 /**
- *
+ * Class representing an instance of [VariableProvider].
  */
 class VariableProviderImpl : VariableProvider {
     private var variables: MutableMap<String, Variable> = mutableMapOf()

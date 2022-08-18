@@ -18,8 +18,9 @@ class ProblemDSL(val domain: Domain) {
 
     private var predicateProvider = PredicateProvider.of(domain.predicates)
     private var typesProvider = TypeProvider.of(domain.types)
+
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     * Method that allows to call [ObjectSetDSL] methods in an instance of a [ProblemDSL] without any qualifiers.
      */
     fun objects(f: ObjectSetDSL.() -> Unit) {
         val objectsDSL = ObjectSetDSL(typesProvider)
@@ -28,7 +29,7 @@ class ProblemDSL(val domain: Domain) {
     }
 
     /**
-     * Scrivi qualcosa di sensato quando fixi sta roba.
+     * Method that allows to call [GoalDSL] methods in an instance of a [ProblemDSL] without any qualifiers.
      */
     fun goals(f: GoalDSL.() -> Unit) {
         val goalDSL = GoalDSL(predicateProvider)
@@ -37,15 +38,16 @@ class ProblemDSL(val domain: Domain) {
     }
 
     /**
-     * */
-    fun initialState(f: StateDSL.() -> Unit) {
-        val stateDSL = StateDSL(predicateProvider)
-        stateDSL.f()
-        this.state = stateDSL.toState()
+     * Method that allows to call [State] methods in an instance of a [ProblemDSL] without any qualifiers.
+     */
+    fun initialState(f: StatesDSL.() -> Unit) {
+        val statesDSL = StatesDSL(predicateProvider)
+        statesDSL.f()
+        this.state = statesDSL.toState()
     }
 
     /**
-     *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Domain].
+     *  Method responsible that build an instance of [ProblemDSL] and converts it to a [Problem].
      */
     fun buildProblem(): Problem =
         Problem.of(domain, objects, state, goal)

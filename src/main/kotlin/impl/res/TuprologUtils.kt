@@ -39,7 +39,7 @@ private val negationFunctors = setOf("not", "\\+")
 internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
     when {
         arity == 1 && functor in negationFunctors && args[0] is Struct -> {
-            (args[0] as Struct).toFluent(instanceOf).not()
+            (args[0] as Struct).toFluent(instanceOf).negate()
         }
         arity == instanceOf.arguments.size && functor == instanceOf.name -> {
             Fluent.of(instanceOf, false, args.map { it.toValue() })

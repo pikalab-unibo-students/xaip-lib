@@ -109,9 +109,9 @@ object TestUtils {
                     "W" ofType "anything"
                     "Z" ofType "strings"
                 }
-                context = "clear"("X") and "clear"("Y")
+                context = "on"("a", "b") or "on"("a", "c")
                 // precondizioni
-                implies = "clear"("W") and "clear"("Z")
+                implies = !"on"("b", "c")
                 // postcondizioni
             }
         }
@@ -155,7 +155,7 @@ object TestUtils {
                 "W" ofType "anything"
                 "Z" ofType "strings"
             }
-            context = "clear"("X") and "clear"("Y")
+            context = "on"("X") and "on"("Y")
             // precondizioni
             implies = "clear"("W") and "clear"("Z")
             // postcondizioni

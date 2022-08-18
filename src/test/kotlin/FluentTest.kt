@@ -58,7 +58,7 @@ class FluentTest : AnnotationSpec() {
         fluentNotEmpty.match(fluentNotEmpty) shouldBe true
 
         fluentNotEmpty.isGround shouldBe false
-        fluentNotEmpty.not().isNegated shouldBe false
+        fluentNotEmpty.negate().isNegated shouldBe false
     }
 
     @Test

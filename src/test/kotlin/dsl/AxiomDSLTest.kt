@@ -1,7 +1,11 @@
 package dsl
 
+import BinaryExpression
+import Fluent
+import UnaryExpression
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import resources.TestUtils
 import resources.TestUtils.DomainDSLs
 import resources.TestUtils.Types
 import resources.TestUtils.Values
@@ -30,5 +34,30 @@ class AxiomDSLTest : AnnotationSpec() {
 
         axioms?.parameters?.values?.toList()?.get(3)?.superType shouldBe Types.anything
         axioms?.parameters?.values?.toList()?.get(2)?.superType shouldBe null
+    }
+
+    @Test
+    fun test() {
+        val ctx: BinaryExpression = axioms?.context as BinaryExpression
+        val implies: UnaryExpression = axioms.implies as UnaryExpression
+        val binaryExpression = BinaryExpression.of(
+            Fluent.of(TestUtils.Predicates.on, false, Values.a, Values.b),
+            Fluent.of(TestUtils.Predicates.on, false, Values.a, Values.b),
+            "or"
+        )
+
+        val unaryExpression = UnaryExpression.of(
+            Fluent.of(TestUtils.Predicates.on, false, Values.b, Values.c),
+            "not"
+        )
+        (ctx.expression1 as Fluent).name.filter { it.isLowerCase() } shouldBe
+            (binaryExpression.expression1 as Fluent).name.filter { it.isLowerCase() }
+
+        (ctx.expression2 as Fluent).name.filter { it.isLowerCase() } shouldBe
+                (binaryExpression.expression2 as Fluent).name.filter { it.isLowerCase() }
+
+        (implies.expression as Fluent).name.filter { it.isLowerCase() } shouldBe
+                (unaryExpression.expression as Fluent).name.filter { it.isLowerCase() }
+
     }
 }

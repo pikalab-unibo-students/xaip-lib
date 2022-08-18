@@ -24,7 +24,7 @@ internal data class FluentImpl(
         }
     }
 
-    override fun not(): Fluent = copy(isNegated = !isNegated)
+    override fun negate(): Fluent = copy(isNegated = !isNegated)
 
     override val name: String
         get() = instanceOf.name

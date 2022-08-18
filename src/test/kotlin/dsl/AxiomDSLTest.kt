@@ -54,10 +54,9 @@ class AxiomDSLTest : AnnotationSpec() {
             (binaryExpression.expression1 as Fluent).name.filter { it.isLowerCase() }
 
         (ctx.expression2 as Fluent).name.filter { it.isLowerCase() } shouldBe
-                (binaryExpression.expression2 as Fluent).name.filter { it.isLowerCase() }
+            (binaryExpression.expression2 as Fluent).name.filter { it.isLowerCase() }
 
         (implies.expression as Fluent).name.filter { it.isLowerCase() } shouldBe
-                (unaryExpression.expression as Fluent).name.filter { it.isLowerCase() }
-
+            (unaryExpression.expression as Fluent).name.filter { it.isLowerCase() }
     }
 }

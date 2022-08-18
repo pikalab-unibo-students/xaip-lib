@@ -148,18 +148,6 @@ object TestUtils {
                 }
             }
         }
-        axioms {
-            parameters {
-                "X" ofType "blocks"
-                "Y" ofType "locations"
-                "W" ofType "anything"
-                "Z" ofType "strings"
-            }
-            context = "on"("X") and "on"("Y")
-            // precondizioni
-            implies = "clear"("W") and "clear"("Z")
-            // postcondizioni
-        }
     }
     val problemDSL = problem(domainDSL) {
         objects {

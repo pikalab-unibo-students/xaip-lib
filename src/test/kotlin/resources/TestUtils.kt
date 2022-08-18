@@ -21,11 +21,10 @@ import dsl.domain
 import dsl.problem
 
 object TestUtils {
-    fun removePostfix(string: String) = string.replace("_[0-9]".toRegex(), "")
-    const val name = "f"
+    const val name = "F"
     const val size = 5
 
-    // val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
+    val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
@@ -40,7 +39,7 @@ object TestUtils {
         Object.of(1),
         Object.of(2)
     )
-    object DomainDSLs {
+    object DomainsDSL {
         val blockWorldXDomainDSL = domain {
             name = "block_world"
             types {
@@ -116,54 +115,24 @@ object TestUtils {
             }
         }
     }
-    val domainDSL = domain {
-        name = "block_world"
-        types {
-            +"anything"
-            +"strings"("anything")
-            +"blocks"("strings")
-            +"locations"("strings")
-        }
-        predicates {
-            +"on"("blocks", "blocks")
-            +"at"("blocks", "locations")
-            +"clear"("blocks")
-            +"arm_empty"()
-        }
-        actions {
-            "stack" {
-                parameters {
-                    "X" ofType "blocks"
-                    "Y" ofType "locations"
-                }
-                preconditions {
-                    +"at"("X", "arm")
-                    +"clear"("Y")
-                }
-                effects {
-                    +"on"("X", "Y")
-                    +"at"("X", "arm")
-                    +"arm_empty"
-                    -"clear"("Y")
-                }
+
+    object ProblemsDSL {
+        val problemOnAB = problem(Domains.blockWorld) {
+            objects {
+                +"blocks"("a", "b")
             }
-        }
-    }
-    val problemDSL = problem(domainDSL) {
-        objects {
-            +"blocks"("a", "b")
-        }
-        initialState {
-            +"at"("a", "floor")
-            +"at"("b", "floor")
-            +"at"("c", "floor")
-            +"arm_empty"()
-            +"clear"("a")
-            +"clear"("b")
-            +"clear"("c")
-        }
-        goals {
-            +"on"("a", "b")
+            initialState {
+                +"at"("a", "floor")
+                +"at"("b", "floor")
+                +"at"("c", "floor")
+                +"arm_empty"()
+                +"clear"("a")
+                +"clear"("b")
+                +"clear"("c")
+            }
+            goals {
+                +"on"("a", "b")
+            }
         }
     }
 

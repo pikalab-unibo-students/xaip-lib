@@ -2,17 +2,16 @@ package dsl
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import resources.TestUtils.Domains.blockWorld
 import resources.TestUtils.Values
-import resources.TestUtils.domainDSL
-import resources.TestUtils.removePostfix
 
 class ParametersDSLTest : AnnotationSpec() {
     @Test
     fun parametersDSLworksAsExpected() {
-        val parameters = domainDSL.actions.first().parameters
-        removePostfix(Values.X.name) shouldBe removePostfix(parameters.keys.first().name)
+        val parameters = blockWorld.actions.first().parameters
+        Values.X.name.filter { it.isUpperCase() } shouldBe parameters.keys.first().name.filter { it.isUpperCase() }
         Values.X.isGround shouldBe parameters.keys.first().isGround
-        removePostfix(Values.Y.name) shouldBe removePostfix(parameters.keys.last().name)
+        Values.X.name.filter { it.isUpperCase() } shouldBe parameters.keys.last().name.filter { it.isUpperCase() }
         Values.Y.isGround shouldBe parameters.keys.last().isGround
     }
 }

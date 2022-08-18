@@ -5,13 +5,13 @@ import Fluent
 import UnaryExpression
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.DomainDSLs
+import resources.TestUtils.DomainsDSL
 import resources.TestUtils.Predicates
 import resources.TestUtils.Types
 import resources.TestUtils.Values
 
 class AxiomDSLTest : AnnotationSpec() {
-    private val axioms = DomainDSLs.blockWorldXDomainDSL.axioms
+    private val axioms = DomainsDSL.blockWorldXDomainDSL.axioms
 
     @Test
     fun axiomDSLworksAsExpected() {

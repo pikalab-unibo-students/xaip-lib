@@ -10,7 +10,7 @@ class PredicatesProviderTest : AnnotationSpec() {
     private val predicateProvider =
         PredicateProvider.of(setOf(Predicates.on, Predicates.armEmpty, Predicates.at, Predicates.clear))
     private val predicateProviderFramework = PredicateProvider.of(TestUtils.Domains.blockWorld)
-    private val predicateProviderDSL = PredicateProvider.of(TestUtils.DomainDSLs.blockWorldXDomainDSL)
+    private val predicateProviderDSL = PredicateProvider.of(TestUtils.DomainsDSL.blockWorldXDomainDSL)
 
     @Test
     fun testPredicateProviderConstructor() {

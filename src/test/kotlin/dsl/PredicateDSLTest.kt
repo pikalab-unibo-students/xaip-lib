@@ -4,33 +4,33 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
+import resources.TestUtils.Domains.blockWorld
 import resources.TestUtils.Predicates
-import resources.TestUtils.domainDSL
 
 class PredicateDSLTest : AnnotationSpec() {
     @Test
-    fun testArmEmptyPredicateExists() {
-        Predicates.armEmpty shouldBeIn domainDSL.predicates
-        Predicates.armEmpty.name shouldBe domainDSL.predicates.last().name
-        Predicates.armEmpty.arguments shouldBe domainDSL.predicates.last().arguments
+    fun testClearPredicateExists() {
+        Predicates.clear shouldBeIn blockWorld.predicates
+        Predicates.clear.name shouldBe blockWorld.predicates.last().name
+        Predicates.clear.arguments shouldBe blockWorld.predicates.last().arguments
     }
 
     @Test
-    fun testOnPredicateExists() {
-        Predicates.on shouldBeIn domainDSL.predicates
-        Predicates.on.name shouldBe domainDSL.predicates.first().name
-        Predicates.on.arguments shouldBe domainDSL.predicates.first().arguments
-        Predicates.on.arguments.first().name shouldBe domainDSL.predicates.first().arguments.first().name
-        Predicates.on.arguments.first().superType shouldBe
-            domainDSL.predicates.first().arguments.first().superType
-        Predicates.on.arguments.last().name shouldBe
-            domainDSL.predicates.first().arguments.last().name
-        Predicates.on.arguments.last().superType shouldBe
-            domainDSL.predicates.first().arguments.last().superType
+    fun testAtPredicateExists() {
+        Predicates.at shouldBeIn blockWorld.predicates
+        Predicates.at.name shouldBe blockWorld.predicates.first().name
+        Predicates.at.arguments shouldBe blockWorld.predicates.first().arguments
+        Predicates.at.arguments.first().name shouldBe blockWorld.predicates.first().arguments.first().name
+        Predicates.at.arguments.first().superType shouldBe
+            blockWorld.predicates.first().arguments.first().superType
+        Predicates.at.arguments.last().name shouldBe
+            blockWorld.predicates.first().arguments.last().name
+        Predicates.at.arguments.last().superType shouldBe
+            blockWorld.predicates.first().arguments.last().superType
     }
 
     @Test
     fun testPredicateNotExists() {
-        Predicate.of("nothing") shouldNotBeIn domainDSL.predicates
+        Predicate.of("nothing") shouldNotBeIn blockWorld.predicates
     }
 }

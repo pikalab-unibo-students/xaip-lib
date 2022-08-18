@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.Values
 import resources.TestUtils.name
-import resources.TestUtils.removePostfix
 import resources.TestUtils.variables
 
 class VariableTest : AnnotationSpec() {
@@ -20,13 +19,14 @@ class VariableTest : AnnotationSpec() {
 
     @Test
     fun freshVariableBehavior() {
-        removePostfix(localVariableEmpty.name) shouldBe ""
+        localVariableEmpty.name.filter { it.isUpperCase() } shouldBe ""
         localVariableEmpty.name shouldNotBe ""
-        removePostfix(localVariableEmpty.name) shouldBe removePostfix(localVariableEmpty.name)
+        localVariableEmpty.name.filter { it.isUpperCase() } shouldBe localVariableEmpty.name.filter { it.isUpperCase() }
 
-        removePostfix(localVariableNotEmpty.name) shouldBe localName
+        localVariableNotEmpty.name.filter { it.isUpperCase() } shouldBe localName
         localVariableNotEmpty.name shouldNotBe localName
-        removePostfix(localVariableNotEmpty.name) shouldBe removePostfix(localVariableNotEmpty.name)
+        localVariableNotEmpty.name.filter { it.isUpperCase() } shouldBe
+            localVariableNotEmpty.name.filter { it.isUpperCase() }
     }
 
     @Test

@@ -3,11 +3,11 @@ package dsl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.Fluents
-import resources.TestUtils.problemDSL
+import resources.TestUtils.ProblemsDSL.problemOnAB
 
 class GoalDSLTest : AnnotationSpec() {
     @Test
     fun goalDSLworksAsExpected() {
-        problemDSL.goal shouldBe FluentBasedGoal.of(Fluents.onAB)
+        problemOnAB.goal shouldBe FluentBasedGoal.of(Fluents.onAB)
     }
 }

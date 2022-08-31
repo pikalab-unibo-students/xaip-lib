@@ -53,7 +53,7 @@ internal data class ExecutionContext(
         }
     }
 
-    private fun Deque<ChoicePoint>.update( // Perché non devo ritornare i punti di scelta?
+    private fun Deque<ChoicePoint>.update(
         changes: List<Any>,
         stack: Stack<Applicable<*>>,
         currentState: State,

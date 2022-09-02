@@ -29,14 +29,13 @@ class ProblemDSLTest : AnnotationSpec() {
                     "X" ofType "blocks"
                 }
                 preconditions {
-                    +"at"("X", "floor")
-                    +"arm_empty"
+                    +"arm_empty"()
                     +"clear"("X")
                 }
                 effects {
                     +"at"("X", "arm")
-                    -"at"("X", "floor")
                     -"arm_empty"
+                    -"at"("X", "floor")
                     -"clear"("X")
                 }
             }
@@ -51,12 +50,13 @@ class ProblemDSLTest : AnnotationSpec() {
                 }
                 effects {
                     +"on"("X", "Y")
+                    +"clear"("X")
                     +"arm_empty"
-                    -"on"("X", "arm")
+                    -"at"("X", "arm")
                     -"clear"("Y")
                 }
             }
-            "unStack" {
+            /*"unStack" {
                 parameters {
                     "X" ofType "blocks"
                     "Y" ofType "locations"
@@ -64,13 +64,18 @@ class ProblemDSLTest : AnnotationSpec() {
                 preconditions {
                     +"on"("X", "Y")
                     +"clear"("X")
+                    +"arm_empty"
                 }
                 effects {
-                    +"at"("X", "floor")
-                    +"arm_empty"
-                    -"clear"("Y")
+                    +"at"("X", "arm")
+                    +"clear("Y")
+                    -"arm_empty"
+                    -"clear"("X")
+                    -"on"("X", "Y")
                 }
             }
+
+             */
         }
     }
 

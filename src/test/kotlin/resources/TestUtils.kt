@@ -60,7 +60,6 @@ object TestUtils {
                         "X" ofType "blocks"
                     }
                     preconditions {
-                        +"at"("X", "floor")
                         +"arm_empty"()
                         +"clear"("X")
                     }
@@ -77,29 +76,37 @@ object TestUtils {
                         "Y" ofType "locations"
                     }
                     preconditions {
-                        +"on"("a", "b")
-                        +"on"("a", "b")
+                        +"at"("X", "arm")
+                        +"clear"("Y")
                     }
                     effects {
-                        +"at"("X", "floor")
-                        -"arm_empty"
+                        +"on"("X", "Y")
+                        +"clear"("X")
+                        +"arm_empty"
+                        -"at"("X", "arm")
+                        -"clear"("Y")
                     }
                 }
-                "unStack" {
+                /*"unStack" {
                     parameters {
                         "X" ofType "blocks"
                         "Y" ofType "locations"
                     }
                     preconditions {
-                        +"on"("a", "b")
+                        +"on"("X", "Y")
                         +"clear"("X")
+                        +"arm_empty"
                     }
                     effects {
-                        +"at"("X", "floor")
+                        +"at"("X", "arm")
+                        +"clear("Y")
                         -"arm_empty"
-                        -"clear"("Y")
+                        -"clear"("X")
+                        -"on"("X", "Y")
                     }
                 }
+
+                 */
             }
             axioms {
                 parameters {
@@ -142,12 +149,12 @@ object TestUtils {
             parameters = mapOf(
                 Values.X to Types.blocks
             ),
-            preconditions = setOf(Fluents.atXFloor, Fluents.armEmpty, Fluents.clearX),
+            preconditions = setOf(Fluents.armEmpty, Fluents.clearX),
             effects = setOf(
                 Effect.of(Fluents.atXArm),
-                Effect.negative(Fluents.atXFloor),
                 Effect.negative(Fluents.armEmpty),
-                Effect.negative(Fluents.clearX)
+                Effect.negative(Fluents.clearX),
+                Effect.negative(Fluents.atXFloor)
             )
         )
 
@@ -160,6 +167,7 @@ object TestUtils {
             preconditions = setOf(Fluents.atXArm, Fluents.clearY),
             effects = setOf(
                 Effect.of(Fluents.onXY),
+                Effect.of(Fluents.clearX),
                 Effect.of(Fluents.armEmpty),
                 Effect.negative(Fluents.atXArm),
                 Effect.negative(Fluents.clearY)
@@ -172,11 +180,17 @@ object TestUtils {
                 Values.X to Types.blocks,
                 Values.Y to Types.locations
             ),
-            preconditions = setOf(Fluents.onXY, Fluents.clearX),
+            preconditions = setOf(
+                Fluents.onXY,
+                Fluents.clearX,
+                Fluents.armEmpty
+            ),
             effects = setOf(
-                Effect.of(Fluents.atXFloor),
-                Effect.of(Fluents.armEmpty),
-                Effect.negative(Fluents.clearY)
+                Effect.negative(Fluents.clearX),
+                Effect.negative(Fluents.onXY),
+                Effect.negative(Fluents.armEmpty),
+                Effect.of(Fluents.atXArm),
+                Effect.of(Fluents.clearY)
             )
         )
     }
@@ -214,7 +228,7 @@ object TestUtils {
         val blockWorld = Domain.of(
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
-            actions = setOf(Actions.pick, Actions.stack, Actions.unStack),
+            actions = setOf(Actions.pick, Actions.stack),
             types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
         val blockWorldAxiomException = Domain.of(
@@ -254,6 +268,7 @@ object TestUtils {
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
+        val onCA = Fluent.positive(Predicates.on, Values.c, Values.a)
         val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
@@ -265,7 +280,10 @@ object TestUtils {
         val clearW = Fluent.positive(Predicates.clear, Values.Z)
 
         val onXY = Fluent.positive(Predicates.on, Values.X, Values.Y)
+        val onYX = Fluent.positive(Predicates.on, Values.Y, Values.X)
+        val onWX = Fluent.positive(Predicates.on, Values.W, Values.X)
         val onWZ = Fluent.positive(Predicates.on, Values.W, Values.Z)
+        val onXW = Fluent.positive(Predicates.on, Values.X, Values.W)
         val onZW = Fluent.positive(Predicates.on, Values.Z, Values.W)
     }
 
@@ -279,6 +297,7 @@ object TestUtils {
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
         val onXYatW = FluentBasedGoal.of(Fluents.atWArm, Fluents.onXY) // caso sfigato
+        val onXYW = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
     }
 
     object ObjectSets {
@@ -357,6 +376,13 @@ object TestUtils {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXY
+        )
+
+        val stackABC = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onXYW
         )
 
         val stackXYpickW = Problem.of(

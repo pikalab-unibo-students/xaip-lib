@@ -76,12 +76,12 @@ class ActionTest : AnnotationSpec() {
                 mapOf(
                     Values.X to Types.blocks
                 ),
-                setOf(Fluents.atXFloor, Fluents.armEmpty, Fluents.clearX),
+                setOf(Fluents.armEmpty, Fluents.clearX),
                 setOf(
                     Effect.of(Fluents.atXArm),
-                    Effect.negative(Fluents.atXFloor),
                     Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearX)
+                    Effect.negative(Fluents.clearX),
+                    Effect.negative(Fluents.atXFloor)
                 )
             )
     }
@@ -94,12 +94,12 @@ class ActionTest : AnnotationSpec() {
                 mapOf(
                     Values.X to Types.blocks
                 ),
-                setOf(Fluents.atYFloor, Fluents.armEmpty, Fluents.clearY),
+                setOf(Fluents.armEmpty, Fluents.clearY),
                 setOf(
                     Effect.of(Fluents.atYArm),
-                    Effect.negative(Fluents.atYFloor),
                     Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearY)
+                    Effect.negative(Fluents.clearY),
+                    Effect.negative(Fluents.atYFloor)
                 )
             )
     }

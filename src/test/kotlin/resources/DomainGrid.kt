@@ -1,11 +1,11 @@
 
-import resources.TestUtils
+import resources.BlockWorldDomain
 object DomainGrid {
     object Actions {
         val load = Action.of(
             name = "load",
             parameters = mapOf(
-                Values.X to TestUtils.Types.blocks,
+                Values.X to BlockWorldDomain.Types.blocks,
                 Values.Y to Types.agents,
                 Values.W to Types.locations,
                 Values.Z to Types.locations
@@ -62,8 +62,8 @@ object DomainGrid {
 
     object Effects {
         val atXFloor = Effect.of(Fluents.atXFloor, true)
-        val armEmpty = Effect.of(TestUtils.Fluents.armEmpty, true)
-        val onXY = Effect.of(TestUtils.Fluents.onXY)
+        val armEmpty = Effect.of(BlockWorldDomain.Fluents.armEmpty, true)
+        val onXY = Effect.of(BlockWorldDomain.Fluents.onXY)
     }
 
     object Fluents {
@@ -96,13 +96,13 @@ object DomainGrid {
         // forse qui ci andranno delle variabili al posto di box1 e agent1
 
         // potenzialmente inutile per ora
-        val clearBox1 = Fluent.positive(TestUtils.Predicates.clear, Values.box1)
-        val clearAgent1 = Fluent.positive(TestUtils.Predicates.clear, Values.agent1)
+        val clearBox1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.box1)
+        val clearAgent1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.agent1)
 
-        val clearLoc1 = Fluent.positive(TestUtils.Predicates.clear, Values.loc1)
-        val clearLoc2 = Fluent.positive(TestUtils.Predicates.clear, Values.loc2)
-        val clearLoc3 = Fluent.positive(TestUtils.Predicates.clear, Values.loc3)
-        val clearLoc4 = Fluent.positive(TestUtils.Predicates.clear, Values.loc4)
+        val clearLoc1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc1)
+        val clearLoc2 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc2)
+        val clearLoc3 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc3)
+        val clearLoc4 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc4)
 
         val clearX = Fluent.positive(Predicates.clear, Values.X)
         val clearY = Fluent.positive(Predicates.clear, Values.Y)
@@ -134,7 +134,7 @@ object DomainGrid {
         val on = Predicate.of("on", Types.blocks, Types.agents)
         val at = Predicate.of("at", Types.strings, Types.locations)
         val agentEmpty = Predicate.of("agent_empty")
-        val clear = Predicate.of("clear", TestUtils.Types.blocks)
+        val clear = Predicate.of("clear", BlockWorldDomain.Types.blocks)
         val adjacent = Predicate.of("adjacent", Types.locations, Types.locations)
     }
     object Problems {

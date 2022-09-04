@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils.Values
+import resources.BlockWorldDomain.Values
 
 class VariableProviderTest : AnnotationSpec() {
     private val variableProvider = VariableProvider.of()

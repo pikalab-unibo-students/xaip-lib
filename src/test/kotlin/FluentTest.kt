@@ -4,19 +4,19 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
-import resources.TestUtils.Expressions
-import resources.TestUtils.Fluents
-import resources.TestUtils.Predicates
-import resources.TestUtils.Values
-import resources.TestUtils.fluentEmpty
-import resources.TestUtils.fluentNotEmpty
-import resources.TestUtils.name
-import resources.TestUtils.predicateEmpty
-import resources.TestUtils.predicateNotEmpty
-import resources.TestUtils.predicates
-import resources.TestUtils.size
-import resources.TestUtils.substitution
-import resources.TestUtils.variableNotEmpty
+import resources.BlockWorldDomain.Expressions
+import resources.BlockWorldDomain.Fluents
+import resources.BlockWorldDomain.Predicates
+import resources.BlockWorldDomain.Values
+import resources.BlockWorldDomain.fluentEmpty
+import resources.BlockWorldDomain.fluentNotEmpty
+import resources.BlockWorldDomain.name
+import resources.BlockWorldDomain.predicateEmpty
+import resources.BlockWorldDomain.predicateNotEmpty
+import resources.BlockWorldDomain.predicates
+import resources.BlockWorldDomain.size
+import resources.BlockWorldDomain.substitution
+import resources.BlockWorldDomain.variableNotEmpty
 
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

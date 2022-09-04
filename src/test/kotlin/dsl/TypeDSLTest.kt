@@ -3,8 +3,8 @@ package dsl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Domains.blockWorld
-import resources.TestUtils.Types
+import resources.BlockWorldDomain.Domains.blockWorld
+import resources.BlockWorldDomain.Types
 
 class TypeDSLTest : AnnotationSpec() {
     @Test

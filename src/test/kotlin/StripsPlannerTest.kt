@@ -2,10 +2,10 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.TestUtils.Actions
-import resources.TestUtils.Planners
-import resources.TestUtils.Problems
-import resources.TestUtils.Values
+import resources.BlockWorldDomain.Actions
+import resources.BlockWorldDomain.Planners
+import resources.BlockWorldDomain.Problems
+import resources.BlockWorldDomain.Values
 
 class StripsPlannerTest : AnnotationSpec() {
     private val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))

@@ -20,7 +20,7 @@ import VariableAssignment
 import dsl.domain
 import dsl.problem
 
-object TestUtils {
+object BlockWorldDomain {
     const val name = "F"
     const val size = 5
 

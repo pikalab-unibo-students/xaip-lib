@@ -4,9 +4,9 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.TestUtils
-import resources.TestUtils.Actions
-import resources.TestUtils.States
+import resources.BlockWorldDomain
+import resources.BlockWorldDomain.Actions
+import resources.BlockWorldDomain.States
 
 class StateTest : AnnotationSpec() {
 
@@ -67,7 +67,7 @@ class StateTest : AnnotationSpec() {
     @Test
     fun testStateException() {
         val exception = shouldThrow<IllegalArgumentException> {
-            State.of(Fluent.of(Predicate.of("error", TestUtils.Types.anything), false, TestUtils.Values.X))
+            State.of(Fluent.of(Predicate.of("error", BlockWorldDomain.Types.anything), false, BlockWorldDomain.Values.X))
         }
         exception.message shouldStartWith ("States cannot contain non-ground fluents")
     }

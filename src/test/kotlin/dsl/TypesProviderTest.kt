@@ -6,9 +6,9 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils.Domains.blockWorld
-import resources.TestUtils.Types
-import resources.TestUtils.types
+import resources.BlockWorldDomain.Domains.blockWorld
+import resources.BlockWorldDomain.Types
+import resources.BlockWorldDomain.types
 
 class TypesProviderTest : AnnotationSpec() {
     val typeProvider = TypeProvider.of(setOf(Types.strings, Types.anything))

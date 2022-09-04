@@ -2,8 +2,8 @@ package dsl // ktlint-disable filename
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Planners
-import resources.TestUtils.Problems
+import resources.BlockWorldDomain.Planners
+import resources.BlockWorldDomain.Problems
 
 /**
  * Test for DomainDSL cereation.

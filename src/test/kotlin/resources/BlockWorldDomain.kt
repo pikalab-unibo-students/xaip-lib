@@ -14,16 +14,12 @@ import Predicate
 import Problem
 import State
 import Type
-import Value
 import Variable
 import VariableAssignment
 import dsl.domain
 import dsl.problem
 
 object BlockWorldDomain {
-    const val name = "F"
-    const val size = 5
-
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
@@ -87,6 +83,7 @@ object BlockWorldDomain {
                         -"clear"("Y")
                     }
                 }
+                /*
                 "unStack" {
                     parameters {
                         "X" ofType "blocks"
@@ -105,6 +102,8 @@ object BlockWorldDomain {
                         -"on"("X", "Y")
                     }
                 }
+
+                 */
             }
             axioms {
                 parameters {
@@ -460,37 +459,4 @@ object BlockWorldDomain {
         val x2arm = VariableAssignment.of(Values.X, Values.arm)
         val x2a = VariableAssignment.of(Values.X, Values.a)
     }
-
-    val type1 = Type.of(name, null)
-
-    val objEmpty = Object.of("")
-    val objNotEmpty = Object.of(name)
-
-    val variableNotEmpty = Variable.of(name)
-
-    val predicateEmpty = Predicate.of("", emptyList())
-    val predicateNotEmpty = Predicate.of(name, List(size) { type1 })
-
-    val fluentEmpty = Fluent.of(predicateEmpty, false, emptyList())
-    var fluentNotEmpty = Fluent.of(predicateNotEmpty, true, List<Value>(size) { variableNotEmpty })
-
-    val effectEmpty = Effect.of(fluentEmpty, false)
-    val effectNotEmpty = Effect.of(fluentNotEmpty, true)
-
-    val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), fluentNotEmpty, fluentNotEmpty)
-
-    val actionEmpty = Action.of("", emptyMap(), emptySet(), emptySet())
-    var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
-
-    val domainEmpty = Domain.of("", emptySet(), emptySet(), emptySet())
-    val domainNotEmpty =
-        Domain.of(name, setOf(predicateNotEmpty), setOf(actionNotEmpty), setOf(type1), axiomNotEmpty)
-
-    val objectSetEmpty = ObjectSet.of(emptyMap())
-    val objectSetNotEmpty = ObjectSet.of(mapOf(type1 to setOf(objNotEmpty)))
-
-    val planEmpty = Plan.of(emptyList())
-    val planNotEmpty = Plan.of(listOf(actionNotEmpty))
-
-    val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 }

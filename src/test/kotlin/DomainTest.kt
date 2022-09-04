@@ -4,11 +4,11 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.BlockWorldDomain.Domains
 import resources.BlockWorldDomain.actions
-import resources.BlockWorldDomain.domainEmpty
-import resources.BlockWorldDomain.domainNotEmpty
-import resources.BlockWorldDomain.name
 import resources.BlockWorldDomain.predicates
 import resources.BlockWorldDomain.types
+import resources.TestUtils.domainEmpty
+import resources.TestUtils.domainNotEmpty
+import resources.TestUtils.name
 
 class DomainTest : AnnotationSpec() {
     @Test

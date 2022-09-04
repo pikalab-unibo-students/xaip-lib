@@ -3,8 +3,8 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import resources.BlockWorldDomain.Values
-import resources.BlockWorldDomain.name
 import resources.BlockWorldDomain.variables
+import resources.TestUtils.name
 
 class VariableTest : AnnotationSpec() {
     private val localName = name

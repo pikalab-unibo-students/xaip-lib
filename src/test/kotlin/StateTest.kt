@@ -67,7 +67,13 @@ class StateTest : AnnotationSpec() {
     @Test
     fun testStateException() {
         val exception = shouldThrow<IllegalArgumentException> {
-            State.of(Fluent.of(Predicate.of("error", BlockWorldDomain.Types.anything), false, BlockWorldDomain.Values.X))
+            State.of(
+                Fluent.of(
+                    Predicate.of("error", BlockWorldDomain.Types.anything),
+                    false,
+                    BlockWorldDomain.Values.X
+                )
+            )
         }
         exception.message shouldStartWith ("States cannot contain non-ground fluents")
     }

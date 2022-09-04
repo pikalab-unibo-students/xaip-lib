@@ -56,7 +56,7 @@ class ProblemDSLTest : AnnotationSpec() {
                     -"clear"("Y")
                 }
             }
-            /*"unStack" {
+            "unStack" {
                 parameters {
                     "X" ofType "blocks"
                     "Y" ofType "locations"
@@ -67,15 +67,13 @@ class ProblemDSLTest : AnnotationSpec() {
                     +"arm_empty"
                 }
                 effects {
-                    +"at"("X", "arm")
-                    +"clear("Y")
-                    -"arm_empty"
-                    -"clear"("X")
                     -"on"("X", "Y")
+                    -"clear"("X")
+                    -"arm_empty"
+                    +"at"("X", "arm")
+                    +"clear"("Y")
                 }
             }
-
-             */
         }
     }
 

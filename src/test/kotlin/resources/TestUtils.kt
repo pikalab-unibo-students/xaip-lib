@@ -87,7 +87,7 @@ object TestUtils {
                         -"clear"("Y")
                     }
                 }
-                /*"unStack" {
+                "unStack" {
                     parameters {
                         "X" ofType "blocks"
                         "Y" ofType "locations"
@@ -99,14 +99,12 @@ object TestUtils {
                     }
                     effects {
                         +"at"("X", "arm")
-                        +"clear("Y")
+                        +"clear"("Y")
                         -"arm_empty"
                         -"clear"("X")
                         -"on"("X", "Y")
                     }
                 }
-
-                 */
             }
             axioms {
                 parameters {
@@ -191,6 +189,20 @@ object TestUtils {
                 Effect.negative(Fluents.armEmpty),
                 Effect.of(Fluents.atXArm),
                 Effect.of(Fluents.clearY)
+            )
+        )
+
+        val putdown = Action.of(
+            name = "putDown",
+            parameters = mapOf(
+                Values.X to Types.blocks
+            ),
+            preconditions = setOf(Fluents.atXArm),
+            effects = setOf(
+                Effect.negative(Fluents.atXArm),
+                Effect.of(Fluents.clearX),
+                Effect.of(Fluents.armEmpty),
+                Effect.of(Fluents.atXFloor)
             )
         )
     }

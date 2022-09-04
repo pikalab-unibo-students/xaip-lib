@@ -56,8 +56,8 @@ class ProblemDSLTest : AnnotationSpec() {
                     -"clear"("Y")
                 }
             }
-            /*
-            "unStack" {
+
+            "unstack" {
                 parameters {
                     "X" ofType "blocks"
                     "Y" ofType "locations"
@@ -75,7 +75,20 @@ class ProblemDSLTest : AnnotationSpec() {
                     +"clear"("Y")
                 }
             }
-             */
+            "putdown" {
+                parameters {
+                    "X" ofType "blocks"
+                }
+                preconditions {
+                    +"at"("X", "arm")
+                }
+                effects {
+                    -"at"("X", "arm")
+                    +"clear"("X")
+                    +"arm_empty"
+                    +"at"("X", "floor")
+                }
+            }
         }
     }
 
@@ -106,6 +119,7 @@ class ProblemDSLTest : AnnotationSpec() {
         problemDSL.objects shouldBe Problems.stackAB.objects
     }
 
+    @Ignore
     @Test
     fun testPlanner() {
         Planners.dummyPlanner.plan(problemDSL).toSet().size shouldBe 1

@@ -21,7 +21,7 @@ import dsl.problem
 
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
-    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unStack)
+    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
     val predicates = arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
@@ -83,8 +83,7 @@ object BlockWorldDomain {
                         -"clear"("Y")
                     }
                 }
-                /*
-                "unStack" {
+                "unstack" {
                     parameters {
                         "X" ofType "blocks"
                         "Y" ofType "locations"
@@ -102,8 +101,20 @@ object BlockWorldDomain {
                         -"on"("X", "Y")
                     }
                 }
-
-                 */
+                "putdown" {
+                    parameters {
+                        "X" ofType "blocks"
+                    }
+                    preconditions {
+                        +"at"("X", "arm")
+                    }
+                    effects {
+                        -"at"("X", "arm")
+                        +"clear"("X")
+                        +"arm_empty"
+                        +"at"("X", "floor")
+                    }
+                }
             }
             axioms {
                 parameters {
@@ -171,7 +182,7 @@ object BlockWorldDomain {
             )
         )
 
-        val unStack = Action.of(
+        val unstack = Action.of(
             name = "unStack",
             parameters = mapOf(
                 Values.X to Types.blocks,
@@ -192,7 +203,7 @@ object BlockWorldDomain {
         )
 
         val putdown = Action.of(
-            name = "putDown",
+            name = "putdown",
             parameters = mapOf(
                 Values.X to Types.blocks
             ),
@@ -239,7 +250,7 @@ object BlockWorldDomain {
         val blockWorld = Domain.of(
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
-            actions = setOf(Actions.pick, Actions.stack),
+            actions = setOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown),
             types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
         val blockWorldAxiomException = Domain.of(

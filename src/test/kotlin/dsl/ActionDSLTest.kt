@@ -8,7 +8,7 @@ import resources.domain.BlockWorldDomain.Domains.blockWorld
 class ActionDSLTest : AnnotationSpec() {
     @Test
     fun actionsDSLworksAsExpected() {
-        blockWorld.actions.size shouldBe 2 // tolto per il momento unstack
+        blockWorld.actions.size shouldBe 4
         blockWorld.actions.first().name shouldBe Actions.pick.name
         blockWorld.actions.first().parameters.size shouldBe 1
         blockWorld.actions.first().preconditions.size shouldBe 2

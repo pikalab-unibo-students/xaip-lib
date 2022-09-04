@@ -1,181 +1,191 @@
 package resources.domain
-import Action
-import Domain
-import Effect
-import Fluent
-import FluentBasedGoal
-import Object
-import ObjectSet
-import Predicate
-import Problem
-import State
-import Type
-import Variable
 
+import Object
 object GridDomain {
     object Actions {
-        val load = Action.of(
-            name = "load",
-            parameters = mapOf(
-                Values.X to BlockWorldDomain.Types.blocks,
-                Values.Y to Types.agents,
-                Values.W to Types.locations,
-                Values.Z to Types.locations
-            ),
-            preconditions = setOf(
-                Fluents.atXLocationW,
-                Fluents.atYLocationZ,
-                Fluents.clearY,
-                Fluents.adjacentZW
-            ),
-            effects = setOf(
-                Effect.negative(Fluents.atXLocationW),
-                Effect.negative(Fluents.clearY),
-                Effect.of(Fluents.busyXY)
-            )
-        )
-
-        val unload = Action.of(
-            name = "unload",
-            parameters = mapOf(
-                Values.X to Types.blocks,
-                Values.Y to Types.agents,
-                Values.W to Types.locations,
-                Values.Z to Types.locations
-            ),
-            preconditions = setOf(Fluents.busyXY, Fluents.atYLocationZ, Fluents.clearW, Fluents.adjacentZW),
-            effects = setOf(
-                Effect.of(Fluents.clearY),
-                Effect.of(Fluents.clearX),
-                Effect.negative(Fluents.clearW)
-            )
-        )
-
         val move = Action.of(
             name = "move",
             parameters = mapOf(
-                Values.Y to Types.agents,
-                Values.W to Types.locations,
+                Values.X to Types.robots,
+                Values.Y to Types.locations,
                 Values.Z to Types.locations
             ),
-            preconditions = setOf(Fluents.adjacentZW, Fluents.clearW),
-            effects = setOf(Effect.negative(Fluents.clearW))
+            preconditions = setOf(Fluents.adjacentYZ, Fluents.atRobotXlocationY),
+            effects = setOf(
+                Effect.of(Fluents.atRobotXlocationW),
+                Effect.negative(Fluents.atRobotXlocationY)
+            )
+        )
+        val load = Action.of(
+            name = "load",
+            parameters = mapOf(
+                Values.Z to Types.locations,
+                Values.Y to Types.containers,
+                Values.X to Types.robots
+            ),
+            preconditions = setOf(Fluents.atRobotXlocationZ, Fluents.inContainerYlocationZ, Fluents.unloadedX),
+            effects = setOf(
+                Effect.of(Fluents.loadedXY),
+                Effect.negative(Fluents.inContainerYlocationZ),
+                Effect.negative(Fluents.unloadedX)
+            )
+        )
+        val unload = Action.of(
+            name = "unload",
+            parameters = mapOf(
+                Values.Z to Types.locations,
+                Values.Y to Types.containers,
+                Values.X to Types.robots
+            ),
+            preconditions = setOf(Fluents.atRobotXlocationZ, Fluents.loadedXY),
+            effects = setOf(
+                Effect.of(Fluents.inContainerYlocationZ),
+                Effect.of(Fluents.unloadedX),
+                Effect.negative(Fluents.loadedXY)
+            )
         )
     }
 
     object Domains {
-        val gridDomain = Domain.of(
+        val gridWorld = Domain.of(
             name = "grid_world",
-            predicates = setOf(Predicates.at, Predicates.on, Predicates.clear),
-            actions = setOf(Actions.load, Actions.move, Actions.unload),
-            types = setOf(Types.blocks, Types.strings, Types.locations, Types.anything, Types.agents)
+            predicates = setOf(
+                Predicates.adjacent,
+                Predicates.atLocation,
+                Predicates.loaded,
+                Predicates.unLoaded,
+                Predicates.inContainerLocation
+            ),
+            actions = setOf(
+                Actions.move,
+                Actions.load,
+                Actions.unload
+            ),
+            types = setOf(
+                Types.anything,
+                Types.strings,
+                Types.locations,
+                Types.robots,
+                Types.containers
+            )
         )
     }
 
-    object Effects {
-        val atXFloor = Effect.of(Fluents.atXFloor, true)
-        val armEmpty = Effect.of(BlockWorldDomain.Fluents.armEmpty, true)
-        val onXY = Effect.of(BlockWorldDomain.Fluents.onXY)
-    }
-
     object Fluents {
-        val atXFloor: Fluent = Fluent.positive(Predicates.at, Values.X)
+        val atRobotlocation1 = Fluent.positive(Predicates.atLocation, Values.r, Values.l1)
+        val atRobotlocation2 = Fluent.positive(Predicates.atLocation, Values.r, Values.l2)
+        val atRobotlocation3 = Fluent.positive(Predicates.atLocation, Values.r, Values.l3)
+        val atRobotlocation4 = Fluent.positive(Predicates.atLocation, Values.r, Values.l4)
+        val atRobotXlocationY = Fluent.positive(Predicates.atLocation, Values.X, Values.Y)
+        val atRobotXlocationZ = Fluent.positive(Predicates.atLocation, Values.X, Values.Z)
+        val atRobotXlocationW = Fluent.positive(Predicates.atLocation, Values.X, Values.W)
 
-        val busyLocation1 =
-            Fluent.positive(Predicates.at, Values.X, Values.W)
-        // non sono troppo convinta di questo, più per la location
-
-        val atAgent1Location = Fluent.positive(Predicates.at, Values.agent1, Values.Y)
-        val atAgent1Location1 = Fluent.positive(Predicates.at, Values.agent1, Values.loc1)
-        val atAgent1Location2 = Fluent.positive(Predicates.at, Values.agent1, Values.loc2)
-        val atAgent1Location3 = Fluent.positive(Predicates.at, Values.agent1, Values.loc3)
-        val atAgent1Location4 = Fluent.positive(Predicates.at, Values.agent1, Values.loc4)
-
-        val atXLocationY = Fluent.positive(Predicates.at, Values.X, Values.Y)
-        val atXLocationZ = Fluent.positive(Predicates.at, Values.X, Values.Z)
-        val atXLocationW = Fluent.positive(Predicates.at, Values.X, Values.Y)
-        val atYLocationX = Fluent.positive(Predicates.at, Values.Y, Values.X)
-        val atYLocationZ = Fluent.positive(Predicates.at, Values.Y, Values.Z)
-        val atYLocationW = Fluent.positive(Predicates.at, Values.Y, Values.W)
-
-        val atBox1Location1 = Fluent.positive(Predicates.at, Values.agent1, Values.loc1)
-        val atBox1Location2 = Fluent.positive(Predicates.at, Values.agent1, Values.loc2)
-        val atBox1Location3 = Fluent.positive(Predicates.at, Values.agent1, Values.loc3)
-        val atBox1Location4 = Fluent.positive(Predicates.at, Values.agent1, Values.loc4)
-
-        val busyAgent1 = Fluent.positive(Predicates.on, Values.box1, Values.agent1)
-        val busyXY = Fluent.positive(Predicates.on, Values.X, Values.Y)
-        // forse qui ci andranno delle variabili al posto di box1 e agent1
-
-        // potenzialmente inutile per ora
-        val clearBox1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.box1)
-        val clearAgent1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.agent1)
-
-        val clearLoc1 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc1)
-        val clearLoc2 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc2)
-        val clearLoc3 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc3)
-        val clearLoc4 = Fluent.positive(BlockWorldDomain.Predicates.clear, Values.loc4)
-
-        val clearX = Fluent.positive(Predicates.clear, Values.X)
-        val clearY = Fluent.positive(Predicates.clear, Values.Y)
-        val clearW = Fluent.positive(Predicates.clear, Values.W)
-        val clearZ = Fluent.positive(Predicates.clear, Values.Z)
-
+        val adjacentL1L2 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l2)
+        val adjacentL1L3 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l3)
+        val adjacentL2L4 = Fluent.positive(Predicates.adjacent, Values.l2, Values.l4)
+        val adjacentL3L4 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l2)
         val adjacentXY = Fluent.positive(Predicates.adjacent, Values.X, Values.Y)
-        val adjacentXW = Fluent.positive(Predicates.adjacent, Values.X, Values.W)
         val adjacentXZ = Fluent.positive(Predicates.adjacent, Values.X, Values.Z)
-        val adjacentYW = Fluent.positive(Predicates.adjacent, Values.Y, Values.W)
+        val adjacentXW = Fluent.positive(Predicates.adjacent, Values.X, Values.W)
         val adjacentYZ = Fluent.positive(Predicates.adjacent, Values.Y, Values.Z)
+        val adjacentYW = Fluent.positive(Predicates.adjacent, Values.Y, Values.W)
         val adjacentZW = Fluent.positive(Predicates.adjacent, Values.Z, Values.W)
+
+        val loadedXY = Fluent.positive(Predicates.loaded, Values.X, Values.Y)
+
+        val unloadedX = Fluent.positive(Predicates.unLoaded, Values.X)
+        val unloadedY = Fluent.positive(Predicates.unLoaded, Values.Y)
+        val unloadedZ = Fluent.positive(Predicates.unLoaded, Values.Z)
+        val unloadedW = Fluent.positive(Predicates.unLoaded, Values.W)
+
+        val inContainerlocation1 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l1)
+        val inContainerlocation2 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l2)
+        val inContainerlocation3 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l3)
+        val inContainerlocation4 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l4)
+        val inContainerXlocationY = Fluent.positive(Predicates.inContainerLocation, Values.X, Values.Y)
+        val inContainerXlocationZ = Fluent.positive(Predicates.inContainerLocation, Values.X, Values.Z)
+        val inContainerXlocationW = Fluent.positive(Predicates.inContainerLocation, Values.X, Values.W)
+        val inContainerYlocationX = Fluent.positive(Predicates.inContainerLocation, Values.Y, Values.X)
+        val inContainerYlocationZ = Fluent.positive(Predicates.inContainerLocation, Values.Y, Values.Z)
+        val inContainerYlocationW = Fluent.positive(Predicates.inContainerLocation, Values.Y, Values.W)
     }
+
     object Goals {
-        val atAgent1Location1Box1Location2 =
-            FluentBasedGoal.of(Fluents.atAgent1Location1, Fluents.atBox1Location2)
+        val atRobotAtlocation3 = FluentBasedGoal.of(Fluents.atRobotlocation3)
+        val atRobotAtlocation3InContainerLocation4 = FluentBasedGoal.of(
+            Fluents.atRobotlocation3,
+            Fluents.inContainerlocation4
+        )
+        val inContainerLocation4 = FluentBasedGoal.of(
+            Fluents.inContainerlocation4
+        )
     }
+
     object ObjectSets {
         val all = ObjectSet.of(
-            Types.blocks to setOf(Values.box1),
-            Types.locations to setOf(Values.loc1, Values.loc2, Values.loc3, Values.loc4),
-            Types.agents to setOf(Values.agent1)
+            Types.robots to setOf(Values.r),
+            Types.locations to setOf(Values.l1, Values.l2, Values.l3, Values.l4),
+            Types.containers to setOf(Values.c)
+        )
+    }
+
+    object Problems {
+        val robotFromLoc1ToLoc2 = Problem.of(
+            domain = Domains.gridWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtlocation3
+        )
+        val robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4 = Problem.of(
+            domain = Domains.gridWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtlocation3InContainerLocation4
+        )
+        val inContainerLocation4 = Problem.of(
+            domain = Domains.gridWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.inContainerLocation4
         )
     }
 
     object Predicates {
-        // at dovrebbe andare bene sia per un oggetto sia per un agente,
-        // quindi o sdoppio il predicato o ci metto il supertipo
-        val on = Predicate.of("on", Types.blocks, Types.agents)
-        val at = Predicate.of("at", Types.strings, Types.locations)
-        val agentEmpty = Predicate.of("agent_empty")
-        val clear = Predicate.of("clear", BlockWorldDomain.Types.blocks)
         val adjacent = Predicate.of("adjacent", Types.locations, Types.locations)
+        val atLocation = Predicate.of("atLocation", Types.robots, Types.locations)
+        val loaded = Predicate.of("loaded", Types.robots, Types.containers)
+        val unLoaded = Predicate.of("unloaded", Types.robots)
+        val inContainerLocation = Predicate.of("inContainerLocation", Types.containers, Types.robots)
     }
-    object Problems {
-        val simpleDestination = Problem.of(
-            domain = Domains.gridDomain,
-            objects = ObjectSets.all,
-            initialState = States.initial,
-            goal = Goals.atAgent1Location1Box1Location2
+
+    object States {
+        val initial = State.of(
+            Fluents.atRobotlocation1,
+            Fluents.inContainerlocation2,
+            Fluents.adjacentL1L2,
+            Fluents.adjacentL1L3,
+            Fluents.adjacentL2L4,
+            Fluents.adjacentL3L4
         )
     }
-    object States {
-        val initial = State.of(Fluents.atAgent1Location2, Fluents.atBox1Location3)
-    }
+
     object Types {
         val anything = Type.of("anything")
         val strings = Type.of("strings", anything)
-        val numbers = Type.of("numbers", anything)
-        val blocks = Type.of("blocks", strings)
-        val agents = Type.of("agents", strings)
         val locations = Type.of("locations", strings)
+        val robots = Type.of("robots", strings)
+        val containers = Type.of("containers", strings)
     }
-    object Values {
-        val box1 = Object.of("box1")
-        val agent1 = Object.of("agent1")
 
-        val loc1 = Object.of("loc1")
-        val loc2 = Object.of("loc2")
-        val loc3 = Object.of("loc3")
-        val loc4 = Object.of("loc4")
+    object Values {
+        val r = Object.of("r")
+
+        val c = Object.of("c")
+
+        val l1 = Object.of("l1")
+        val l2 = Object.of("l2")
+        val l3 = Object.of("l3")
+        val l4 = Object.of("l4")
 
         val W = Variable.of("W")
         val X = Variable.of("X")

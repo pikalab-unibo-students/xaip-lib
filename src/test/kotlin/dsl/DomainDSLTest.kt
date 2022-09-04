@@ -22,7 +22,7 @@ class DomainDSLTest : AnnotationSpec() {
             Domains.blockWorld.actions.first().parameters.size
         DomainsDSL.blockWorldXDomainDSL.actions.first().preconditions.size shouldBe
             Domains.blockWorld.actions.first().preconditions.size
-        DomainsDSL.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.last().name
+        DomainsDSL.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.toList().last().name
         DomainsDSL.blockWorldXDomainDSL.predicates.size shouldBe 4
     }
 }

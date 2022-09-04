@@ -1,8 +1,8 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.BlockWorldDomain
-import resources.BlockWorldDomain.Goals
+import resources.domain.BlockWorldDomain
+import resources.domain.BlockWorldDomain.Goals
 
 class FluentBasedGoalTest : AnnotationSpec() {
     private val atXarm = FluentBasedGoal.of(BlockWorldDomain.Fluents.atXArm)

@@ -4,11 +4,11 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
-import resources.BlockWorldDomain.Expressions
-import resources.BlockWorldDomain.Fluents
-import resources.BlockWorldDomain.Predicates
-import resources.BlockWorldDomain.Values
-import resources.BlockWorldDomain.predicates
+import resources.domain.BlockWorldDomain.Expressions
+import resources.domain.BlockWorldDomain.Fluents
+import resources.domain.BlockWorldDomain.Predicates
+import resources.domain.BlockWorldDomain.Values
+import resources.domain.BlockWorldDomain.predicates
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
 import resources.TestUtils.name

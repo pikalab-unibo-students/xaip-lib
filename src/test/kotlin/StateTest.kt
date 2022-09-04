@@ -4,9 +4,9 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.BlockWorldDomain
-import resources.BlockWorldDomain.Actions
-import resources.BlockWorldDomain.States
+import resources.domain.BlockWorldDomain
+import resources.domain.BlockWorldDomain.Actions
+import resources.domain.BlockWorldDomain.States
 
 class StateTest : AnnotationSpec() {
 

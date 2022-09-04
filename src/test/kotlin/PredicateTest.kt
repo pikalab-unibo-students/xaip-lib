@@ -2,10 +2,10 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.BlockWorldDomain.Predicates
-import resources.BlockWorldDomain.Types
-import resources.BlockWorldDomain.predicates
-import resources.BlockWorldDomain.types
+import resources.domain.BlockWorldDomain.Predicates
+import resources.domain.BlockWorldDomain.Types
+import resources.domain.BlockWorldDomain.predicates
+import resources.domain.BlockWorldDomain.types
 import resources.TestUtils.name
 import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty

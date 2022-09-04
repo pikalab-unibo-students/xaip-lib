@@ -1,9 +1,9 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import resources.BlockWorldDomain.ObjectSets
-import resources.BlockWorldDomain.objects
-import resources.BlockWorldDomain.types
+import resources.domain.BlockWorldDomain.ObjectSets
+import resources.domain.BlockWorldDomain.objects
+import resources.domain.BlockWorldDomain.types
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.objectSetEmpty
 import resources.TestUtils.objectSetNotEmpty

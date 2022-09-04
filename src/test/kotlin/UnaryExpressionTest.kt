@@ -1,7 +1,7 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.BlockWorldDomain.Expressions
-import resources.BlockWorldDomain.Fluents
+import resources.domain.BlockWorldDomain.Expressions
+import resources.domain.BlockWorldDomain.Fluents
 
 class UnaryExpressionTest : AnnotationSpec() {
     private val unaryExpression = UnaryExpression.of(Fluents.atXArm, "not")

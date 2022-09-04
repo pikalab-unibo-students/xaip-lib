@@ -1,4 +1,4 @@
-package resources
+package resources.domain
 
 import Action
 import Axiom

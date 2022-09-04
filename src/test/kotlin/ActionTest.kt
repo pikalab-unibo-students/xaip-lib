@@ -2,13 +2,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.domain.BlockWorldDomain.Actions
-import resources.domain.BlockWorldDomain.Fluents
-import resources.domain.BlockWorldDomain.Types
-import resources.domain.BlockWorldDomain.Values
-import resources.domain.BlockWorldDomain.actions
-import resources.domain.BlockWorldDomain.types
-import resources.domain.BlockWorldDomain.variables
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.name
@@ -17,6 +10,13 @@ import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
+import resources.domain.BlockWorldDomain.Actions
+import resources.domain.BlockWorldDomain.Fluents
+import resources.domain.BlockWorldDomain.Types
+import resources.domain.BlockWorldDomain.Values
+import resources.domain.BlockWorldDomain.actions
+import resources.domain.BlockWorldDomain.types
+import resources.domain.BlockWorldDomain.variables
 
 class ActionTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

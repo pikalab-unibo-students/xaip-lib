@@ -4,13 +4,14 @@ import Domain
 import Effect
 import Fluent
 import FluentBasedGoal
+import Object
 import ObjectSet
 import Predicate
 import Problem
 import State
 import Type
 import Variable
-import resources.domain.BlockWorldDomain
+
 object GridDomain {
     object Actions {
         val load = Action.of(

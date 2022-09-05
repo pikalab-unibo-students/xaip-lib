@@ -119,7 +119,6 @@ class ProblemDSLTest : AnnotationSpec() {
         problemDSL.objects shouldBe Problems.stackAB.objects
     }
 
-    @Ignore
     @Test
     fun testPlanner() {
         Planners.dummyPlanner.plan(problemDSL).toSet().size shouldBe 1

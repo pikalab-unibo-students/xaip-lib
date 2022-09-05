@@ -84,28 +84,20 @@ class StripsPlannerTest : AnnotationSpec() {
         plansGenerated4.toSet() shouldBe plan2check4.toSet()
     }
 
-    // aggiungi piani contenti la unstack
-    @Ignore
     @Test
     fun testStackXYpickW() {
         val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW) // caso sfigato
         val plan2check5 = setOf(
-            Plan.of(listOf(pickA, stackAB, pickC)),
-            Plan.of(listOf(pickA, stackAC, pickB)),
-            Plan.of(listOf(pickA, stackAC, pickA)),
-            Plan.of(listOf(pickA, stackAB, pickA)),
+            Plan.of(listOf(pickA, stackAB)),
+            Plan.of(listOf(pickA, stackAC)),
 
-            Plan.of(listOf(pickB, stackBA, pickC)),
-            Plan.of(listOf(pickB, stackBC, pickA)),
-            Plan.of(listOf(pickB, stackBA, pickB)),
-            Plan.of(listOf(pickB, stackBC, pickB)),
+            Plan.of(listOf(pickB, stackBA)),
+            Plan.of(listOf(pickB, stackBC)),
 
-            Plan.of(listOf(pickC, stackCA, pickB)),
-            Plan.of(listOf(pickC, stackCB, pickA)),
-            Plan.of(listOf(pickC, stackCA, pickC)),
-            Plan.of(listOf(pickC, stackCB, pickC))
+            Plan.of(listOf(pickC, stackCA)),
+            Plan.of(listOf(pickC, stackCB))
         )
-        plansGenerated5.toSet().size shouldBe 18
+        plansGenerated5.toSet().size shouldBe 6
         plansGenerated5.toSet() shouldBe plan2check5
     }
 

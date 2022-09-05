@@ -318,7 +318,7 @@ object BlockWorldDomain {
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
-        val onXYatW = FluentBasedGoal.of(Fluents.atWArm, Fluents.onXY) // caso sfigato
+        val onXYatW = FluentBasedGoal.of(Fluents.onXY, Fluents.atWArm) // caso sfigato
         val onXYW = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
     }
 

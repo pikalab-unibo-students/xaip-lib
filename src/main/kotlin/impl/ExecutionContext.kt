@@ -113,24 +113,33 @@ internal data class ExecutionContext(
         actions: Set<Action>
     ) {
         val h = Effect.of(head)
-        val actionsMatched = actions.`actions whose effects match head`(h)
-        val actionMatchedMutable = actionsMatched.toMutableList()
+        val actionsMatched = actions.`actions whose effects match head`(h).toMutableList()
         if (stack.isNotEmpty()) {
-            val stackHead = stack.peek()
-            // cambia sta roba per fare in modo che vada a controllare se esiste
-            // un azione che abbia le medesime precondizioni tra le postcondizioni
-            when (stackHead) {
+            when (val stackHead = stack.peek()) {
                 is Action -> {
-                    if (stackHead.name == "unstack") {
-                        for (action in actionsMatched)
-                            if (action.name == "stack") {
-                                actionMatchedMutable.remove(action)
+                    actionsMatched.filter { // con questa tolgo unstack e pick se ho stack
+                        it.preconditions.all { precondition ->
+                            stackHead.positiveEffects.any { positiveEffect ->
+                                positiveEffect.fluent.match(precondition)
                             }
+                        }
+                    }.filter { actionsFiltered -> // con questa lascio da rimuovere solo unstack
+                        stackHead.preconditions.all { precondition2 ->
+                            actionsFiltered.positiveEffects.any { positiveEffect2 ->
+                                positiveEffect2.fluent.match(precondition2)
+                            }
+                        }
+                    }.also { actionsDoubledFiltered ->
+                        if (actionsDoubledFiltered.isNotEmpty()) {
+                            actionsDoubledFiltered.map {
+                                actionsMatched.remove(it)
+                            }
+                        }
                     }
                 }
             }
         }
-        if (actionMatchedMutable.isNotEmpty()) {
+        if (actionsMatched.isNotEmpty()) {
             val action = actionsMatched.first()
             choicePoints.update(actionsMatched, stack, currentState, plan)
             stack.update(action, h)

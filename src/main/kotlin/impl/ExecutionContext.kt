@@ -137,7 +137,7 @@ internal data class ExecutionContext(
         val h = Effect.of(head)
         val actionsMatched = actions.`actions whose effects match head`(h).toMutableList()
         if (stack.isNotEmpty()) {
-            when (val stackHead = stack.peek() ::class) {
+            when (val stackHead = stack.peek()) {
                 is Action -> {
                     actionsMatched.removeIdempotentActions(stackHead)
                 }

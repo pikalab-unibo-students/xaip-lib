@@ -183,7 +183,7 @@ object BlockWorldDomain {
         )
 
         val unstack = Action.of(
-            name = "unStack",
+            name = "unstack",
             parameters = mapOf(
                 Values.X to Types.blocks,
                 Values.Y to Types.locations
@@ -207,7 +207,7 @@ object BlockWorldDomain {
             parameters = mapOf(
                 Values.X to Types.blocks
             ),
-            preconditions = setOf(Fluents.atXArm),
+            preconditions = setOf(Fluents.atXArm, Fluents.clearY),
             effects = setOf(
                 Effect.negative(Fluents.atXArm),
                 Effect.of(Fluents.clearX),

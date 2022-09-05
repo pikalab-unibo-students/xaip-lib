@@ -114,12 +114,28 @@ internal data class ExecutionContext(
     ) {
         val h = Effect.of(head)
         val actionsMatched = actions.`actions whose effects match head`(h)
-        val action = actionsMatched.first()
-        choicePoints.update(actionsMatched, stack, currentState, plan)
-        stack.update(action, h)
+        val actionMatchedMutable = actionsMatched.toMutableList()
+        if (stack.isNotEmpty()) {
+            val stackHead = stack.peek()
+            when (stackHead) {
+                is Action -> {
+                    if (stackHead.name == "unstack") {
+                        for (action in actionsMatched)
+                            if (action.name == "stack") {
+                                actionMatchedMutable.remove(action)
+                            }
+                    }
+                }
+            }
+        }
+        if (actionMatchedMutable.isNotEmpty()) {
+            val action = actionsMatched.first()
+            choicePoints.update(actionsMatched, stack, currentState, plan)
+            stack.update(action, h)
 
-        val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
-        choicePoints.update(effectsMatched, stack, currentState, plan, h)
-        stack.update(effectsMatched.first(), h)
+            val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
+            choicePoints.update(effectsMatched, stack, currentState, plan, h)
+            stack.update(effectsMatched.first(), h)
+        }
     }
 }

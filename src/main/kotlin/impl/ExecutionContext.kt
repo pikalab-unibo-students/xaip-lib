@@ -108,6 +108,28 @@ internal data class ExecutionContext(
         return true
     }
 
+    private fun MutableList<Action>.removeIdempotentActions(action: Action) {
+        this.filter { // con questa tolgo unstack e pick se ho stack
+            it.preconditions.all { precondition ->
+                action.positiveEffects.any { positiveEffect ->
+                    positiveEffect.fluent.match(precondition)
+                }
+            }
+        }.filter { actionsFiltered -> // con questa lascio da rimuovere solo unstack
+            action.preconditions.all { precondition2 ->
+                actionsFiltered.positiveEffects.any { positiveEffect2 ->
+                    positiveEffect2.fluent.match(precondition2)
+                }
+            }
+        }.also { actionsDoubledFiltered ->
+            if (actionsDoubledFiltered.isNotEmpty()) {
+                actionsDoubledFiltered.map {
+                    this.remove(it)
+                }
+            }
+        }
+    }
+
     fun handleFluentNotInCurrentState(
         head: Fluent,
         actions: Set<Action>
@@ -115,27 +137,9 @@ internal data class ExecutionContext(
         val h = Effect.of(head)
         val actionsMatched = actions.`actions whose effects match head`(h).toMutableList()
         if (stack.isNotEmpty()) {
-            when (val stackHead = stack.peek()) {
+            when (val stackHead = stack.peek() ::class) {
                 is Action -> {
-                    actionsMatched.filter { // con questa tolgo unstack e pick se ho stack
-                        it.preconditions.all { precondition ->
-                            stackHead.positiveEffects.any { positiveEffect ->
-                                positiveEffect.fluent.match(precondition)
-                            }
-                        }
-                    }.filter { actionsFiltered -> // con questa lascio da rimuovere solo unstack
-                        stackHead.preconditions.all { precondition2 ->
-                            actionsFiltered.positiveEffects.any { positiveEffect2 ->
-                                positiveEffect2.fluent.match(precondition2)
-                            }
-                        }
-                    }.also { actionsDoubledFiltered ->
-                        if (actionsDoubledFiltered.isNotEmpty()) {
-                            actionsDoubledFiltered.map {
-                                actionsMatched.remove(it)
-                            }
-                        }
-                    }
+                    actionsMatched.removeIdempotentActions(stackHead)
                 }
             }
         }

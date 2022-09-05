@@ -117,6 +117,8 @@ internal data class ExecutionContext(
         val actionMatchedMutable = actionsMatched.toMutableList()
         if (stack.isNotEmpty()) {
             val stackHead = stack.peek()
+            // cambia sta roba per fare in modo che vada a controllare se esiste
+            // un azione che abbia le medesime precondizioni tra le postcondizioni
             when (stackHead) {
                 is Action -> {
                     if (stackHead.name == "unstack") {

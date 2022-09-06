@@ -10,9 +10,9 @@ object GridDomain {
                 Values.Y to Types.locations,
                 Values.Z to Types.locations
             ),
-            preconditions = setOf(Fluents.adjacentYZ, Fluents.atRobotXlocationY),
+            preconditions = setOf(Fluents.connectedYZ, Fluents.atRobotXlocationY),
             effects = setOf(
-                Effect.of(Fluents.atRobotXlocationW),
+                Effect.of(Fluents.atRobotXlocationZ),
                 Effect.negative(Fluents.atRobotXlocationY)
             )
         )
@@ -23,11 +23,13 @@ object GridDomain {
                 Values.Y to Types.containers,
                 Values.X to Types.robots
             ),
-            preconditions = setOf(Fluents.atRobotXlocationZ, Fluents.inContainerYlocationZ, Fluents.unloadedX),
+            preconditions = setOf(
+                Fluents.atRobotXlocationZ,
+                Fluents.inContainerYlocationZ
+            ),
             effects = setOf(
                 Effect.of(Fluents.loadedXY),
-                Effect.negative(Fluents.inContainerYlocationZ),
-                Effect.negative(Fluents.unloadedX)
+                Effect.negative(Fluents.inContainerYlocationZ)
             )
         )
         val unload = Action.of(
@@ -37,10 +39,12 @@ object GridDomain {
                 Values.Y to Types.containers,
                 Values.X to Types.robots
             ),
-            preconditions = setOf(Fluents.atRobotXlocationZ, Fluents.loadedXY),
+            preconditions = setOf(
+                Fluents.atRobotXlocationZ,
+                Fluents.loadedXY
+            ),
             effects = setOf(
                 Effect.of(Fluents.inContainerYlocationZ),
-                Effect.of(Fluents.unloadedX),
                 Effect.negative(Fluents.loadedXY)
             )
         )
@@ -50,7 +54,7 @@ object GridDomain {
         val gridWorld = Domain.of(
             name = "grid_world",
             predicates = setOf(
-                Predicates.adjacent,
+                Predicates.connected,
                 Predicates.atLocation,
                 Predicates.loaded,
                 Predicates.unLoaded,
@@ -80,16 +84,16 @@ object GridDomain {
         val atRobotXlocationZ = Fluent.positive(Predicates.atLocation, Values.X, Values.Z)
         val atRobotXlocationW = Fluent.positive(Predicates.atLocation, Values.X, Values.W)
 
-        val adjacentL1L2 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l2)
-        val adjacentL1L3 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l3)
-        val adjacentL2L4 = Fluent.positive(Predicates.adjacent, Values.l2, Values.l4)
-        val adjacentL3L4 = Fluent.positive(Predicates.adjacent, Values.l1, Values.l2)
-        val adjacentXY = Fluent.positive(Predicates.adjacent, Values.X, Values.Y)
-        val adjacentXZ = Fluent.positive(Predicates.adjacent, Values.X, Values.Z)
-        val adjacentXW = Fluent.positive(Predicates.adjacent, Values.X, Values.W)
-        val adjacentYZ = Fluent.positive(Predicates.adjacent, Values.Y, Values.Z)
-        val adjacentYW = Fluent.positive(Predicates.adjacent, Values.Y, Values.W)
-        val adjacentZW = Fluent.positive(Predicates.adjacent, Values.Z, Values.W)
+        val connectedL1L2 = Fluent.positive(Predicates.connected, Values.l1, Values.l2)
+        val connectedL1L3 = Fluent.positive(Predicates.connected, Values.l1, Values.l3)
+        val connectedL2L4 = Fluent.positive(Predicates.connected, Values.l2, Values.l4)
+        val connectedL3L4 = Fluent.positive(Predicates.connected, Values.l1, Values.l2)
+        val connectedXY = Fluent.positive(Predicates.connected, Values.X, Values.Y)
+        val connectedXZ = Fluent.positive(Predicates.connected, Values.X, Values.Z)
+        val connectedXW = Fluent.positive(Predicates.connected, Values.X, Values.W)
+        val connectedYW = Fluent.positive(Predicates.connected, Values.Y, Values.W)
+        val connectedYZ = Fluent.positive(Predicates.connected, Values.Y, Values.Z)
+        val connectedZW = Fluent.positive(Predicates.connected, Values.Z, Values.W)
 
         val loadedXY = Fluent.positive(Predicates.loaded, Values.X, Values.Y)
 
@@ -112,11 +116,11 @@ object GridDomain {
 
     object Goals {
         val atRobotAtlocation3 = FluentBasedGoal.of(Fluents.atRobotlocation3)
-        val atRobotAtlocation3InContainerLocation4 = FluentBasedGoal.of(
-            Fluents.atRobotlocation3,
+        val inContainerLocation4 = FluentBasedGoal.of(
             Fluents.inContainerlocation4
         )
-        val inContainerLocation4 = FluentBasedGoal.of(
+        val atRobotAtlocation3InContainerLocation4 = FluentBasedGoal.of(
+            Fluents.atRobotlocation4,
             Fluents.inContainerlocation4
         )
     }
@@ -151,7 +155,7 @@ object GridDomain {
     }
 
     object Predicates {
-        val adjacent = Predicate.of("adjacent", Types.locations, Types.locations)
+        val connected = Predicate.of("connected", Types.locations, Types.locations)
         val atLocation = Predicate.of("atLocation", Types.robots, Types.locations)
         val loaded = Predicate.of("loaded", Types.robots, Types.containers)
         val unLoaded = Predicate.of("unloaded", Types.robots)
@@ -162,10 +166,10 @@ object GridDomain {
         val initial = State.of(
             Fluents.atRobotlocation1,
             Fluents.inContainerlocation2,
-            Fluents.adjacentL1L2,
-            Fluents.adjacentL1L3,
-            Fluents.adjacentL2L4,
-            Fluents.adjacentL3L4
+            Fluents.connectedL1L2,
+            Fluents.connectedL1L3,
+            Fluents.connectedL2L4,
+            Fluents.connectedL3L4
         )
     }
 

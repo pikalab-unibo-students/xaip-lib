@@ -1,7 +1,7 @@
 package resources.domain
 
 import Object
-object GridDomain {
+object PlanDomain {
     object Actions {
         val move = Action.of(
             name = "move",
@@ -57,7 +57,7 @@ object GridDomain {
                 Predicates.connected,
                 Predicates.atLocation,
                 Predicates.loaded,
-                Predicates.unLoaded,
+                Predicates.unloaded,
                 Predicates.inContainerLocation
             ),
             actions = setOf(
@@ -88,6 +88,7 @@ object GridDomain {
         val connectedL1L3 = Fluent.positive(Predicates.connected, Values.l1, Values.l3)
         val connectedL2L4 = Fluent.positive(Predicates.connected, Values.l2, Values.l4)
         val connectedL3L4 = Fluent.positive(Predicates.connected, Values.l1, Values.l2)
+
         val connectedXY = Fluent.positive(Predicates.connected, Values.X, Values.Y)
         val connectedXZ = Fluent.positive(Predicates.connected, Values.X, Values.Z)
         val connectedXW = Fluent.positive(Predicates.connected, Values.X, Values.W)
@@ -97,10 +98,10 @@ object GridDomain {
 
         val loadedXY = Fluent.positive(Predicates.loaded, Values.X, Values.Y)
 
-        val unloadedX = Fluent.positive(Predicates.unLoaded, Values.X)
-        val unloadedY = Fluent.positive(Predicates.unLoaded, Values.Y)
-        val unloadedZ = Fluent.positive(Predicates.unLoaded, Values.Z)
-        val unloadedW = Fluent.positive(Predicates.unLoaded, Values.W)
+        val unloadedX = Fluent.positive(Predicates.unloaded, Values.X)
+        val unloadedY = Fluent.positive(Predicates.unloaded, Values.Y)
+        val unloadedZ = Fluent.positive(Predicates.unloaded, Values.Z)
+        val unloadedW = Fluent.positive(Predicates.unloaded, Values.W)
 
         val inContainerlocation1 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l1)
         val inContainerlocation2 = Fluent.positive(Predicates.inContainerLocation, Values.c, Values.l2)
@@ -158,7 +159,7 @@ object GridDomain {
         val connected = Predicate.of("connected", Types.locations, Types.locations)
         val atLocation = Predicate.of("atLocation", Types.robots, Types.locations)
         val loaded = Predicate.of("loaded", Types.robots, Types.containers)
-        val unLoaded = Predicate.of("unloaded", Types.robots)
+        val unloaded = Predicate.of("unloaded", Types.robots)
         val inContainerLocation = Predicate.of("inContainerLocation", Types.containers, Types.robots)
     }
 

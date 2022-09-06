@@ -1,7 +1,7 @@
 package resources.domain
 
 import Object
-object PlanDomain {
+object GraphDomain {
     object Actions {
         val move = Action.of(
             name = "move",

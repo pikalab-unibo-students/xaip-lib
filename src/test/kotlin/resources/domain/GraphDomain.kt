@@ -12,7 +12,8 @@ object GraphDomain {
             ),
             preconditions = setOf(
                 Fluents.connectedYZ,
-                Fluents.atRobotXlocationY),
+                Fluents.atRobotXlocationY
+            ),
             effects = setOf(
                 Effect.of(Fluents.atRobotXlocationZ),
                 Effect.negative(Fluents.atRobotXlocationY)

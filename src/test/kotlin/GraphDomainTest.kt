@@ -57,7 +57,7 @@ class GraphDomainTest : AnnotationSpec() {
             Actions.load.name,
             Actions.move.name,
             Actions.unload.name,
-            Actions.move
+            Actions.move.name
         )
     }
 }

@@ -47,14 +47,17 @@ class GraphDomainTest : AnnotationSpec() {
             GraphDomain.Problems.robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7
         )
         plans.toSet().size shouldBe 1
-        /*
+
         plans.toSet().first().actions.map { it.name }.toList() shouldBe listOf(
             Actions.move.name,
             Actions.load.name,
             Actions.move.name,
-            Actions.unload.name
+            Actions.unload.name,
+            Actions.move.name,
+            Actions.load.name,
+            Actions.move.name,
+            Actions.unload.name,
+            Actions.move
         )
-
-         */
     }
 }

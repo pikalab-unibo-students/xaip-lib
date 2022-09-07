@@ -158,7 +158,7 @@ object GraphDomain {
             Fluents.atRobotlocation4,
             Fluents.inContainer1location4
         )
-        val atRobotAtlocation3InContainer1Location4InContainer2Location7 = FluentBasedGoal.of(
+        val atRobotAtlocation7InContainer1Location4InContainer2Location1 = FluentBasedGoal.of(
             Fluents.atRobotlocation7,
             Fluents.inContainer1location4,
             Fluents.inContainer2location1
@@ -199,7 +199,7 @@ object GraphDomain {
             domain = Domains.graphWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.atRobotAtlocation3InContainer1Location4InContainer2Location7
+            goal = Goals.atRobotAtlocation7InContainer1Location4InContainer2Location1
         )
     }
 

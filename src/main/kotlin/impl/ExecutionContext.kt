@@ -108,26 +108,28 @@ internal data class ExecutionContext(
         return true
     }
 
-    private fun MutableList<Action>.removeIdempotentActions(action: Action) {
-        this.filter { // con questa tolgo unstack e pick se ho stack
-            it.preconditions.all { precondition ->
-                action.positiveEffects.any { positiveEffect ->
-                    positiveEffect.fluent.match(precondition)
-                }
-            }
-        }.filter { actionsFiltered -> // con questa lascio da rimuovere solo unstack
-            action.preconditions.all { precondition2 ->
-                actionsFiltered.positiveEffects.any { positiveEffect2 ->
-                    positiveEffect2.fluent.match(precondition2)
-                }
-            }
-        }.also { actionsDoubledFiltered ->
-            if (actionsDoubledFiltered.isNotEmpty()) {
-                actionsDoubledFiltered.map {
-                    this.remove(it)
-                }
+    private fun Action.`precondition of this match with the effects of the 2nd action`
+    (action: Action): Boolean =
+        this.preconditions.all { precondition ->
+            action.positiveEffects.any { positiveEffect ->
+                positiveEffect.fluent.match(precondition)
             }
         }
+
+    private fun Action.isIdempotent(action: Action): Boolean =
+        // this.parameters == action.parameters &&
+        this.`precondition of this match with the effects of the 2nd action`(action) &&
+            action.`precondition of this match with the effects of the 2nd action`(this)
+
+    private fun MutableList<Action>.removeIdempotentActions(action: Action) {
+        this.filter { it.isIdempotent(action) }
+            .also { actionsDoubledFiltered ->
+                if (actionsDoubledFiltered.isNotEmpty()) {
+                    actionsDoubledFiltered.map {
+                        this.remove(it)
+                    }
+                }
+            }
     }
 
     fun handleFluentNotInCurrentState(

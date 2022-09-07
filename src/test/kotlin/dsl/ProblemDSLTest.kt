@@ -81,6 +81,7 @@ class ProblemDSLTest : AnnotationSpec() {
                 }
                 preconditions {
                     +"at"("X", "arm")
+                    +"clear"("Y")
                 }
                 effects {
                     -"at"("X", "arm")
@@ -119,6 +120,10 @@ class ProblemDSLTest : AnnotationSpec() {
         problemDSL.objects shouldBe Problems.stackAB.objects
     }
 
+    @Test
+    fun test() {
+        Planners.dummyPlanner.plan(Problems.stackAB)
+    }
     @Test
     fun testPlanner() {
         Planners.dummyPlanner.plan(problemDSL).toSet().size shouldBe 1

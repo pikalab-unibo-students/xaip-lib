@@ -2,10 +2,10 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.TestUtils.Actions
-import resources.TestUtils.Planners
-import resources.TestUtils.Problems
-import resources.TestUtils.Values
+import resources.domain.BlockWorldDomain.Actions
+import resources.domain.BlockWorldDomain.Planners
+import resources.domain.BlockWorldDomain.Problems
+import resources.domain.BlockWorldDomain.Values
 
 class StripsPlannerTest : AnnotationSpec() {
     private val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))
@@ -87,16 +87,18 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackXYpickW() {
         val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW) // caso sfigato
-        val plan2check5 = listOf(
-            Plan.of(listOf(pickA, stackAB, pickC)),
-            Plan.of(listOf(pickA, stackAC, pickB)),
-            Plan.of(listOf(pickB, stackBA, pickC)),
-            Plan.of(listOf(pickB, stackBC, pickA)),
-            Plan.of(listOf(pickC, stackCA, pickB)),
-            Plan.of(listOf(pickC, stackCB, pickA))
+        val plan2check5 = setOf(
+            Plan.of(listOf(pickA, stackAB)),
+            Plan.of(listOf(pickA, stackAC)),
+
+            Plan.of(listOf(pickB, stackBA)),
+            Plan.of(listOf(pickB, stackBC)),
+
+            Plan.of(listOf(pickC, stackCA)),
+            Plan.of(listOf(pickC, stackCB))
         )
         plansGenerated5.toSet().size shouldBe 6
-        plansGenerated5.toSet() shouldBe plan2check5.toSet()
+        plansGenerated5.toSet() shouldBe plan2check5
     }
 
     @Test
@@ -109,19 +111,8 @@ class StripsPlannerTest : AnnotationSpec() {
     }
 
     @Test
-    fun testPlannerRelation() {
-        /*ObjectSet.of(
-            mapOf(
-                Type.of("anything") to emptySet(),
-                Type.of("strings", Type.of("anything")) to emptySet(),
-                Type.of("blocks", Type.of("strings")) to setOf(Object.of("a"), Object.of("b")),
-                Type.of("location", Type.of("strings")) to setOf(Object.of("floor"), Object.of("arm"))
-            )
-        )
-         State.of(setOf(Fluent.of()))
-
-         Planner.strips().plan()
-
-         */
+    fun testStackABC() {
+        val plan = Planners.dummyPlanner.plan(Problems.stackABC)
+        println(plan.first().actions.toSet())
     }
 }

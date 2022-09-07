@@ -1,9 +1,9 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Expressions
-import resources.TestUtils.Expressions.binaryExpression1
-import resources.TestUtils.Expressions.binaryExpression2
-import resources.TestUtils.Fluents
+import resources.domain.BlockWorldDomain.Expressions
+import resources.domain.BlockWorldDomain.Expressions.binaryExpression1
+import resources.domain.BlockWorldDomain.Expressions.binaryExpression2
+import resources.domain.BlockWorldDomain.Fluents
 
 class BinaryExpressionTest : AnnotationSpec() {
 

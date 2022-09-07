@@ -2,8 +2,8 @@ package dsl // ktlint-disable filename
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Planners
-import resources.TestUtils.Problems
+import resources.domain.BlockWorldDomain.Planners
+import resources.domain.BlockWorldDomain.Problems
 
 /**
  * Test for DomainDSL cereation.
@@ -29,14 +29,13 @@ class ProblemDSLTest : AnnotationSpec() {
                     "X" ofType "blocks"
                 }
                 preconditions {
-                    +"at"("X", "floor")
-                    +"arm_empty"
+                    +"arm_empty"()
                     +"clear"("X")
                 }
                 effects {
                     +"at"("X", "arm")
-                    -"at"("X", "floor")
                     -"arm_empty"
+                    -"at"("X", "floor")
                     -"clear"("X")
                 }
             }
@@ -51,12 +50,14 @@ class ProblemDSLTest : AnnotationSpec() {
                 }
                 effects {
                     +"on"("X", "Y")
+                    +"clear"("X")
                     +"arm_empty"
-                    -"on"("X", "arm")
+                    -"at"("X", "arm")
                     -"clear"("Y")
                 }
             }
-            "unStack" {
+
+            "unstack" {
                 parameters {
                     "X" ofType "blocks"
                     "Y" ofType "locations"
@@ -64,11 +65,29 @@ class ProblemDSLTest : AnnotationSpec() {
                 preconditions {
                     +"on"("X", "Y")
                     +"clear"("X")
+                    +"arm_empty"
                 }
                 effects {
-                    +"at"("X", "floor")
+                    -"on"("X", "Y")
+                    -"clear"("X")
+                    -"arm_empty"
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+            }
+            "putdown" {
+                parameters {
+                    "X" ofType "blocks"
+                }
+                preconditions {
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+                effects {
+                    -"at"("X", "arm")
+                    +"clear"("X")
                     +"arm_empty"
-                    -"clear"("Y")
+                    +"at"("X", "floor")
                 }
             }
         }
@@ -101,6 +120,10 @@ class ProblemDSLTest : AnnotationSpec() {
         problemDSL.objects shouldBe Problems.stackAB.objects
     }
 
+    @Test
+    fun test() {
+        Planners.dummyPlanner.plan(Problems.stackAB)
+    }
     @Test
     fun testPlanner() {
         Planners.dummyPlanner.plan(problemDSL).toSet().size shouldBe 1

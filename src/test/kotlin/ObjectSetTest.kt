@@ -1,13 +1,13 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.ObjectSets
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.objectSetEmpty
 import resources.TestUtils.objectSetNotEmpty
-import resources.TestUtils.objects
 import resources.TestUtils.type1
-import resources.TestUtils.types
+import resources.domain.BlockWorldDomain.ObjectSets
+import resources.domain.BlockWorldDomain.objects
+import resources.domain.BlockWorldDomain.types
 
 class ObjectSetTest : AnnotationSpec() {
     private val regex = Regex("[^A-Za-z0-9()=']")

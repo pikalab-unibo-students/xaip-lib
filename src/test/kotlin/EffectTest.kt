@@ -1,26 +1,28 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils
-import resources.TestUtils.Effects
-import resources.TestUtils.Fluents
-import resources.TestUtils.Predicates
-import resources.TestUtils.Values
-import resources.TestUtils.VariableAssignments
 import resources.TestUtils.effectEmpty
 import resources.TestUtils.effectNotEmpty
 import resources.TestUtils.fluentEmpty
 import resources.TestUtils.fluentNotEmpty
+import resources.TestUtils.predicateNotEmpty
+import resources.TestUtils.size
 import resources.TestUtils.substitution
+import resources.TestUtils.variableNotEmpty
+import resources.domain.BlockWorldDomain.Effects
+import resources.domain.BlockWorldDomain.Fluents
+import resources.domain.BlockWorldDomain.Predicates
+import resources.domain.BlockWorldDomain.Values
+import resources.domain.BlockWorldDomain.VariableAssignments
 
 class EffectTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
 
-    private val substitution2 = VariableAssignment.of(TestUtils.variableNotEmpty, variable)
+    private val substitution2 = VariableAssignment.of(variableNotEmpty, variable)
     private val fluent = Fluent.of(
-        TestUtils.predicateNotEmpty,
+        predicateNotEmpty,
         true,
-        List<Value>(TestUtils.size) { variable }
+        List<Value>(size) { variable }
     )
 
     private val effect = Effect.of(fluent, true)

@@ -108,18 +108,51 @@ internal data class ExecutionContext(
         return true
     }
 
+    private fun Action.`precondition of this match with the effects of the 2nd action`
+    (action: Action): Boolean =
+        this.preconditions.all { precondition ->
+            action.positiveEffects.any { positiveEffect ->
+                positiveEffect.fluent.match(precondition)
+            }
+        }
+
+    private fun Action.isIdempotent(action: Action): Boolean =
+        // this.parameters == action.parameters &&
+        this.`precondition of this match with the effects of the 2nd action`(action) &&
+            action.`precondition of this match with the effects of the 2nd action`(this)
+
+    private fun MutableList<Action>.removeIdempotentActions(action: Action) {
+        this.filter { it.isIdempotent(action) }
+            .also { actionsDoubledFiltered ->
+                if (actionsDoubledFiltered.isNotEmpty()) {
+                    actionsDoubledFiltered.map {
+                        this.remove(it)
+                    }
+                }
+            }
+    }
+
     fun handleFluentNotInCurrentState(
         head: Fluent,
         actions: Set<Action>
     ) {
         val h = Effect.of(head)
-        val actionsMatched = actions.`actions whose effects match head`(h)
-        val action = actionsMatched.first()
-        choicePoints.update(actionsMatched, stack, currentState, plan)
-        stack.update(action, h)
+        val actionsMatched = actions.`actions whose effects match head`(h).toMutableList()
+        if (stack.isNotEmpty()) {
+            when (val stackHead = stack.peek()) {
+                is Action -> {
+                    actionsMatched.removeIdempotentActions(stackHead)
+                }
+            }
+        }
+        if (actionsMatched.isNotEmpty()) {
+            val action = actionsMatched.first()
+            choicePoints.update(actionsMatched, stack, currentState, plan)
+            stack.update(action, h)
 
-        val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
-        choicePoints.update(effectsMatched, stack, currentState, plan, h)
-        stack.update(effectsMatched.first(), h)
+            val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
+            choicePoints.update(effectsMatched, stack, currentState, plan, h)
+            stack.update(effectsMatched.first(), h)
+        }
     }
 }

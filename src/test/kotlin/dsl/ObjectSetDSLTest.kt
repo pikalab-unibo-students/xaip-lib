@@ -2,8 +2,8 @@ package dsl
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.ProblemsDSL.problemOnAB
-import resources.TestUtils.Types
+import resources.domain.BlockWorldDomain.ProblemsDSL.problemOnAB
+import resources.domain.BlockWorldDomain.Types
 
 class ObjectSetDSLTest : AnnotationSpec() {
     @Test

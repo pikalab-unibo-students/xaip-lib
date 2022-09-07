@@ -3,8 +3,8 @@ package dsl // ktlint-disable filename
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils.Domains
-import resources.TestUtils.DomainsDSL
+import resources.domain.BlockWorldDomain.Domains
+import resources.domain.BlockWorldDomain.DomainsDSL
 
 /**
  * Test for DomainDSL cereation.
@@ -22,7 +22,7 @@ class DomainDSLTest : AnnotationSpec() {
             Domains.blockWorld.actions.first().parameters.size
         DomainsDSL.blockWorldXDomainDSL.actions.first().preconditions.size shouldBe
             Domains.blockWorld.actions.first().preconditions.size
-        DomainsDSL.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.last().name
+        DomainsDSL.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.toList().last().name
         DomainsDSL.blockWorldXDomainDSL.predicates.size shouldBe 4
     }
 }

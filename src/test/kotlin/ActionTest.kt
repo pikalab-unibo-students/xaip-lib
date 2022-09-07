@@ -2,21 +2,21 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.TestUtils.Actions
-import resources.TestUtils.Fluents
-import resources.TestUtils.Types
-import resources.TestUtils.Values
 import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
-import resources.TestUtils.actions
 import resources.TestUtils.name
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
-import resources.TestUtils.types
 import resources.TestUtils.variableNotEmpty
-import resources.TestUtils.variables
+import resources.domain.BlockWorldDomain.Actions
+import resources.domain.BlockWorldDomain.Fluents
+import resources.domain.BlockWorldDomain.Types
+import resources.domain.BlockWorldDomain.Values
+import resources.domain.BlockWorldDomain.actions
+import resources.domain.BlockWorldDomain.types
+import resources.domain.BlockWorldDomain.variables
 
 class ActionTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
@@ -76,12 +76,12 @@ class ActionTest : AnnotationSpec() {
                 mapOf(
                     Values.X to Types.blocks
                 ),
-                setOf(Fluents.atXFloor, Fluents.armEmpty, Fluents.clearX),
+                setOf(Fluents.armEmpty, Fluents.clearX),
                 setOf(
                     Effect.of(Fluents.atXArm),
-                    Effect.negative(Fluents.atXFloor),
                     Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearX)
+                    Effect.negative(Fluents.clearX),
+                    Effect.negative(Fluents.atXFloor)
                 )
             )
     }
@@ -94,12 +94,12 @@ class ActionTest : AnnotationSpec() {
                 mapOf(
                     Values.X to Types.blocks
                 ),
-                setOf(Fluents.atYFloor, Fluents.armEmpty, Fluents.clearY),
+                setOf(Fluents.armEmpty, Fluents.clearY),
                 setOf(
                     Effect.of(Fluents.atYArm),
-                    Effect.negative(Fluents.atYFloor),
                     Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearY)
+                    Effect.negative(Fluents.clearY),
+                    Effect.negative(Fluents.atYFloor)
                 )
             )
     }

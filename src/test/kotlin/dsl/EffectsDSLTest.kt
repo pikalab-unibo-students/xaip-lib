@@ -2,9 +2,9 @@ package dsl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import resources.TestUtils.Domains.blockWorld
-import resources.TestUtils.Predicates
-import resources.TestUtils.predicates
+import resources.domain.BlockWorldDomain.Domains.blockWorld
+import resources.domain.BlockWorldDomain.Predicates
+import resources.domain.BlockWorldDomain.predicates
 
 class EffectsDSLTest : AnnotationSpec() {
     @Test

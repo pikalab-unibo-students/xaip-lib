@@ -24,7 +24,7 @@ class PlanTest : AnnotationSpec() {
     fun testPlanObjectWorksAsExpected() {
         Plans.emptyPlan.actions.isEmpty() shouldBe true
 
-        Plans.dummyPlan.actions.isNotEmpty() shouldBe true
-        Plans.dummyPlan.actions.forEach { it shouldBeIn actions }
+        Plans.basicPlan.actions.isNotEmpty() shouldBe true
+        Plans.basicPlan.actions.forEach { it shouldBeIn actions }
     }
 }

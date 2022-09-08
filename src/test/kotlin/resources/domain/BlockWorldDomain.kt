@@ -269,13 +269,16 @@ object BlockWorldDomain {
     }
 
     object Fluents {
+
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
+        val atDFloor = Fluent.positive(Predicates.at, Values.d, Values.floor)
 
         val atAArm = Fluent.positive(Predicates.at, Values.a, Values.arm)
         val atBArm = Fluent.positive(Predicates.at, Values.b, Values.arm)
         val atCArm = Fluent.positive(Predicates.at, Values.c, Values.arm)
+        val atDArm = Fluent.positive(Predicates.at, Values.d, Values.arm)
 
         val atXFloor = Fluent.positive(Predicates.at, Values.X, Values.floor)
         val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
@@ -290,12 +293,23 @@ object BlockWorldDomain {
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
+        val onBA = Fluent.positive(Predicates.on, Values.b, Values.a)
+        val onAC = Fluent.positive(Predicates.on, Values.a, Values.c)
         val onCA = Fluent.positive(Predicates.on, Values.c, Values.a)
+        val onAD = Fluent.positive(Predicates.on, Values.a, Values.d)
+        val onDA = Fluent.positive(Predicates.on, Values.d, Values.a)
+        val onBC = Fluent.positive(Predicates.on, Values.b, Values.c)
+        val onCB = Fluent.positive(Predicates.on, Values.c, Values.b)
+        val onBD = Fluent.positive(Predicates.on, Values.b, Values.d)
+        val onDB = Fluent.positive(Predicates.on, Values.d, Values.b)
+        val onCD = Fluent.positive(Predicates.on, Values.c, Values.d)
+        val onDC = Fluent.positive(Predicates.on, Values.d, Values.c)
         val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
         val clearC = Fluent.positive(Predicates.clear, Values.c)
+        val clearD = Fluent.positive(Predicates.clear, Values.d)
         val clearX = Fluent.positive(Predicates.clear, Values.X)
         val clearY = Fluent.positive(Predicates.clear, Values.Y)
         val clearZ = Fluent.positive(Predicates.clear, Values.Z)
@@ -310,6 +324,7 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val onBC = FluentBasedGoal.of(Fluents.onBC)
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val onFlooratAandBatCarm =
             FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
@@ -324,23 +339,23 @@ object BlockWorldDomain {
 
     object ObjectSets {
         val all = ObjectSet.of(
-            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.blocks to setOf(Values.a, Values.b, Values.c, Values.d),
             Types.locations to setOf(Values.floor, Values.arm),
             Types.numbers to setOf(Values.one, Values.two, Values.zero)
         )
         val objects = ObjectSet.of(
-            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.blocks to setOf(Values.a, Values.b, Values.c, Values.d),
             Types.locations to setOf(Values.floor, Values.arm)
         )
     }
 
     object Plans {
         val emptyPlan = Plan.of(emptyList())
-        val dummyPlan = Plan.of(listOf(Actions.pick, Actions.stack))
+        val basicPlan = Plan.of(listOf(Actions.pick, Actions.stack))
     }
 
     object Planners {
-        val dummyPlanner = Planner.strips()
+        val stripsPlanner = Planner.strips()
     }
 
     object Predicates {
@@ -351,6 +366,13 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val stackBC = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onBC
+        )
+
         val stackAny = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
@@ -427,10 +449,12 @@ object BlockWorldDomain {
             Fluents.atAFloor,
             Fluents.atBFloor,
             Fluents.atCFloor,
+            Fluents.atDFloor,
             Fluents.armEmpty,
             Fluents.clearA,
             Fluents.clearB,
-            Fluents.clearC
+            Fluents.clearC,
+            Fluents.clearD
         )
 
         val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
@@ -450,6 +474,7 @@ object BlockWorldDomain {
         val a = Object.of("a")
         val b = Object.of("b")
         val c = Object.of("c")
+        val d = Object.of("d")
 
         val floor = Object.of("floor")
         val arm = Object.of("arm")

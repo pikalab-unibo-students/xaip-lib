@@ -29,14 +29,14 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testPlanner() {
-        val generatedPlan = Planners.dummyPlanner.plan(Problems.stack).first()
+        val generatedPlan = Planners.stripsPlanner.plan(Problems.stack).first()
         val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))))
         generatedPlan shouldBe plan2check
     }
 
     @Test
     fun testStackAX() {
-        val plansGenerated1 = Planners.dummyPlanner.plan(Problems.stackAX)
+        val plansGenerated1 = Planners.stripsPlanner.plan(Problems.stackAX)
         val plan2check1 = listOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC))
@@ -47,7 +47,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testPickX() {
-        val plansGenerated2 = Planners.dummyPlanner.plan(Problems.pickX)
+        val plansGenerated2 = Planners.stripsPlanner.plan(Problems.pickX)
         val plan2check2 = listOf(
             Plan.of(listOf(pickA)),
             Plan.of(listOf(pickB)),
@@ -59,7 +59,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testPickXFloorY() {
-        val plansGenerated3 = Planners.dummyPlanner.plan(Problems.pickXfloorY)
+        val plansGenerated3 = Planners.stripsPlanner.plan(Problems.pickXfloorY)
         val plan2check2 = listOf(
             Plan.of(listOf(pickA)),
             Plan.of(listOf(pickB)),
@@ -71,7 +71,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackXY() {
-        val plansGenerated4 = Planners.dummyPlanner.plan(Problems.stackXY)
+        val plansGenerated4 = Planners.stripsPlanner.plan(Problems.stackXY)
         val plan2check4 = listOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
@@ -86,7 +86,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackXYpickW() {
-        val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW) // caso sfigato
+        val plansGenerated5 = Planners.stripsPlanner.plan(Problems.stackXYpickW) // caso sfigato
         val plan2check5 = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
@@ -103,7 +103,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testAxiomException() {
-        val plan = Planners.dummyPlanner.plan(Problems.axiomException)
+        val plan = Planners.stripsPlanner.plan(Problems.axiomException)
         val exception = shouldThrow<IllegalStateException> {
             plan.toSet().size shouldBe 0
         }
@@ -112,7 +112,7 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackABC() {
-        val plan = Planners.dummyPlanner.plan(Problems.stackABC)
+        val plan = Planners.stripsPlanner.plan(Problems.stackABC)
         println(plan.first().actions.toSet())
     }
 }

@@ -37,7 +37,7 @@ class ExplanationTest : AnnotationSpec() {
         println("predicate: " + predicate.name)
 
         fun newFluent(action: Action, predicate: Predicate): Fluent =
-            Fluent.positive(predicate, BlockWorldDomain.Values.a, BlockWorldDomain.Values.b)        // TODO(fixa sta roba con gli argomenti delle azioni)
+            Fluent.positive(predicate, BlockWorldDomain.Values.a, BlockWorldDomain.Values.b) // TODO(fixa sta roba con gli argomenti delle azioni)
 
         val fluent = newFluent(questionAddActionPlan.actionToAdd, predicate)
         println("fluent: $fluent")

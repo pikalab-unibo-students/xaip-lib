@@ -260,6 +260,13 @@ object BlockWorldDomain {
             types = setOf(Types.blocks, Types.locations),
             axioms = Axioms.axiom1
         )
+
+        val blockWorldWithoutIdempotentActions = Domain.of(
+            name = "block_world_without_idempotent_actions",
+            predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
+            actions = setOf(Actions.pick, Actions.stack),
+            types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
+        )
     }
 
     object Effects {
@@ -269,7 +276,6 @@ object BlockWorldDomain {
     }
 
     object Fluents {
-
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
@@ -337,7 +343,7 @@ object BlockWorldDomain {
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
         val onXYatW = FluentBasedGoal.of(Fluents.onXY, Fluents.atWArm) // caso sfigato
-        val onXYW = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
+        val onABC = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
     }
 
     object ObjectSets {
@@ -369,14 +375,6 @@ object BlockWorldDomain {
     }
 
     object Problems {
-        /*
-        val stackDXA = Problem.of(
-            domain = Domains.blockWorld,
-            objects = ObjectSets.all,
-            initialState = States.onDXA,
-            goal = Goals.onBC // TODO("cambia")
-        )
-*/
         val stackBC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
@@ -385,13 +383,13 @@ object BlockWorldDomain {
         )
 
         val stackAny = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
-        val stack = Problem.of(
+        val stackABatCarm = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
@@ -406,28 +404,28 @@ object BlockWorldDomain {
         )
 
         val stackAX = Problem.of(
-            domain = Domains.blockWorld,
-            objects = ObjectSets.all,
+            domain = Domains.blockWorldWithoutIdempotentActions,
+            objects = ObjectSets.objects,
             initialState = States.initial,
             goal = Goals.onAX
         )
 
         val pickX = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickX
         )
 
         val pickXfloorY = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickXfloorY
         )
 
         val stackXY = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXY
@@ -437,11 +435,11 @@ object BlockWorldDomain {
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onXYW
+            goal = Goals.onABC
         )
 
         val stackXYpickW = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXYatW
@@ -456,14 +454,7 @@ object BlockWorldDomain {
     }
 
     object States {
-        val onDXA = State.of(
-            Fluents.onDX,
-            Fluents.onXA,
-            Fluents.atAFloor,
-            Fluents.clearD,
 
-            Fluents.armEmpty
-        )
         val initial = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,

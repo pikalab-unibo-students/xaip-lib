@@ -304,7 +304,10 @@ object BlockWorldDomain {
         val onDB = Fluent.positive(Predicates.on, Values.d, Values.b)
         val onCD = Fluent.positive(Predicates.on, Values.c, Values.d)
         val onDC = Fluent.positive(Predicates.on, Values.d, Values.c)
-        val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
+
+        val onAX = Fluent.positive(Predicates.on, Values.a, Values.X)
+        val onDX = Fluent.positive(Predicates.on, Values.d, Values.X)
+        val onXA = Fluent.positive(Predicates.on, Values.X, Values.a)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
@@ -366,10 +369,18 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        /*
+        val stackDXA = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onDXA,
+            goal = Goals.onBC // TODO("cambia")
+        )
+*/
         val stackBC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.omBAonCB,
+            initialState = States.onBAonCB,
             goal = Goals.onBC
         )
 
@@ -445,6 +456,14 @@ object BlockWorldDomain {
     }
 
     object States {
+        val onDXA = State.of(
+            Fluents.onDX,
+            Fluents.onXA,
+            Fluents.atAFloor,
+            Fluents.clearD,
+
+            Fluents.armEmpty
+        )
         val initial = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,
@@ -461,7 +480,7 @@ object BlockWorldDomain {
         val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
         val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
 
-        val omBAonCB = State.of(Fluents.onBA, Fluents.onCD, Fluents.clearC, Fluents.clearB, Fluents.armEmpty, Fluents.atAFloor, Fluents.atDFloor)
+        val onBAonCB = State.of(Fluents.onBA, Fluents.onCD, Fluents.clearC, Fluents.clearB, Fluents.armEmpty, Fluents.atAFloor, Fluents.atDFloor)
     }
 
     object Types {

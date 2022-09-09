@@ -6,7 +6,8 @@ class ExplanationTest : AnnotationSpec() {
     /*
     1.“Why is action A used in the plan, rather than not being used?” //add action to a state
     2.“Why is action A not used in the plan, rather than being used?” //remove a specific grounded action
-    “Why is action A used, rather than action B?”
+    3. “Why is action A used, rather than action B?” // replacing action in a state
+
     “Why is action A used before/after action B (rather than after/before)?”
      */
     data class Question1(val actionToAdd: Action, val problem: Problem, val plan: Plan)
@@ -61,18 +62,18 @@ class ExplanationTest : AnnotationSpec() {
 
         println("Piani disponibili: " + BlockWorldDomain.Planners.stripsPlanner.plan(BlockWorldDomain.Problems.stackBC).toSet().size)
         fun newPredicated(action: Action): Predicate =
-            Predicate.of("has_done_unstack_" + action.name, action.parameters.values.toList())
+            Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
         val predicate = newPredicated(questionAddActionPlan.actionToAdd)
-        println("predicate: " + predicate.name)
+        println("new predicate: " + predicate.name)
 
-        fun newFluent(action: Action, predicate: Predicate): Fluent =
+        fun createNewFluent(action: Action, predicate: Predicate): Fluent =
             Fluent.positive(predicate, BlockWorldDomain.Values.a, BlockWorldDomain.Values.b) // TODO(fixa sta roba con gli argomenti delle azioni)
 
-        val fluent = newFluent(questionAddActionPlan.actionToAdd, predicate)
-        println("fluent: $fluent")
+        val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, predicate)
+        println("new fluent: $newFluent")
 
-        fun newAction(action: Action, fluent: Fluent) =
+        fun createNewAction(action: Action, fluent: Fluent) =
             Action.of(
                 name = action.name + "'",
                 parameters = action.parameters,
@@ -80,15 +81,15 @@ class ExplanationTest : AnnotationSpec() {
                 effects = mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
             )
 
-        val action = newAction(BlockWorldDomain.Actions.unstack, fluent)
-        println("action: $action")
+        val newAction = createNewAction(BlockWorldDomain.Actions.unstack, newFluent)
+        println("updated action: $newAction")
 
         val HDomain = Domain.of(
             name = questionAddActionPlan.problem.domain.name,
             predicates = mutableSetOf(predicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
-            actions = mutableSetOf(action).also {
+            actions = mutableSetOf(newAction).also {
                 questionAddActionPlan.problem.domain.actions.map { oldAction ->
-                    if (oldAction.name != action.name.filter { char -> char.isLetter() }) it.add(oldAction)
+                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) it.add(oldAction)
                 }
             },
             types = questionAddActionPlan.problem.domain.types
@@ -100,7 +101,7 @@ class ExplanationTest : AnnotationSpec() {
             domain = HDomain,
             objects = questionAddActionPlan.problem.objects,
             initialState = questionAddActionPlan.problem.initialState,
-            goal = FluentBasedGoal.of(mutableSetOf(fluent).also { it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets) })
+            goal = FluentBasedGoal.of(mutableSetOf(newFluent).also { it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets) })
         )
 
         val plan = questionAddActionPlan.plan
@@ -121,45 +122,45 @@ class ExplanationTest : AnnotationSpec() {
             Plan.of(emptyList()) // TODO("mettici il piano del test precedente")
         )
 
-        fun newPredicated(action: Action): Predicate =
-            Predicate.of("not_has_done_unstack_" + action.name, action.parameters.values.toList())
+        fun createNewPredicated(action: Action): Predicate =
+            Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())
 
-        val predicate = newPredicated(questionAddActionPlan.actionToAdd)
-        println("predicate: " + predicate.name)
+        val newPredicate = createNewPredicated(questionAddActionPlan.actionToAdd)
+        println("new predicate: " + newPredicate.name)
 
-        fun newFluent(action: Action, predicate: Predicate): Fluent =
+        fun createNewFluent(action: Action, predicate: Predicate): Fluent = // new predicate
             Fluent.positive(predicate, BlockWorldDomain.Values.a, BlockWorldDomain.Values.b) // TODO(fixa sta roba con gli argomenti delle azioni)
 
-        val fluent = newFluent(questionAddActionPlan.actionToAdd, predicate)
-        println("fluent: $fluent")
+        val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, newPredicate) // new predicate
+        println("new fluent: $newFluent")
 
-        fun newAction(action: Action, fluent: Fluent) =
+        fun createNewAction(action: Action, fluent: Fluent) = // extend action
             Action.of(
                 name = action.name + "'",
                 parameters = action.parameters,
                 preconditions = action.preconditions,
-                effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) }
+                effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) } // add new predicate as negative effect
             )
 
-        val action = newAction(BlockWorldDomain.Actions.unstack, fluent)
-        println("action: $action")
+        val newAction = createNewAction(BlockWorldDomain.Actions.unstack, newFluent) // new action
+        println("updated action: $newAction")
 
-        val HDomain = Domain.of(
+        val HDomain = Domain.of( // domain extended
             name = questionAddActionPlan.problem.domain.name,
-            predicates = mutableSetOf(predicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
-            actions = mutableSetOf(action).also {
+            predicates = mutableSetOf(newPredicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
+            actions = mutableSetOf(newAction).also {
                 questionAddActionPlan.problem.domain.actions.map { oldAction ->
-                    if (oldAction.name != action.name.filter { char -> char.isLetter() }) it.add(oldAction)
+                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) it.add(oldAction)
                 }
             },
             types = questionAddActionPlan.problem.domain.types
         )
 
-        val HProblem = Problem.of(
+        val HProblem = Problem.of( // problem extended
             domain = HDomain,
             objects = questionAddActionPlan.problem.objects,
-            initialState = State.of(mutableSetOf(fluent).also { it.addAll(questionAddActionPlan.problem.initialState.fluents) }),
-            goal = FluentBasedGoal.of(mutableSetOf(fluent).also { it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets) })
+            initialState = State.of(mutableSetOf(newFluent).also { it.addAll(questionAddActionPlan.problem.initialState.fluents) }), // extended
+            goal = FluentBasedGoal.of(mutableSetOf(newFluent).also { it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets) }) // extended
         )
 
         val plan = questionAddActionPlan.plan
@@ -171,4 +172,64 @@ class ExplanationTest : AnnotationSpec() {
         buildExplanation(plan, Hplan)
         comparePlans(plan, Hplan)
     }
+
+    @Test
+    fun testQuestion3() {
+        val questionAddActionPlan = Question1(
+            BlockWorldDomain.Actions.unstack,
+            BlockWorldDomain.Problems.stackBC,
+            Plan.of(emptyList()) // TODO("mettici il piano del test precedente")
+        )
+
+        fun createNewPredicated(action: Action): Predicate =
+            Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())
+
+        val newPredicate = createNewPredicated(questionAddActionPlan.actionToAdd)
+        println("new predicate: " + newPredicate.name)
+
+        fun createNewFluent(action: Action, predicate: Predicate): Fluent = // new predicate
+            Fluent.positive(predicate, BlockWorldDomain.Values.a, BlockWorldDomain.Values.b) // TODO(fixa sta roba con gli argomenti delle azioni)
+
+        val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, newPredicate) // new predicate
+        println("new fluent: $newFluent")
+
+        fun createNewAction(action: Action, fluent: Fluent) = // extend action
+            Action.of(
+                name = action.name + "'",
+                parameters = action.parameters,
+                preconditions = action.preconditions,
+                effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) } // add new predicate as negative effect
+            )
+
+        val newAction = createNewAction(BlockWorldDomain.Actions.unstack, newFluent) // new action
+        println("updated action: $newAction")
+
+        val HDomain = Domain.of( // domain extended
+            name = questionAddActionPlan.problem.domain.name,
+            predicates = mutableSetOf(newPredicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
+            actions = mutableSetOf(newAction).also {
+                questionAddActionPlan.problem.domain.actions.map { oldAction ->
+                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) it.add(oldAction)
+                }
+            },
+            types = questionAddActionPlan.problem.domain.types
+        )
+
+        val HProblem = Problem.of( // problem extended
+            domain = HDomain,
+            objects = questionAddActionPlan.problem.objects,
+            initialState = State.of(mutableSetOf(newFluent).also { it.addAll(questionAddActionPlan.problem.initialState.fluents) }), // extended
+            goal = FluentBasedGoal.of(mutableSetOf(newFluent).also { it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets) }) // extended
+        )
+
+        val plan = questionAddActionPlan.plan
+        val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).first()
+
+        println("plan:" + plan.actions.toList())
+        println("Hplan:" + Hplan.actions.toList())
+
+        buildExplanation(plan, Hplan)
+        comparePlans(plan, Hplan)
+    }
+
 }

@@ -358,7 +358,7 @@ object BlockWorldDomain {
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
-        val stack = Problem.of(
+        val stackABpickC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,

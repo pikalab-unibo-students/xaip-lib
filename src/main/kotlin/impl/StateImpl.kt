@@ -2,6 +2,7 @@ package impl
 
 import Action
 import Fluent
+import Operator
 import State
 import VariableAssignment
 import impl.res.toPddl
@@ -20,7 +21,7 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
         }
     }
 
-    override fun apply(action: Action): Sequence<State> =
+    override fun apply(action: Operator): Sequence<State> =
         mguForActionPreconditions(action).map { action.apply(it) }.map {
             val (addList, removeList) = it.getAddAndRemoveLists()
             val fluents = (fluents - removeList) + addList

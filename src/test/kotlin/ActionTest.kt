@@ -52,8 +52,8 @@ class ActionTest : AnnotationSpec() {
 
     @Test
     fun testApplyWorksAsExpected() {
-        actionNotEmpty.apply(substitution) shouldBe actionNotEmpty
-        actionNotEmpty.apply(substitution2) shouldBe action
+        Operator.of(actionNotEmpty).apply(substitution) shouldBe Operator.of(actionNotEmpty)
+        Operator.of(actionNotEmpty).apply(substitution2) shouldBe Operator.of(action)
     }
 
     @Test
@@ -70,36 +70,40 @@ class ActionTest : AnnotationSpec() {
 
     @Test
     fun testActionObjectVariableAssignmentX2XworksAsExpected() {
-        Actions.pick.apply(VariableAssignment.of(Values.X, Values.X)) shouldBe
-            Action.of(
-                "pick",
-                mapOf(
-                    Values.X to Types.blocks
-                ),
-                setOf(Fluents.armEmpty, Fluents.clearX),
-                setOf(
-                    Effect.of(Fluents.atXArm),
-                    Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearX),
-                    Effect.negative(Fluents.atXFloor)
+        Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.X)) shouldBe
+            Operator.of(
+                Action.of(
+                    "pick",
+                    mapOf(
+                        Values.X to Types.blocks
+                    ),
+                    setOf(Fluents.armEmpty, Fluents.clearX),
+                    setOf(
+                        Effect.of(Fluents.atXArm),
+                        Effect.negative(Fluents.armEmpty),
+                        Effect.negative(Fluents.clearX),
+                        Effect.negative(Fluents.atXFloor)
+                    )
                 )
             )
     }
 
     @Test
     fun testActionObjectVariableAssignmentX2YworksAsExpected() {
-        Actions.pick.apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
-            Action.of(
-                "pick",
-                mapOf(
-                    Values.X to Types.blocks
-                ),
-                setOf(Fluents.armEmpty, Fluents.clearY),
-                setOf(
-                    Effect.of(Fluents.atYArm),
-                    Effect.negative(Fluents.armEmpty),
-                    Effect.negative(Fluents.clearY),
-                    Effect.negative(Fluents.atYFloor)
+        Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
+            Operator.of(
+                Action.of(
+                    "pick",
+                    mapOf(
+                        Values.X to Types.blocks
+                    ),
+                    setOf(Fluents.armEmpty, Fluents.clearY),
+                    setOf(
+                        Effect.of(Fluents.atYArm),
+                        Effect.negative(Fluents.armEmpty),
+                        Effect.negative(Fluents.clearY),
+                        Effect.negative(Fluents.atYFloor)
+                    )
                 )
             )
     }

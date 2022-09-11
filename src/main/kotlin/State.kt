@@ -12,7 +12,7 @@ interface State {
      * Method that compute the application of an [Action] to the current [State].
      * @return a sequence of [State] reachable from the current one given the application of an [Action].
      */
-    fun apply(action: Action): Sequence<State>
+    fun apply(action: Operator): Sequence<State>
 
     /**
      * Method that checks if an [Action] can be applied to the current [State].

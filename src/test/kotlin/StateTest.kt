@@ -11,15 +11,15 @@ import resources.domain.BlockWorldDomain.States
 class StateTest : AnnotationSpec() {
 
     private lateinit var state: State
-    private lateinit var applicableAction: Action
-    private lateinit var nonApplicableAction: Action
+    private lateinit var applicableAction: Operator
+    private lateinit var nonApplicableAction: Operator
     private lateinit var destinationStates: Set<State>
 
     @BeforeEach
     fun init() {
         state = States.initial
-        applicableAction = Actions.pick
-        nonApplicableAction = Actions.stack
+        applicableAction = Operator.of(Actions.pick)
+        nonApplicableAction = Operator.of(Actions.stack)
         destinationStates = setOf(States.atAArm, States.atBArm, States.atCArm)
     }
 
@@ -61,7 +61,7 @@ class StateTest : AnnotationSpec() {
 
     @Test
     fun testStateObjectAtAArmApplyWorksAsExpected() {
-        States.initial.apply(Actions.pick).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))
+        States.initial.apply(Operator.of(Actions.pick)).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))
     }
 
     @Test

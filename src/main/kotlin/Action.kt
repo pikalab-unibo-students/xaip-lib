@@ -8,7 +8,7 @@ import impl.ActionImpl
  * @property preconditions: is a goal description that must be satisfied before the action is applied.
  * @property effects: describe the effects of the action.
  * */
-interface Action : Applicable<Action> {
+interface Action /*: Applicable<Action>*/ {
     val name: String
     val parameters: Map<Variable, Type>
     val preconditions: Set<Fluent>

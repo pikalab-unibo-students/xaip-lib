@@ -8,15 +8,15 @@ import resources.domain.BlockWorldDomain.Problems
 import resources.domain.BlockWorldDomain.Values
 
 class StripsPlannerTest : AnnotationSpec() {
-    private val pickA = Actions.pick.apply(VariableAssignment.of(Values.X, Values.a))
-    private val pickB = Actions.pick.apply(VariableAssignment.of(Values.X, Values.b))
-    private val pickC = Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))
-    private var stackAB = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
-    private var stackAC = Actions.stack.apply(VariableAssignment.of(Values.X, Values.a))
-    private var stackBA = Actions.stack.apply(VariableAssignment.of(Values.X, Values.b))
-    private var stackBC = Actions.stack.apply(VariableAssignment.of(Values.X, Values.b))
-    private var stackCB = Actions.stack.apply(VariableAssignment.of(Values.X, Values.c))
-    private var stackCA = Actions.stack.apply(VariableAssignment.of(Values.X, Values.c))
+    private val pickA = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.a))
+    private val pickB = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.b))
+    private val pickC = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.c))
+    private var stackAB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
+    private var stackAC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
+    private var stackBA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
+    private var stackBC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
+    private var stackCB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
+    private var stackCA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
 
     init {
         stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
@@ -28,33 +28,35 @@ class StripsPlannerTest : AnnotationSpec() {
     }
 
     @Test
-    fun testPlanner() {
-        val generatedPlan = Planners.dummyPlanner.plan(Problems.stack).first()
-        val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))))
-        generatedPlan shouldBe plan2check
+    fun testStackABpickC() {
+        val plans = Planners.dummyPlanner.plan(Problems.stackABpickC).toSet()
+        val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC)))
+        plans.size shouldBe 3
+        plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
     fun testStackAX() {
-        val plansGenerated1 = Planners.dummyPlanner.plan(Problems.stackAX)
-        val plan2check1 = listOf(
+        val plans = Planners.dummyPlanner.plan(Problems.stackAX).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC))
         )
-        plansGenerated1.toSet().size shouldBe 2
-        plansGenerated1.toSet() shouldBe plan2check1.toSet()
+        plans.toSet().size shouldBe 2
+        plans shouldBe plan2check
     }
 
     @Test
     fun testPickX() {
-        val plansGenerated2 = Planners.dummyPlanner.plan(Problems.pickX)
-        val plan2check2 = listOf(
+        val plans = Planners.dummyPlanner.plan(Problems.pickX).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA)),
             Plan.of(listOf(pickB)),
             Plan.of(listOf(pickC))
         )
-        plansGenerated2.toSet().size shouldBe 3
-        plansGenerated2.toSet() shouldBe plan2check2.toSet()
+        plans.size shouldBe 3
+        plans shouldBe plan2check
     }
 
     @Test
@@ -71,8 +73,8 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackXY() {
-        val plansGenerated4 = Planners.dummyPlanner.plan(Problems.stackXY)
-        val plan2check4 = listOf(
+        val plans = Planners.dummyPlanner.plan(Problems.stackXY).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
             Plan.of(listOf(pickB, stackBA)),
@@ -80,14 +82,14 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickC, stackCB)),
             Plan.of(listOf(pickC, stackCA))
         )
-        plansGenerated4.toSet().size shouldBe 6
-        plansGenerated4.toSet() shouldBe plan2check4.toSet()
+        plans.size shouldBe 6
+        plans shouldBe plan2check
     }
 
     @Test
     fun testStackXYpickW() {
-        val plansGenerated5 = Planners.dummyPlanner.plan(Problems.stackXYpickW) // caso sfigato
-        val plan2check5 = setOf(
+        val plans = Planners.dummyPlanner.plan(Problems.stackXYpickW).toSet() // caso sfigato
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
 
@@ -97,8 +99,9 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickC, stackCA)),
             Plan.of(listOf(pickC, stackCB))
         )
-        plansGenerated5.toSet().size shouldBe 6
-        plansGenerated5.toSet() shouldBe plan2check5
+        plans.size shouldBe 6
+        plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -112,7 +115,11 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackABC() {
-        val plan = Planners.dummyPlanner.plan(Problems.stackABC)
-        println(plan.first().actions.toSet())
+        val plans = Planners.dummyPlanner.plan(Problems.stackABC).toSet()
+        val plan2check = setOf(
+            Plan.of(listOf(pickA, stackAB, pickC, stackCA))
+        )
+        plans.size shouldBe 1
+        plans shouldBe plan2check
     }
 }

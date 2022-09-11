@@ -3,6 +3,7 @@ package impl
 import Action
 import Fluent
 import FluentBasedGoal
+import Operator
 import Plan
 import Planner
 import Problem
@@ -50,7 +51,7 @@ internal class StripsPlanner : Planner {
                         (head is FluentBasedGoal) -> {
                             stack.addAll(head.targets)
                         }
-                        (head is Action) -> { // applicare l'azione a currentState e aggiornarlo"
+                        (head is Operator) -> { // applicare l'azione a currentState e aggiornarlo"
                             if (handleAction(head)) return@sequence
                         }
                         else -> {

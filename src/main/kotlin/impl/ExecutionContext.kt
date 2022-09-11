@@ -5,6 +5,7 @@ import Applicable
 import Effect
 import Fluent
 import FluentBasedGoal
+import Operator
 import State
 import VariableAssignment
 import java.util.*
@@ -31,7 +32,7 @@ internal data class ExecutionContext(
         }
     }
 
-    private fun Set<Action>.`actions whose effects match head`(head: Effect) =
+    private fun Set<Operator>.`actions whose effects match head`(head: Effect) =
         map { it.refresh() }.filter { action ->
             action.positiveEffects.any { effect ->
                 effect.match(head)
@@ -43,7 +44,7 @@ internal data class ExecutionContext(
             is VariableAssignment -> {
                 this.apply(elem)
             }
-            is Action -> {
+            is Operator -> {
                 this.push(elem)
                 this.addAll(elem.preconditions)
             }
@@ -67,7 +68,7 @@ internal data class ExecutionContext(
                 is VariableAssignment -> {
                     stackCopy.apply(elem)
                 }
-                is Action -> {
+                is Operator -> {
                     stackCopy.push(elem)
                     stackCopy.addAll((elem).preconditions)
                 }
@@ -81,7 +82,7 @@ internal data class ExecutionContext(
         }
     }
 
-    fun handleAction(head: Action): Boolean {
+    fun handleAction(head: Operator): Boolean {
         val states = currentState.apply(head).toList()
         if (states.isNotEmpty()) {
             currentState = states.first()
@@ -108,20 +109,20 @@ internal data class ExecutionContext(
         return true
     }
 
-    private fun Action.`precondition of this match with the effects of the 2nd action`
-    (action: Action): Boolean =
+    private fun Operator.`precondition of this match with the effects of the 2nd action`
+    (action: Operator): Boolean =
         this.preconditions.all { precondition ->
             action.positiveEffects.any { positiveEffect ->
                 positiveEffect.fluent.match(precondition)
             }
         }
 
-    private fun Action.isIdempotent(action: Action): Boolean =
+    private fun Operator.isIdempotent(action: Operator): Boolean =
         // this.parameters == action.parameters &&
         this.`precondition of this match with the effects of the 2nd action`(action) &&
             action.`precondition of this match with the effects of the 2nd action`(this)
 
-    private fun MutableList<Action>.removeIdempotentActions(action: Action) {
+    private fun MutableList<Operator>.removeIdempotentActions(action: Operator) {
         this.filter { it.isIdempotent(action) }
             .also { actionsDoubledFiltered ->
                 if (actionsDoubledFiltered.isNotEmpty()) {
@@ -137,10 +138,12 @@ internal data class ExecutionContext(
         actions: Set<Action>
     ) {
         val h = Effect.of(head)
-        val actionsMatched = actions.`actions whose effects match head`(h).toMutableList()
+
+        val actionsMatched = actions.map { Operator.of(it) }.toSet().`actions whose effects match head`(h).toMutableList()
+
         if (stack.isNotEmpty()) {
             when (val stackHead = stack.peek()) {
-                is Action -> {
+                is Operator -> {
                     actionsMatched.removeIdempotentActions(stackHead)
                 }
             }

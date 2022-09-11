@@ -139,7 +139,10 @@ internal data class ExecutionContext(
     ) {
         val h = Effect.of(head)
 
-        val actionsMatched = actions.map { Operator.of(it) }.toSet().`actions whose effects match head`(h).toMutableList()
+        val actionsMatched = actions.map { Operator.of(it) }
+            .toSet()
+            .`actions whose effects match head`(h)
+            .toMutableList()
 
         if (stack.isNotEmpty()) {
             when (val stackHead = stack.peek()) {

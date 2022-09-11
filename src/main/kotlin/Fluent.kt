@@ -1,7 +1,7 @@
 import impl.FluentImpl
 
 /**
- * A [Fluent] represents a predicate ([instanceOf]) at runtime.
+ * A [Fluent] represents a [Predicate] ([instanceOf]) at runtime.
  * It states its truthiness/falseness.
  */
 interface Fluent : Applicable<Fluent>, Expression {

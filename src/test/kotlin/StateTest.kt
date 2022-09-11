@@ -61,7 +61,8 @@ class StateTest : AnnotationSpec() {
 
     @Test
     fun testStateObjectAtAArmApplyWorksAsExpected() {
-        States.initial.apply(Operator.of(Actions.pick)).toSet() shouldBe (setOf(States.atAArm, States.atCArm, States.atBArm))
+        States.initial.apply(Operator.of(Actions.pick)).toSet() shouldBe
+            setOf(States.atAArm, States.atCArm, States.atBArm)
     }
 
     @Test

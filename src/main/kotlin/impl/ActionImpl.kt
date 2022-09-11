@@ -4,16 +4,13 @@ import Action
 import Effect
 import Fluent
 import Type
-import Value
 import Variable
-import VariableAssignment
-import it.unibo.tuprolog.core.Scope
 
 internal data class ActionImpl(
     override val name: String,
     override val parameters: Map<Variable, Type>,
     override val preconditions: Set<Fluent>,
-    override val effects: Set<Effect>,
+    override val effects: Set<Effect>
     // private val args: List<Value> = parameters.keys.toList()
 ) : Action {
 /*

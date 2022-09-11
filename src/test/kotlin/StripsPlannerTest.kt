@@ -43,8 +43,9 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC))
         )
-        plans.toSet().size shouldBe 2
+        plans.size shouldBe 2
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test

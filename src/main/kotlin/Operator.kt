@@ -16,10 +16,7 @@ interface Operator : Applicable<Operator>, Action {
             action.name,
             action.parameters,
             action.preconditions,
-            action.effects,
-            action.positiveEffects,
-            action.negativeEffects,
-            action.parameters.keys.toList()
+            action.effects
         )
     }
 }

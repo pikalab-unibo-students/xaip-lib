@@ -12,7 +12,7 @@ import java.util.*
 internal data class ExecutionContext(
     var currentState: State,
     var stack: Stack<Applicable<*>>,
-    var maxDepth: Int,
+    val maxDepth: Int,
     var choicePoints: Deque<ChoicePoint> = LinkedList(),
     var plan: MutableList<Action> = mutableListOf()
 ) {
@@ -22,6 +22,9 @@ internal data class ExecutionContext(
         goal: FluentBasedGoal,
         maxDepth: Int
     ) : this(currentState, Stack<Applicable<*>>().also { it.add(goal) }, maxDepth)
+
+    val depth: Int
+        get() = stack.filterIsInstance<Action>().count()
 
     private fun Stack<Applicable<*>>.apply(substitution: VariableAssignment) {
         val iterator = listIterator()
@@ -98,19 +101,22 @@ internal data class ExecutionContext(
     }
 
     fun backtrackOrFail(): Boolean {
-        if (!choicePoints.isEmpty()) {
+        while (choicePoints.isNotEmpty()) {
             val choicePoint = choicePoints.pollFirst()
             stack = choicePoint.stack
             currentState = choicePoint.state
             plan = choicePoint.plan
-            return false
+            if (depth <= maxDepth) {
+                return false
+            }
         }
         return true
     }
+
     fun handleFluentNotInCurrentState(
         head: Fluent,
         actions: Set<Action>
-    ) {
+    ): Boolean {
         val h = Effect.of(head)
         val actionsMatched = actions.`actions whose effects match head`(h)
         val action = actionsMatched.first()
@@ -120,5 +126,18 @@ internal data class ExecutionContext(
         val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
         choicePoints.update(effectsMatched, stack, currentState, plan, h)
         stack.update(effectsMatched.first(), h)
+
+        return depth > maxDepth && backtrackOrFail()
     }
+
+    override fun toString(): String =
+        """${ExecutionContext::class.simpleName}(
+            |  ${ExecutionContext::currentState.name}=${currentState},
+            |  ${ExecutionContext::currentState.name}.hash=${currentState.hashCode()},
+            |  ${ExecutionContext::stack.name}=${stack.asReversed()},
+            |  ${ExecutionContext::depth.name}=${depth}/${maxDepth},
+            |  ${ExecutionContext::plan.name}=${plan},
+            |  ${ExecutionContext::choicePoints.name}=${choicePoints.toString().replace("\n", "\n  ")}
+            |)
+        """.trimMargin()
 }

@@ -152,6 +152,6 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackABC() {
         val plan = Planners.stripsPlanner.plan(Problems.stackABC)
-        println(plan.first().actions.toSet())
+        println(plan.toSet())
     }
 }

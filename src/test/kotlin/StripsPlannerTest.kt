@@ -31,7 +31,8 @@ class StripsPlannerTest : AnnotationSpec() {
     fun testStackABpickC() {
         val plans = Planners.dummyPlanner.plan(Problems.stackABpickC).toSet()
         val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC)))
-        plans.size shouldBe 3
+        println(plans)
+        plans.size shouldBe 1
         plans shouldBe plan2check
         println(plans)
     }

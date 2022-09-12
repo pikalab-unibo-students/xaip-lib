@@ -312,7 +312,7 @@ object BlockWorldDomain {
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val onFlooratAandBatCarm =
-            FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
+            FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)

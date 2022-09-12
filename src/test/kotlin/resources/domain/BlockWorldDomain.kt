@@ -478,7 +478,8 @@ object BlockWorldDomain {
             Fluents.clearB,
             Fluents.armEmpty,
             Fluents.atAFloor,
-            Fluents.atDFloor)
+            Fluents.atDFloor
+        )
     }
 
     object Types {

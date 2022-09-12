@@ -29,6 +29,7 @@ object BlockWorldDomain {
         Object.of("a"),
         Object.of("b"),
         Object.of("c"),
+        Object.of("d"),
         Object.of("floor"),
         Object.of("arm"),
         Object.of(0),
@@ -134,16 +135,18 @@ object BlockWorldDomain {
     object ProblemsDSL {
         val problemOnAB = problem(Domains.blockWorld) {
             objects {
-                +"blocks"("a", "b")
+                +"blocks"("a", "b", "c", "d")
             }
             initialState {
                 +"at"("a", "floor")
                 +"at"("b", "floor")
                 +"at"("c", "floor")
+                +"at"("d", "floor")
                 +"arm_empty"()
                 +"clear"("a")
                 +"clear"("b")
                 +"clear"("c")
+                +"clear"("d")
             }
             goals {
                 +"on"("a", "b")
@@ -260,6 +263,13 @@ object BlockWorldDomain {
             types = setOf(Types.blocks, Types.locations),
             axioms = Axioms.axiom1
         )
+
+        val blockWorldWithoutIdempotentActions = Domain.of(
+            name = "block_world_without_idempotent_actions",
+            predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
+            actions = setOf(Actions.pick, Actions.stack),
+            types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
+        )
     }
 
     object Effects {
@@ -272,10 +282,12 @@ object BlockWorldDomain {
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
+        val atDFloor = Fluent.positive(Predicates.at, Values.d, Values.floor)
 
         val atAArm = Fluent.positive(Predicates.at, Values.a, Values.arm)
         val atBArm = Fluent.positive(Predicates.at, Values.b, Values.arm)
         val atCArm = Fluent.positive(Predicates.at, Values.c, Values.arm)
+        val atDArm = Fluent.positive(Predicates.at, Values.d, Values.arm)
 
         val atXFloor = Fluent.positive(Predicates.at, Values.X, Values.floor)
         val atXArm = Fluent.positive(Predicates.at, Values.X, Values.arm)
@@ -290,12 +302,26 @@ object BlockWorldDomain {
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
+        val onBA = Fluent.positive(Predicates.on, Values.b, Values.a)
+        val onAC = Fluent.positive(Predicates.on, Values.a, Values.c)
         val onCA = Fluent.positive(Predicates.on, Values.c, Values.a)
-        val onAX = Fluent.positive(Predicates.on, Values.a, Values.W)
+        val onAD = Fluent.positive(Predicates.on, Values.a, Values.d)
+        val onDA = Fluent.positive(Predicates.on, Values.d, Values.a)
+        val onBC = Fluent.positive(Predicates.on, Values.b, Values.c)
+        val onCB = Fluent.positive(Predicates.on, Values.c, Values.b)
+        val onBD = Fluent.positive(Predicates.on, Values.b, Values.d)
+        val onDB = Fluent.positive(Predicates.on, Values.d, Values.b)
+        val onCD = Fluent.positive(Predicates.on, Values.c, Values.d)
+        val onDC = Fluent.positive(Predicates.on, Values.d, Values.c)
+
+        val onAX = Fluent.positive(Predicates.on, Values.a, Values.X)
+        val onDX = Fluent.positive(Predicates.on, Values.d, Values.X)
+        val onXA = Fluent.positive(Predicates.on, Values.X, Values.a)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
         val clearC = Fluent.positive(Predicates.clear, Values.c)
+        val clearD = Fluent.positive(Predicates.clear, Values.d)
         val clearX = Fluent.positive(Predicates.clear, Values.X)
         val clearY = Fluent.positive(Predicates.clear, Values.Y)
         val clearZ = Fluent.positive(Predicates.clear, Values.Z)
@@ -310,6 +336,7 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val onBC = FluentBasedGoal.of(Fluents.onBC)
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val onFlooratAandBatCarm =
             FluentBasedGoal.of(Fluents.atCArm, Fluents.atBFloor, Fluents.atAFloor)
@@ -319,28 +346,28 @@ object BlockWorldDomain {
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
         val onXYatW = FluentBasedGoal.of(Fluents.onXY, Fluents.atWArm) // caso sfigato
-        val onXYW = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
+        val onABC = FluentBasedGoal.of(Fluents.onCA, Fluents.onAB)
     }
 
     object ObjectSets {
         val all = ObjectSet.of(
-            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.blocks to setOf(Values.a, Values.b, Values.c, Values.d),
             Types.locations to setOf(Values.floor, Values.arm),
             Types.numbers to setOf(Values.one, Values.two, Values.zero)
         )
         val objects = ObjectSet.of(
-            Types.blocks to setOf(Values.a, Values.b, Values.c),
+            Types.blocks to setOf(Values.a, Values.b, Values.c, Values.d),
             Types.locations to setOf(Values.floor, Values.arm)
         )
     }
 
     object Plans {
         val emptyPlan = Plan.of(emptyList())
-        val dummyPlan = Plan.of(listOf(Actions.pick, Actions.stack))
+        val basicPlan = Plan.of(listOf(Actions.pick, Actions.stack))
     }
 
     object Planners {
-        val dummyPlanner = Planner.strips()
+        val stripsPlanner = Planner.strips()
     }
 
     object Predicates {
@@ -351,6 +378,13 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val stackBC = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onBAonCB,
+            goal = Goals.onBC
+        )
+
         val stackAny = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
@@ -358,7 +392,7 @@ object BlockWorldDomain {
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
-        val stack = Problem.of(
+        val pickC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
@@ -373,42 +407,42 @@ object BlockWorldDomain {
         )
 
         val stackAX = Problem.of(
-            domain = Domains.blockWorld,
-            objects = ObjectSets.all,
+            domain = Domains.blockWorldWithoutIdempotentActions,
+            objects = ObjectSets.objects,
             initialState = States.initial,
             goal = Goals.onAX
         )
 
         val pickX = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickX
         )
 
         val pickXfloorY = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickXfloorY
         )
 
         val stackXY = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXY
         )
 
-        val stackABC = Problem.of(
+        val stackCAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onXYW
+            goal = Goals.onABC
         )
 
         val stackXYpickW = Problem.of(
-            domain = Domains.blockWorld,
+            domain = Domains.blockWorldWithoutIdempotentActions,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXYatW
@@ -427,15 +461,60 @@ object BlockWorldDomain {
             Fluents.atAFloor,
             Fluents.atBFloor,
             Fluents.atCFloor,
+            Fluents.atDFloor,
             Fluents.armEmpty,
+            Fluents.clearA,
+            Fluents.clearB,
+            Fluents.clearC,
+            Fluents.clearD
+        )
+
+        val atAArm = State.of(
+            Fluents.atAArm,
+            Fluents.atBFloor,
+            Fluents.atCFloor,
+            Fluents.atDFloor,
+            Fluents.clearB,
+            Fluents.clearC,
+            Fluents.clearD
+        )
+        val atBArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atBArm,
+            Fluents.atCFloor,
+            Fluents.atDFloor,
+            Fluents.clearA,
+            Fluents.clearC,
+            Fluents.clearD
+        )
+        val atCArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atBFloor,
+            Fluents.atCArm,
+            Fluents.atDFloor,
+            Fluents.clearA,
+            Fluents.clearB,
+            Fluents.clearD
+        )
+        val atDArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atCFloor,
+            Fluents.atBFloor,
+            Fluents.atDArm,
             Fluents.clearA,
             Fluents.clearB,
             Fluents.clearC
         )
 
-        val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
-        val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
-        val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
+        val onBAonCB = State.of(
+            Fluents.onBA,
+            Fluents.onCD,
+            Fluents.clearC,
+            Fluents.clearB,
+            Fluents.armEmpty,
+            Fluents.atAFloor,
+            Fluents.atDFloor
+        )
     }
 
     object Types {
@@ -450,6 +529,7 @@ object BlockWorldDomain {
         val a = Object.of("a")
         val b = Object.of("b")
         val c = Object.of("c")
+        val d = Object.of("d")
 
         val floor = Object.of("floor")
         val arm = Object.of("arm")

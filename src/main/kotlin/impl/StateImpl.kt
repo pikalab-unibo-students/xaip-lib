@@ -10,6 +10,8 @@ import it.unibo.tuprolog.core.Fact
 import it.unibo.tuprolog.core.Tuple
 import it.unibo.tuprolog.solve.Solution
 import it.unibo.tuprolog.solve.Solver
+import it.unibo.tuprolog.solve.flags.FlagStore
+import it.unibo.tuprolog.solve.flags.Unknown
 import it.unibo.tuprolog.theory.Theory
 
 internal data class StateImpl(override val fluents: Set<Fluent>) : State {
@@ -46,8 +48,10 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
     private fun mguForActionPreconditions(action: Action): Sequence<VariableAssignment> {
         val stateAsTheory = Theory.of(fluents.map { it.toTerm() }.map { Fact.of(it) })
         val preconditionsAsQuery = Tuple.of(action.preconditions.map { it.toTerm() })
-        return Solver.prolog.solverOf(stateAsTheory)
-            .solve(preconditionsAsQuery)
+        return Solver.prolog.solverOf(
+            staticKb = stateAsTheory,
+            flags = FlagStore.DEFAULT + (Unknown.name to Unknown.FAIL)
+        ).solve(preconditionsAsQuery)
             .filterIsInstance<Solution.Yes>()
             .map { it.substitution.toPddl() }
     }

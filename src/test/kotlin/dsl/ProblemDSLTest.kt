@@ -95,17 +95,19 @@ class ProblemDSLTest : AnnotationSpec() {
 
     private val problemDSL = problem(domainDSL) {
         objects {
-            +"blocks"("a", "b", "c")
+            +"blocks"("a", "b", "c", "d")
             +"locations"("floor", "arm")
         }
         initialState {
             +"at"("a", "floor")
             +"at"("b", "floor")
             +"at"("c", "floor")
+            +"at"("d", "floor")
             +"arm_empty"
             +"clear"("a")
             +"clear"("b")
             +"clear"("c")
+            +"clear"("d")
         }
         goals {
             +"at"("b", "floor")
@@ -122,15 +124,15 @@ class ProblemDSLTest : AnnotationSpec() {
 
     @Test
     fun test() {
-        Planners.dummyPlanner.plan(Problems.stackAB)
+        Planners.stripsPlanner.plan(Problems.stackAB)
     }
     @Test
     fun testPlanner() {
-        Planners.dummyPlanner.plan(problemDSL).toSet().size shouldBe 1
-        Planners.dummyPlanner.plan(problemDSL).first().actions.toSet().size shouldBe 2
-        Planners.dummyPlanner.plan(problemDSL).first().actions.first().name shouldBe
-            Planners.dummyPlanner.plan(Problems.stackAB).first().actions.first().name
-        Planners.dummyPlanner.plan(problemDSL).first().actions.last().name shouldBe
-            Planners.dummyPlanner.plan(Problems.stackAB).first().actions.last().name
+        Planners.stripsPlanner.plan(problemDSL).toSet().size shouldBe 1
+        Planners.stripsPlanner.plan(problemDSL).first().actions.toSet().size shouldBe 2
+        Planners.stripsPlanner.plan(problemDSL).first().actions.first().name shouldBe
+            Planners.stripsPlanner.plan(Problems.stackAB).first().actions.first().name
+        Planners.stripsPlanner.plan(problemDSL).first().actions.last().name shouldBe
+            Planners.stripsPlanner.plan(Problems.stackAB).first().actions.last().name
     }
 }

@@ -15,10 +15,10 @@ internal data class ChoicePoint(
 
     override fun toString(): String =
         """${ChoicePoint::class.simpleName}(
-            |  ${ChoicePoint::state.name}=${state},
+            |  ${ChoicePoint::state.name}=$state,
             |  ${ChoicePoint::state.name}.hash=${state.hashCode()},
             |  ${ChoicePoint::stack.name}=${stack.asReversed()},
-            |  ${ChoicePoint::plan.name}=${plan}
+            |  ${ChoicePoint::plan.name}=$plan
             |)
         """.trimMargin()
 }

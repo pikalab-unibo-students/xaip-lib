@@ -132,11 +132,11 @@ internal data class ExecutionContext(
 
     override fun toString(): String =
         """${ExecutionContext::class.simpleName}(
-            |  ${ExecutionContext::currentState.name}=${currentState},
+            |  ${ExecutionContext::currentState.name}=$currentState,
             |  ${ExecutionContext::currentState.name}.hash=${currentState.hashCode()},
             |  ${ExecutionContext::stack.name}=${stack.asReversed()},
-            |  ${ExecutionContext::depth.name}=${depth}/${maxDepth},
-            |  ${ExecutionContext::plan.name}=${plan},
+            |  ${ExecutionContext::depth.name}=$depth/$maxDepth,
+            |  ${ExecutionContext::plan.name}=$plan,
             |  ${ExecutionContext::choicePoints.name}=${choicePoints.toString().replace("\n", "\n  ")}
             |)
         """.trimMargin()

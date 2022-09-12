@@ -95,17 +95,19 @@ class ProblemDSLTest : AnnotationSpec() {
 
     private val problemDSL = problem(domainDSL) {
         objects {
-            +"blocks"("a", "b", "c")
+            +"blocks"("a", "b", "c", "d")
             +"locations"("floor", "arm")
         }
         initialState {
             +"at"("a", "floor")
             +"at"("b", "floor")
             +"at"("c", "floor")
+            +"at"("d", "floor")
             +"arm_empty"
             +"clear"("a")
             +"clear"("b")
             +"clear"("c")
+            +"clear"("d")
         }
         goals {
             +"at"("b", "floor")

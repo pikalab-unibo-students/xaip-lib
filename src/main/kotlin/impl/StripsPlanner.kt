@@ -55,9 +55,7 @@ internal class StripsPlanner : Planner {
                         head is Fluent -> { // "applica la sostituzione a tutto lo stack"
                             if (currentState.fluents.any { it.match(head) }) {
                                 handleFluentInCurrentState(head)
-                            } else if (handleFluentNotInCurrentState(head, actions)) {
-                                 return@sequence
-                            }
+                            } else if (handleFluentNotInCurrentState(head, actions)) return@sequence
                         }
                         (head is FluentBasedGoal) -> {
                             stack.addAll(head.targets)

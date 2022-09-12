@@ -29,6 +29,7 @@ object BlockWorldDomain {
         Object.of("a"),
         Object.of("b"),
         Object.of("c"),
+        Object.of("d"),
         Object.of("floor"),
         Object.of("arm"),
         Object.of(0),
@@ -134,16 +135,18 @@ object BlockWorldDomain {
     object ProblemsDSL {
         val problemOnAB = problem(Domains.blockWorld) {
             objects {
-                +"blocks"("a", "b")
+                +"blocks"("a", "b", "c", "d")
             }
             initialState {
                 +"at"("a", "floor")
                 +"at"("b", "floor")
                 +"at"("c", "floor")
+                +"at"("d", "floor")
                 +"arm_empty"()
                 +"clear"("a")
                 +"clear"("b")
                 +"clear"("c")
+                +"clear"("d")
             }
             goals {
                 +"on"("a", "b")
@@ -383,7 +386,7 @@ object BlockWorldDomain {
         )
 
         val stackAny = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atXArmAndAtYFloorAndOnWZ
@@ -454,7 +457,6 @@ object BlockWorldDomain {
     }
 
     object States {
-
         val initial = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,
@@ -467,9 +469,42 @@ object BlockWorldDomain {
             Fluents.clearD
         )
 
-        val atAArm = State.of(Fluents.atAArm, Fluents.atBFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearC)
-        val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
-        val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
+        val atAArm = State.of(
+            Fluents.atAArm,
+            Fluents.atBFloor,
+            Fluents.atCFloor,
+            Fluents.atDFloor,
+            Fluents.clearB,
+            Fluents.clearC,
+            Fluents.clearD
+        )
+        val atBArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atBArm,
+            Fluents.atCFloor,
+            Fluents.atDFloor,
+            Fluents.clearA,
+            Fluents.clearC,
+            Fluents.clearD
+        )
+        val atCArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atBFloor,
+            Fluents.atCArm,
+            Fluents.atDFloor,
+            Fluents.clearA,
+            Fluents.clearB,
+            Fluents.clearD
+        )
+        val atDArm = State.of(
+            Fluents.atAFloor,
+            Fluents.atCFloor,
+            Fluents.atBFloor,
+            Fluents.atDArm,
+            Fluents.clearA,
+            Fluents.clearB,
+            Fluents.clearC
+        )
 
         val onBAonCB = State.of(
             Fluents.onBA,

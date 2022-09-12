@@ -21,8 +21,7 @@ internal data class ActionImpl(
         map { it.toString() }.sorted().joinToString(", ", "$functor(", ")")
 
     override fun toString(): String = "action($name, " +
-            "${preconditions.pretty("if")}, " +
-            "${positiveEffects.map { it.fluent }.pretty("addList")}, " +
-            "${negativeEffects.map { it.fluent }.pretty("removeList")})"
-
+        "${preconditions.pretty("if")}, " +
+        "${positiveEffects.map { it.fluent }.pretty("addList")}, " +
+        "${negativeEffects.map { it.fluent }.pretty("removeList")})"
 }

@@ -36,7 +36,12 @@ object TestUtils {
     val axiomNotEmpty = Axiom.of(mapOf(variableNotEmpty to type1), fluentNotEmpty, fluentNotEmpty)
 
     val actionEmpty = Action.of("", emptyMap(), emptySet(), emptySet())
-    var actionNotEmpty = Action.of(name, mapOf(variableNotEmpty to type1), setOf(fluentNotEmpty), setOf(effectNotEmpty))
+    var actionNotEmpty = Action.of(
+        name,
+        mapOf(variableNotEmpty to type1),
+        setOf(fluentNotEmpty),
+        setOf(effectNotEmpty)
+    )
 
     val domainEmpty = Domain.of("", emptySet(), emptySet(), emptySet())
     val domainNotEmpty =

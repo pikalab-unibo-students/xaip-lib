@@ -7,7 +7,7 @@ import resources.domain.GraphDomain.Actions
 class GraphDomainTest : AnnotationSpec() {
     @Test
     fun robotFromLoc1ToLoc2() {
-        val plans1 = BlockWorldDomain.Planners.dummyPlanner.plan(GraphDomain.Problems.robotFromLoc1ToLoc2)
+        val plans1 = BlockWorldDomain.Planners.stripsPlanner.plan(GraphDomain.Problems.robotFromLoc1ToLoc2)
         plans1.toSet().size shouldBe 1
         println(plans1.toSet())
         plans1.toSet().first().actions.first().name shouldBe Actions.move.name
@@ -15,7 +15,7 @@ class GraphDomainTest : AnnotationSpec() {
 
     @Test
     fun inContainerLocation4() {
-        val plans = BlockWorldDomain.Planners.dummyPlanner.plan(
+        val plans = BlockWorldDomain.Planners.stripsPlanner.plan(
             GraphDomain.Problems.inContainerLocation4
         )
         plans.toSet().size shouldBe 1
@@ -29,7 +29,7 @@ class GraphDomainTest : AnnotationSpec() {
 
     @Test
     fun robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4() {
-        val plans = BlockWorldDomain.Planners.dummyPlanner.plan(
+        val plans = BlockWorldDomain.Planners.stripsPlanner.plan(
             GraphDomain.Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4
         )
         plans.toSet().size shouldBe 1
@@ -43,7 +43,7 @@ class GraphDomainTest : AnnotationSpec() {
 
     @Test
     fun atRobotAtlocation3InContainer1Location4InContainer2Location7() {
-        val plans = BlockWorldDomain.Planners.dummyPlanner.plan(
+        val plans = BlockWorldDomain.Planners.stripsPlanner.plan(
             GraphDomain.Problems.robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7
         )
         plans.toSet().size shouldBe 1

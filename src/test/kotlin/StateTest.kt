@@ -20,7 +20,7 @@ class StateTest : AnnotationSpec() {
         state = States.initial
         applicableAction = Operator.of(Actions.pick)
         nonApplicableAction = Operator.of(Actions.stack)
-        destinationStates = setOf(States.atAArm, States.atBArm, States.atCArm)
+        destinationStates = setOf(States.atAArm, States.atBArm, States.atCArm, States.atDArm)
     }
 
     @Test
@@ -62,7 +62,7 @@ class StateTest : AnnotationSpec() {
     @Test
     fun testStateObjectAtAArmApplyWorksAsExpected() {
         States.initial.apply(Operator.of(Actions.pick)).toSet() shouldBe
-            setOf(States.atAArm, States.atCArm, States.atBArm)
+            setOf(States.atAArm, States.atCArm, States.atBArm, States.atDArm)
     }
 
     @Test

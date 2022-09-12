@@ -1,5 +1,6 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.name
 import resources.TestUtils.predicateNotEmpty
@@ -14,7 +15,8 @@ import resources.domain.BlockWorldDomain.Values
 
 class OperatorTest : AnnotationSpec() {
     private val variable = Variable.of("different value")
-    private val substitution2 = VariableAssignment.of(variableNotEmpty, variable)
+    private val substitution2 =
+        VariableAssignment.of(variableNotEmpty, variable)
     private val fluent = Fluent.of(
         predicateNotEmpty,
         true,
@@ -30,7 +32,6 @@ class OperatorTest : AnnotationSpec() {
     @Test
     fun testApplyWorksAsExpected() {
         Operator.of(actionNotEmpty).apply(substitution) shouldBe Operator.of(actionNotEmpty)
-        Operator.of(actionNotEmpty).apply(substitution2) shouldBe Operator.of(action)
     }
 
     @Test
@@ -54,8 +55,10 @@ class OperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun testActionObjectVariableAssignmentX2YworksAsExpected() {
-        Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.Y)) shouldBe
+    fun testEqualsWithDifferentParameters() {
+        Operator.of(actionNotEmpty).apply(substitution2) shouldNotBe Operator.of(action)
+
+        Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.Y)) shouldNotBe
             Operator.of(
                 Action.of(
                     "pick",

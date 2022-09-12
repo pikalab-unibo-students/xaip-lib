@@ -28,8 +28,8 @@ class StripsPlannerTest : AnnotationSpec() {
     }
 
     @Test
-    fun testStackABpickC() {
-        val plans = Planners.dummyPlanner.plan(Problems.stackABpickC).toSet()
+    fun testPickC() {
+        val plans = Planners.dummyPlanner.plan(Problems.pickC).toSet()
         val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC)))
         println(plans)
         plans.size shouldBe 1

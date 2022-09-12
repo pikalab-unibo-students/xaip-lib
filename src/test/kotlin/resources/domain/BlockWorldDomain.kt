@@ -311,7 +311,7 @@ object BlockWorldDomain {
 
     object Goals {
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-        val onFlooratAandBatCarm =
+        val atCarm =
             FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
@@ -358,11 +358,11 @@ object BlockWorldDomain {
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
-        val stackABpickC = Problem.of(
+        val pickC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onFlooratAandBatCarm
+            goal = Goals.atCarm
         )
 
         val stackAB = Problem.of(

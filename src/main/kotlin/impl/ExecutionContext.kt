@@ -32,7 +32,7 @@ internal data class ExecutionContext(
         }
     }
 
-    private fun Set<Operator>.`actions whose effects match head`(head: Effect) =
+    private fun Iterable<Operator>.`actions whose effects match head`(head: Effect) =
         map { it.refresh() }.filter { action ->
             action.positiveEffects.any { effect ->
                 effect.match(head)
@@ -140,7 +140,6 @@ internal data class ExecutionContext(
         val h = Effect.of(head)
 
         val actionsMatched = actions.map { Operator.of(it) }
-            .toSet()
             .`actions whose effects match head`(h)
             .toMutableList()
 
@@ -156,7 +155,7 @@ internal data class ExecutionContext(
             choicePoints.update(actionsMatched, stack, currentState, plan)
             stack.update(action, h)
 
-            val effectsMatched = action.positiveEffects.filter { effect -> effect.match(h) }
+            val effectsMatched = action.positiveEffects.filter { it.match(h) }
             choicePoints.update(effectsMatched, stack, currentState, plan, h)
             stack.update(effectsMatched.first(), h)
         }

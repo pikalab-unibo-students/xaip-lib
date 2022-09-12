@@ -48,54 +48,56 @@ class StripsPlannerTest : AnnotationSpec() {
     }
 
     @Test
-    fun testStackABatCarm() {
-        val generatedPlan = Planners.stripsPlanner.plan(Problems.stackABatCarm).first()
-        val plan2check = Plan.of(listOf(Actions.pick.apply(VariableAssignment.of(Values.X, Values.c))))
-        generatedPlan shouldBe plan2check
+    fun testPickC() {
+        val plans = Planners.stripsPlanner.plan(Problems.pickC).toSet()
+        val plan2check = setOf(Plan.of(listOf(pickC)))
+        plans.toSet().size shouldBe 1
+
+        plans shouldBe plan2check
     }
 
     @Test
     fun testStackAX() {
-        val plansGenerated1 = Planners.stripsPlanner.plan(Problems.stackAX)
-        val plan2check1 = listOf(
+        val plans = Planners.stripsPlanner.plan(Problems.stackAX).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
             Plan.of(listOf(pickA, stackAD))
         )
-        plansGenerated1.toSet().size shouldBe 3
-        plansGenerated1.toSet() shouldBe plan2check1.toSet()
+        plans.size shouldBe 3
+        plans shouldBe plan2check
     }
 
     @Test
     fun testPickX() {
-        val plansGenerated2 = Planners.stripsPlanner.plan(Problems.pickX)
-        val plan2check2 = listOf(
+        val plans = Planners.stripsPlanner.plan(Problems.pickX).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA)),
             Plan.of(listOf(pickB)),
             Plan.of(listOf(pickC)),
             Plan.of(listOf(pickD))
         )
-        plansGenerated2.toSet().size shouldBe 4
-        plansGenerated2.toSet() shouldBe plan2check2.toSet()
+        plans.size shouldBe 4
+        plans shouldBe plan2check
     }
 
     @Test
     fun testPickXFloorY() {
-        val plansGenerated3 = Planners.stripsPlanner.plan(Problems.pickXfloorY)
-        val plan2check2 = listOf(
+        val plans = Planners.stripsPlanner.plan(Problems.pickXfloorY).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA)),
             Plan.of(listOf(pickB)),
             Plan.of(listOf(pickC)),
             Plan.of(listOf(pickD))
         )
-        plansGenerated3.toSet().size shouldBe 4
-        plansGenerated3.toSet() shouldBe plan2check2.toSet()
+        plans.size shouldBe 4
+        plans shouldBe plan2check
     }
 
     @Test
     fun testStackXY() {
-        val plansGenerated4 = Planners.stripsPlanner.plan(Problems.stackXY)
-        val plan2check4 = listOf(
+        val plans = Planners.stripsPlanner.plan(Problems.stackXY).toSet()
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
             Plan.of(listOf(pickA, stackAD)),
@@ -112,14 +114,14 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickD, stackDC)),
             Plan.of(listOf(pickD, stackDB))
         )
-        plansGenerated4.toSet().size shouldBe 12
-        plansGenerated4.toSet() shouldBe plan2check4.toSet()
+        plans.size shouldBe 12
+        plans shouldBe plan2check
     }
 
     @Test
     fun testStackXYpickW() {
-        val plansGenerated5 = Planners.stripsPlanner.plan(Problems.stackXYpickW) // caso sfigato
-        val plan2check5 = setOf(
+        val plans = Planners.stripsPlanner.plan(Problems.stackXYpickW).toSet() // caso sfigato
+        val plan2check = setOf(
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA, stackAC)),
             Plan.of(listOf(pickA, stackAD)),
@@ -136,8 +138,8 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickD, stackDB)),
             Plan.of(listOf(pickD, stackDC))
         )
-        plansGenerated5.toSet().size shouldBe 12
-        plansGenerated5.toSet() shouldBe plan2check5
+        plans.size shouldBe 12
+        plans shouldBe plan2check
     }
 
     @Test
@@ -151,7 +153,9 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackABC() {
-        val plan = Planners.stripsPlanner.plan(Problems.stackABC)
-        println(plan.toSet())
+        val plan = Planners.stripsPlanner.plan(Problems.stackCAB).toSet()
+        val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC, stackCA)))
+        plan.size shouldBe 1
+        plan shouldBe plan2check
     }
 }

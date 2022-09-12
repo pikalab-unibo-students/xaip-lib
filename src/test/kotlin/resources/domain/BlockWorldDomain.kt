@@ -389,7 +389,7 @@ object BlockWorldDomain {
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
-        val stackABatCarm = Problem.of(
+        val pickC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
@@ -431,7 +431,7 @@ object BlockWorldDomain {
             goal = Goals.onXY
         )
 
-        val stackABC = Problem.of(
+        val stackCAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
@@ -471,7 +471,14 @@ object BlockWorldDomain {
         val atBArm = State.of(Fluents.atAFloor, Fluents.atBArm, Fluents.atCFloor, Fluents.clearA, Fluents.clearC)
         val atCArm = State.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atCArm, Fluents.clearA, Fluents.clearB)
 
-        val onBAonCB = State.of(Fluents.onBA, Fluents.onCD, Fluents.clearC, Fluents.clearB, Fluents.armEmpty, Fluents.atAFloor, Fluents.atDFloor)
+        val onBAonCB = State.of(
+            Fluents.onBA,
+            Fluents.onCD,
+            Fluents.clearC,
+            Fluents.clearB,
+            Fluents.armEmpty,
+            Fluents.atAFloor,
+            Fluents.atDFloor)
     }
 
     object Types {

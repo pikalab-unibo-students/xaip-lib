@@ -53,6 +53,7 @@ class StripsPlannerTest : AnnotationSpec() {
         val plan2check = setOf(Plan.of(listOf(pickC)))
         plans.toSet().size shouldBe 1
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -65,6 +66,7 @@ class StripsPlannerTest : AnnotationSpec() {
         )
         plans.size shouldBe 3
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -78,6 +80,7 @@ class StripsPlannerTest : AnnotationSpec() {
         )
         plans.size shouldBe 4
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -91,6 +94,7 @@ class StripsPlannerTest : AnnotationSpec() {
         )
         plans.size shouldBe 4
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -115,6 +119,7 @@ class StripsPlannerTest : AnnotationSpec() {
         )
         plans.size shouldBe 12
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -139,6 +144,7 @@ class StripsPlannerTest : AnnotationSpec() {
         )
         plans.size shouldBe 12
         plans shouldBe plan2check
+        println(plans)
     }
 
     @Test
@@ -152,9 +158,10 @@ class StripsPlannerTest : AnnotationSpec() {
 
     @Test
     fun testStackABC() {
-        val plan = Planners.stripsPlanner.plan(Problems.stackCAB).toSet()
+        val plans = Planners.stripsPlanner.plan(Problems.stackCAB).toSet()
         val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC, stackCA)))
-        plan.size shouldBe 1
-        plan shouldBe plan2check
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
     }
 }

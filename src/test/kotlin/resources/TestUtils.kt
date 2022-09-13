@@ -51,7 +51,7 @@ object TestUtils {
     val objectSetNotEmpty = ObjectSet.of(mapOf(type1 to setOf(objNotEmpty)))
 
     val planEmpty = Plan.of(emptyList())
-    val planNotEmpty = Plan.of(listOf(actionNotEmpty))
+    val planNotEmpty = Plan.of(listOf(Operator.of(actionNotEmpty)))
 
     val substitution = VariableAssignment.of(variableNotEmpty, variableNotEmpty)
 }

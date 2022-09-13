@@ -279,6 +279,7 @@ object BlockWorldDomain {
     }
 
     object Fluents {
+
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
@@ -342,6 +343,7 @@ object BlockWorldDomain {
             FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
+        val onAXD = FluentBasedGoal.of(Fluents.onAX, Fluents.onDX)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
@@ -377,7 +379,13 @@ object BlockWorldDomain {
         val clear = Predicate.of("clear", Types.blocks)
     }
 
-    object Problems {
+    object Problems{
+        val stackDXA = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onAXD
+        )
         val stackBC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

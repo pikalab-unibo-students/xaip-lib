@@ -123,7 +123,7 @@ internal data class ExecutionContext(
             .`actions whose effects match head`(h)
             .toMutableList()
 
-        if(actionsMatched.isEmpty()) return backtrackOrFail()
+        if (actionsMatched.isEmpty()) return backtrackOrFail()
 
         val action = actionsMatched.first()
         choicePoints.update(actionsMatched, stack, currentState, plan)

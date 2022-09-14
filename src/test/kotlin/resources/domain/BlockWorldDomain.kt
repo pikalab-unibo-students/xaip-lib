@@ -210,7 +210,7 @@ object BlockWorldDomain {
             parameters = mapOf(
                 Values.X to Types.blocks
             ),
-            preconditions = setOf(Fluents.atXArm, Fluents.clearY),
+            preconditions = setOf(Fluents.atXArm),
             effects = setOf(
                 Effect.negative(Fluents.atXArm),
                 Effect.of(Fluents.clearX),

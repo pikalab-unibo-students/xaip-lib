@@ -50,7 +50,7 @@ internal class StripsPlanner : Planner {
         with(ExecutionContext(initialState, goal, maxDepth)) {
             while (true) {
                 while (stack.isNotEmpty()) {
-                    log { this.toString()}
+                    log { this.toString() }
                     val head = stack.pop()
                     when {
                         head is Fluent -> { // "applica la sostituzione a tutto lo stack"

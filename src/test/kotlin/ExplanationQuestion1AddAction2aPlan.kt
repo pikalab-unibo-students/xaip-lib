@@ -8,7 +8,7 @@ import resources.ExplanationUtils.newPredicate
 import resources.domain.BlockWorldDomain.Operators.unstackCD
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
-class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
+class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
 
     @Test
@@ -27,18 +27,18 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
                 plans
         )
 
-        val predicate = newPredicate(question.actionToAdd)
+        val predicate = newPredicate(question.actionToAddOrToRemove)
         // println("new predicate: $predicate")
 
-        val newFluent = createNewFluent(question.actionToAdd, predicate)
+        val newFluent = createNewFluent(question.actionToAddOrToRemove, predicate)
         // println("new fluent: $newFluent")
 
         val notGroundAction =
-            findAction(question.actionToAdd, question.problem.domain.actions)
+            findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
         val newAction = createNewAction(notGroundAction, newFluent)
         // println("updated action: $newAction")
 
-        val HDomain = Domain.of(
+        val hDomain = Domain.of(
             name = question.problem.domain.name,
             predicates = mutableSetOf(predicate).also { it.addAll(question.problem.domain.predicates) },
             actions = mutableSetOf(newAction).also {
@@ -53,8 +53,8 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
         // for (action in HDomain.actions)
         //    println("  " + action.toString())
 
-        val HProblem = Problem.of(
-            domain = HDomain,
+        val hProblem = Problem.of(
+            domain = hDomain,
             objects = question.problem.objects,
             initialState = question.problem.initialState,
             goal = FluentBasedGoal.of(
@@ -74,12 +74,12 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
         // println("HProblem " + HProblem.goal)
         // println(HProblem)
 
-        val plan = question.plan
-        val Hplan = stripsPlanner.plan(HProblem).first()
+        val plan = question.originalPlan
+        val hplan = stripsPlanner.plan(hProblem).first()
 
         // println("plan:" + plan.actions.toList())
-        println("Hplan:" + Hplan.actions.toList())
+        println("Hplan:" + hplan.actions.toList())
 
-        buildExplanation(plan, Hplan)
+        buildExplanation(plan, hplan, question.actionToAddOrToRemove)
     }
 }

@@ -1,20 +1,17 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import resources.ExplanationUtils.buildExplanation
-import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickB
+import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
 import resources.domain.BlockWorldDomain.Operators.stackAB
 import resources.domain.BlockWorldDomain.Operators.stackBD
-import resources.domain.BlockWorldDomain.Operators.stackDB
 import resources.domain.BlockWorldDomain.Operators.stackCA
-
+import resources.domain.BlockWorldDomain.Operators.stackDB
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
-
 import resources.domain.BlockWorldDomain.Problems
-
 import resources.domain.BlockWorldDomain.States
 
-class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
+class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
     // 3. “Why is action A used, rather than action B?” // replacing action in a state
     data class Question3(val actionToAdd: Operator, val problem: Problem, val plan: Plan, val state: State? = null)
 
@@ -35,32 +32,32 @@ class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
 
         val newState = question.problem.initialState.apply(pickC).first() // questo sarebbe un punto di scelta
 
-        val HDomain = Domain.of( // domain extended
+        val hDomain = Domain.of( // domain extended
             name = question.problem.domain.name,
             predicates = question.problem.domain.predicates,
             actions = question.problem.domain.actions,
             types = question.problem.domain.types
         )
 
-        val HProblem = Problem.of( // problem extended
-            domain = HDomain,
+        val hProblem = Problem.of( // problem extended
+            domain = hDomain,
             objects = question.problem.objects,
             initialState = newState, // extended
             goal = question.problem.goal // extended
         )
 
         val plan = question.plan
-        val Hplan = stripsPlanner.plan(HProblem).toSet()
+        val hplan = stripsPlanner.plan(hProblem).toSet()
 
         println("plan:" + plan)
-        println("Hplan:" + Hplan)
+        println("Hplan:" + hplan)
 
-        buildExplanation(plan, Hplan.first())
+        buildExplanation(plan, hplan.first(), question.actionToAdd)
     }
 
     @Test
     fun testQuestion3Extended() {
-        var newProblem: Problem
+        val newProblem: Problem
         val question = Question3(
             pickB,
             Problems.stackCAstackBY,
@@ -91,34 +88,34 @@ class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
         println("apply: " + question.actionToAdd + " to inital state obtaining: " + newState)
 
-        val HDomain = Domain.of( // domain extended
+        val hDomain = Domain.of( // domain extended
             name = newProblem.domain.name,
             predicates = newProblem.domain.predicates,
             actions = newProblem.domain.actions,
             types = newProblem.domain.types
         )
 
-        val HProblem = Problem.of( // problem extended
-            domain = HDomain,
+        val hProblem = Problem.of( // problem extended
+            domain = hDomain,
             objects = newProblem.objects,
             initialState = newState, // extended
             goal = newProblem.goal // extended
         )
 
         val plan = question.plan
-        val Hplan = stripsPlanner.plan(HProblem).toSet()
+        val hplan = stripsPlanner.plan(hProblem).toSet()
 
         println("plan:" + plan)
-        println("Hplan:" + Hplan)
+        println("Hplan:" + hplan)
 
-        var actionsToKeep = mutableListOf<Operator>()
+        val actionsToKeep = mutableListOf<Operator>()
         var tmpStates: Sequence<State> = emptySequence()
-        var tmpState: State = State.of(emptySet())
-        for (action in question.plan.actions){
+        val tmpState: State = State.of(emptySet())
+        for (action in question.plan.actions) {
             actionsToKeep.add(action as Operator)
             tmpStates = tmpState.apply(action)
             // mi serve una chiamata ricorsiva
         }
-        buildExplanation(plan, Hplan.first())
+        buildExplanation(plan, hplan.first(), question.actionToAdd)
     }
 }

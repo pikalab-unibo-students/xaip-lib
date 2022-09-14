@@ -6,10 +6,9 @@ import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.newPredicate
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Operators.stackBC
-import resources.domain.BlockWorldDomain.Operators.stackCB
 import resources.domain.BlockWorldDomain.Operators.unstackBA
 
-class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
+class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
     /*
     2. Why is action A used in state , rather not being used? // remove specific grounded action
     4.“Why is action A used before/after action B (rather than after/before)?” // reordering actions
@@ -22,17 +21,18 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
             BlockWorldDomain.Problems.stackBC,
             Plan.of(listOf(unstackBA, stackBC))
         )
+        println(question)
 
-        val newPredicate = newPredicate(question.actionToAdd, true)
-        println("new predicate: " + newPredicate.name)
+        val newPredicate = newPredicate(question.actionToAddOrToRemove, true)
+        // println("new predicate: " + newPredicate.name)
 
-        val newFluent = createNewFluent(question.actionToAdd, newPredicate) // new predicate
-        println("new fluent: $newFluent")
+        val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate) // new predicate
+        // println("new fluent: $newFluent")
 
         val newAction = createNewAction(BlockWorldDomain.Actions.unstack, newFluent, true) // new action
-        println("updated action: $newAction")
+        // println("updated action: $newAction")
 
-        val HDomain = Domain.of( // domain extended
+        val hDomain = Domain.of( // domain extended
             name = question.problem.domain.name,
             predicates = mutableSetOf(newPredicate).also { it.addAll(question.problem.domain.predicates) },
             actions = mutableSetOf(newAction).also {
@@ -46,26 +46,22 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
             types = question.problem.domain.types
         )
 
-        val HProblem = Problem.of( // problem extended
-            domain = HDomain,
+        val hProblem = Problem.of( // problem extended
+            domain = hDomain,
             objects = question.problem.objects,
             initialState = State.of(
                 mutableSetOf(newFluent).also { it.addAll(question.problem.initialState.fluents) }
             ), // extended
-            goal = question.problem.goal/*FluentBasedGoal.of(
+            goal = FluentBasedGoal.of(
                 mutableSetOf(newFluent).also {
-                    it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets)
+                    it.addAll((question.problem.goal as FluentBasedGoal).targets)
                 }
-                */
+            )
             // extended
         )
 
-        val plan = question.plan
-        val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).toSet()
+        val hplan = BlockWorldDomain.Planners.stripsPlanner.plan(hProblem).toSet()
 
-        println("plan:" + plan)
-        println("Hplan:" + Hplan)
-
-        buildExplanation(plan, Hplan.first())
+        buildExplanation(question.originalPlan, hplan.first(), question.actionToAddOrToRemove)
     }
 }

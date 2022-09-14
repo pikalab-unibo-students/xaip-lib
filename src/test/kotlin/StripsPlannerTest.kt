@@ -2,50 +2,26 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.domain.BlockWorldDomain.Actions
+import resources.domain.BlockWorldDomain.Operators.pickA
+import resources.domain.BlockWorldDomain.Operators.pickB
+import resources.domain.BlockWorldDomain.Operators.pickC
+import resources.domain.BlockWorldDomain.Operators.pickD
+import resources.domain.BlockWorldDomain.Operators.stackAB
+import resources.domain.BlockWorldDomain.Operators.stackAC
+import resources.domain.BlockWorldDomain.Operators.stackAD
+import resources.domain.BlockWorldDomain.Operators.stackBA
+import resources.domain.BlockWorldDomain.Operators.stackBC
+import resources.domain.BlockWorldDomain.Operators.stackBD
+import resources.domain.BlockWorldDomain.Operators.stackCA
+import resources.domain.BlockWorldDomain.Operators.stackCB
+import resources.domain.BlockWorldDomain.Operators.stackCD
+import resources.domain.BlockWorldDomain.Operators.stackDA
+import resources.domain.BlockWorldDomain.Operators.stackDB
+import resources.domain.BlockWorldDomain.Operators.stackDC
 import resources.domain.BlockWorldDomain.Planners
 import resources.domain.BlockWorldDomain.Problems
-import resources.domain.BlockWorldDomain.Values
 
 class StripsPlannerTest : AnnotationSpec() {
-    private val pickA = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.a))
-    private val pickB = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.b))
-    private val pickC = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.c))
-    private val pickD = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.d))
-
-    private var stackAB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
-    private var stackAC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
-    private var stackAD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
-
-    private var stackBA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
-    private var stackBC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
-    private var stackBD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
-
-    private var stackCB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
-    private var stackCA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
-    private var stackCD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
-
-    private var stackDB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
-    private var stackDC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
-    private var stackDA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
-
-    init {
-        stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
-        stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
-        stackAD = stackAD.apply(VariableAssignment.of(Values.Y, Values.d))
-
-        stackBA = stackBA.apply(VariableAssignment.of(Values.Y, Values.a))
-        stackBC = stackBC.apply(VariableAssignment.of(Values.Y, Values.c))
-        stackBD = stackBD.apply(VariableAssignment.of(Values.Y, Values.d))
-
-        stackCB = stackCB.apply(VariableAssignment.of(Values.Y, Values.b))
-        stackCA = stackCA.apply(VariableAssignment.of(Values.Y, Values.a))
-        stackCD = stackCD.apply(VariableAssignment.of(Values.Y, Values.d))
-
-        stackDA = stackDA.apply(VariableAssignment.of(Values.Y, Values.a))
-        stackDB = stackDB.apply(VariableAssignment.of(Values.Y, Values.b))
-        stackDC = stackDC.apply(VariableAssignment.of(Values.Y, Values.c))
-    }
 
     @Test
     fun testPickC() {

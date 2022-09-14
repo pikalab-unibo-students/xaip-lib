@@ -343,7 +343,7 @@ object BlockWorldDomain {
             FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
-        val onAXD = FluentBasedGoal.of(Fluents.onAX, Fluents.onDX)
+        val onDXA = FluentBasedGoal.of(Fluents.onXA, Fluents.onDX)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
@@ -363,6 +363,51 @@ object BlockWorldDomain {
         )
     }
 
+    object Operators {
+        val pickA = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.a))
+        val pickB = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.b))
+        val pickC = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.c))
+        val pickD = Operator.of(Actions.pick).apply(VariableAssignment.of(Values.X, Values.d))
+
+        var stackAB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
+        var stackAC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
+        var stackAD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.a))
+
+        var stackBA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
+        var stackBC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
+        var stackBD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.b))
+
+        var stackCB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
+        var stackCA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
+        var stackCD = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.c))
+
+        var stackDB = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
+        var stackDC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
+        var stackDA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
+
+        var unstackBA = Operator.of(BlockWorldDomain.Actions.unstack)
+            .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.b))
+        init {
+            stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
+            stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
+            stackAD = stackAD.apply(VariableAssignment.of(Values.Y, Values.d))
+
+            stackBA = stackBA.apply(VariableAssignment.of(Values.Y, Values.a))
+            stackBC = stackBC.apply(VariableAssignment.of(Values.Y, Values.c))
+            stackBD = stackBD.apply(VariableAssignment.of(Values.Y, Values.d))
+
+            stackCB = stackCB.apply(VariableAssignment.of(Values.Y, Values.b))
+            stackCA = stackCA.apply(VariableAssignment.of(Values.Y, Values.a))
+            stackCD = stackCD.apply(VariableAssignment.of(Values.Y, Values.d))
+
+            stackDA = stackDA.apply(VariableAssignment.of(Values.Y, Values.a))
+            stackDB = stackDB.apply(VariableAssignment.of(Values.Y, Values.b))
+            stackDC = stackDC.apply(VariableAssignment.of(Values.Y, Values.c))
+
+            unstackBA = unstackBA.apply(VariableAssignment.of(Values.Y, Values.a))
+        }
+    }
+
     object Plans {
         val emptyPlan = Plan.of(emptyList())
         val basicPlan = Plan.of(listOf(Actions.pick, Actions.stack))
@@ -379,12 +424,12 @@ object BlockWorldDomain {
         val clear = Predicate.of("clear", Types.blocks)
     }
 
-    object Problems{
+    object Problems {
         val stackDXA = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onAXD
+            goal = Goals.onDXA
         )
         val stackBC = Problem.of(
             domain = Domains.blockWorld,
@@ -415,28 +460,28 @@ object BlockWorldDomain {
         )
 
         val stackAX = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.objects,
             initialState = States.initial,
             goal = Goals.onAX
         )
 
         val pickX = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickX
         )
 
         val pickXfloorY = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.pickXfloorY
         )
 
         val stackXY = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXY
@@ -450,7 +495,7 @@ object BlockWorldDomain {
         )
 
         val stackXYpickW = Problem.of(
-            domain = Domains.blockWorldWithoutIdempotentActions,
+            domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.onXYatW

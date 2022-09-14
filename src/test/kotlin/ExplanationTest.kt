@@ -6,6 +6,11 @@ import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.findAction
 import resources.ExplanationUtils.newPredicated
 import resources.domain.BlockWorldDomain
+import resources.domain.BlockWorldDomain.Operators.pickC
+import resources.domain.BlockWorldDomain.Operators.stackAB
+import resources.domain.BlockWorldDomain.Operators.stackCB
+import resources.domain.BlockWorldDomain.Operators.stackDB
+import resources.domain.BlockWorldDomain.Operators.unstackBA
 
 class ExplanationTest : AnnotationSpec() {
     /*
@@ -14,7 +19,7 @@ class ExplanationTest : AnnotationSpec() {
     3. “Why is action A used, rather than action B?” // replacing action in a state
     “Why is action A used before/after action B (rather than after/before)?”
      */
-
+/*
     private var unstackBA = Operator.of(BlockWorldDomain.Actions.unstack)
         .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.b))
     private var stackAB = Operator.of(BlockWorldDomain.Actions.stack).apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a))
@@ -32,7 +37,7 @@ class ExplanationTest : AnnotationSpec() {
         stackDB = stackDB.apply(VariableAssignment.of(BlockWorldDomain.Values.Y, BlockWorldDomain.Values.b))
         stackDC = stackDC.apply(VariableAssignment.of(BlockWorldDomain.Values.Y, BlockWorldDomain.Values.c))
     }
-
+*/
     @Test
     fun testQuestion1() {
         val plans = BlockWorldDomain.Planners.stripsPlanner.plan(BlockWorldDomain.Problems.stackBC).toSet()
@@ -179,11 +184,11 @@ class ExplanationTest : AnnotationSpec() {
     @Test
     fun testQuestion3() {
         val questionAddActionPlan = ExplanationUtils.Question1(
-            stackCA, //fatta al posto di stack AC
+            pickC, // fatta al posto di stack AC
             BlockWorldDomain.Problems.stackDXA,
             Plan.of(listOf(stackAB, stackDB))
         )
-        val newState = questionAddActionPlan.problem.initialState.apply(stackCA).first()
+        val newState = questionAddActionPlan.problem.initialState.apply(pickC).first()
         val HDomain = Domain.of( // domain extended
             name = questionAddActionPlan.problem.domain.name,
             predicates = questionAddActionPlan.problem.domain.predicates,
@@ -195,7 +200,7 @@ class ExplanationTest : AnnotationSpec() {
             domain = HDomain,
             objects = questionAddActionPlan.problem.objects,
             initialState = newState, // extended
-            goal = questionAddActionPlan.problem.goal// extended
+            goal = questionAddActionPlan.problem.goal // extended
         )
 
         val plan = questionAddActionPlan.plan

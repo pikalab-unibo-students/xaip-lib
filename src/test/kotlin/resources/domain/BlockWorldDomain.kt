@@ -318,6 +318,7 @@ object BlockWorldDomain {
         val onAX = Fluent.positive(Predicates.on, Values.a, Values.X)
         val onDX = Fluent.positive(Predicates.on, Values.d, Values.X)
         val onXA = Fluent.positive(Predicates.on, Values.X, Values.a)
+        val onBX = Fluent.positive(Predicates.on, Values.b, Values.X)
 
         val clearA = Fluent.positive(Predicates.clear, Values.a)
         val clearB = Fluent.positive(Predicates.clear, Values.b)
@@ -337,6 +338,7 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val onDXonXA = FluentBasedGoal.of(Fluents.onDX, Fluents.onXA)
         val onCB = FluentBasedGoal.of(Fluents.onCB)
 
         // i goal vanno dichiarati in ordine inverso,
@@ -347,7 +349,7 @@ object BlockWorldDomain {
             FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
-        val onDXA = FluentBasedGoal.of(Fluents.onDX, Fluents.onXA)
+        val onCAonBY = FluentBasedGoal.of(Fluents.onBX, Fluents.onCA)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)
@@ -436,19 +438,19 @@ object BlockWorldDomain {
         val stackCB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.onBAonCB,
+            initialState = States.onBAonCD,
             goal = Goals.onCB
         )
-        val stackDXA = Problem.of(
+        val stackCAstackBY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onDXA
+            goal = Goals.onCAonBY
         )
         val stackBC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.onBAonCB,
+            initialState = States.onBAonCD,
             goal = Goals.onBC
         )
 
@@ -521,6 +523,13 @@ object BlockWorldDomain {
             initialState = States.initial,
             goal = Goals.onXYatW
         )
+
+        val stackDXA = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onDXonXA
+        )
     }
 
     object States {
@@ -573,7 +582,7 @@ object BlockWorldDomain {
             Fluents.clearC
         )
 
-        val onBAonCB = State.of(
+        val onBAonCD = State.of(
             Fluents.onBA,
             Fluents.onCD,
             Fluents.clearC,
@@ -581,6 +590,17 @@ object BlockWorldDomain {
             Fluents.armEmpty,
             Fluents.atAFloor,
             Fluents.atDFloor
+        )
+
+        val onCAatBfloorDfloor = State.of(
+            Fluents.clearC,
+            Fluents.clearD,
+            Fluents.clearB,
+            Fluents.atDFloor,
+            Fluents.atBFloor,
+            Fluents.atAFloor,
+            Fluents.onCA,
+            Fluents.armEmpty
         )
     }
 

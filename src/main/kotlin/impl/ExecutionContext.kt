@@ -122,6 +122,9 @@ internal data class ExecutionContext(
         val actionsMatched = actions.map { Operator.of(it) }
             .`actions whose effects match head`(h)
             .toMutableList()
+
+        if(actionsMatched.isEmpty()) return backtrackOrFail()
+
         val action = actionsMatched.first()
         choicePoints.update(actionsMatched, stack, currentState, plan)
         stack.update(action, h)

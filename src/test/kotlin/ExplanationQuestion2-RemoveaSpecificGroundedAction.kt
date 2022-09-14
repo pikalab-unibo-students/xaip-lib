@@ -5,6 +5,7 @@ import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.newPredicate
 import resources.domain.BlockWorldDomain
+import resources.domain.BlockWorldDomain.Operators.stackBC
 import resources.domain.BlockWorldDomain.Operators.stackCB
 import resources.domain.BlockWorldDomain.Operators.unstackBA
 
@@ -19,7 +20,7 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
         val question = ExplanationUtils.Question1(
             unstackBA,
             BlockWorldDomain.Problems.stackBC,
-            Plan.of(listOf(unstackBA, stackCB))
+            Plan.of(listOf(unstackBA, stackBC))
         )
 
         val newPredicate = newPredicate(question.actionToAdd, true)

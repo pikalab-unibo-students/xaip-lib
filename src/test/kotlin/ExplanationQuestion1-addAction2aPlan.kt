@@ -1,23 +1,33 @@
-class `ExplanationQuestion1-addAction2aPlan` {
+import io.kotest.core.spec.style.AnnotationSpec
+import resources.ExplanationUtils
+import resources.ExplanationUtils.buildExplanation
+import resources.ExplanationUtils.createNewAction
+import resources.ExplanationUtils.createNewFluent
+import resources.ExplanationUtils.findAction
+import resources.ExplanationUtils.newPredicate
+import resources.domain.BlockWorldDomain.Operators.unstackBA
+import resources.domain.BlockWorldDomain.Planners.stripsPlanner
+import resources.domain.BlockWorldDomain.Problems
+class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
 
-    @Test
+    @AnnotationSpec.Test
     fun testQuestion1() {
-        val plans = BlockWorldDomain.Planners.stripsPlanner.plan(BlockWorldDomain.Problems.stackBC).toSet()
+        val plans = stripsPlanner.plan(Problems.stackBC).toSet()
         val questionAddActionPlan = ExplanationUtils.Question1(
             unstackBA,
-            BlockWorldDomain.Problems.stackBC,
+            Problems.stackBC,
             plans.first()
         )
 
         println(
             "Piani disponibili: " +
-                    BlockWorldDomain.Planners.stripsPlanner.plan(BlockWorldDomain.Problems.stackBC).toSet().size +
-                    "\n" +
-                    plans
+                stripsPlanner.plan(Problems.stackBC).toSet().size +
+                "\n" +
+                plans
         )
 
-        val predicate = newPredicated(questionAddActionPlan.actionToAdd)
+        val predicate = newPredicate(questionAddActionPlan.actionToAdd)
         // println("new predicate: $predicate")
 
         val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, predicate)
@@ -65,7 +75,7 @@ class `ExplanationQuestion1-addAction2aPlan` {
         // println(HProblem)
 
         val plan = questionAddActionPlan.plan
-        val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).first()
+        val Hplan = stripsPlanner.plan(HProblem).first()
 
         // println("plan:" + plan.actions.toList())
         println("Hplan:" + Hplan.actions.toList())

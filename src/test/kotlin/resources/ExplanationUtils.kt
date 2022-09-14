@@ -36,29 +36,19 @@ object ExplanationUtils {
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.args.toTypedArray().reversedArray())
 
-    fun newPredicated(action: Action): Predicate =
-        Predicate.of("has_done_" + action.name, action.parameters.values.toList())
+    fun newPredicate(action: Action, negated: Boolean = false): Predicate =
+        if (negated) Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())
+        else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
-    fun createNewAction(action: Action, fluent: Fluent): Action {
+    fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
         return Action.of(
             name = action.name + "^",
             parameters = action.parameters,
             preconditions = action.preconditions,
-            effects = mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
+            effects = if (negated) mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
         )
     }
 
     fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
         actionList.first { it.name == inputOperator.name }
 }
-
-    /*
-    val newAction = Action.of(
-            name = operator.name + "'",
-            parameters = operator.parameters,
-            preconditions = operator.preconditions,
-            effects = mutableSetOf(Effect.of(fluent)).also { it.addAll(operator.effects) }
-        )
-        val newOperator = Operator.of(newAction)
-        newOperator.args= operator.args
-     */

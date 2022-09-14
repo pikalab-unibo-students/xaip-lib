@@ -337,13 +337,15 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        // i goal vanno dichiarati in ordine inverso,
+        // perché ho un apila quando faccio push per metterli sulllo stack il primo è a offset zero
         val onBC = FluentBasedGoal.of(Fluents.onBC)
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val atCarm =
             FluentBasedGoal.of(Fluents.atCArm)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
-        val onDXA = FluentBasedGoal.of(Fluents.onXA, Fluents.onDX)
+        val onDXA = FluentBasedGoal.of(Fluents.onDX, Fluents.onXA)
         val pickX = FluentBasedGoal.of(Fluents.atXArm)
         val pickXfloorY = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor)
         val onXY = FluentBasedGoal.of(Fluents.onXY)

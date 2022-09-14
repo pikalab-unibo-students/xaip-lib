@@ -11,7 +11,7 @@ import resources.domain.BlockWorldDomain.Problems
 class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
 
-    @AnnotationSpec.Test
+    @Test
     fun testQuestion1() {
         val plans = stripsPlanner.plan(Problems.stackBC).toSet()
         val questionAddActionPlan = ExplanationUtils.Question1(

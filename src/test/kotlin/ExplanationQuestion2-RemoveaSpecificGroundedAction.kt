@@ -10,9 +10,9 @@ import resources.domain.BlockWorldDomain.Operators.unstackBA
 
 class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
     /*
-    3.“Why is action A used, rather than action B?” // replacing action in a state
+    2. Why is action A used in state , rather not being used? // remove specific grounded action
     4.“Why is action A used before/after action B (rather than after/before)?” // reordering actions
-     */
+    */
 
     @Test
     fun testQuestion2() {
@@ -62,7 +62,7 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
         val plan = questionAddActionPlan.plan
         val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).toSet()
 
-        println("plan:" + plan.actions.toList())
+        println("plan:" + plan)
         println("Hplan:" + Hplan)
 
         buildExplanation(plan, Hplan.first())

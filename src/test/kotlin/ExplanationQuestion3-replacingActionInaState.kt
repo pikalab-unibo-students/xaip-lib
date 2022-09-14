@@ -2,10 +2,10 @@ import io.kotest.core.spec.style.AnnotationSpec
 import resources.ExplanationUtils
 import resources.domain.BlockWorldDomain
 
-class `ExplanationQuestion3-replacingActionInaState` {
+class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
     // 3. “Why is action A used, rather than action B?” // replacing action in a state
 
-    @AnnotationSpec.Test
+    @Test
     fun testQuestion3() {
         val questionAddActionPlan = ExplanationUtils.Question1(
             BlockWorldDomain.Operators.pickC, // fatta al posto di stack AC

@@ -14,7 +14,7 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
     @Test
     fun testQuestion1() {
         val plans = stripsPlanner.plan(Problems.stackBC).toSet()
-        val questionAddActionPlan = ExplanationUtils.Question1(
+        val question = ExplanationUtils.Question1(
             unstackBA,
             Problems.stackBC,
             plans.first()
@@ -27,26 +27,26 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
                 plans
         )
 
-        val predicate = newPredicate(questionAddActionPlan.actionToAdd)
+        val predicate = newPredicate(question.actionToAdd)
         // println("new predicate: $predicate")
 
-        val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, predicate)
+        val newFluent = createNewFluent(question.actionToAdd, predicate)
         // println("new fluent: $newFluent")
 
         val notGroundAction =
-            findAction(questionAddActionPlan.actionToAdd, questionAddActionPlan.problem.domain.actions)
+            findAction(question.actionToAdd, question.problem.domain.actions)
         val newAction = createNewAction(notGroundAction, newFluent)
         // println("updated action: $newAction")
 
         val HDomain = Domain.of(
-            name = questionAddActionPlan.problem.domain.name,
-            predicates = mutableSetOf(predicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
+            name = question.problem.domain.name,
+            predicates = mutableSetOf(predicate).also { it.addAll(question.problem.domain.predicates) },
             actions = mutableSetOf(newAction).also {
-                questionAddActionPlan.problem.domain.actions.map { oldAction ->
+                question.problem.domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) it.add(oldAction)
                 }
             },
-            types = questionAddActionPlan.problem.domain.types
+            types = question.problem.domain.types
         )
         // println("HDomain action")
 
@@ -55,10 +55,10 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
 
         val HProblem = Problem.of(
             domain = HDomain,
-            objects = questionAddActionPlan.problem.objects,
-            initialState = questionAddActionPlan.problem.initialState,
+            objects = question.problem.objects,
+            initialState = question.problem.initialState,
             goal = FluentBasedGoal.of(
-                (questionAddActionPlan.problem.goal as FluentBasedGoal).targets.toMutableSet().also {
+                (question.problem.goal as FluentBasedGoal).targets.toMutableSet().also {
                     it.add(newFluent)
                 }.toSet()
                 /*
@@ -74,7 +74,7 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
         // println("HProblem " + HProblem.goal)
         // println(HProblem)
 
-        val plan = questionAddActionPlan.plan
+        val plan = question.plan
         val Hplan = stripsPlanner.plan(HProblem).first()
 
         // println("plan:" + plan.actions.toList())

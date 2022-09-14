@@ -1,13 +1,15 @@
 import io.kotest.core.spec.style.AnnotationSpec
-import resources.ExplanationUtils
+import resources.ExplanationUtils.Question1
+import resources.ExplanationUtils.buildExplanation
 import resources.domain.BlockWorldDomain
 
 class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
     // 3. “Why is action A used, rather than action B?” // replacing action in a state
+    data class Question3(val actionToAdd: Operator, val problem: Problem, val plan: Plan, val state: State)
 
     @Test
     fun testQuestion3() {
-        val questionAddActionPlan = ExplanationUtils.Question1(
+        val question = Question1(
             BlockWorldDomain.Operators.pickC, // fatta al posto di stack AC
             BlockWorldDomain.Problems.stackDXA,
             Plan.of(
@@ -18,27 +20,32 @@ class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
                 )
             )
         )
-        val newState = questionAddActionPlan.problem.initialState.apply(BlockWorldDomain.Operators.pickC).first()
+        val newState = question.problem.initialState.apply(BlockWorldDomain.Operators.pickC).first()
         val HDomain = Domain.of( // domain extended
-            name = questionAddActionPlan.problem.domain.name,
-            predicates = questionAddActionPlan.problem.domain.predicates,
-            actions = questionAddActionPlan.problem.domain.actions,
-            types = questionAddActionPlan.problem.domain.types
+            name = question.problem.domain.name,
+            predicates = question.problem.domain.predicates,
+            actions = question.problem.domain.actions,
+            types = question.problem.domain.types
         )
 
         val HProblem = Problem.of( // problem extended
             domain = HDomain,
-            objects = questionAddActionPlan.problem.objects,
+            objects = question.problem.objects,
             initialState = newState, // extended
-            goal = questionAddActionPlan.problem.goal // extended
+            goal = question.problem.goal // extended
         )
 
-        val plan = questionAddActionPlan.plan
+        val plan = question.plan
         val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).toSet()
 
         println("plan:" + plan)
         println("Hplan:" + Hplan)
 
-        ExplanationUtils.buildExplanation(plan, Hplan.first())
+        buildExplanation(plan, Hplan.first())
+    }
+
+    @Test
+    fun testQuestion3Extended() {
+
     }
 }

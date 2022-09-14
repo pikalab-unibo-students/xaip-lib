@@ -16,42 +16,42 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
 
     @Test
     fun testQuestion2() {
-        val questionAddActionPlan = ExplanationUtils.Question1(
+        val question = ExplanationUtils.Question1(
             unstackBA,
             BlockWorldDomain.Problems.stackBC,
             Plan.of(listOf(unstackBA, stackCB))
         )
 
-        val newPredicate = newPredicate(questionAddActionPlan.actionToAdd, true)
+        val newPredicate = newPredicate(question.actionToAdd, true)
         println("new predicate: " + newPredicate.name)
 
-        val newFluent = createNewFluent(questionAddActionPlan.actionToAdd, newPredicate) // new predicate
+        val newFluent = createNewFluent(question.actionToAdd, newPredicate) // new predicate
         println("new fluent: $newFluent")
 
         val newAction = createNewAction(BlockWorldDomain.Actions.unstack, newFluent, true) // new action
         println("updated action: $newAction")
 
         val HDomain = Domain.of( // domain extended
-            name = questionAddActionPlan.problem.domain.name,
-            predicates = mutableSetOf(newPredicate).also { it.addAll(questionAddActionPlan.problem.domain.predicates) },
+            name = question.problem.domain.name,
+            predicates = mutableSetOf(newPredicate).also { it.addAll(question.problem.domain.predicates) },
             actions = mutableSetOf(newAction).also {
-                questionAddActionPlan.problem.domain.actions.map { oldAction ->
+                question.problem.domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char ->
                         char.isLetter()
                     }
                     ) it.add(oldAction)
                 }
             },
-            types = questionAddActionPlan.problem.domain.types
+            types = question.problem.domain.types
         )
 
         val HProblem = Problem.of( // problem extended
             domain = HDomain,
-            objects = questionAddActionPlan.problem.objects,
+            objects = question.problem.objects,
             initialState = State.of(
-                mutableSetOf(newFluent).also { it.addAll(questionAddActionPlan.problem.initialState.fluents) }
+                mutableSetOf(newFluent).also { it.addAll(question.problem.initialState.fluents) }
             ), // extended
-            goal = questionAddActionPlan.problem.goal/*FluentBasedGoal.of(
+            goal = question.problem.goal/*FluentBasedGoal.of(
                 mutableSetOf(newFluent).also {
                     it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets)
                 }
@@ -59,7 +59,7 @@ class `ExplanationQuestion2-RemoveaSpecificGroundedAction` : AnnotationSpec() {
             // extended
         )
 
-        val plan = questionAddActionPlan.plan
+        val plan = question.plan
         val Hplan = BlockWorldDomain.Planners.stripsPlanner.plan(HProblem).toSet()
 
         println("plan:" + plan)

@@ -10,7 +10,7 @@ class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
     @Test
     fun testQuestion3() {
         val question = Question1(
-            BlockWorldDomain.Operators.pickC, // fatta al posto di stack AC
+            BlockWorldDomain.Operators.pickC, // fatta al posto di pickB
             BlockWorldDomain.Problems.stackDXA,
             Plan.of(
                 listOf(
@@ -46,6 +46,17 @@ class `ExplanationQuestion3-replacingActionInaState` : AnnotationSpec() {
 
     @Test
     fun testQuestion3Extended() {
-
+        val question = Question3(
+            BlockWorldDomain.Operators.pickC,
+            BlockWorldDomain.Problems.stackDXA,
+            Plan.of(
+                listOf(
+                    BlockWorldDomain.Operators.pickB,
+                    BlockWorldDomain.Operators.stackAB,
+                    BlockWorldDomain.Operators.stackDB
+                )
+            ),
+            State.of()
+        )
     }
 }

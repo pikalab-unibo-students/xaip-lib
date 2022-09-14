@@ -5,7 +5,7 @@ import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.findAction
 import resources.ExplanationUtils.newPredicate
-import resources.domain.BlockWorldDomain.Operators.unstackBA
+import resources.domain.BlockWorldDomain.Operators.unstackCD
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
@@ -13,10 +13,10 @@ class `ExplanationQuestion1-addAction2aPlan` : AnnotationSpec(){
 
     @Test
     fun testQuestion1() {
-        val plans = stripsPlanner.plan(Problems.stackBC).toSet()
+        val plans = stripsPlanner.plan(Problems.stackCB).toSet()
         val question = ExplanationUtils.Question1(
-            unstackBA,
-            Problems.stackBC,
+            unstackCD,
+            Problems.stackCB,
             plans.first()
         )
 

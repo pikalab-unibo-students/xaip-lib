@@ -337,6 +337,8 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val onCB = FluentBasedGoal.of(Fluents.onCB)
+
         // i goal vanno dichiarati in ordine inverso,
         // perché ho un apila quando faccio push per metterli sulllo stack il primo è a offset zero
         val onBC = FluentBasedGoal.of(Fluents.onBC)
@@ -387,8 +389,11 @@ object BlockWorldDomain {
         var stackDC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
         var stackDA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
 
-        var unstackBA = Operator.of(BlockWorldDomain.Actions.unstack)
-            .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.b))
+        var unstackBA = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.b))
+
+        var unstackCD = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.c))
         init {
             stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
             stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
@@ -407,6 +412,7 @@ object BlockWorldDomain {
             stackDC = stackDC.apply(VariableAssignment.of(Values.Y, Values.c))
 
             unstackBA = unstackBA.apply(VariableAssignment.of(Values.Y, Values.a))
+            unstackCD = unstackCD.apply(VariableAssignment.of(Values.Y, Values.d))
         }
     }
 
@@ -427,6 +433,12 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val stackCB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onBAonCB,
+            goal = Goals.onCB
+        )
         val stackDXA = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

@@ -1,5 +1,6 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import resources.ExplanationUtils.buildExplanation
+import resources.ExplanationUtils.buildHproblem
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
@@ -32,19 +33,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         val newState = question.problem.initialState.apply(pickC).first() // questo sarebbe un punto di scelta
 
-        val hDomain = Domain.of( // domain extended
-            name = question.problem.domain.name,
-            predicates = question.problem.domain.predicates,
-            actions = question.problem.domain.actions,
-            types = question.problem.domain.types
-        )
-
-        val hProblem = Problem.of( // problem extended
-            domain = hDomain,
-            objects = question.problem.objects,
-            initialState = newState, // extended
-            goal = question.problem.goal // extended
-        )
+        val hProblem = buildHproblem(question.problem.domain, question.problem, null, newState)
 
         val plan = question.plan
         val hplan = stripsPlanner.plan(hProblem).toSet()

@@ -18,10 +18,10 @@ import Variable
 import VariableAssignment
 import dsl.domain
 import dsl.problem
-
+// tre reference al putdown
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
-    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
+    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack) // , Actions.putdown)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
     val predicates = arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
@@ -160,7 +160,7 @@ object BlockWorldDomain {
             parameters = mapOf(
                 Values.X to Types.blocks
             ),
-            preconditions = setOf(Fluents.armEmpty, Fluents.clearX), //Fluents.atXFloor),
+            preconditions = setOf(Fluents.armEmpty, Fluents.clearX, Fluents.atXFloor),
             effects = setOf(
                 Effect.of(Fluents.atXArm),
                 Effect.negative(Fluents.armEmpty),
@@ -169,6 +169,21 @@ object BlockWorldDomain {
             )
         )
 
+/*
+        val putdown = Action.of(
+            name = "putdown",
+            parameters = mapOf(
+                Values.X to Types.blocks
+            ),
+            preconditions = setOf(Fluents.atXArm),
+            effects = setOf(
+                Effect.negative(Fluents.atXArm),
+                Effect.of(Fluents.clearX),
+                Effect.of(Fluents.armEmpty),
+                Effect.of(Fluents.atXFloor)
+            )
+        )
+*/
         val stack = Action.of(
             name = "stack",
             parameters = mapOf(
@@ -202,20 +217,6 @@ object BlockWorldDomain {
                 Effect.negative(Fluents.armEmpty),
                 Effect.of(Fluents.atXArm),
                 Effect.of(Fluents.clearY)
-            )
-        )
-
-        val putdown = Action.of(
-            name = "putdown",
-            parameters = mapOf(
-                Values.X to Types.blocks
-            ),
-            preconditions = setOf(Fluents.atXArm),
-            effects = setOf(
-                Effect.negative(Fluents.atXArm),
-                Effect.of(Fluents.clearX),
-                Effect.of(Fluents.armEmpty),
-                Effect.of(Fluents.atXFloor)
             )
         )
     }
@@ -253,7 +254,7 @@ object BlockWorldDomain {
         val blockWorld = Domain.of(
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
-            actions = setOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown),
+            actions = setOf(Actions.pick, Actions.stack, Actions.unstack), // , Actions.putdown),
             types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
         val blockWorldAxiomException = Domain.of(

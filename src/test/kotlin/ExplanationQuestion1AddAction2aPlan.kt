@@ -1,85 +1,52 @@
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
+import resources.ExplanationUtils.ContrastiveExplanation
 import resources.ExplanationUtils.buildExplanation
+import resources.ExplanationUtils.buildHdomain
+import resources.ExplanationUtils.buildHproblem
 import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.findAction
 import resources.ExplanationUtils.newPredicate
+import resources.domain.BlockWorldDomain.Operators.stackCB
 import resources.domain.BlockWorldDomain.Operators.unstackCD
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
+import resources.domain.BlockWorldDomain.Values
+
 class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
-
     @Test
     fun testQuestion1() {
         val plans = stripsPlanner.plan(Problems.stackCB).toSet()
-        val question = ExplanationUtils.Question1(
+        val questionAddCD = ExplanationUtils.Question1(
             unstackCD,
             Problems.stackCB,
             plans.first()
         )
-
-        println(
-            "Piani disponibili: " +
-                stripsPlanner.plan(Problems.stackBC).toSet().size +
-                "\n" +
-                plans
-        )
-
-        val predicate = newPredicate(question.actionToAddOrToRemove)
-        // println("new predicate: $predicate")
-
-        val newFluent = createNewFluent(question.actionToAddOrToRemove, predicate)
-        // println("new fluent: $newFluent")
-
+        val newPredicate = newPredicate(questionAddCD.actionToAddOrToRemove)
+        val newFluent = createNewFluent(questionAddCD.actionToAddOrToRemove, newPredicate)
         val notGroundAction =
-            findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
+            findAction(questionAddCD.actionToAddOrToRemove, questionAddCD.problem.domain.actions)
         val newAction = createNewAction(notGroundAction, newFluent)
-        // println("updated action: $newAction")
-
-        val hDomain = Domain.of(
-            name = question.problem.domain.name,
-            predicates = mutableSetOf(predicate).also { it.addAll(question.problem.domain.predicates) },
-            actions = mutableSetOf(newAction).also {
-                question.problem.domain.actions.map { oldAction ->
-                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) it.add(oldAction)
-                }
-            },
-            types = question.problem.domain.types
-        )
-        // println("HDomain action")
-
-        // for (action in HDomain.actions)
-        //    println("  " + action.toString())
-
-        val hProblem = Problem.of(
-            domain = hDomain,
-            objects = question.problem.objects,
-            initialState = question.problem.initialState,
-            goal = FluentBasedGoal.of(
-                (question.problem.goal as FluentBasedGoal).targets.toMutableSet().also {
-                    it.add(newFluent)
-                }.toSet()
-                /*
-                mutableSetOf(newFluent)
-                    .also {
-                        it.addAll((questionAddActionPlan.problem.goal as FluentBasedGoal).targets)
-                    }
-
-                 */
-            )
-        )
-
-        // println("HProblem " + HProblem.goal)
-        // println(HProblem)
-
-        val plan = question.originalPlan
+        val hDomain = buildHdomain(questionAddCD.problem.domain, newPredicate, newAction)
+        val hProblem = buildHproblem(hDomain, questionAddCD.problem, newFluent, null)
+        val plan = questionAddCD.originalPlan
         val hplan = stripsPlanner.plan(hProblem).first()
+        val explanation: ContrastiveExplanation =
+            buildExplanation(plan, hplan, questionAddCD.actionToAddOrToRemove)
+        var newActionGrounded = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.c))
+        newActionGrounded = newActionGrounded.apply(VariableAssignment.of(Values.Y, Values.d))
+        val contrastiveExplanation = ContrastiveExplanation(
+            questionAddCD.originalPlan,
+            hplan,
+            questionAddCD.actionToAddOrToRemove,
+            setOf(newActionGrounded),
+            setOf(questionAddCD.actionToAddOrToRemove),
+            setOf(stackCB)
+        )
 
-        // println("plan:" + plan.actions.toList())
-        println("Hplan:" + hplan.actions.toList())
-
-        buildExplanation(plan, hplan, question.actionToAddOrToRemove)
+        explanation shouldBe contrastiveExplanation
     }
 }

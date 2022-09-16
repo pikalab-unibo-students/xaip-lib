@@ -8,6 +8,7 @@ import VariableAssignment
 import impl.res.toPddl
 import impl.res.toTerm
 import it.unibo.tuprolog.core.Fact
+import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.core.Tuple
 import it.unibo.tuprolog.solve.Solution
 import it.unibo.tuprolog.solve.Solver
@@ -48,7 +49,7 @@ internal data class StateImpl(override val fluents: Set<Fluent>) : State {
      */
     private fun mguForActionPreconditions(action: Action): Sequence<VariableAssignment> {
         val stateAsTheory = Theory.of(fluents.map { it.toTerm() }.map { Fact.of(it) })
-        val preconditionsAsQuery = Tuple.of(action.preconditions.map { it.toTerm() })
+        val preconditionsAsQuery = Tuple.wrapIfNeeded(action.preconditions.map { it.toTerm() }) as Struct
         return Solver.prolog.solverOf(
             staticKb = stateAsTheory,
             flags = FlagStore.DEFAULT + (Unknown.name to Unknown.FAIL)

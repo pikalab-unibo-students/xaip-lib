@@ -21,7 +21,7 @@ import dsl.problem
 // tre reference al putdown
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
-    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack) // , Actions.putdown)
+    val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
     val predicates = arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
@@ -169,7 +169,6 @@ object BlockWorldDomain {
             )
         )
 
-/*
         val putdown = Action.of(
             name = "putdown",
             parameters = mapOf(
@@ -183,7 +182,6 @@ object BlockWorldDomain {
                 Effect.of(Fluents.atXFloor)
             )
         )
-*/
         val stack = Action.of(
             name = "stack",
             parameters = mapOf(
@@ -254,7 +252,7 @@ object BlockWorldDomain {
         val blockWorld = Domain.of(
             name = "block_world",
             predicates = setOf(Predicates.at, Predicates.on, Predicates.armEmpty, Predicates.clear),
-            actions = setOf(Actions.pick, Actions.stack, Actions.unstack), // , Actions.putdown),
+            actions = setOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown),
             types = setOf(Types.blocks, Types.locations, Types.anything, Types.strings)
         )
         val blockWorldAxiomException = Domain.of(

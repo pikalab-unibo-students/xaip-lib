@@ -38,6 +38,8 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
             buildExplanation(plan, hplan, questionAddCD.actionToAddOrToRemove)
         var newActionGrounded = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.c))
         newActionGrounded = newActionGrounded.apply(VariableAssignment.of(Values.Y, Values.d))
+
+        val originalPlan =Plan.of(listOf())
         val contrastiveExplanation = ContrastiveExplanation(
             questionAddCD.originalPlan,
             hplan,

@@ -6,6 +6,7 @@ import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
+import resources.domain.BlockWorldDomain.Operators.putdownA
 import resources.domain.BlockWorldDomain.Operators.stackAB
 import resources.domain.BlockWorldDomain.Operators.stackAC
 import resources.domain.BlockWorldDomain.Operators.stackAD
@@ -18,6 +19,7 @@ import resources.domain.BlockWorldDomain.Operators.stackCD
 import resources.domain.BlockWorldDomain.Operators.stackDA
 import resources.domain.BlockWorldDomain.Operators.stackDB
 import resources.domain.BlockWorldDomain.Operators.stackDC
+import resources.domain.BlockWorldDomain.Operators.unstackAB
 import resources.domain.BlockWorldDomain.Planners
 import resources.domain.BlockWorldDomain.Problems
 
@@ -136,6 +138,15 @@ class StripsPlannerTest : AnnotationSpec() {
     fun testStackABC() {
         val plans = Planners.stripsPlanner.plan(Problems.stackCAB).toSet()
         val plan2check = setOf(Plan.of(listOf(pickA, stackAB, pickC, stackCA)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackAB() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackAB).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA)))
         plans.size shouldBe 1
         plans shouldBe plan2check
         println(plans)

@@ -66,7 +66,7 @@ object ExplanationUtils {
                 domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char ->
                         char.isLetter()
-                    }
+                    }   // se il nome è diverso lo aggiungo
                     ) it.add(oldAction)
                 }
             },

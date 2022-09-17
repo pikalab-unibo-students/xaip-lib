@@ -31,13 +31,13 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
         println(question)
 
         val newPredicate = newPredicate(question.actionToAddOrToRemove, true)
-        // println("new predicate: " + newPredicate.name)
+        println("new predicate: " + newPredicate.name)
 
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate) // new predicate
-        // println("new fluent: $newFluent")
+        println("new fluent: $newFluent")
 
         val newAction = createNewAction(Actions.unstack, newFluent, true) // new action
-        // println("updated action: $newAction")
+        println("updated action: $newAction")
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         println(hDomain)
@@ -56,21 +56,21 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
             Problems.stackBC,
             Plan.of(listOf(unstackCD, unstackBA, stackBC))
         )
-        // println(question)
+        println(question)
 
         val newPredicate = newPredicate(question.actionToAddOrToRemove, true)
-        // println("new predicate: " + newPredicate.name)
+        println("new predicate: " + newPredicate.name)
 
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate) // new predicate
-        // println("new fluent: $newFluent")
+        println("new fluent: $newFluent")
 
         val newAction = createNewAction(Actions.unstack, newFluent, true) // new action
-        // println("updated action: $newAction")
+        println("updated action: $newAction")
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
 
         val hProblem = buildHproblem(hDomain, question.problem, newFluent, null, true)
-        // println(HProblem)
+        println(hProblem)
 
         val hplan = stripsPlanner.plan(hProblem).toSet()
 

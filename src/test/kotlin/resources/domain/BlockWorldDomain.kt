@@ -18,7 +18,7 @@ import Variable
 import VariableAssignment
 import dsl.domain
 import dsl.problem
-// tre reference al putdown
+
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
@@ -337,6 +337,13 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val atAfloorAtBfloorAtCfloorAtDfloor =
+            FluentBasedGoal.of(
+                Fluents.atAFloor,
+                Fluents.atCFloor,
+                Fluents.atDFloor,
+                Fluents.atBFloor
+            )
         val onDXonXA = FluentBasedGoal.of(Fluents.onDX, Fluents.onXA)
         val onCB = FluentBasedGoal.of(Fluents.onCB)
 
@@ -390,11 +397,42 @@ object BlockWorldDomain {
         var stackDC = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
         var stackDA = Operator.of(Actions.stack).apply(VariableAssignment.of(Values.X, Values.d))
 
+        var unstackAB = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.a))
+        var unstackAC = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.a))
+        var unstackAD = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.a))
+
         var unstackBA = Operator.of(Actions.unstack)
             .apply(VariableAssignment.of(Values.X, Values.b))
+        var unstackBC = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.b))
+        var unstackBD = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.b))
 
+        var unstackCA = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.c))
+        var unstackCB = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.c))
         var unstackCD = Operator.of(Actions.unstack)
             .apply(VariableAssignment.of(Values.X, Values.c))
+
+        var unstackDA = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.d))
+        var unstackDB = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.d))
+        var unstackDC = Operator.of(Actions.unstack)
+            .apply(VariableAssignment.of(Values.X, Values.d))
+
+        val putdownA = Operator.of(Actions.putdown)
+            .apply(VariableAssignment.of(Values.X, Values.a))
+        val putdownB = Operator.of(Actions.putdown)
+            .apply(VariableAssignment.of(Values.X, Values.b))
+        val putdownC = Operator.of(Actions.putdown)
+            .apply(VariableAssignment.of(Values.X, Values.c))
+        val putdownD = Operator.of(Actions.putdown)
+            .apply(VariableAssignment.of(Values.X, Values.d))
         init {
             stackAB = stackAB.apply(VariableAssignment.of(Values.Y, Values.b))
             stackAC = stackAC.apply(VariableAssignment.of(Values.Y, Values.c))
@@ -412,8 +450,21 @@ object BlockWorldDomain {
             stackDB = stackDB.apply(VariableAssignment.of(Values.Y, Values.b))
             stackDC = stackDC.apply(VariableAssignment.of(Values.Y, Values.c))
 
+            unstackAB = unstackAB.apply(VariableAssignment.of(Values.Y, Values.b))
+            unstackAC = unstackAC.apply(VariableAssignment.of(Values.Y, Values.c))
+            unstackAD = unstackAD.apply(VariableAssignment.of(Values.Y, Values.d))
+
             unstackBA = unstackBA.apply(VariableAssignment.of(Values.Y, Values.a))
+            unstackBC = unstackBC.apply(VariableAssignment.of(Values.Y, Values.c))
+            unstackBD = unstackBD.apply(VariableAssignment.of(Values.Y, Values.d))
+
+            unstackCA = unstackCA.apply(VariableAssignment.of(Values.Y, Values.a))
+            unstackCB = unstackCB.apply(VariableAssignment.of(Values.Y, Values.b))
             unstackCD = unstackCD.apply(VariableAssignment.of(Values.Y, Values.d))
+
+            unstackDA = unstackDA.apply(VariableAssignment.of(Values.Y, Values.a))
+            unstackDB = unstackDB.apply(VariableAssignment.of(Values.Y, Values.b))
+            unstackDC = unstackDC.apply(VariableAssignment.of(Values.Y, Values.c))
         }
     }
 
@@ -434,6 +485,13 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val unstackAB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onAB,
+            goal = Goals.atAfloorAtBfloorAtCfloorAtDfloor
+        )
+
         val stackCB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
@@ -532,6 +590,16 @@ object BlockWorldDomain {
     }
 
     object States {
+        val onAB = State.of(
+            Fluents.onAB,
+            Fluents.atCFloor,
+            Fluents.atDFloor,
+            Fluents.atBFloor,
+            Fluents.clearA,
+            Fluents.clearC,
+            Fluents.clearD,
+            Fluents.armEmpty
+        )
         val initial = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,

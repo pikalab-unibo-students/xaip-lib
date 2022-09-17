@@ -143,7 +143,10 @@ internal data class ExecutionContext(
             |  ${ExecutionContext::stack.name}=${stack.asReversed()},
             |  ${ExecutionContext::depth.name}=$depth/$maxDepth,
             |  ${ExecutionContext::plan.name}=$plan,
-            |  ${ExecutionContext::choicePoints.name}=${choicePoints.toString().replace("\n", "\n  ")}
+            |  ${ExecutionContext::choicePoints}=${choicePoints.toSet().size//.replace("\n", "\n  ")
+            }
             |)
         """.trimMargin()
+    // |  ${ExecutionContext::choicePoints.name}=${choicePoints.toString().replace("\n", "\n  ")}
+    //
 }

@@ -337,6 +337,7 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val armNotEmpty = FluentBasedGoal.of(Fluents.atXArm)
         val atAfloorAtBfloorAtCfloorAtDfloor =
             FluentBasedGoal.of(
                 Fluents.atAFloor,
@@ -345,11 +346,11 @@ object BlockWorldDomain {
                 Fluents.atBFloor
             )
         val onDXonXA = FluentBasedGoal.of(Fluents.onDX, Fluents.onXA)
-        val onCB = FluentBasedGoal.of(Fluents.onCB)
+        val onCB = FluentBasedGoal.of(Fluents.atAFloor, Fluents.atBFloor, Fluents.atDFloor, Fluents.onCB)
 
         // i goal vanno dichiarati in ordine inverso,
         // perché ho un apila quando faccio push per metterli sulllo stack il primo è a offset zero
-        val onBC = FluentBasedGoal.of(Fluents.onBC)
+        val onBC = FluentBasedGoal.of(Fluents.onBC, Fluents.atAFloor, Fluents.atDFloor, Fluents.atCFloor)
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
         val atCarm =
             FluentBasedGoal.of(Fluents.atCArm)
@@ -485,6 +486,12 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val armNotEmpty = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.armNotEmpty
+        )
         val unstackAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

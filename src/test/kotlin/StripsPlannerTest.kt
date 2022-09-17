@@ -151,4 +151,13 @@ class StripsPlannerTest : AnnotationSpec() {
         plans shouldBe plan2check
         println(plans)
     }
+
+    @Test
+    fun testArmNotEmpty() {
+        val plans = Planners.stripsPlanner.plan(Problems.armNotEmpty).toSet()
+        val plan2check = setOf(Plan.of(listOf(pickA, pickB, pickC, pickD)))
+        plans.size shouldBe 4
+        plans shouldBe plan2check
+        println(plans)
+    }
 }

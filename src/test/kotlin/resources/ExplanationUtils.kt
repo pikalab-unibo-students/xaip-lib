@@ -13,7 +13,6 @@ import State
 object ExplanationUtils {
     data class Question1(val actionToAddOrToRemove: Operator, val problem: Problem, val originalPlan: Plan) {
         override fun toString(): String =
-
             """${Question1::class.simpleName}(
             |  ${Question1::actionToAddOrToRemove.name}=$actionToAddOrToRemove,
             |  ${Question1::problem.name}=$problem,
@@ -100,7 +99,7 @@ object ExplanationUtils {
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.args.toTypedArray())
 
-    fun newPredicate(action: Action, negated: Boolean = false): Predicate =
+    fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
         if (negated) Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 

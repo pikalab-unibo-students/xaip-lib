@@ -12,7 +12,7 @@ import State
 internal class StripsPlanner : Planner {
 
     companion object {
-        private const val DEBUG = true
+        private const val DEBUG = false
 
         private fun log(msg: () -> String) {
             if (DEBUG) {

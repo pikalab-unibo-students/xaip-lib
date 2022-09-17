@@ -10,10 +10,6 @@ import resources.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Actions
 import resources.domain.BlockWorldDomain.Operators.pickA
-import resources.domain.BlockWorldDomain.Operators.pickB
-import resources.domain.BlockWorldDomain.Operators.stackBC
-import resources.domain.BlockWorldDomain.Operators.unstackBA
-import resources.domain.BlockWorldDomain.Operators.unstackCD
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 
@@ -24,11 +20,11 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
     */
 
     @Test
-    fun testQuestion2PlanNotPossible() {
+    fun testQuestion2() {
         val question = ExplanationUtils.Question1(
-            unstackCD,
-            Problems.stackCB,
-            Plan.of(listOf(unstackCD, unstackBA, stackBC))
+            pickA,
+            Problems.armNotEmpty,
+            Plan.of(listOf(pickA))
         )
         println(question)
 
@@ -38,7 +34,7 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         println("new fluent: $newFluent")
 
-        val newAction = createNewAction(Actions.unstack, newFluent, true) // new action
+        val newAction = createNewAction(Actions.pick, newFluent, true) // new action
         println("updated action: $newAction")
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
@@ -50,45 +46,4 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
         buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
     }
 
-    @Test
-    fun testQuestion2() {
-        val question = ExplanationUtils.Question1(
-            pickA,
-            Problems.armNotEmpty,
-            Plan.of(listOf(pickB))
-        )
-        println(question)
-
-        val newPredicate = createNewPredicate(question.actionToAddOrToRemove, true)
-        println("new predicate: " + newPredicate.name)
-
-        val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate) // new predicate
-        println("new fluent: $newFluent")
-
-        val newAction = createNewAction(Actions.pick, newFluent, true) // new action
-        println("updated action: $newAction")
-
-        val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
-
-        val hProblem = buildHproblem(hDomain, question.problem, newFluent, null, true)
-        println(hProblem)
-
-        val hplan = stripsPlanner.plan(hProblem).toSet()
-
-        val explanation = buildExplanation(question.originalPlan, hplan.first(), question.actionToAddOrToRemove)
-
-        val newActionGrounded =
-            Operator.of(newAction).apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a))
-
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
-            question.originalPlan,
-            hplan.first(),
-            question.actionToAddOrToRemove,
-            setOf(newActionGrounded),
-            setOf(question.actionToAddOrToRemove),
-            setOf(pickB)
-        )
-
-        explanation shouldBe contrastiveExplanation
-    }
 }

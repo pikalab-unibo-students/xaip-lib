@@ -26,7 +26,7 @@ object ExplanationUtils {
         val actionToAddOrRemove: Operator,
         val addList: Set<Operator>,
         val deleteList: Set<Operator>,
-        val existingList: Set<Operator>,
+        val existingList: Set<Operator>
     ) {
         override fun toString(): String =
             """${ContrastiveExplanation::class.simpleName}(
@@ -65,7 +65,7 @@ object ExplanationUtils {
                 domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char ->
                         char.isLetter()
-                    }   // se il nome è diverso lo aggiungo
+                    } // se il nome è diverso lo aggiungo
                     ) it.add(oldAction)
                 }
             },
@@ -88,11 +88,19 @@ object ExplanationUtils {
                     it.addAll(problem.initialState.fluents)
                 }
             ) else state ?: problem.initialState, // extended
-            goal = if (newFluent != null) FluentBasedGoal.of(
-                mutableSetOf(newFluent).also {
-                    it.addAll((problem.goal as FluentBasedGoal).targets)
-                }
-            ) else problem.goal
+            goal = if (newFluent != null) {
+                /*FluentBasedGoal.of(
+                    mutableSetOf(newFluent).also {
+                        it.addAll((problem.goal as FluentBasedGoal).targets)
+                    }
+                )
+
+                 */
+                FluentBasedGoal.of(
+                    (problem.goal as FluentBasedGoal).targets.toMutableSet().also{
+                        it.add(newFluent)}
+                )
+            } else problem.goal
         )
     // extended
 

@@ -12,7 +12,6 @@ import resources.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickC
-import resources.domain.BlockWorldDomain.Operators.stackCB
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 import resources.domain.BlockWorldDomain.Values

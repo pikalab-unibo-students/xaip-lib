@@ -94,18 +94,21 @@ object ExplanationUtils {
                         it.addAll((problem.goal as FluentBasedGoal).targets)
                     }
                 )
-
                  */
                 FluentBasedGoal.of(
-                    (problem.goal as FluentBasedGoal).targets.toMutableSet().also{
-                        it.add(newFluent)}
+                    (problem.goal as FluentBasedGoal).targets.toMutableSet().also {
+                        it.add(newFluent)
+                    }
                 )
             } else problem.goal
         )
+
     // extended
+    fun createNewGroundFluent(action: Operator, predicate: Predicate): Fluent =
+        Fluent.positive(predicate, *action.args.toTypedArray())
 
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
-        Fluent.positive(predicate, *action.args.toTypedArray())
+        Fluent.positive(predicate, *action.args.map { Variable.of(it.toString().uppercase()) }.toTypedArray())
 
     fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
         if (negated) Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())

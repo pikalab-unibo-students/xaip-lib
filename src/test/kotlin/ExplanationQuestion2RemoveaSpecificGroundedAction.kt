@@ -6,6 +6,7 @@ import resources.ExplanationUtils.buildHdomain
 import resources.ExplanationUtils.buildHproblem
 import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
+import resources.ExplanationUtils.createNewGroundFluent
 import resources.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Actions
@@ -33,12 +34,14 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
 
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         println("new fluent: $newFluent")
+        val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
+        println("new fluent: $newFluent")
 
         val newAction = createNewAction(Actions.pick, newFluent, true) // new action
         println("updated action: $newAction")
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
-        val hProblem = buildHproblem(hDomain, question.problem, newFluent, null, true)
+        val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, true)
         println(hProblem)
 
         val hplan = stripsPlanner.plan(hProblem).first()

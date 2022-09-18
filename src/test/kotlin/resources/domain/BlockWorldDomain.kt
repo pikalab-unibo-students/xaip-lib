@@ -337,6 +337,9 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val onBAonDC = FluentBasedGoal.of(
+            Fluents.onBA, Fluents.onDC, Fluents.atAFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearD
+        )
         val armNotEmpty = FluentBasedGoal.of(Fluents.atXArm)
         val atAfloorAtBfloorAtCfloorAtDfloor =
             FluentBasedGoal.of(
@@ -486,6 +489,13 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val stackBAstackDC = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onBAonDC
+        )
+
         val armNotEmpty = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

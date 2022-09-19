@@ -8,16 +8,14 @@ import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.createNewGroundFluent
 import resources.ExplanationUtils.createNewPredicate
-import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Actions
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
+import resources.domain.BlockWorldDomain.Values
 
 class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
-    /*
-    2. Why is action A used in state, rather not being used? // remove specific grounded action
-    */
+    // 2. Why is action A used in state, rather not being used? // remove specific grounded action
 
     @Test
     fun testQuestion2() {
@@ -34,11 +32,11 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         println("new fluent: $newFluent")
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
-        println("new fluent: $newFluent")
+        println("new ground fluent: $newFluent")
 
         val newAction = createNewAction(Actions.pick, newFluent, true) // new action
         println("updated action: $newAction")
-        val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.b))
+        val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.b))
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, true)

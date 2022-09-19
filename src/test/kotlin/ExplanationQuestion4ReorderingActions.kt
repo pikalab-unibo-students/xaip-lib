@@ -61,7 +61,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
             predicates.add(predicate2)
         }
 
-        val hPlan: Plan
+        val hPlan: Plan = TODO()
         val explanation: ExplanationUtils.ContrastiveExplanation =
             ExplanationUtils.buildExplanation(question.originalPlan, hPlan, question.action1)
 

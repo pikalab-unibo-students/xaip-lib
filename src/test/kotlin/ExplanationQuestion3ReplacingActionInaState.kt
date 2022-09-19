@@ -3,27 +3,29 @@ import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
 import resources.ExplanationUtils.buildExplanation
 import resources.ExplanationUtils.buildHproblem
+import resources.domain.BlockWorldDomain
+import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
+import resources.domain.BlockWorldDomain.Operators.stackAB
 import resources.domain.BlockWorldDomain.Operators.stackBA
-import resources.domain.BlockWorldDomain.Operators.stackBD
 import resources.domain.BlockWorldDomain.Operators.stackCA
 import resources.domain.BlockWorldDomain.Operators.stackDB
 import resources.domain.BlockWorldDomain.Operators.stackDC
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
-import resources.domain.BlockWorldDomain.States
 
 class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
     // 3. “Why is action A used, rather than action B?” // replacing action in a state
-    data class Question3(val actionToAdd: Operator, val problem: Problem, val originalPlan: Plan, val state: State? = null)
+    data class Question3(val actionToAdd: Operator, val actionToRemove: Operator, val problem: Problem, val originalPlan: Plan, val state: State? = null)
 
     @Test
     fun testQuestion3() {
         var newProblem: Problem
         val question = Question3(
             pickC, // fatta al posto di pickB
+            pickB,
             Problems.stackDXA,
             Plan.of(
                 listOf(
@@ -57,34 +59,28 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
     fun testQuestion3Extended() {
         val newProblem: Problem
         val question = Question3(
-            pickB,
-            Problems.stackCAstackBY,
-            Plan.of(
-                listOf(
-                    pickC,
-                    stackCA,
-                    pickD,
-                    stackBD
-                )
-            ),
-            States.onCAatBfloorDfloor
+            pickD, // al posto di pickC
+            pickC,
+            Problems.stackZWpickX,
+            Plan.of(listOf(BlockWorldDomain.Operators.pickA, BlockWorldDomain.Operators.stackAB, pickC)),
+            State.of(BlockWorldDomain.Fluents.onAB, BlockWorldDomain.Fluents.clearA, BlockWorldDomain.Fluents.atCFloor, BlockWorldDomain.Fluents.clearC, BlockWorldDomain.Fluents.atDFloor, BlockWorldDomain.Fluents.clearD, BlockWorldDomain.Fluents.atBFloor, BlockWorldDomain.Fluents.armEmpty)
         )
 
-        if (question.state != null) {
-            newProblem = Problem.of(
+        newProblem = if (question.state != null) {
+            Problem.of(
                 domain = question.problem.domain,
                 objects = question.problem.objects,
-                initialState = question.state, // extended
-                goal = question.problem.goal // extended
+                initialState = question.state,
+                goal = question.problem.goal
             )
         } else {
-            newProblem = question.problem
+            question.problem
         }
 
         println("new initial state: " + newProblem.initialState)
 
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
-        println("apply: " + question.actionToAdd + " to inital state obtaining: " + newState)
+        println("apply: " + question.actionToAdd + " to initial state obtaining: " + newState)
 
         val hDomain = Domain.of( // domain extended
             name = newProblem.domain.name,
@@ -99,17 +95,22 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             initialState = newState, // extended
             goal = newProblem.goal // extended
         )
+        println("problem $hProblem")
 
-        val hplan = stripsPlanner.plan(hProblem).toSet()
+        val tmpPlan = stripsPlanner.plan(hProblem).first()
+        val actionToKeep = question.originalPlan.actions.subList(0, question.originalPlan.actions.indexOf(question.actionToRemove)).toMutableList()
+        val hplan = Plan.of(actionToKeep.also{it.add(question.actionToAdd)}.also { it.addAll(tmpPlan.actions) })
+        val explanation = buildExplanation(question.originalPlan, hplan, question.actionToAdd)
+        println("explanation $explanation")
+        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+            question.originalPlan,
+            hplan,
+            question.actionToAdd,
+            setOf(pickD),
+            setOf(pickC),
+            setOf(pickA, stackAB)
+        )
 
-        val actionsToKeep = mutableListOf<Operator>()
-        var tmpStates: Sequence<State> = emptySequence()
-        val tmpState: State = State.of(emptySet())
-        for (action in question.originalPlan.actions) {
-            actionsToKeep.add(action as Operator)
-            tmpStates = tmpState.apply(action)
-            // mi serve una chiamata ricorsiva
-        }
-        buildExplanation(question.originalPlan, hplan.first(), question.actionToAdd)
+        explanation shouldBe contrastiveExplanation
     }
 }

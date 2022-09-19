@@ -10,6 +10,7 @@ import resources.ExplanationUtils.createNewGroundFluent
 import resources.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain.Actions
 import resources.domain.BlockWorldDomain.Operators.pickA
+import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 import resources.domain.BlockWorldDomain.Values
@@ -39,7 +40,7 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
         val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.b))
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
-        val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, true)
+        val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, false)
         println("Hproblem $hProblem")
 
         val hplan = stripsPlanner.plan(hProblem).first()
@@ -48,7 +49,7 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
 
         val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
-            hplan,
+            Plan.of(listOf(newGroundAction)),
             question.actionToAddOrToRemove
         )
 

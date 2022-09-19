@@ -1,7 +1,7 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
-import resources.ExplanationUtils.buildExplanation
+import resources.ExplanationUtils.ContrastiveExplanation
 import resources.ExplanationUtils.buildHproblem
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Operators.pickA
@@ -22,7 +22,6 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
     @Test
     fun testQuestion3() {
-        var newProblem: Problem
         val question = Question3(
             pickC, // fatta al posto di pickB
             pickB,
@@ -43,14 +42,11 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         val hplan = stripsPlanner.plan(hProblem).toSet()
 
-        val explanation = buildExplanation(question.originalPlan, Plan.of(mutableListOf(pickC).also { it.addAll(hplan.first().actions as List<Operator>) }), question.actionToAdd)
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+        val explanation = ContrastiveExplanation.of(question.originalPlan, Plan.of(mutableListOf(pickC).also { it.addAll(hplan.first().actions as List<Operator>) }), question.actionToAdd)
+        val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
             Plan.of(listOf(pickC, stackCA, pickD, stackDC)), // non c'è pickC perché l'ho già applicata nello stato iniziale, non dovrei comunque rappresentarla?
-            question.actionToAdd,
-            setOf(pickC, stackCA, stackDC),
-            setOf(pickB, stackBA, stackDB),
-            setOf(pickD)
+            question.actionToAdd
         )
         explanation shouldBe contrastiveExplanation
     }
@@ -62,7 +58,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             pickD, // al posto di pickC
             pickC,
             Problems.stackZWpickX,
-            Plan.of(listOf(BlockWorldDomain.Operators.pickA, BlockWorldDomain.Operators.stackAB, pickC)),
+            Plan.of(listOf(pickA, stackAB, pickC)),
             State.of(BlockWorldDomain.Fluents.onAB, BlockWorldDomain.Fluents.clearA, BlockWorldDomain.Fluents.atCFloor, BlockWorldDomain.Fluents.clearC, BlockWorldDomain.Fluents.atDFloor, BlockWorldDomain.Fluents.clearD, BlockWorldDomain.Fluents.atBFloor, BlockWorldDomain.Fluents.armEmpty)
         )
 
@@ -97,20 +93,19 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         )
         println("problem $hProblem")
 
-        val tmpPlan = stripsPlanner.plan(hProblem).first()
-        val actionToKeep = question.originalPlan.actions.subList(0, question.originalPlan.actions.indexOf(question.actionToRemove)).toMutableList()
-        val hplan = Plan.of(actionToKeep.also{it.add(question.actionToAdd)}.also { it.addAll(tmpPlan.actions) })
-        val explanation = buildExplanation(question.originalPlan, hplan, question.actionToAdd)
-        println("explanation $explanation")
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
-            question.originalPlan,
-            hplan,
-            question.actionToAdd,
-            setOf(pickD),
-            setOf(pickC),
-            setOf(pickA, stackAB)
-        )
 
-        explanation shouldBe contrastiveExplanation
+        val actionToKeep = question.originalPlan.actions.subList(0, question.originalPlan.actions.indexOf(question.actionToRemove)).toMutableList()
+        val plans = stripsPlanner.plan(hProblem).toSet()
+        for(plan in plans) {
+            val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.actions) })
+            val explanation = ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAdd)
+            println("explanation $explanation")
+            val contrastiveExplanation = ContrastiveExplanation.of(
+                question.originalPlan,
+                hplan,
+                question.actionToAdd
+            )
+            explanation shouldBe contrastiveExplanation
+        }
     }
 }

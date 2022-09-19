@@ -2,7 +2,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
 import resources.ExplanationUtils.ContrastiveExplanation
-import resources.ExplanationUtils.buildExplanation
 import resources.ExplanationUtils.buildHdomain
 import resources.ExplanationUtils.buildHproblem
 import resources.ExplanationUtils.createNewAction
@@ -31,9 +30,9 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
 
-        val notGroundAction =
+        val oldAction =
             findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
-        val newAction = createNewAction(notGroundAction, newFluent)
+        val newAction = createNewAction(oldAction, newFluent)
         val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.a))
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
@@ -41,15 +40,12 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
         val hplan = stripsPlanner.plan(hProblem).first()
 
         val explanation: ContrastiveExplanation =
-            buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
+            ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAddOrToRemove)
 
-        val contrastiveExplanation = ContrastiveExplanation(
+        val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
             hplan,
-            question.actionToAddOrToRemove,
-            setOf(newGroundAction),
-            setOf(pickB),
-            setOf()
+            question.actionToAddOrToRemove
         )
 
         explanation shouldBe contrastiveExplanation
@@ -83,15 +79,12 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
         // println(hplans)
 
         val explanation: ContrastiveExplanation =
-            buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
+            ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAddOrToRemove)
 
-        val contrastiveExplanation = ContrastiveExplanation(
+        val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
             hplan,
-            question.actionToAddOrToRemove,
-            setOf(newGroundAction),
-            setOf(pickB),
-            setOf()
+            question.actionToAddOrToRemove
         )
 
         explanation shouldBe contrastiveExplanation

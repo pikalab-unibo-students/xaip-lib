@@ -20,14 +20,36 @@ object ExplanationUtils {
             |)
             """.trimMargin()
     }
-    data class ContrastiveExplanation(
-        val originalPlan: Plan,
-        val newPlan: Plan,
-        val actionToAddOrRemove: Operator,
-        val addList: Set<Operator>,
-        val deleteList: Set<Operator>,
+
+    interface ContrastiveExplanation {
+        val originalPlan: Plan
+        val newPlan: Plan
+        val actionToAddOrRemove: Operator
+        val addList: Set<Operator>
+        val deleteList: Set<Operator>
         val existingList: Set<Operator>
-    ) {
+
+        companion object {
+            /**
+             * Factory method for an [ContrastiveExplanation] creation.
+             */
+            fun of(
+                originalPlan: Plan,
+                newPlan: Plan,
+                actionToAddOrRemove: Operator
+            ): ContrastiveExplanation = ContrastiveExplanationImpl(originalPlan, newPlan, actionToAddOrRemove)
+        }
+    }
+
+    data class ContrastiveExplanationImpl(
+        override val originalPlan: Plan,
+        override val newPlan: Plan,
+        override val actionToAddOrRemove: Operator
+    ) : ContrastiveExplanation {
+        override val addList: Set<Operator> by lazy { newPlan.actions.filter { !originalPlan.actions.contains(it) }.map { it as Operator }.toSet() }
+        override val deleteList: Set<Operator> by lazy { originalPlan.actions.filter { !newPlan.actions.contains(it) }.map { it as Operator }.toSet() }
+        override val existingList: Set<Operator> by lazy { originalPlan.actions.filter { newPlan.actions.contains(it) }.map { it as Operator }.toSet() }
+
         override fun toString(): String =
             """${ContrastiveExplanation::class.simpleName}(
             |  ${ContrastiveExplanation::originalPlan.name}=$originalPlan,
@@ -39,22 +61,26 @@ object ExplanationUtils {
             |  ${ContrastiveExplanation::existingList.name}=$existingList
             |)
             """.trimMargin()
-    }
 
-    fun buildExplanation(plan: Plan, hPlan: Plan, action: Operator): ContrastiveExplanation {
-        val addList: MutableSet<Operator> = mutableSetOf()
-        val deleteList: MutableSet<Operator> = mutableSetOf()
-        val existingList: MutableSet<Operator> = mutableSetOf()
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
 
-        plan.actions.map {
-            if (!hPlan.actions.contains(it)) deleteList.add(it as Operator)
-            if (hPlan.actions.contains(it)) existingList.add(it as Operator)
+            other as ContrastiveExplanation
+
+            if (originalPlan != other.originalPlan) return false
+            if (newPlan != other.newPlan) return false
+            if (actionToAddOrRemove != other.actionToAddOrRemove) return false
+
+            return true
         }
 
-        hPlan.actions.map {
-            if (!plan.actions.contains(it)) addList.add(it as Operator)
+        override fun hashCode(): Int {
+            var result = originalPlan.hashCode()
+            result = 31 * result + newPlan.hashCode()
+            result = 31 * result + actionToAddOrRemove.hashCode()
+            return result
         }
-        return ContrastiveExplanation(plan, hPlan, action, addList, deleteList, existingList)
     }
 
     fun buildHdomain(domain: Domain, newPredicate: Predicate, newAction: Action) =
@@ -108,7 +134,7 @@ object ExplanationUtils {
         Fluent.positive(predicate, *action.args.toTypedArray())
 
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
-        Fluent.positive(predicate, *action.args.map { Variable.of(it.toString().uppercase()) }.toTypedArray())
+        Fluent.positive(predicate, *action.args.map { Variable.of("X") }.toTypedArray())
 
     fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
         if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
@@ -120,7 +146,7 @@ object ExplanationUtils {
             parameters = action.parameters,
             preconditions = action.preconditions,
             effects = if (negated) mutableSetOf(Effect.negative(fluent)).also {
-                it.addAll(action.effects)
+                it.addAll(action.effects.also { it.map { it.refresh() } })
             } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
         )
     }

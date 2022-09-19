@@ -1,7 +1,7 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
-import resources.ExplanationUtils.buildExplanation
+import resources.ExplanationUtils.ContrastiveExplanation
 import resources.ExplanationUtils.buildHdomain
 import resources.ExplanationUtils.buildHproblem
 import resources.ExplanationUtils.createNewAction
@@ -44,15 +44,12 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
 
         val hplan = stripsPlanner.plan(hProblem).first()
 
-        val explanation = buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
+        val explanation = ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAddOrToRemove)
 
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+        val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
             hplan,
-            question.actionToAddOrToRemove,
-            setOf(newGroundAction),
-            setOf(pickA),
-            setOf()
+            question.actionToAddOrToRemove
         )
 
         explanation shouldBe contrastiveExplanation

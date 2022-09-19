@@ -65,13 +65,10 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val explanation: ExplanationUtils.ContrastiveExplanation =
             ExplanationUtils.buildExplanation(question.originalPlan, hPlan, question.action1)
 
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation.of(
             question.originalPlan,
             Plan.of(listOf(pickC, stackCA, pickB)),
-            question.action1,
-            setOf(stackCA, pickB),
-            setOf(pickA, stackAB, pickB),
-            setOf(pickC)
+            question.action1
         )
         explanation shouldBe contrastiveExplanation
     }

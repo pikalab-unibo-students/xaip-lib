@@ -1,6 +1,5 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.ExplanationUtils
 import resources.ExplanationUtils.ContrastiveExplanation
 import resources.ExplanationUtils.buildHproblem
 import resources.domain.BlockWorldDomain
@@ -93,10 +92,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         )
         println("problem $hProblem")
 
-
         val actionToKeep = question.originalPlan.actions.subList(0, question.originalPlan.actions.indexOf(question.actionToRemove)).toMutableList()
         val plans = stripsPlanner.plan(hProblem).toSet()
-        for(plan in plans) {
+        for (plan in plans) {
             val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.actions) })
             val explanation = ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAdd)
             println("explanation $explanation")

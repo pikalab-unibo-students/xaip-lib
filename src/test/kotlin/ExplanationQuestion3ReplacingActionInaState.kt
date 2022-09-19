@@ -1,20 +1,23 @@
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
+import resources.ExplanationUtils
 import resources.ExplanationUtils.buildExplanation
 import resources.ExplanationUtils.buildHproblem
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
-import resources.domain.BlockWorldDomain.Operators.stackAB
+import resources.domain.BlockWorldDomain.Operators.stackBA
 import resources.domain.BlockWorldDomain.Operators.stackBD
 import resources.domain.BlockWorldDomain.Operators.stackCA
 import resources.domain.BlockWorldDomain.Operators.stackDB
+import resources.domain.BlockWorldDomain.Operators.stackDC
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 import resources.domain.BlockWorldDomain.States
 
 class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
     // 3. “Why is action A used, rather than action B?” // replacing action in a state
-    data class Question3(val actionToAdd: Operator, val problem: Problem, val plan: Plan, val state: State? = null)
+    data class Question3(val actionToAdd: Operator, val problem: Problem, val originalPlan: Plan, val state: State? = null)
 
     @Test
     fun testQuestion3() {
@@ -25,7 +28,8 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             Plan.of(
                 listOf(
                     pickB,
-                    stackAB,
+                    stackBA,
+                    pickD,
                     stackDB
                 )
             )
@@ -35,13 +39,18 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         val hProblem = buildHproblem(question.problem.domain, question.problem, null, newState)
 
-        val plan = question.plan
         val hplan = stripsPlanner.plan(hProblem).toSet()
 
-        println("plan:" + plan)
-        println("Hplan:" + hplan)
-
-        buildExplanation(plan, hplan.first(), question.actionToAdd)
+        val explanation = buildExplanation(question.originalPlan, Plan.of(mutableListOf(pickC).also { it.addAll(hplan.first().actions as List<Operator>) }), question.actionToAdd)
+        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+            question.originalPlan,
+            Plan.of(listOf(pickC, stackCA, pickD, stackDC)), // non c'è pickC perché l'ho già applicata nello stato iniziale, non dovrei comunque rappresentarla?
+            question.actionToAdd,
+            setOf(pickC, stackCA, stackDC),
+            setOf(pickB, stackBA, stackDB),
+            setOf(pickD)
+        )
+        explanation shouldBe contrastiveExplanation
     }
 
     @Test
@@ -91,20 +100,16 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             goal = newProblem.goal // extended
         )
 
-        val plan = question.plan
         val hplan = stripsPlanner.plan(hProblem).toSet()
-
-        println("plan:" + plan)
-        println("Hplan:" + hplan)
 
         val actionsToKeep = mutableListOf<Operator>()
         var tmpStates: Sequence<State> = emptySequence()
         val tmpState: State = State.of(emptySet())
-        for (action in question.plan.actions) {
+        for (action in question.originalPlan.actions) {
             actionsToKeep.add(action as Operator)
             tmpStates = tmpState.apply(action)
             // mi serve una chiamata ricorsiva
         }
-        buildExplanation(plan, hplan.first(), question.actionToAdd)
+        buildExplanation(question.originalPlan, hplan.first(), question.actionToAdd)
     }
 }

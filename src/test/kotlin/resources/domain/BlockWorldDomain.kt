@@ -279,6 +279,7 @@ object BlockWorldDomain {
 
     object Fluents {
 
+
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
@@ -299,6 +300,7 @@ object BlockWorldDomain {
         val atWArm = Fluent.positive(Predicates.at, Values.W, Values.arm)
 
         val atZFloor = Fluent.positive(Predicates.at, Values.Z, Values.floor)
+        val atZArm = Fluent.positive(Predicates.at, Values.Z, Values.arm)
         val armEmpty = Fluent.positive(Predicates.armEmpty)
 
         val onAB = Fluent.positive(Predicates.on, Values.a, Values.b)
@@ -337,8 +339,22 @@ object BlockWorldDomain {
     }
 
     object Goals {
+        val atXatYarm = FluentBasedGoal.of(
+            Fluents.atYArm,
+            Fluents.atXArm,
+            Fluents.atXFloor
+        )
+        val onZWatXarm = FluentBasedGoal.of(
+            Fluents.atXArm,
+            Fluents.onZW
+        )
         val onBAonDC = FluentBasedGoal.of(
-            Fluents.onBA, Fluents.onDC, Fluents.atAFloor, Fluents.atCFloor, Fluents.clearB, Fluents.clearD
+            Fluents.onBA,
+            Fluents.onDC,
+            Fluents.atAFloor,
+            Fluents.atCFloor,
+            Fluents.clearB,
+            Fluents.clearD
         )
         val armNotEmpty = FluentBasedGoal.of(Fluents.atXArm)
         val atAfloorAtBfloorAtCfloorAtDfloor =
@@ -489,6 +505,20 @@ object BlockWorldDomain {
     }
 
     object Problems {
+
+        val pickXpickY = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atXatYarm
+        )
+        val stackZWpickX = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.onZWatXarm
+        )
+
         val stackBAstackDC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

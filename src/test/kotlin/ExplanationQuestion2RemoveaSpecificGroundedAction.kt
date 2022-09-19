@@ -17,7 +17,6 @@ import resources.domain.BlockWorldDomain.Problems
 class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
     /*
     2. Why is action A used in state, rather not being used? // remove specific grounded action
-    4.“Why is action A used before/after action B (rather than after/before)?” // reordering actions
     */
 
     @Test
@@ -39,14 +38,25 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
 
         val newAction = createNewAction(Actions.pick, newFluent, true) // new action
         println("updated action: $newAction")
+        val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.b))
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, true)
-        println(hProblem)
+        println("Hproblem $hProblem")
 
         val hplan = stripsPlanner.plan(hProblem).first()
 
-        buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
-    }
+        val explanation = buildExplanation(question.originalPlan, hplan, question.actionToAddOrToRemove)
 
+        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation(
+            question.originalPlan,
+            hplan,
+            question.actionToAddOrToRemove,
+            setOf(newGroundAction),
+            setOf(pickA),
+            setOf()
+        )
+
+        explanation shouldBe contrastiveExplanation
+    }
 }

@@ -111,7 +111,7 @@ object ExplanationUtils {
         Fluent.positive(predicate, *action.args.map { Variable.of(it.toString().uppercase()) }.toTypedArray())
 
     fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
-        if (negated) Predicate.of("not_has_done_" + action.name, action.parameters.values.toList())
+        if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {

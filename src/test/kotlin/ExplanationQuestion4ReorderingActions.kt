@@ -1,15 +1,16 @@
+import dsl.problem
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import it.unibo.tuprolog.core.Scope
+import resources.ExplanationUtils
 import resources.ExplanationUtils.ContrastiveExplanation
+import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.createNewGroundFluent
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Operators.pickA
-import resources.domain.BlockWorldDomain.Operators.pickB
-import resources.domain.BlockWorldDomain.Operators.pickC
 import resources.domain.BlockWorldDomain.Operators.pickD
 import resources.domain.BlockWorldDomain.Operators.stackAB
-import resources.domain.BlockWorldDomain.Operators.stackCA
 import resources.domain.BlockWorldDomain.Operators.stackDC
 
 class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
@@ -32,16 +33,24 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         Predicate.of(string + action.name, action.parameters.values.toList())
 
     fun createNewAction1(action: Action, fluentInEffect: Fluent): Action {
+        val refreshedFluent =
+            fluentInEffect.refresh(
+                Scope.of(
+                    (action.preconditions.first().args.last().toString())
+                    // /effects.first().fluent.args.first() as Variable).toTerm()
+                )
+            )
         return Action.of(
             name = action.name + "^",
             parameters = action.parameters,
             preconditions = action.preconditions,
-            effects = mutableSetOf(Effect.of(fluentInEffect)).also {
+            effects = mutableSetOf(Effect.of(refreshedFluent)).also {
                 it.addAll(action.effects)
             }
         )
     }
-    @Ignore
+
+    // @Ignore
     @Test
     fun test() {
         println("action list, original order ${question.originalPlan.actions}")
@@ -62,56 +71,63 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val indiceInizio2 = question.originalPlan.actions.indexOf(question.actionsToAnticipate.first())
         val indiceFine2 = question.originalPlan.actions.indexOf(question.actionsToAnticipate.last())
         println("indici $indiceInizio $indiceFine $indiceInizio2 $indiceFine2")
+
         val newList = question.originalPlan.actions.subList(0, indiceInizio).toMutableList()
             .also { it.addAll(question.actionsToAnticipate) }
             .also { it.addAll(question.originalPlan.actions.subList(indiceFine + 1, indiceInizio2)) }
             .also { it.addAll(question.actionsToPosticipate) }
-            .also { it.addAll(question.originalPlan.actions.subList(indiceFine2, question.originalPlan.actions.size)) }
+            .also { it.addAll(question.originalPlan.actions.subList(indiceFine2 + 1, question.originalPlan.actions.size)) }
         println("new list $newList")
 
         for (action in newList) {
             fluents.add(createNewGroundFluent(action, newPredicate1(action, "traversed_")))
         }
-        val newoperatorlist = mutableListOf<Action>()
-        for (i in 0..newList.size - 1) {
-            if (!newoperatorlist.map { it.name }.contains(newList[i].name)) {
+        println(fluents)
+        val newoperatorlist = mutableSetOf<Action>()
+        for (action in newList) {
+            if (!newoperatorlist.map {
+                it.name.filter { char ->
+                    char.isLetter()
+                }
+            }.equals(action.name)
+            ) {
                 newoperatorlist.add(
-                    createNewAction1(
-                        newList[i],
-                        createNewFluent(
-                            newList[i],
-                            newPredicate1(newList[i], "traversed_")
-                        )
+                    createNewAction(
+                        ExplanationUtils.findAction(action, question.problem.domain.actions),
+                        createNewFluent(action, newPredicate1(action, "traversed_"))
                     )
                 )
             }
         }
         println(newoperatorlist)
-        for (action in question.problem.domain.actions) {
-            if (!newoperatorlist.map { it.name.all { it.isLetter() }.toString() }.contains(action.name)) {
-                newoperatorlist.add(action)
-            }
-        }
         val hDomain = Domain.of(
             question.problem.domain.name,
             predicates.also { it.addAll(question.problem.domain.predicates) }.toSet(),
-            newoperatorlist.also { it.addAll(question.problem.domain.actions) }.toSet(),
+            newoperatorlist,
+            // newoperatorlist.also { it.addAll(question.problem.domain.actions) }.toSet(),
             question.problem.domain.types
         )
-        println(fluents)
+        val prova: List<Fluent> = fluents.toMutableList().also { it.addAll((question.problem.goal as FluentBasedGoal).targets) }
+        println(prova)
         val hProblem = Problem.of(
             hDomain,
             question.problem.objects,
             question.problem.initialState,
-            FluentBasedGoal.of(fluents.toSet())
+            // State.of(question.problem.initialState.fluents.toMutableSet().also { it.addAll(fluents) }),
+            FluentBasedGoal.of(
+                fluents.toMutableSet().also { it.addAll((question.problem.goal as FluentBasedGoal).targets) }
+            )
         )
+        // possibile problema sul refresh dei fluent
+        println(hProblem)
+
         val plans = BlockWorldDomain.Planners.stripsPlanner.plan(hProblem)
         val hPlan = plans.first()
         val explanation = ContrastiveExplanation.of(question.originalPlan, hPlan, question.actionsToAnticipate.first())
 
         val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
-            Plan.of(listOf(pickC, stackCA, pickB)),
+            Plan.of(listOf(pickD, stackDC, pickA, stackAB)),
             question.actionsToAnticipate.first()
         )
         explanation shouldBe contrastiveExplanation

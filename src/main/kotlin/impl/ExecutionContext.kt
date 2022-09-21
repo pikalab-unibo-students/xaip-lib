@@ -5,9 +5,11 @@ import Applicable
 import Effect
 import Fluent
 import FluentBasedGoal
+import NotUnifiableException
 import Operator
 import State
 import VariableAssignment
+import it.unibo.tuprolog.core.Substitution
 import java.util.*
 
 internal data class ExecutionContext(
@@ -15,7 +17,7 @@ internal data class ExecutionContext(
     var stack: Stack<Applicable<*>>,
     val maxDepth: Int,
     var choicePoints: Deque<ChoicePoint> = LinkedList(),
-    var plan: MutableList<Action> = mutableListOf()
+    var plan: MutableList<Operator> = mutableListOf()
 ) {
 
     constructor(
@@ -61,7 +63,7 @@ internal data class ExecutionContext(
         changes: List<Any>,
         stack: Stack<Applicable<*>>,
         currentState: State,
-        plan: List<Action>,
+        plan: List<Operator>,
         effect: Effect? = null
     ) {
         for (elem in changes.asSequence().drop(1)) {
@@ -136,6 +138,25 @@ internal data class ExecutionContext(
         return depth > maxDepth && backtrackOrFail()
     }
 
+    fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
+        var indice = 0
+        for (fluent in goal.targets) {
+            if (!fluent.isGround) {
+                for (fluentState in currentState.fluents) {
+                    val tmp = try {
+                        fluentState.mostGeneralUnifier(fluent)
+                    } catch (_: NotUnifiableException) { null }
+                    if (tmp != Substitution.empty() || tmp != Substitution.empty() || tmp != null) {
+                        indice++
+                        break
+                    }
+                }
+            } else {
+                if (currentState.fluents.contains(fluent)) indice++ else indice--
+            }
+        }
+        return goal.targets.size == indice
+    }
     override fun toString(): String =
         """${ExecutionContext::class.simpleName}(
             |  ${ExecutionContext::currentState.name}=$currentState,
@@ -144,7 +165,7 @@ internal data class ExecutionContext(
             |  ${ExecutionContext::depth.name}=$depth/$maxDepth,
             |  ${ExecutionContext::plan.name}=$plan,
             |  ${ExecutionContext::choicePoints.name}=${choicePoints.toSet().size
-            }
+        }
             |)
         """.trimMargin()
     // |  ${ExecutionContext::choicePoints.name}=${choicePoints.toString().replace("\n", "\n  ")}

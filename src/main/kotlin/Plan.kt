@@ -6,12 +6,12 @@ import impl.PlanImpl
  * @property actions: list of actions to be executed to achieve the goal from the initial state.
  */
 interface Plan {
-    val actions: List<Action>
+    val actions: List<Operator>
 
     companion object {
         /**
          * Factory method for an [Plan] creation.
          */
-        fun of(actions: List<Action>): Plan = PlanImpl(actions)
+        fun of(actions: List<Operator>): Plan = PlanImpl(actions)
     }
 }

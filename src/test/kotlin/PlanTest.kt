@@ -5,7 +5,7 @@ import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
 import resources.domain.BlockWorldDomain.Plans
-import resources.domain.BlockWorldDomain.actions
+import resources.domain.BlockWorldDomain.operators
 
 class PlanTest : AnnotationSpec() {
     @Test
@@ -17,7 +17,7 @@ class PlanTest : AnnotationSpec() {
     fun testNotEmpty() {
         planNotEmpty.actions.isNotEmpty() shouldBe true
         planNotEmpty.actions.size shouldBe 1
-        planNotEmpty.actions.forEach { it shouldBe actionNotEmpty }
+        planNotEmpty.actions.forEach { it shouldBe Operator.of(actionNotEmpty) }
     }
 
     @Test
@@ -25,6 +25,6 @@ class PlanTest : AnnotationSpec() {
         Plans.emptyPlan.actions.isEmpty() shouldBe true
 
         Plans.basicPlan.actions.isNotEmpty() shouldBe true
-        Plans.basicPlan.actions.forEach { it shouldBeIn actions }
+        Plans.basicPlan.actions.forEach { it shouldBeIn operators }
     }
 }

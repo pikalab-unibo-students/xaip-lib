@@ -11,7 +11,7 @@ class ActionDSLTest : AnnotationSpec() {
         blockWorld.actions.size shouldBe 4
         blockWorld.actions.first().name shouldBe Actions.pick.name
         blockWorld.actions.first().parameters.size shouldBe 1
-        blockWorld.actions.first().preconditions.size shouldBe 2
+        blockWorld.actions.first().preconditions.size shouldBe 3
         blockWorld.actions.first().effects.size shouldBe 4
     }
 }

@@ -41,7 +41,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
             }
         )
     }
-
+    @Ignore
     @Test
     fun test() {
         println("action list, original order ${question.originalPlan.actions}")
@@ -70,7 +70,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         println("new list $newList")
 
         for (action in newList) {
-            fluents.add(createNewGroundFluent(action as Operator, newPredicate1(action, "traversed_")))
+            fluents.add(createNewGroundFluent(action, newPredicate1(action, "traversed_")))
         }
         val newoperatorlist = mutableListOf<Action>()
         for (i in 0..newList.size - 1) {
@@ -79,7 +79,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
                     createNewAction1(
                         newList[i],
                         createNewFluent(
-                            newList[i] as Operator,
+                            newList[i],
                             newPredicate1(newList[i], "traversed_")
                         )
                     )

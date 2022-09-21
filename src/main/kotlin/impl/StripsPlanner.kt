@@ -3,18 +3,16 @@ package impl
 import Action
 import Fluent
 import FluentBasedGoal
-import NotUnifiableException
 import Operator
 import Plan
 import Planner
 import Problem
 import State
-import it.unibo.tuprolog.core.Substitution
 
 internal class StripsPlanner : Planner {
 
     companion object {
-        private const val DEBUG = true
+        private const val DEBUG = false
 
         private fun log(msg: () -> String) {
             if (DEBUG) {
@@ -71,24 +69,7 @@ internal class StripsPlanner : Planner {
                         }
                     }
                 }
-                var indice = 0
-                for (fluent in goal.targets) {
-                    if (!fluent.isGround) {
-                        for (fluentState in currentState.fluents) {
-                            val tmp = try {
-                                fluentState.mostGeneralUnifier(fluent)
-                            } catch (e: NotUnifiableException) { null }
-                            if (tmp != Substitution.empty() || tmp != Substitution.empty() || tmp != null) {
-                                indice++
-                                break
-                            }
-                        }
-                    } else {
-                        if (currentState.fluents.contains(fluent)) indice++ else indice--
-                    }
-                }
-                println("indice $indice goal.targets.size $goal.targets.size")
-                if (goal.targets.size == indice) {
+                if (finalStateComplaintWithGoal(goal, currentState)) {
                     yield(Plan.of(plan))
                 }
                 if (backtrackOrFail()) return@sequence

@@ -178,7 +178,12 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testArmNotEmpty() {
         val plans = Planners.stripsPlanner.plan(Problems.armNotEmpty).toSet()
-        val plan2check = setOf(Plan.of(listOf(pickA, pickB, pickC, pickD)))
+        val plan2check = setOf(
+            Plan.of(listOf(pickA)),
+            Plan.of(listOf(pickB)),
+            Plan.of(listOf(pickC)),
+            Plan.of(listOf(pickD))
+        )
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)

@@ -43,7 +43,7 @@ class OperatorTest : AnnotationSpec() {
                     mapOf(
                         Values.X to Types.blocks
                     ),
-                    setOf(Fluents.armEmpty, Fluents.clearX),
+                    setOf(Fluents.armEmpty, Fluents.clearX, Fluents.atXFloor),
                     setOf(
                         Effect.of(Fluents.atXArm),
                         Effect.negative(Fluents.armEmpty),

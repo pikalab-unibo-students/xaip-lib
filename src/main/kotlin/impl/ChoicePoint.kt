@@ -1,17 +1,17 @@
 package impl
 
-import Action
 import Applicable
+import Operator
 import State
 import java.util.*
 
 internal data class ChoicePoint(
     val stack: Stack<Applicable<*>>,
     val state: State,
-    val plan: MutableList<Action>
+    val plan: MutableList<Operator>
 ) {
     val depth: Int
-        get() = stack.filterIsInstance<Action>().count()
+        get() = stack.filterIsInstance<Operator>().count()
 
     override fun toString(): String =
         """${ChoicePoint::class.simpleName}(

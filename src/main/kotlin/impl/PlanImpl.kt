@@ -1,6 +1,6 @@
 package impl
 
-import Action
+import Operator
 import Plan
 
-internal data class PlanImpl(override val actions: List<Action>) : Plan
+internal data class PlanImpl(override val actions: List<Operator>) : Plan

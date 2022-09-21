@@ -49,9 +49,21 @@ object ExplanationUtils {
         override val newPlan: Plan,
         override val actionToAddOrRemove: Operator
     ) : ContrastiveExplanation {
-        override val addList: Set<Operator> by lazy { newPlan.actions.filter { !originalPlan.actions.contains(it) }.map { it as Operator }.toSet() }
-        override val deleteList: Set<Operator> by lazy { originalPlan.actions.filter { !newPlan.actions.contains(it) }.map { it as Operator }.toSet() }
-        override val existingList: Set<Operator> by lazy { originalPlan.actions.filter { newPlan.actions.contains(it) }.map { it as Operator }.toSet() }
+        override val addList: Set<Operator> by lazy {
+            newPlan.actions.filter {
+                !originalPlan.actions.contains(it)
+            }.map { it }.toSet()
+        }
+        override val deleteList: Set<Operator> by lazy {
+            originalPlan.actions.filter {
+                !newPlan.actions.contains(it)
+            }.map { it }.toSet()
+        }
+        override val existingList: Set<Operator> by lazy {
+            originalPlan.actions.filter {
+                newPlan.actions.contains(it)
+            }.map { it }.toSet()
+        }
 
         override fun toString(): String =
             """${ContrastiveExplanation::class.simpleName}(
@@ -144,7 +156,12 @@ object ExplanationUtils {
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
-        val refreshedFluent = fluent.refresh(Scope.of((action.effects.first().fluent.args.first() as Variable).toTerm()))
+        val refreshedFluent =
+            fluent.refresh(
+                Scope.of(
+                    (action.effects.first().fluent.args.first() as Variable).toTerm()
+                )
+            )
         return Action.of(
             name = action.name + "^",
             parameters = action.parameters,

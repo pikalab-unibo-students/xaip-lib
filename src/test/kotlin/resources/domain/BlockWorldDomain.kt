@@ -22,6 +22,16 @@ import dsl.problem
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
+    val operators = arrayOf(
+        Operators.pickA,
+        Operators.pickB,
+        Operators.stackAB,
+        Operators.stackBA,
+        Operators.unstackAB,
+        Operators.putdownA,
+        Operators.putdownB,
+        Operators.unstackBA
+    )
     val variables = arrayOf(Values.W, Values.X, Values.Y, Values.Z)
     val types = arrayOf(Types.blocks, Types.locations, Types.numbers, Types.strings, Types.anything)
     val predicates = arrayOf(Predicates.at, Predicates.on, Predicates.clear, Predicates.armEmpty)
@@ -59,6 +69,7 @@ object BlockWorldDomain {
                     preconditions {
                         +"arm_empty"()
                         +"clear"("X")
+                        +"at"("X", "floor")
                     }
                     effects {
                         +"at"("X", "arm")
@@ -278,8 +289,6 @@ object BlockWorldDomain {
     }
 
     object Fluents {
-
-
         val atAFloor = Fluent.positive(Predicates.at, Values.a, Values.floor)
         val atBFloor = Fluent.positive(Predicates.at, Values.b, Values.floor)
         val atCFloor = Fluent.positive(Predicates.at, Values.c, Values.floor)
@@ -490,7 +499,7 @@ object BlockWorldDomain {
 
     object Plans {
         val emptyPlan = Plan.of(emptyList())
-        val basicPlan = Plan.of(listOf(Actions.pick, Actions.stack))
+        val basicPlan = Plan.of(listOf(Operators.pickA, Operators.stackAB))
     }
 
     object Planners {

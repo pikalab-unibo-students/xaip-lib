@@ -113,7 +113,6 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             initialState = newState,
             goal = newProblem.goal
         )
-        println("problem $hProblem")
 
         val actionToKeep = question.originalPlan.actions.subList(
             0,

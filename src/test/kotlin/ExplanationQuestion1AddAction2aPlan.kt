@@ -59,10 +59,8 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
             Plan.of(listOf(pickB))
         )
         val newPredicate = createNewPredicate(question.actionToAddOrToRemove)
-
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
-
         val notGroundAction =
             findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
         val newAction = createNewAction(notGroundAction, newFluent)
@@ -70,13 +68,9 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)
-        println(hProblem)
-
         val hplan = stripsPlanner.plan(hProblem).first {
             it.actions.contains(newGroundAction)
         }
-        // val hplans = stripsPlanner.plan(hProblem).toSet()
-        // println(hplans)
 
         val explanation: ContrastiveExplanation =
             ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAddOrToRemove)

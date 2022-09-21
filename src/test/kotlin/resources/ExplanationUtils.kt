@@ -143,12 +143,6 @@ object ExplanationUtils {
         if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
-    private fun Action.refreshValues() {
-        parameters.keys.map { it.refresh() }
-        preconditions.map { it.refresh() }
-        effects.map { it.refresh() }
-    }
-
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
         val refreshedFluent = fluent.refresh(Scope.of((action.effects.first().fluent.args.first() as Variable).toTerm()))
         return Action.of(

@@ -1,7 +1,7 @@
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.ExplanationUtils
 import resources.ExplanationUtils.ContrastiveExplanation
+import resources.ExplanationUtils.Question1
 import resources.ExplanationUtils.buildHdomain
 import resources.ExplanationUtils.buildHproblem
 import resources.ExplanationUtils.createNewAction
@@ -19,7 +19,7 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
 
     @Test
     fun testQuestion2() {
-        val question = ExplanationUtils.Question1(
+        val question = Question1(
             pickA,
             Problems.armNotEmpty,
             Plan.of(listOf(pickA))

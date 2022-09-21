@@ -9,6 +9,9 @@ import Plan
 import Predicate
 import Problem
 import State
+import Variable
+import impl.res.toTerm
+import it.unibo.tuprolog.core.Scope
 
 object ExplanationUtils {
     data class Question1(val actionToAddOrToRemove: Operator, val problem: Problem, val originalPlan: Plan) {
@@ -140,14 +143,21 @@ object ExplanationUtils {
         if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
+    private fun Action.refreshValues() {
+        parameters.keys.map { it.refresh() }
+        preconditions.map { it.refresh() }
+        effects.map { it.refresh() }
+    }
+
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
+        val refreshedFluent = fluent.refresh(Scope.of((action.effects.first().fluent.args.first() as Variable).toTerm()))
         return Action.of(
             name = action.name + "^",
             parameters = action.parameters,
             preconditions = action.preconditions,
-            effects = if (negated) mutableSetOf(Effect.negative(fluent)).also {
-                it.addAll(action.effects.also { it.map { it.refresh() } })
-            } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
+            effects = if (negated) mutableSetOf(Effect.negative(refreshedFluent)).also {
+                it.addAll(action.effects)
+            } else mutableSetOf(Effect.of(refreshedFluent)).also { it.addAll(action.effects) }
         )
     }
 

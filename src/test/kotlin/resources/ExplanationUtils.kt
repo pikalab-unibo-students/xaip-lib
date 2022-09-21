@@ -149,26 +149,20 @@ object ExplanationUtils {
         Fluent.positive(predicate, *action.args.toTypedArray())
 
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
-        Fluent.positive(predicate, *action.args.map { Variable.of("X") }.toTypedArray())
+        Fluent.positive(predicate, *action.parameters.keys.toTypedArray())
 
     fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
         if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
         else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
 
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
-        val refreshedFluent =
-            fluent.refresh(
-                Scope.of(
-                    (action.effects.first().fluent.args.first() as Variable).toTerm()
-                )
-            )
         return Action.of(
             name = action.name + "^",
             parameters = action.parameters,
             preconditions = action.preconditions,
-            effects = if (negated) mutableSetOf(Effect.negative(refreshedFluent)).also {
+            effects = if (negated) mutableSetOf(Effect.negative(fluent)).also {
                 it.addAll(action.effects)
-            } else mutableSetOf(Effect.of(refreshedFluent)).also { it.addAll(action.effects) }
+            } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
         )
     }
 

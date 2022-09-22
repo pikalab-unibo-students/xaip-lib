@@ -8,7 +8,6 @@ import resources.ExplanationUtils.createNewGroundFluent
 import resources.ExplanationUtils.createNewPredicate
 import resources.ExplanationUtils.findAction
 import resources.ExplanationUtils.reorderPlan
-import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickD
 import resources.domain.BlockWorldDomain.Operators.stackBA
@@ -94,19 +93,19 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val hPlan = Planners.stripsPlanner.plan(hProblem).first()
 
         val explanation = ContrastiveExplanation.of(question.originalPlan, hPlan, question.actionsToAnticipate.first())
-        var `pickD^` = Operator.of(newActions.first())
-        `pickD^` = `pickD^`.apply(VariableAssignment.of(Values.X, Values.d))
-        var `pickB^` = Operator.of(newActions.first())
-        `pickB^` = `pickB^`.apply(VariableAssignment.of(Values.X, Values.b))
-        var `stackDC^` = Operator.of(newActions.last())
-        `stackDC^` = `stackDC^`.apply(VariableAssignment.of(Values.X, Values.d))
-        `stackDC^` = `stackDC^`.apply(VariableAssignment.of(Values.Y, Values.c))
-        var `stackBA^` = Operator.of(newActions.last())
-        `stackBA^` = `stackBA^`.apply(VariableAssignment.of(Values.X, Values.b))
-        `stackBA^` = `stackBA^`.apply(VariableAssignment.of(Values.Y, Values.a))
+        var newPickD = Operator.of(newActions.first())
+        newPickD = newPickD.apply(VariableAssignment.of(Values.X, Values.d))
+        var newPickB = Operator.of(newActions.first())
+        newPickB = newPickB.apply(VariableAssignment.of(Values.X, Values.b))
+        var newStackDC = Operator.of(newActions.last())
+        newStackDC = newStackDC.apply(VariableAssignment.of(Values.X, Values.d))
+        newStackDC = newStackDC.apply(VariableAssignment.of(Values.Y, Values.c))
+        var newStackBA = Operator.of(newActions.last())
+        newStackBA = newStackBA.apply(VariableAssignment.of(Values.X, Values.b))
+        newStackBA = newStackBA.apply(VariableAssignment.of(Values.Y, Values.a))
         val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
-            Plan.of(listOf(`pickD^`,`stackDC^`, `pickB^`, `stackBA^`)),
+            Plan.of(listOf(newPickD, newStackDC, newPickB, newStackBA)),
             question.actionsToAnticipate.first()
         )
         explanation shouldBe contrastiveExplanation

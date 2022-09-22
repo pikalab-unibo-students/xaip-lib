@@ -25,8 +25,8 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         val state: State? = null
     )
 
-    /**
-     * Versione base che parte dal presupposto che si parta dallo stato iniziale
+    /*
+     * Versione base che parte dal presupposto che si parta dallo stato iniziale.
      */
     @Test
     fun testQuestion3() {

@@ -33,7 +33,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         Plan.of(listOf(pickB, stackBA, pickD, stackDC))
     )
 
-    /**
+    /*
      * Idea:
      * 1. creo tutti i nuovi predicati da aggiungere al Dominio
      * 2. creo il DAG semplicemente riordinando il piano secondo le scelte dell'utente

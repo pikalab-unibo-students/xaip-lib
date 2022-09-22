@@ -7,7 +7,7 @@ on:
     branches:
       - develop
       #- feature/**
-      - feature/operator
+      - feature/explanation
       #- master
 
   #pull_request:

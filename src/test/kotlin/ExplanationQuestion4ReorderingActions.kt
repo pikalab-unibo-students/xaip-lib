@@ -22,7 +22,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val originalPlan: Plan
     )
 
-    val question = Question4(
+    private val question = Question4(
         listOf(pickD, stackDC),
         listOf(pickB, stackBA),
         BlockWorldDomain.Problems.stackBAstackDC,

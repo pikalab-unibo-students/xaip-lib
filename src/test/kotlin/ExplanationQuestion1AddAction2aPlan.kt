@@ -33,7 +33,6 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
         val oldAction =
             findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
         val newAction = createNewAction(oldAction, newFluent)
-        val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.a))
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)

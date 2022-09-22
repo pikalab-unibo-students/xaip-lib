@@ -25,6 +25,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         val state: State? = null
     )
 
+    /**
+     * Versione base che parte dal presupposto che si parta dallo stato iniziale
+     */
     @Test
     fun testQuestion3() {
         val question = Question3(
@@ -64,6 +67,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         explanation shouldBe contrastiveExplanation
     }
 
+    /**
+     * Versione estesa; considera che l'utente possa voler partire da qualsivoglia stato.
+     */
     @Test
     fun testQuestion3Extended() {
         val newProblem: Problem
@@ -99,7 +105,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
         println("apply: ${question.actionToAdd} initial state obtaining: $newState")
-
+        // TODO( estendi a considerare tutti gli stati possibili)
+        // problema ho una sequenza potenzialmente infinita come la gestiamo sta cosa,
+        // non posso semplicemente fare un forEach() perché rischio il loop
         val hDomain = Domain.of(
             name = newProblem.domain.name,
             predicates = newProblem.domain.predicates,

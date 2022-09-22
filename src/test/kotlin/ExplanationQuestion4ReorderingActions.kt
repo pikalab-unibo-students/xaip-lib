@@ -1,12 +1,12 @@
-import dsl.problem
+
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import it.unibo.tuprolog.core.Scope
 import resources.ExplanationUtils
 import resources.ExplanationUtils.ContrastiveExplanation
 import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.createNewGroundFluent
+import resources.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickD
@@ -29,28 +29,6 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         Plan.of(listOf(pickB, stackBA, pickD, stackDC))
     )
 
-    fun newPredicate1(action: Action, string: String): Predicate =
-        Predicate.of(string + action.name, action.parameters.values.toList())
-
-    fun createNewAction1(action: Action, fluentInEffect: Fluent): Action {
-        val refreshedFluent =
-            fluentInEffect.refresh(
-                Scope.of(
-                    (action.preconditions.first().args.last().toString())
-                    // /effects.first().fluent.args.first() as Variable).toTerm()
-                )
-            )
-        return Action.of(
-            name = action.name + "^",
-            parameters = action.parameters,
-            preconditions = action.preconditions,
-            effects = mutableSetOf(Effect.of(refreshedFluent)).also {
-                it.addAll(action.effects)
-            }
-        )
-    }
-
-    @Ignore
     @Test
     fun test() {
         println("action list, original order ${question.originalPlan.actions}")
@@ -59,10 +37,9 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val fluents = mutableListOf<Fluent>()
 
         // creare il DAG
-
         for (action in question.originalPlan.actions) {
-            val predicate1 = newPredicate1(action, "ordered_")
-            val predicate2 = newPredicate1(action, "traversed_")
+            val predicate1 = createNewPredicate(action, "ordered_")
+            val predicate2 = createNewPredicate(action, "traversed_")
             predicates.add(predicate1)
             predicates.add(predicate2)
         }
@@ -94,7 +71,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         println("new list $newList")
 
         for (action in newList) {
-            fluents.add(createNewGroundFluent(action, newPredicate1(action, "traversed_")))
+            fluents.add(createNewGroundFluent(action, createNewPredicate(action, "traversed_")))
         }
         println(fluents)
         val newoperatorlist = mutableSetOf<Action>()
@@ -108,7 +85,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
                 newoperatorlist.add(
                     createNewAction(
                         ExplanationUtils.findAction(action, question.problem.domain.actions),
-                        createNewFluent(action, newPredicate1(action, "traversed_"))
+                        createNewFluent(action, createNewPredicate(action, "traversed_"))
                     )
                 )
             }
@@ -118,7 +95,6 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
             question.problem.domain.name,
             predicates.also { it.addAll(question.problem.domain.predicates) }.toSet(),
             newoperatorlist,
-            // newoperatorlist.also { it.addAll(question.problem.domain.actions) }.toSet(),
             question.problem.domain.types
         )
         val hProblem = Problem.of(

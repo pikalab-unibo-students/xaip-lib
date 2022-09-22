@@ -25,7 +25,7 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
             Plan.of(listOf(pickA))
         )
 
-        val newPredicate = createNewPredicate(question.actionToAddOrToRemove, true)
+        val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "not_done_", true)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newAction = createNewAction(Actions.pick, newFluent, true) // new action

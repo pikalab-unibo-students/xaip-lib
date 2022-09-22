@@ -25,7 +25,7 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
             Problems.armNotEmpty,
             Plan.of(listOf(pickB))
         )
-        val newPredicate = createNewPredicate(question.actionToAddOrToRemove)
+        val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "has_done_")
 
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
@@ -58,7 +58,7 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
             Problems.armNotEmpty,
             Plan.of(listOf(pickB))
         )
-        val newPredicate = createNewPredicate(question.actionToAddOrToRemove)
+        val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "has_done_")
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         val notGroundAction =

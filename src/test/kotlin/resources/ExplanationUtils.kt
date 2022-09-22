@@ -9,9 +9,6 @@ import Plan
 import Predicate
 import Problem
 import State
-import Variable
-import impl.res.toTerm
-import it.unibo.tuprolog.core.Scope
 
 object ExplanationUtils {
     data class Question1(val actionToAddOrToRemove: Operator, val problem: Problem, val originalPlan: Plan) {
@@ -130,12 +127,6 @@ object ExplanationUtils {
                 }
             ) else state ?: problem.initialState, // extended
             goal = if (newFluent != null) {
-                /*FluentBasedGoal.of(
-                    mutableSetOf(newFluent).also {
-                        it.addAll((problem.goal as FluentBasedGoal).targets)
-                    }
-                )
-                 */
                 FluentBasedGoal.of(
                     (problem.goal as FluentBasedGoal).targets.toMutableSet().also {
                         it.add(newFluent)
@@ -151,9 +142,9 @@ object ExplanationUtils {
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.parameters.keys.toTypedArray())
 
-    fun createNewPredicate(action: Action, negated: Boolean = false): Predicate =
-        if (negated) Predicate.of("not_done_" + action.name, action.parameters.values.toList())
-        else Predicate.of("has_done_" + action.name, action.parameters.values.toList())
+    fun createNewPredicate(action: Action, name: String, negated: Boolean = false): Predicate =
+        if (negated) Predicate.of(name + action.name, action.parameters.values.toList())
+        else Predicate.of(name + action.name, action.parameters.values.toList())
 
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
         return Action.of(

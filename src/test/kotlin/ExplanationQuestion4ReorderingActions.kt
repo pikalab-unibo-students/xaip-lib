@@ -50,7 +50,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         )
     }
 
-    // @Ignore
+    @Ignore
     @Test
     fun test() {
         println("action list, original order ${question.originalPlan.actions}")
@@ -74,9 +74,23 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
 
         val newList = question.originalPlan.actions.subList(0, indiceInizio).toMutableList()
             .also { it.addAll(question.actionsToAnticipate) }
-            .also { it.addAll(question.originalPlan.actions.subList(indiceFine + 1, indiceInizio2)) }
+            .also {
+                it.addAll(
+                    question.originalPlan.actions.subList(
+                        indiceFine + 1,
+                        indiceInizio2
+                    )
+                )
+            }
             .also { it.addAll(question.actionsToPosticipate) }
-            .also { it.addAll(question.originalPlan.actions.subList(indiceFine2 + 1, question.originalPlan.actions.size)) }
+            .also {
+                it.addAll(
+                    question.originalPlan.actions.subList(
+                        indiceFine2 + 1,
+                        question.originalPlan.actions.size
+                    )
+                )
+            }
         println("new list $newList")
 
         for (action in newList) {
@@ -107,15 +121,13 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
             // newoperatorlist.also { it.addAll(question.problem.domain.actions) }.toSet(),
             question.problem.domain.types
         )
-        val prova: List<Fluent> = fluents.toMutableList().also { it.addAll((question.problem.goal as FluentBasedGoal).targets) }
-        println(prova)
         val hProblem = Problem.of(
             hDomain,
             question.problem.objects,
             question.problem.initialState,
-            // State.of(question.problem.initialState.fluents.toMutableSet().also { it.addAll(fluents) }),
             FluentBasedGoal.of(
-                (question.problem.goal as FluentBasedGoal).targets.toMutableSet().also { it.addAll(fluents.reversed()) }
+                (question.problem.goal as FluentBasedGoal)
+                    .targets.toMutableSet().also { it.addAll(fluents.reversed()) }
             )
         )
         // possibile problema sul refresh dei fluent

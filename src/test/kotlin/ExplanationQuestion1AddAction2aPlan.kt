@@ -16,7 +16,7 @@ import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 import resources.domain.BlockWorldDomain.Values
 
-class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
+class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
     @Test
     fun testQuestion1() {
@@ -36,17 +36,16 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
 
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)
-        val hplan = stripsPlanner.plan(hProblem).first()
+        val hPlan = stripsPlanner.plan(hProblem).first()
 
         val explanation: ContrastiveExplanation =
-            ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAddOrToRemove)
+            ContrastiveExplanation.of(question.originalPlan, hPlan, question.actionToAddOrToRemove)
 
         val contrastiveExplanation = ContrastiveExplanation.of(
             question.originalPlan,
-            hplan,
+            hPlan,
             question.actionToAddOrToRemove
         )
-
         explanation shouldBe contrastiveExplanation
     }
 
@@ -79,7 +78,6 @@ class `ExplanationQuestion1AddAction2aPlan` : AnnotationSpec() {
             hplan,
             question.actionToAddOrToRemove
         )
-
         explanation shouldBe contrastiveExplanation
     }
 }

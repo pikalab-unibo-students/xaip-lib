@@ -157,6 +157,37 @@ object ExplanationUtils {
         )
     }
 
+    fun reorderPlan(
+        plan: Plan,
+        actionsToPosticipate: List<Operator>,
+        actionsToAnticipate: List<Operator>
+    ): List<Operator> {
+        val indiceInizio = plan.actions.indexOf(actionsToPosticipate.first())
+        val indiceFine = plan.actions.indexOf(actionsToPosticipate.last())
+        val indiceInizio2 = plan.actions.indexOf(actionsToAnticipate.last())
+        val indiceFine2 = plan.actions.indexOf(actionsToAnticipate.last())
+
+        val reorderedPlan = plan.actions.subList(0, indiceInizio).toMutableList()
+            .also { it.addAll(actionsToAnticipate) }
+            .also {
+                it.addAll(
+                    plan.actions.subList(
+                        indiceFine + 1,
+                        indiceInizio2
+                    )
+                )
+            }
+            .also { it.addAll(actionsToPosticipate) }
+            .also {
+                it.addAll(
+                    plan.actions.subList(
+                        indiceFine2 + 1,
+                        plan.actions.size
+                    )
+                )
+            }
+        return reorderedPlan
+    }
     fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
         actionList.first { it.name == inputOperator.name }
 }

@@ -33,29 +33,44 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         Plan.of(listOf(pickB, stackBA, pickD, stackDC))
     )
 
+    /**
+     * Idea:
+     * 1. creo tutti i nuovi predicati da aggiungere al Dominio
+     * 2. creo il DAG semplicemente riordinando il piano secondo le scelte dell'utente
+     *      nota: la funzione fa schifo e certamente può essere implementata meglio
+     * 3. creo i nuovi fluent da aggiungere al goal
+     * 4. creo le nuove azioni aggiungenedo un nuovo fluent come effetto
+     * 5. creo il nuovo dominio aggiungendo i predicati (creati nel punto 1)
+     *      e le azioni (create nel punto 4)
+     * 6. creo il nuovo problema dandogli il nuovo dominio e aggiornando il goal
+     *      in modo che includa i fluent ground corrispondenti all'esecuzione
+     *      delle azioni del piano che voglio in output
+     *      Note: si basa sul fatto che tutti i fluent del goal devono essere nello stato finale,
+     *             gioca sull'ordine dei fluent del goal pushand prima i fluent che voglio
+     *             siano soddisfatti per primi per evitare di fare incasinare il planner.
+     *             L'ordine lo so perché l'utente mi dice che piano si aspetta in output.
+     */
     @Test
     fun test() {
         val predicates = mutableListOf<Predicate>()
         val fluents = mutableListOf<Fluent>()
         val newActions = mutableSetOf<Action>()
-        // creare il DAG
+        // 1
         for (action in question.originalPlan.actions) {
-            val predicate1 = createNewPredicate(action, "ordered_")
-            val predicate2 = createNewPredicate(action, "traversed_")
-            predicates.add(predicate1)
-            predicates.add(predicate2)
+            val predicate = createNewPredicate(action, "traversed_")
+            predicates.add(predicate)
         }
-
+        // 2
         val reorderedPlan = reorderPlan(
             question.originalPlan,
             question.actionsToPosticipate,
             question.actionsToAnticipate
         )
-
+        // 3
         for (action in reorderedPlan) {
             fluents.add(createNewGroundFluent(action, createNewPredicate(action, "traversed_")))
         }
-
+        // 4
         for (action in reorderedPlan) {
             if (!newActions.map {
                 it.name.filter { char ->
@@ -74,7 +89,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
                 )
             }
         }
-        println(newActions)
+        // 5
         val hDomain = Domain.of(
             question.problem.domain.name,
             predicates.also { it.addAll(question.problem.domain.predicates) }.toSet(),

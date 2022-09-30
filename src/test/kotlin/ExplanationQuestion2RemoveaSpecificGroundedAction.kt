@@ -34,22 +34,22 @@ class ExplanationQuestion2RemoveaSpecificGroundedAction : AnnotationSpec() {
             Plan.of(listOf(pickA))
         )
 
-        //1.
+        // 1.
         val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "not_done_", true)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
 
-        //2.
+        // 2.
         val oldAction =
             ExplanationUtils.findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
 
-        //3.
+        // 3.
         val newAction = createNewAction(oldAction, newFluent, true) // new action
         val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.b))
 
-        //4.
+        // 4.
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
-        //5.
+        // 5.
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null, true)
         val hplan = stripsPlanner.plan(hProblem).first()
 

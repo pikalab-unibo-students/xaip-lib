@@ -1,3 +1,4 @@
+import explanation.Question1
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.ExplanationUtils
@@ -35,21 +36,23 @@ class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
             Problems.armNotEmpty,
             Plan.of(listOf(pickB))
         )
-        //1.
+        // 1.
         val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "has_done_")
 
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
 
-        //2.
+        // 2.
         val oldAction =
             findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
-        //3.
+
+        // 3.
         val newAction = createNewAction(oldAction, newFluent)
 
-        //4.
+        // 4.
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
-        //5.
+
+        // 5.
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)
         val hPlan = stripsPlanner.plan(hProblem).first()
 
@@ -92,6 +95,27 @@ class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
             question.originalPlan,
             hplan,
             question.actionToAddOrToRemove
+        )
+        explanation shouldBe contrastiveExplanation
+    }
+
+    @Test
+    fun testQuestionNew() {
+        val q1 = Question1(
+            Problems.armNotEmpty,
+            Plan.of(listOf(pickB)),
+            pickA
+        )
+
+        val hPlan = stripsPlanner.plan(q1.buildHproblem()).first()
+
+        val explanation: ContrastiveExplanation =
+            ContrastiveExplanation.of(q1.plan, hPlan, q1.focus)
+
+        val contrastiveExplanation = ContrastiveExplanation.of(
+            q1.plan,
+            hPlan,
+            q1.focus
         )
         explanation shouldBe contrastiveExplanation
     }

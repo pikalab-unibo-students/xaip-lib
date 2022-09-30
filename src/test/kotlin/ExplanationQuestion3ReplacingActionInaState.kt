@@ -126,7 +126,8 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             goal = newProblem.goal
         )
         /* Idea:
-                fino ad una certa il piano è ok, ma da un certo punto X in avanti deve essere cambiato;
+                fino ad una certa il piano è ok, ma da un certo punto X in avanti deve e
+                ssere cambiato;
                 riflettendo cosa succederebbe se dopo X venisse applicata l'azione scelta dall'utente.
                 1. mi salvo il piano fino al punto dell'azione che devo andare
             Problema: assenza di controlli sul fatto che unìazione si applicabile in uno stato (mancanza di gestione delle eccezioni.

@@ -1,4 +1,6 @@
 package explanation
 
-class Question5Test {
+import io.kotest.core.spec.style.AnnotationSpec
+
+class Question5Test : AnnotationSpec() {
 }

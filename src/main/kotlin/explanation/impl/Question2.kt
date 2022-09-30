@@ -12,7 +12,8 @@ import explanation.Question
 class Question2(
     override val problem: Problem,
     override val plan: Plan,
-    override val focus: Operator
+    override val focus: Operator,
+    override val focusOn: Int
 ) : Question, AbstractQuestion() {
     override var newPredicate = createNewPredicate(focus, "not_done_", true)
     override var newFluent = createNewFluent(focus, newPredicate)

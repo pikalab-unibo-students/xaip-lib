@@ -13,7 +13,7 @@ class Question4(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
-    val alternativePlan: Plan
+    val alternativePlan: Plan, override val focusOn: Int
 ) : Question, AbstractQuestion() {
 
     override fun buildHdomain(): Domain {

@@ -14,7 +14,8 @@ class Question3(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
-    inState: State? = null
+    inState: State? = null,
+    override val focusOn: Int
 ) : Question, AbstractQuestion() {
     private val newProblem = if (inState != null) {
         Problem.of(

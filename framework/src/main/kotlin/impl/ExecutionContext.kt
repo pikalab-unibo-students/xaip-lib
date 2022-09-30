@@ -146,7 +146,7 @@ internal data class ExecutionContext(
                     val tmp = try {
                         fluentState.mostGeneralUnifier(fluent)
                     } catch (_: NotUnifiableException) { null }
-                    if (tmp != Substitution.empty() || tmp != Substitution.empty() || tmp != null) {
+                    if (tmp != Substitution.empty() || tmp != Substitution.empty()) {
                         indice++
                         break
                     }

@@ -17,7 +17,8 @@ class Question2Test : AnnotationSpec() {
         val q2 = Question2(
             Problems.armNotEmpty,
             Plan.of(listOf(pickA)),
-            pickA
+            pickA,
+            0
         )
 
         val hProblem = q2.buildHproblem()

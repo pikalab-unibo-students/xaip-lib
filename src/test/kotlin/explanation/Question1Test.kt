@@ -14,7 +14,8 @@ class Question1Test : AnnotationSpec() {
         val q1 = Question1(
             Problems.armNotEmpty,
             Plan.of(listOf(Operators.pickB)),
-            Operators.pickA
+            Operators.pickA,
+            0
         )
 
         val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()

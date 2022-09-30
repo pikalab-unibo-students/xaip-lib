@@ -6,6 +6,9 @@ import Plan
 import Problem
 import explanation.Question
 
+/**
+ * Why not this plan instead
+ */
 class Question4(override val problem: Problem, override val plan: Plan, override val focus: Operator, val alternativePlan: Plan) : Question, AbstractQuestion() {
 
     override fun buildHdomain(): Domain {

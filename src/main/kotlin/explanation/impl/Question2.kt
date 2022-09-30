@@ -6,6 +6,9 @@ import Plan
 import Problem
 import explanation.Question
 
+/**
+ * Why operator used
+ */
 class Question2(override val problem: Problem, override val plan: Plan, override val focus: Operator) : Question, AbstractQuestion() {
     override var newPredicate = createNewPredicate(focus, "not_done_", true)
     override var newFluent = createNewFluent(focus, newPredicate)

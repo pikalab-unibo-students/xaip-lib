@@ -5,10 +5,10 @@ import Operator
 import Plan
 import Problem
 import State
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
 import explanation.oldVersion.ExplanationUtils.buildHproblem
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Fluents
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB
@@ -53,12 +53,11 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
                 )
             )
         )
-        //A.
+        // A.
         val newState = question.problem.initialState.apply(pickC).first() // questo sarebbe un punto di scelta
 
         val hProblem = buildHproblem(question.problem.domain, question.problem, null, newState)
-
-        //B.
+        // B.
         val hplan = stripsPlanner.plan(hProblem).toSet()
 
         val explanation = ContrastiveExplanation.of(
@@ -116,7 +115,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         println("new initial state: ${newProblem.initialState}")
 
-        //A. TODO( estendi a considerare tutti gli stati possibili)
+        // A. TODO( estendi a considerare tutti gli stati possibili)
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
         println("apply: ${question.actionToAdd} initial state obtaining: $newState")
         val hDomain = Domain.of(
@@ -132,12 +131,14 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             initialState = newState,
             goal = newProblem.goal
         )
+
         /* Idea:
                 fino ad una certa il piano è ok, ma da un certo punto X in avanti deve e
                 ssere cambiato;
                 riflettendo cosa succederebbe se dopo X venisse applicata l'azione scelta dall'utente.
                 1. mi salvo il piano fino al punto dell'azione che devo andare
-            Problema: assenza di controlli sul fatto che unìazione si applicabile in uno stato (mancanza di gestione delle eccezioni.
+            Problema: assenza di controlli sul fatto che unìazione si applicabile in uno stato
+                    (mancanza di gestione delle eccezioni.
 
         */
         val actionToKeep = question.originalPlan.actions.subList(
@@ -145,7 +146,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             question.originalPlan.actions.indexOf(question.actionToRemove)
         ).toMutableList()
 
-        //B.
+        // B.
         val plans = stripsPlanner.plan(hProblem).toSet()
         for (plan in plans) {
             val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.actions) })

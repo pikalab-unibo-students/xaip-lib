@@ -8,8 +8,6 @@ import Plan
 import Predicate
 import Problem
 import VariableAssignment
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
 import explanation.oldVersion.ExplanationUtils.createNewAction
 import explanation.oldVersion.ExplanationUtils.createNewFluent
@@ -17,6 +15,8 @@ import explanation.oldVersion.ExplanationUtils.createNewGroundFluent
 import explanation.oldVersion.ExplanationUtils.createNewPredicate
 import explanation.oldVersion.ExplanationUtils.findAction
 import explanation.oldVersion.ExplanationUtils.reorderPlan
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickD
 import resources.domain.BlockWorldDomain.Operators.stackBA

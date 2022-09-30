@@ -3,7 +3,6 @@ package explanation.oldVersion
 import Operator
 import Plan
 import VariableAssignment
-import explanation.Question1
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
@@ -99,27 +98,6 @@ class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
             question.originalPlan,
             hplan,
             question.actionToAddOrToRemove
-        )
-        explanation shouldBe contrastiveExplanation
-    }
-
-    @Test
-    fun testQuestionNew() {
-        val q1 = Question1(
-            Problems.armNotEmpty,
-            Plan.of(listOf(pickB)),
-            pickA
-        )
-
-        val hPlan = stripsPlanner.plan(q1.buildHproblem()).first()
-
-        val explanation: ContrastiveExplanation =
-            ContrastiveExplanation.of(q1.plan, hPlan, q1.focus)
-
-        val contrastiveExplanation = ContrastiveExplanation.of(
-            q1.plan,
-            hPlan,
-            q1.focus
         )
         explanation shouldBe contrastiveExplanation
     }

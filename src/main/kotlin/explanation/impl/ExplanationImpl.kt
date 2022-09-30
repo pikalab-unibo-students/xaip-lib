@@ -4,6 +4,9 @@ import Operator
 import Plan
 import explanation.Explanation
 
+/**
+ *
+ */
 data class ExplanationImpl(override val originalPlan: Plan, override val novelPlan: Plan) : Explanation {
     override val addList: List<Operator> by lazy {
         this.novelPlan.actions.filter {

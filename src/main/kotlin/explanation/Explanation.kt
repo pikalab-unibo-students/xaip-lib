@@ -4,6 +4,9 @@ import Operator
 import Plan
 import explanation.impl.ExplanationImpl
 
+/**
+ *
+ */
 interface Explanation {
     val originalPlan: Plan
     val novelPlan: Plan

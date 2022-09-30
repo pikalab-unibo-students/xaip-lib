@@ -10,7 +10,10 @@ import Predicate
 import Problem
 import State
 
-abstract class AbstractQuestion() {
+/**
+ *
+ */
+abstract class AbstractQuestion {
     open lateinit var newPredicate: Predicate
     open lateinit var newGroundFluent: Fluent
     open lateinit var newFluent: Fluent
@@ -18,6 +21,9 @@ abstract class AbstractQuestion() {
     open lateinit var newAction: Action
     open lateinit var hDomain: Domain
 
+    /**
+     *
+     */
     fun reorderPlan(
         plan: Plan,
         actionsToPosticipate: List<Operator>,
@@ -49,18 +55,35 @@ abstract class AbstractQuestion() {
             }
         return reorderedPlan
     }
+
+    /**
+     *
+     */
     fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
         actionList.first { it.name == inputOperator.name }
+
+    /**
+     *
+     */
     fun createNewGroundFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.args.toTypedArray())
 
+    /**
+     *
+     */
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.parameters.keys.toTypedArray())
 
+    /**
+     *
+     */
     fun createNewPredicate(action: Action, name: String, negated: Boolean = false): Predicate =
         if (negated) Predicate.of(name + action.name, action.parameters.values.toList())
         else Predicate.of(name + action.name, action.parameters.values.toList())
 
+    /**
+     *
+     */
     fun createNewAction(action: Action, fluent: Fluent, negated: Boolean = false): Action {
         return Action.of(
             name = action.name + "^",
@@ -71,6 +94,10 @@ abstract class AbstractQuestion() {
             } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
         )
     }
+
+    /**
+     *
+     */
     fun buildHdomain(domain: Domain, newPredicate: Predicate, newAction: Action) =
         Domain.of( // domain extended
             name = domain.name,
@@ -86,6 +113,9 @@ abstract class AbstractQuestion() {
             types = domain.types
         )
 
+    /**
+     *
+     */
     fun buildHproblem(
         hDomain: Domain,
         problem: Problem,

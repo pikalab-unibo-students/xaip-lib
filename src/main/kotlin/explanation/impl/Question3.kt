@@ -8,9 +8,14 @@ import State
 import explanation.Question
 
 /**
- * Why operator instead of
+ * Why operator instead of.
  */
-class Question3(override val problem: Problem, override val plan: Plan, override val focus: Operator, inState: State? = null) : Question, AbstractQuestion() {
+class Question3(
+    override val problem: Problem,
+    override val plan: Plan,
+    override val focus: Operator,
+    inState: State? = null
+) : Question, AbstractQuestion() {
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

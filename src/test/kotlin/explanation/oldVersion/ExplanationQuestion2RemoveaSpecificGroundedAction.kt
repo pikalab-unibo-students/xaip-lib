@@ -3,8 +3,6 @@ package explanation.oldVersion
 import Operator
 import Plan
 import VariableAssignment
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
 import explanation.oldVersion.ExplanationUtils.Question1
 import explanation.oldVersion.ExplanationUtils.buildHdomain
@@ -13,6 +11,8 @@ import explanation.oldVersion.ExplanationUtils.createNewAction
 import explanation.oldVersion.ExplanationUtils.createNewFluent
 import explanation.oldVersion.ExplanationUtils.createNewGroundFluent
 import explanation.oldVersion.ExplanationUtils.createNewPredicate
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems

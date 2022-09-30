@@ -14,8 +14,9 @@ import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
 
 class Question3Test : AnnotationSpec() {
+
     @Test
-    fun `Use pickD instead of pickC in a given state of the plan`() {
+    fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
         val q3 = Question3(
             Problems.stackZWpickX,
             Plan.of(listOf(pickA, stackAB, pickC)),

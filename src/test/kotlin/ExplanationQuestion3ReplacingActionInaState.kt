@@ -67,8 +67,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         explanation shouldBe contrastiveExplanation
     }
 
-    /**
+    /*
      * Versione estesa; considera che l'utente possa voler partire da qualsivoglia stato.
+     * Problematiche: gestione di possibili loop.
      */
     @Test
     fun testQuestion3Extended() {
@@ -106,7 +107,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
         println("apply: ${question.actionToAdd} initial state obtaining: $newState")
         // TODO( estendi a considerare tutti gli stati possibili)
-        // problema ho una sequenza potenzialmente infinita come la gestiamo sta cosa,
+        // PROBLEMA ho una sequenza potenzialmente infinita come la gestiamo sta cosa,
         // non posso semplicemente fare un forEach() perché rischio il loop
         val hDomain = Domain.of(
             name = newProblem.domain.name,

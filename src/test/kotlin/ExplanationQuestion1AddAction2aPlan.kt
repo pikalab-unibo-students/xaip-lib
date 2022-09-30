@@ -18,6 +18,16 @@ import resources.domain.BlockWorldDomain.Values
 
 class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
     // 1.“Why is action A not used in the plan, rather than being used?” //add action to a state
+
+    /*
+     * Idea:
+     *          1. creo un predicate (+ fluent) che mi indichi se un'azione è stata eseguita.
+     *          2. recupero l'azione che l'utente vorrebbe inserire
+     *          3. la estendo in modo tale da includere il nuovo fluent tra gli effetti positivi
+     *          4. aggiorno il Domain per includere la nuova azione
+     *          5. aggiunto il nuovo fluent corrisponde all'azione ai goal
+     * Problematiche: gestione della sequenza deipaini in output, quali, quanti ne ritorno
+     */
     @Test
     fun testQuestion1() {
         val question = ExplanationUtils.Question1(
@@ -25,16 +35,21 @@ class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
             Problems.armNotEmpty,
             Plan.of(listOf(pickB))
         )
+        //1.
         val newPredicate = createNewPredicate(question.actionToAddOrToRemove, "has_done_")
 
         val newGroundFluent = createNewGroundFluent(question.actionToAddOrToRemove, newPredicate)
         val newFluent = createNewFluent(question.actionToAddOrToRemove, newPredicate)
 
+        //2.
         val oldAction =
             findAction(question.actionToAddOrToRemove, question.problem.domain.actions)
+        //3.
         val newAction = createNewAction(oldAction, newFluent)
 
+        //4.
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
+        //5.
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)
         val hPlan = stripsPlanner.plan(hProblem).first()
 

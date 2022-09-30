@@ -9,7 +9,6 @@ import resources.ExplanationUtils.createNewAction
 import resources.ExplanationUtils.createNewFluent
 import resources.ExplanationUtils.createNewGroundFluent
 import resources.ExplanationUtils.createNewPredicate
-import resources.domain.BlockWorldDomain.Actions
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems

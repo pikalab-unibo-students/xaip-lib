@@ -27,6 +27,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
     /*
      * Versione base che parte dal presupposto che si parta dallo stato iniziale.
+     *
+     * Problematiche: gestione dei punti di scelta, quando applico l'azione in: A,
+     *                  e ricalcolo i possibili piani in B.
      */
     @Test
     fun testQuestion3() {
@@ -43,11 +46,12 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
                 )
             )
         )
-
+        //A.
         val newState = question.problem.initialState.apply(pickC).first() // questo sarebbe un punto di scelta
 
         val hProblem = buildHproblem(question.problem.domain, question.problem, null, newState)
 
+        //B.
         val hplan = stripsPlanner.plan(hProblem).toSet()
 
         val explanation = ContrastiveExplanation.of(
@@ -69,7 +73,8 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
     /*
      * Versione estesa; considera che l'utente possa voler partire da qualsivoglia stato.
-     * Problematiche: gestione di possibili loop.
+     * Problematiche: gestione dei punti di scelta, quando applico l'azione in: A,
+     *                  e ricalcolo i possibili piani in B.
      */
     @Test
     fun testQuestion3Extended() {
@@ -104,11 +109,9 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
 
         println("new initial state: ${newProblem.initialState}")
 
+        //A. TODO( estendi a considerare tutti gli stati possibili)
         val newState = newProblem.initialState.apply(question.actionToAdd).first()
         println("apply: ${question.actionToAdd} initial state obtaining: $newState")
-        // TODO( estendi a considerare tutti gli stati possibili)
-        // PROBLEMA ho una sequenza potenzialmente infinita come la gestiamo sta cosa,
-        // non posso semplicemente fare un forEach() perché rischio il loop
         val hDomain = Domain.of(
             name = newProblem.domain.name,
             predicates = newProblem.domain.predicates,
@@ -122,11 +125,19 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             initialState = newState,
             goal = newProblem.goal
         )
+        /* Idea:
+                fino ad una certa il piano è ok, ma da un certo punto X in avanti deve essere cambiato;
+                riflettendo cosa succederebbe se dopo X venisse applicata l'azione scelta dall'utente.
+                1. mi salvo il piano fino al punto dell'azione che devo andare
+            Problema: assenza di controlli sul fatto che unìazione si applicabile in uno stato (mancanza di gestione delle eccezioni.
 
+        */
         val actionToKeep = question.originalPlan.actions.subList(
             0,
             question.originalPlan.actions.indexOf(question.actionToRemove)
         ).toMutableList()
+
+        //B.
         val plans = stripsPlanner.plan(hProblem).toSet()
         for (plan in plans) {
             val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.actions) })

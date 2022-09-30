@@ -1,8 +1,8 @@
 package explanation
 
-import explanation.impl.Question3
 import Plan
 import State
+import explanation.impl.Question3
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Fluents

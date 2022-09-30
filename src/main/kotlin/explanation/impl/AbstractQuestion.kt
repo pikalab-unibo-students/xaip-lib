@@ -13,8 +13,11 @@ import State
 /**
  *
  */
-abstract class AbstractQuestion {
-    // o li tengo così o li tengo abstract, ma se li metto come abstract poi tocca implementarli anche dove non mi servono; vedi Q3
+open class AbstractQuestion {
+    // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
+    // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
+    // vedi in Q3
+
     open lateinit var newPredicate: Predicate
     open lateinit var newGroundFluent: Fluent
     open lateinit var newFluent: Fluent

@@ -1,7 +1,14 @@
+package explanation.oldVersion
+
+import Domain
+import Operator
+import Plan
+import Problem
+import State
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.ExplanationUtils.ContrastiveExplanation
-import resources.ExplanationUtils.buildHproblem
+import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
+import explanation.oldVersion.ExplanationUtils.buildHproblem
 import resources.domain.BlockWorldDomain.Fluents
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB

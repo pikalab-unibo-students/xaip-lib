@@ -1,13 +1,22 @@
-
+package explanation.oldVersion
+import Action
+import Domain
+import Fluent
+import FluentBasedGoal
+import Operator
+import Plan
+import Predicate
+import Problem
+import VariableAssignment
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.ExplanationUtils.ContrastiveExplanation
-import resources.ExplanationUtils.createNewAction
-import resources.ExplanationUtils.createNewFluent
-import resources.ExplanationUtils.createNewGroundFluent
-import resources.ExplanationUtils.createNewPredicate
-import resources.ExplanationUtils.findAction
-import resources.ExplanationUtils.reorderPlan
+import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
+import explanation.oldVersion.ExplanationUtils.createNewAction
+import explanation.oldVersion.ExplanationUtils.createNewFluent
+import explanation.oldVersion.ExplanationUtils.createNewGroundFluent
+import explanation.oldVersion.ExplanationUtils.createNewPredicate
+import explanation.oldVersion.ExplanationUtils.findAction
+import explanation.oldVersion.ExplanationUtils.reorderPlan
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Operators.pickD
 import resources.domain.BlockWorldDomain.Operators.stackBA
@@ -100,7 +109,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
             hDomain,
             question.problem.objects,
             question.problem.initialState,
-            FluentBasedGoal.of(
+            FluentBasedGoal.Companion.of(
                 (question.problem.goal as FluentBasedGoal)
                     .targets.toMutableSet().also { it.addAll(fluents.reversed()) }
             )

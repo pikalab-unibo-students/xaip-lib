@@ -1,14 +1,18 @@
+package explanation.oldVersion
+
+import Operator
+import Plan
+import VariableAssignment
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.ExplanationUtils
-import resources.ExplanationUtils.ContrastiveExplanation
-import resources.ExplanationUtils.Question1
-import resources.ExplanationUtils.buildHdomain
-import resources.ExplanationUtils.buildHproblem
-import resources.ExplanationUtils.createNewAction
-import resources.ExplanationUtils.createNewFluent
-import resources.ExplanationUtils.createNewGroundFluent
-import resources.ExplanationUtils.createNewPredicate
+import explanation.oldVersion.ExplanationUtils.ContrastiveExplanation
+import explanation.oldVersion.ExplanationUtils.Question1
+import explanation.oldVersion.ExplanationUtils.buildHdomain
+import explanation.oldVersion.ExplanationUtils.buildHproblem
+import explanation.oldVersion.ExplanationUtils.createNewAction
+import explanation.oldVersion.ExplanationUtils.createNewFluent
+import explanation.oldVersion.ExplanationUtils.createNewGroundFluent
+import explanation.oldVersion.ExplanationUtils.createNewPredicate
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems

@@ -11,12 +11,12 @@ import Problem
 import State
 
 abstract class AbstractQuestion() {
-    lateinit var newPredicate: Predicate
-    lateinit var newGroundFluent: Fluent
-    lateinit var newFluent: Fluent
-    lateinit var oldAction: Action
-    lateinit var newAction: Action
-    lateinit var hDomain: Domain
+    open lateinit var newPredicate: Predicate
+    open lateinit var newGroundFluent: Fluent
+    open lateinit var newFluent: Fluent
+    open lateinit var oldAction: Action
+    open lateinit var newAction: Action
+    open lateinit var hDomain: Domain
 
     fun reorderPlan(
         plan: Plan,

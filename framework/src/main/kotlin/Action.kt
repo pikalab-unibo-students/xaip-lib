@@ -16,6 +16,13 @@ interface Action {
     val positiveEffects: Set<Effect>
     val negativeEffects: Set<Effect>
 
+
+
+
+
+
+
+
     companion object {
         /**
          * Factory method for an [Action] creation.

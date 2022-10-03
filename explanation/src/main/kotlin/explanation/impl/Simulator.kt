@@ -8,10 +8,11 @@ import State
 interface Simulator {
     fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean
 }
+
 /**
  *
  */
-class SimulatorImpl(): Simulator {
+class SimulatorImpl() : Simulator {
     class Context(val actions: List<Operator>, val state: State)
 
     var contextList: MutableList<Context> = mutableListOf()
@@ -25,15 +26,15 @@ class SimulatorImpl(): Simulator {
                 val s = contextList.last().state
                 contextList.removeLast()
 
-                val states = s.apply(actionInContext)
-                if (!states.toList().isEmpty()) {
-                    val actionMutable = actions.subList(1, actions.size)
+                val states = s.apply(actionInContext).toList()
+                val actionMutable = actions.subList(1, actions.size)
+                if (states.isNotEmpty() && actionMutable.isNotEmpty()) {
                     for (newState in states)
                         contextList.add(Context(actionMutable, newState))
+                } else if (actionInContext == actions.last()) {
+                    val fluents = states.first().fluents
+                    return fluents.containsAll((goal as FluentBasedGoal).targets)
                 } else break
-                if (actionInContext == contextList.last().actions.last()) {
-                    return states.first().fluents.containsAll((goal as FluentBasedGoal).targets)
-                }
             }
         }
         return false

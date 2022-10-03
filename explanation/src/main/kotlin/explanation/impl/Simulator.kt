@@ -5,15 +5,18 @@ import Goal
 import Operator
 import State
 
+interface Simulator {
+    fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean
+}
 /**
  *
  */
-class Simulator {
+class SimulatorImpl(): Simulator {
     class Context(val actions: List<Operator>, val state: State)
 
     var contextList: MutableList<Context> = mutableListOf()
 
-    fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean {
+    override fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean {
         contextList.add(Context(actions.toMutableList(), state))
         while (true) {
             if (contextList.isEmpty()) break
@@ -28,8 +31,9 @@ class Simulator {
                     for (newState in states)
                         contextList.add(Context(actionMutable, newState))
                 } else break
-                if(actionInContext == contextList.last().actions.last())
+                if (actionInContext == contextList.last().actions.last()) {
                     return states.first().fluents.containsAll((goal as FluentBasedGoal).targets)
+                }
             }
         }
         return false

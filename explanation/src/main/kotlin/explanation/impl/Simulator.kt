@@ -54,7 +54,9 @@ class SimulatorImpl() : Simulator {
                     for (newState in states)
                         contextList.add(Context(actionMutable, newState))
                 } else if (actionInContext == actions.last()) {
-                    return if(states.isNotEmpty()) finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first()) else false
+                    return if (states.isNotEmpty()) {
+                        finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())
+                    } else false
                 } else break
             }
         }

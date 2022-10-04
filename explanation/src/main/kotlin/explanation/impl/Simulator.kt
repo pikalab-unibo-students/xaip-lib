@@ -4,11 +4,12 @@ import FluentBasedGoal
 import Goal
 import NotUnifiableException
 import Operator
+import Plan
 import State
 import it.unibo.tuprolog.core.Substitution
 
 interface Simulator {
-    fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean
+    fun simulate(pla: Plan, state: State, goal: Goal): Boolean
 }
 
 /**
@@ -19,7 +20,8 @@ class SimulatorImpl() : Simulator {
 
     var contextList: MutableList<Context> = mutableListOf()
 
-    fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
+    // NB copiata dall'altro modulo
+    private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var indice = 0
         for (fluent in goal.targets) {
             if (!fluent.isGround) {
@@ -39,12 +41,22 @@ class SimulatorImpl() : Simulator {
         return goal.targets.size == indice
     }
 
-    override fun simulate(actions: List<Operator>, state: State, goal: Goal): Boolean {
+    /**
+     * Idea:
+     * Tenere una lista dei rami possibili da esplorare.
+     * 1. Inizializzazione della lista
+     * 2. Controllo se non ho più rami da esplorare esco e ritorno false.
+     * 3. Altrimenti inizio ad eseguire un ciclo sulla lista dei rami da esplorare.
+     * */
+    override fun simulate(plan: Plan, state: State, goal: Goal): Boolean {
+        val actions = plan.actions
+        // 1.
         contextList.add(Context(actions.toMutableList(), state))
         while (true) {
+            // 2.
             if (contextList.isEmpty()) break
-
-            for (actionInContext in contextList.last().actions) {
+            // 3.
+            for (actionInContext in contextList.also { it.reverse() }.last().actions) {
                 val s = contextList.last().state
                 contextList.removeLast()
 

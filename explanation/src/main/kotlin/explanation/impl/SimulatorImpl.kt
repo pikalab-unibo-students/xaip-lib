@@ -12,7 +12,7 @@ class SimulatorImpl : Simulator {
 
     private fun <T> MutableList<T>.pop(): T = removeAt(0)
 
-    override fun simulate2(plan: Plan, state: State): List<State> {
+    override fun simulate(plan: Plan, state: State): List<State> {
         val actions = plan.actions
         val fringe: MutableList<Context> = mutableListOf(Context(state))
         while (fringe.none { it.depth < actions.size - 1 }) {

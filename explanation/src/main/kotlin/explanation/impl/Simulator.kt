@@ -6,6 +6,7 @@ import NotUnifiableException
 import Operator
 import Plan
 import State
+import explanation.Answer
 import explanation.Simulator
 import it.unibo.tuprolog.core.Substitution
 
@@ -84,5 +85,35 @@ class SimulatorImpl() : Simulator {
             }
         }
         return false
+    }
+
+    override fun simulate2(plan: Plan, state: State, goal: Goal): Answer {
+        val actions = plan.actions
+        // 1.
+        contextList.add(Context(actions.toMutableList(), state))
+        while (true) {
+            // 2.
+            if (contextList.isEmpty()) return Answer(false)
+            // 3.
+            for (actionInContext in contextList.first().actions) {
+                val s = contextList.first().state
+                // 5.
+                val states = s.apply(actionInContext).toList()
+                // 6.
+                val actionMutable = contextList.first().actions.subList(1, contextList.first().actions.size)
+                // 4.
+                contextList.removeFirst()
+                // 7.
+                if (states.isNotEmpty() && actionMutable.isNotEmpty()) {
+                    for (newState in states)
+                        contextList.add(Context(actionMutable, newState))
+                    // 8.
+                } else if (actionInContext == actions.last()) {
+                    return if (states.isNotEmpty() && finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())){
+                        Answer(true)
+                    } else Answer(false, actionInContext)
+                }
+            }
+        }
     }
 }

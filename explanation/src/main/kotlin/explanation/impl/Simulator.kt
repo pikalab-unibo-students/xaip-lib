@@ -1,4 +1,4 @@
-package explanation.impl
+package explanation.impl // ktlint-disable filename
 
 import FluentBasedGoal
 import Goal
@@ -6,11 +6,8 @@ import NotUnifiableException
 import Operator
 import Plan
 import State
+import explanation.Simulator
 import it.unibo.tuprolog.core.Substitution
-
-interface Simulator {
-    fun simulate(pla: Plan, state: State, goal: Goal): Boolean
-}
 
 /**
  *
@@ -78,7 +75,7 @@ class SimulatorImpl() : Simulator {
                 if (states.isNotEmpty() && actionMutable.isNotEmpty()) {
                     for (newState in states)
                         contextList.add(Context(actionMutable, newState))
-                // 8.
+                    // 8.
                 } else if (actionInContext == actions.last()) {
                     return if (states.isNotEmpty()) {
                         finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())

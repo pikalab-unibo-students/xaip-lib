@@ -16,13 +16,14 @@ class SimulatorTest : AnnotationSpec() {
 
     val simulationCorrect = SimulatorImpl().simulate(planPickB, problem.initialState, problem.goal)
     val simulationIncorrect = SimulatorImpl().simulate(planStackDC, problem.initialState, problem.goal)
-    val simulationIncorrect2 = SimulatorImpl().simulate(planPickDStackDC, problem.initialState, problem.goal)
+    val simulationIncorrect2 = SimulatorImpl()
+        .simulate(planPickDStackDC, problem.initialState, problem.goal)
     val simulationIncorrect3 = SimulatorImpl().simulate(planPickDStackDCpickA, problem.initialState, problem.goal)
 
     @Test
     fun `Test simulation correct`() {
         simulationCorrect shouldBe true
-        // simulationIncorrect3 shouldBe true
+        simulationIncorrect3 shouldBe true
     }
 
     @Test

@@ -29,7 +29,8 @@ class SimulatorImpl() : Simulator {
                     val tmp = try {
                         fluentState.mostGeneralUnifier(fluent)
                     } catch (_: NotUnifiableException) { null }
-                    if (tmp != Substitution.empty() || tmp != Substitution.empty()) {
+                    // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
+                    if (tmp != Substitution.empty() && tmp != Substitution.empty() && tmp != null) {
                         indice++
                         break
                     }
@@ -47,6 +48,15 @@ class SimulatorImpl() : Simulator {
      * 1. Inizializzazione della lista
      * 2. Controllo se non ho più rami da esplorare esco e ritorno false.
      * 3. Altrimenti inizio ad eseguire un ciclo sulla lista dei rami da esplorare.
+     * 4. rimuovo il ramo che sto analizzando
+     * 5. applico l'azione
+     * 6. creo una lista delle azioni ancora da valutare
+     * 7. se l'azione era applicabile e ci sono ancora azioni da applicare
+     *    allora creo un nuovo punto di scelta con il nuovo wstato e la lista delle rimanenti azioni.
+     * 8. se l'azione era l'ultima allora allora controllo
+     *    a. se era applicabile allora controllo se soddisfa il goal
+     *    b. altrimento ritorno false
+     *
      * */
     override fun simulate(plan: Plan, state: State, goal: Goal): Boolean {
         val actions = plan.actions
@@ -56,20 +66,24 @@ class SimulatorImpl() : Simulator {
             // 2.
             if (contextList.isEmpty()) break
             // 3.
-            for (actionInContext in contextList.also { it.reverse() }.last().actions) {
-                val s = contextList.last().state
-                contextList.removeLast()
-
+            for (actionInContext in contextList.first().actions) {
+                val s = contextList.first().state
+                // 5.
                 val states = s.apply(actionInContext).toList()
-                val actionMutable = actions.subList(1, actions.size)
+                // 6.
+                val actionMutable = contextList.first().actions.subList(1, contextList.first().actions.size)
+                // 4.
+                contextList.removeFirst()
+                // 7.
                 if (states.isNotEmpty() && actionMutable.isNotEmpty()) {
                     for (newState in states)
                         contextList.add(Context(actionMutable, newState))
+                // 8.
                 } else if (actionInContext == actions.last()) {
                     return if (states.isNotEmpty()) {
                         finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())
                     } else false
-                } else break
+                }
             }
         }
         return false

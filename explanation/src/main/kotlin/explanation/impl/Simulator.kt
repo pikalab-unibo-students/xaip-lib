@@ -9,8 +9,8 @@ import State
 import explanation.Simulator
 import it.unibo.tuprolog.core.Substitution
 
-
 class Answer(val planIsAcceptable: Boolean, val operator: Operator? = null)
+
 /**
  *
  */
@@ -110,7 +110,7 @@ class SimulatorImpl() : Simulator {
                         contextList.add(Context(actionMutable, newState))
                     // 8.
                 } else if (actionInContext == actions.last()) {
-                    return if (states.isNotEmpty() && finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())){
+                    return if (states.isNotEmpty() && finalStateComplaintWithGoal(goal as FluentBasedGoal, states.first())) {
                         Answer(true)
                     } else Answer(false, actionInContext)
                 }

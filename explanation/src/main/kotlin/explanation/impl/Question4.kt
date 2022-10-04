@@ -1,10 +1,9 @@
 package explanation.impl
 
-import Domain
-import Operator
 import Plan
 import Problem
-import explanation.Question
+import explanation.GeneralQuestion
+import explanation.Simulator
 
 /**
  * Why not this plan instead.
@@ -12,16 +11,9 @@ import explanation.Question
 class Question4(
     override val problem: Problem,
     override val plan: Plan,
-    override val focus: Operator,
-    val alternativePlan: Plan,
-    override val focusOn: Int
-) : Question, AbstractQuestion() {
-
-    override fun buildHdomain(): Domain {
-        TODO("Not yet implemented")
-    }
-
-    override fun buildHproblem(): Problem {
-        TODO("Not yet implemented")
-    }
+    val alternativePlan: Plan
+) : GeneralQuestion {
+    private val simulator = Simulator.of()
+    fun isValid(): Boolean =
+        simulator.simulate(alternativePlan, problem.initialState, problem.goal)
 }

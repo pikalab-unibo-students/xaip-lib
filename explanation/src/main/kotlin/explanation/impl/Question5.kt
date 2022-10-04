@@ -1,27 +1,13 @@
 package explanation.impl
 
-import Domain
-import Operator
 import Plan
 import Problem
-import explanation.Question
+import explanation.GeneralQuestion
 
 /**
  * Why is plan not good (solvable).
  */
 class Question5(
     override val problem: Problem,
-    override val plan: Plan,
-    override val focus: Operator,
-    val alternativePlan: Plan,
-    override val focusOn: Int
-) :
-    Question {
-    override fun buildHdomain(): Domain {
-        TODO("Not yet implemented")
-    }
-
-    override fun buildHproblem(): Problem {
-        TODO("Not yet implemented")
-    }
-}
+    override val plan: Plan
+) : GeneralQuestion

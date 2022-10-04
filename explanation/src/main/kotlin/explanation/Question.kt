@@ -8,9 +8,9 @@ import Problem
 /**
  *
  */
-interface Question {
-    val problem: Problem
-    val plan: Plan
+interface Question : GeneralQuestion {
+    // val problem: Problem
+    // val plan: Plan
     val focus: Operator
     val focusOn: Int
 
@@ -23,4 +23,11 @@ interface Question {
      *
      */
     fun buildHproblem(): Problem
+}
+
+/**
+ * */
+interface GeneralQuestion {
+    val problem: Problem
+    val plan: Plan
 }

@@ -14,6 +14,9 @@ class Question4(
     val alternativePlan: Plan
 ) : GeneralQuestion {
     private val simulator = Simulator.of()
-    fun isValid(): Boolean =
+    override fun isValid(): Boolean =
         simulator.simulate(alternativePlan, problem.initialState, problem.goal)
+
+    override fun `Where is the problem`(): Answer =
+        simulator.simulate2(plan, problem.initialState, problem.goal)
 }

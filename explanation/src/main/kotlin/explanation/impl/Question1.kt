@@ -26,7 +26,6 @@ class Question1(
     override fun buildHdomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
     override fun buildHproblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null)
-    override fun isPlanValid(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isPlanValid(pla: Plan, problem: Problem): Boolean = planValidation(plan, problem)
+
 }

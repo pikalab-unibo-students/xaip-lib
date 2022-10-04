@@ -47,7 +47,6 @@ class Question3(
         goal = newProblem.goal
     )
 
-    override fun isPlanValid(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isPlanValid(pla: Plan, problem: Problem): Boolean = planValidation(plan, problem)
+
 }

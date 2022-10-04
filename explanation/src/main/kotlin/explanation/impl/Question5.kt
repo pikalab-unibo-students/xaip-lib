@@ -4,6 +4,7 @@ import Domain
 import Operator
 import Plan
 import Problem
+import dsl.problem
 import explanation.Question
 
 /**
@@ -16,12 +17,9 @@ class Question5(
     val alternativePlan: Plan,
     override val focusOn: Int
 ) :
-    Question {
+    Question, AbstractQuestion() {
     override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHproblem(): Problem = throw UnsupportedOperationException()
-
-    override fun isPlanValid(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isPlanValid(pla: Plan, problem: Problem): Boolean = planValidation(plan, problem)
 }

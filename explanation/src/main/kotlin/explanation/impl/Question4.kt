@@ -16,9 +16,9 @@ import it.unibo.tuprolog.core.Substitution
  */
 class Question4(
     override val problem: Problem,
+    val alternativePlan: Plan,
     override val plan: Plan,
     override val focus: Operator,
-    val alternativePlan: Plan,
     override val focusOn: Int
 ) : Question, AbstractQuestion() {
     val simulator = Simulator.of()

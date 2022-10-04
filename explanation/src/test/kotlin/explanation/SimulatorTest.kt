@@ -15,7 +15,7 @@ class SimulatorTest : AnnotationSpec() {
 
     @Test
     fun `Test simulation correct`() {
-        simulationCorrect shouldBe State.of(
+        simulationCorrect.first() shouldBe State.of(
             BlockWorldDomain.Fluents.atBArm,
             BlockWorldDomain.Fluents.atDFloor,
             BlockWorldDomain.Fluents.atCFloor,
@@ -24,20 +24,11 @@ class SimulatorTest : AnnotationSpec() {
             BlockWorldDomain.Fluents.clearC,
             BlockWorldDomain.Fluents.clearA
         )
-
-        simulationCorrect2 shouldBe State.of(
-            BlockWorldDomain.Fluents.onBA,
-            BlockWorldDomain.Fluents.atDFloor,
-            BlockWorldDomain.Fluents.atCArm,
-            BlockWorldDomain.Fluents.atAFloor,
-            BlockWorldDomain.Fluents.clearD,
-            BlockWorldDomain.Fluents.clearB
-        )
     }
 
     @Test
     fun `Test simulation correct2`() {
-        simulationCorrect2 shouldBe State.of(
+        simulationCorrect2.first() shouldBe State.of(
             BlockWorldDomain.Fluents.onBA,
             BlockWorldDomain.Fluents.atDFloor,
             BlockWorldDomain.Fluents.atCArm,

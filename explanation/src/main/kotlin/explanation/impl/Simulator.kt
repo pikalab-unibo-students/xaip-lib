@@ -6,10 +6,11 @@ import NotUnifiableException
 import Operator
 import Plan
 import State
-import explanation.Answer
 import explanation.Simulator
 import it.unibo.tuprolog.core.Substitution
 
+
+class Answer(val planIsAcceptable: Boolean, val operator: Operator? = null)
 /**
  *
  */

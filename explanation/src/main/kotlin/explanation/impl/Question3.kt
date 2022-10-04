@@ -46,4 +46,8 @@ class Question3(
         initialState = newState,
         goal = newProblem.goal
     )
+
+    override fun isPlanValid(): Boolean {
+        TODO("Not yet implemented")
+    }
 }

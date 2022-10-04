@@ -17,11 +17,11 @@ class Question5(
     override val focusOn: Int
 ) :
     Question {
-    override fun buildHdomain(): Domain {
-        TODO("Not yet implemented")
-    }
+    override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
-    override fun buildHproblem(): Problem {
+    override fun buildHproblem(): Problem = throw UnsupportedOperationException()
+
+    override fun isPlanValid(): Boolean {
         TODO("Not yet implemented")
     }
 }

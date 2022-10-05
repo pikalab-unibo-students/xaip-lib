@@ -14,7 +14,7 @@ import dsl.provider.VariableProvider
 class AxiomDSL(
     predicateProvider: PredicateProvider,
     val typeProvider: TypeProvider
-) : AbstractFluentDSL(predicateProvider) {
+) : dsl.AbstractFluentDSL(predicateProvider) {
     var parameters: Map<Variable, Type> = mutableMapOf()
     lateinit var context: Expression
     lateinit var implies: Expression

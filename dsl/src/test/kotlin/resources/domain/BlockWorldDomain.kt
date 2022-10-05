@@ -16,6 +16,8 @@ import State
 import Type
 import Variable
 import VariableAssignment
+import dsl.domain
+import dsl.problem
 
 object BlockWorldDomain {
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
@@ -44,7 +46,6 @@ object BlockWorldDomain {
         Object.of(1),
         Object.of(2)
     )
-    /*
     object DomainsDSL {
         val blockWorldXDomainDSL = domain {
             name = "block_world"
@@ -163,8 +164,6 @@ object BlockWorldDomain {
             }
         }
     }
-
-     */
 
     object Actions {
         val pick = Action.of(

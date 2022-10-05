@@ -4,8 +4,8 @@ import io.kotest.matchers.shouldBe
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
-import resources.domain.BlockWorldDomain.Plans
-import resources.domain.BlockWorldDomain.operators
+import domain.BlockWorldDomain.Plans
+import domain.BlockWorldDomain.operators
 
 class PlanTest : AnnotationSpec() {
     @Test

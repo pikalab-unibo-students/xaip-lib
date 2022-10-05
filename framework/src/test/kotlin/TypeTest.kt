@@ -1,6 +1,6 @@
+import domain.BlockWorldDomain.Types
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Types
 
 class TypeTest : AnnotationSpec() {
     @Test

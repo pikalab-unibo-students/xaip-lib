@@ -1,3 +1,7 @@
+import domain.BlockWorldDomain.Actions
+import domain.BlockWorldDomain.actions
+import domain.BlockWorldDomain.types
+import domain.BlockWorldDomain.variables
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
@@ -6,10 +10,6 @@ import resources.TestUtils.actionEmpty
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.name
 import resources.TestUtils.type1
-import resources.domain.BlockWorldDomain.Actions
-import resources.domain.BlockWorldDomain.actions
-import resources.domain.BlockWorldDomain.types
-import resources.domain.BlockWorldDomain.variables
 
 class ActionTest : AnnotationSpec() {
 

@@ -1,4 +1,4 @@
-package resources.domain
+package domain
 
 import Action
 import Axiom
@@ -44,8 +44,7 @@ object BlockWorldDomain {
         Object.of(1),
         Object.of(2)
     )
-    /*
-    object DomainsDSL {
+    /*object DomainsDSL {
         val blockWorldXDomainDSL = domain {
             name = "block_world"
             types {

@@ -9,7 +9,7 @@ import dsl.provider.PredicateProvider
  */
 class StatesDSL(
     predicateProvider: PredicateProvider
-) : AbstractFluentDSL(predicateProvider) {
+) : dsl.AbstractFluentDSL(predicateProvider) {
 
     var fluents: MutableSet<Fluent> = mutableSetOf()
 

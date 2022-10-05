@@ -2,11 +2,11 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import resources.domain.BlockWorldDomain.Axioms
-import resources.domain.BlockWorldDomain.Fluents
-import resources.domain.BlockWorldDomain.Predicates
-import resources.domain.BlockWorldDomain.Types
-import resources.domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.Axioms
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.Values
 
 class AxiomTest : AnnotationSpec() {
 

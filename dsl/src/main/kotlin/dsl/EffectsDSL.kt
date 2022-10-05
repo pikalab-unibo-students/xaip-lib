@@ -8,7 +8,7 @@ import dsl.provider.PredicateProvider
  * */
 class EffectsDSL(
     predicateProvider: PredicateProvider
-) : AbstractFluentDSL(predicateProvider) {
+) : dsl.AbstractFluentDSL(predicateProvider) {
     var effects: MutableSet<Effect> = mutableSetOf()
 
     /**

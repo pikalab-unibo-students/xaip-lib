@@ -5,10 +5,10 @@ import io.kotest.matchers.shouldNotBe
 import resources.TestUtils.domainEmpty
 import resources.TestUtils.domainNotEmpty
 import resources.TestUtils.name
-import resources.domain.BlockWorldDomain.Domains
-import resources.domain.BlockWorldDomain.actions
-import resources.domain.BlockWorldDomain.predicates
-import resources.domain.BlockWorldDomain.types
+import domain.BlockWorldDomain.Domains
+import domain.BlockWorldDomain.actions
+import domain.BlockWorldDomain.predicates
+import domain.BlockWorldDomain.types
 
 class DomainTest : AnnotationSpec() {
     @Test

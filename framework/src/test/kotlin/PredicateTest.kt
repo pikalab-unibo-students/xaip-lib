@@ -1,3 +1,7 @@
+import domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.predicates
+import domain.BlockWorldDomain.types
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
@@ -7,10 +11,6 @@ import resources.TestUtils.predicateEmpty
 import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.type1
-import resources.domain.BlockWorldDomain.Predicates
-import resources.domain.BlockWorldDomain.Types
-import resources.domain.BlockWorldDomain.predicates
-import resources.domain.BlockWorldDomain.types
 
 class PredicateTest : AnnotationSpec() {
 

@@ -1,3 +1,7 @@
+import domain.BlockWorldDomain.Actions
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.Values
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -8,10 +12,6 @@ import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.type1
 import resources.TestUtils.variableNotEmpty
-import resources.domain.BlockWorldDomain.Actions
-import resources.domain.BlockWorldDomain.Fluents
-import resources.domain.BlockWorldDomain.Types
-import resources.domain.BlockWorldDomain.Values
 
 class OperatorTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

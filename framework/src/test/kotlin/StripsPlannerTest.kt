@@ -1,27 +1,27 @@
+import domain.BlockWorldDomain.Operators.pickA
+import domain.BlockWorldDomain.Operators.pickB
+import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.pickD
+import domain.BlockWorldDomain.Operators.putdownA
+import domain.BlockWorldDomain.Operators.stackAB
+import domain.BlockWorldDomain.Operators.stackAC
+import domain.BlockWorldDomain.Operators.stackAD
+import domain.BlockWorldDomain.Operators.stackBA
+import domain.BlockWorldDomain.Operators.stackBC
+import domain.BlockWorldDomain.Operators.stackBD
+import domain.BlockWorldDomain.Operators.stackCA
+import domain.BlockWorldDomain.Operators.stackCB
+import domain.BlockWorldDomain.Operators.stackCD
+import domain.BlockWorldDomain.Operators.stackDA
+import domain.BlockWorldDomain.Operators.stackDB
+import domain.BlockWorldDomain.Operators.stackDC
+import domain.BlockWorldDomain.Operators.unstackAB
+import domain.BlockWorldDomain.Planners
+import domain.BlockWorldDomain.Problems
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.domain.BlockWorldDomain.Operators.pickA
-import resources.domain.BlockWorldDomain.Operators.pickB
-import resources.domain.BlockWorldDomain.Operators.pickC
-import resources.domain.BlockWorldDomain.Operators.pickD
-import resources.domain.BlockWorldDomain.Operators.putdownA
-import resources.domain.BlockWorldDomain.Operators.stackAB
-import resources.domain.BlockWorldDomain.Operators.stackAC
-import resources.domain.BlockWorldDomain.Operators.stackAD
-import resources.domain.BlockWorldDomain.Operators.stackBA
-import resources.domain.BlockWorldDomain.Operators.stackBC
-import resources.domain.BlockWorldDomain.Operators.stackBD
-import resources.domain.BlockWorldDomain.Operators.stackCA
-import resources.domain.BlockWorldDomain.Operators.stackCB
-import resources.domain.BlockWorldDomain.Operators.stackCD
-import resources.domain.BlockWorldDomain.Operators.stackDA
-import resources.domain.BlockWorldDomain.Operators.stackDB
-import resources.domain.BlockWorldDomain.Operators.stackDC
-import resources.domain.BlockWorldDomain.Operators.unstackAB
-import resources.domain.BlockWorldDomain.Planners
-import resources.domain.BlockWorldDomain.Problems
 
 class StripsPlannerTest : AnnotationSpec() {
 

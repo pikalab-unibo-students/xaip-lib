@@ -26,5 +26,5 @@ interface Question {
 
     /**
      * */
-    fun isPlanValid(pla: Plan, problem: Problem): Boolean
+    fun isPlanValid(plan: Plan, problem: Problem): Boolean
 }

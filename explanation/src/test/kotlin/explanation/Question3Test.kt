@@ -49,7 +49,7 @@ class Question3Test : AnnotationSpec() {
             q3.focusOn
         ).toMutableList()
 
-        // B.
+        // B. Per me sta roba va fatta dentro l'explaantion
         val plans = stripsPlanner.plan(q3.buildHproblem()).toSet()
         for (plan in plans) {
             val hplan = Plan.of(actionToKeep.also { it.add(q3.focus) }.also { it.addAll(plan.actions) })

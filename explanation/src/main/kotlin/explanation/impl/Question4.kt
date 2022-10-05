@@ -8,6 +8,7 @@ import explanation.Question
 
 /**
  * Why not this plan instead.
+ * Proposal for a new plan.
  */
 class Question4(
     override val problem: Problem,

@@ -8,7 +8,8 @@ import State
 import explanation.Question
 
 /**
- * Why operator instead of.
+ * Why operator a instead of b in state C.
+ * Operator substitution in a state.
  */
 class Question3(
     override val problem: Problem,
@@ -47,6 +48,6 @@ class Question3(
         goal = newProblem.goal
     )
 
-    override fun isPlanValid(pla: Plan, problem: Problem): Boolean = planValidation(plan, problem)
+    override fun isPlanValid(plan: Plan, problem: Problem): Boolean = planValidation(plan, problem)
 
 }

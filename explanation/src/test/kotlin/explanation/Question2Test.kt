@@ -21,8 +21,7 @@ class Question2Test : AnnotationSpec() {
             0
         )
 
-        val hProblem = q2.buildHproblem()
-        val hplan = stripsPlanner.plan(hProblem).first()
+        val hplan = stripsPlanner.plan(q2.buildHproblem()).first()
 
         val newPredicate = q2.createNewPredicate(q2.focus, "not_done_", true)
         val newFluent = q2.createNewFluent(q2.focus, newPredicate)

@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Operators
 import resources.domain.BlockWorldDomain.Planners
 import resources.domain.BlockWorldDomain.Problems
+import resources.domain.BlockWorldDomain.Values
 
 class Question1Test : AnnotationSpec() {
     @Test
@@ -18,13 +19,19 @@ class Question1Test : AnnotationSpec() {
             0
         )
 
-        val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()
+        val newPredicate = q1.createNewPredicate(q1.focus, "has_done_")
+        val newFluent = q1.createNewFluent(q1.focus, newPredicate)
+        val oldAction =
+            q1.findAction(q1.focus, q1.problem.domain.actions)
+        val newAction = ExplanationUtils.createNewAction(oldAction, newFluent)
+        val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.a))
 
+        val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()
         val explanation = Explanation.of(q1.plan, hPlan, q1)
 
         val contrastiveExplanation = Explanation.of(
             q1.plan,
-            Plan.of(listOf(Operators.pickA)),
+            Plan.of(listOf(newGroundAction)),
             q1
         )
         explanation shouldBe contrastiveExplanation

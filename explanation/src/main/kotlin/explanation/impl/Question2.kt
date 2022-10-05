@@ -8,7 +8,7 @@ import explanation.Question
 
 /**
  * Why operator used rather not being used.
- * Forbit operator's usage in the plan
+ * Forbid operator's usage in the plan
  */
 class Question2(
     override val problem: Problem,

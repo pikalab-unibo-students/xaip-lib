@@ -5,8 +5,8 @@ import resources.TestUtils.name
 import resources.TestUtils.objEmpty
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.substitution
-import resources.domain.BlockWorldDomain.Values
-import resources.domain.BlockWorldDomain.objects
+import domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.objects
 
 class ObjectTest : AnnotationSpec() {
     @Test

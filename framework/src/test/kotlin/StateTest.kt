@@ -1,12 +1,13 @@
+import domain.BlockWorldDomain.Actions
+import domain.BlockWorldDomain.States
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.Values
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.domain.BlockWorldDomain
-import resources.domain.BlockWorldDomain.Actions
-import resources.domain.BlockWorldDomain.States
 
 class StateTest : AnnotationSpec() {
 
@@ -70,9 +71,9 @@ class StateTest : AnnotationSpec() {
         val exception = shouldThrow<IllegalArgumentException> {
             State.of(
                 Fluent.of(
-                    Predicate.of("error", BlockWorldDomain.Types.anything),
+                    Predicate.of("error", Types.anything),
                     false,
-                    BlockWorldDomain.Values.X
+                    Values.X
                 )
             )
         }

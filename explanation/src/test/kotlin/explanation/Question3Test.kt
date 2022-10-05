@@ -52,6 +52,7 @@ class Question3Test : AnnotationSpec() {
             hplan,
             q3
         )
+        println(explanation.toString())
         explanation shouldBe contrastiveExplanation
 
     }

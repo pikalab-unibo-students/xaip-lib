@@ -86,6 +86,7 @@ data class ExplanationImpl(
         """${ExplanationImpl::class.simpleName}(
             |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
             |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
+            |  the novel plan is valid: ${this.isValid()},
             |  - Diff(original plan VS new plan):
             |  ${ExplanationImpl::addList.name}=$addList,
             |  ${ExplanationImpl::deleteList.name}=$deleteList,

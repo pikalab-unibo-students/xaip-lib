@@ -16,6 +16,9 @@ interface Explanation {
     val deleteList: List<Operator>
     val existingList: List<Operator>
 
+    /**
+     *
+     */
     fun isValid(): Boolean
 
     companion object {

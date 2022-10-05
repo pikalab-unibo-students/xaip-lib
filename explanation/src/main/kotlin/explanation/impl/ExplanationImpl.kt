@@ -69,7 +69,7 @@ data class ExplanationImpl(
         return goal.targets.size == indice
     }
 
-    override fun isValid(): Boolean {
+    override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
         var flag = false
         if(states.isNotEmpty()){
@@ -86,7 +86,7 @@ data class ExplanationImpl(
         """${ExplanationImpl::class.simpleName}(
             |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
             |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
-            |  the novel plan is valid: ${this.isValid()},
+            |  the novel plan is valid: ${this.isPlanValid()},
             |  - Diff(original plan VS new plan):
             |  ${ExplanationImpl::addList.name}=$addList,
             |  ${ExplanationImpl::deleteList.name}=$deleteList,

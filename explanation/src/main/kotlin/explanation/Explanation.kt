@@ -19,7 +19,7 @@ interface Explanation {
     /**
      *
      */
-    fun isValid(): Boolean
+    fun isPlanValid(): Boolean
 
     companion object {
         /**

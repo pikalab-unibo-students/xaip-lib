@@ -16,13 +16,13 @@ class Question4Test : AnnotationSpec() {
     fun `Test valid plan`() {
         val q4 = Question4(problem, planPickBstackBApickC, planPickB, planPickB.actions.first(), 0)
         val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
-        explanation.isValid() shouldBe true
+        explanation.isPlanValid() shouldBe true
     }
 
     @Test
     fun `Test incorrect plan`() {
         val q4 = Question4(problem, planPickBStackBA, planPickB, planPickB.actions.first(), 0)
         val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
-        explanation.isValid() shouldBe false
+        explanation.isPlanValid() shouldBe false
     }
 }

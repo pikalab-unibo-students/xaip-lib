@@ -54,6 +54,6 @@ class Question3Test : AnnotationSpec() {
         )
         println(explanation.toString())
         explanation shouldBe contrastiveExplanation
-
+        explanation.isPlanValid() shouldBe true
     }
 }

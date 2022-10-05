@@ -20,13 +20,12 @@ class Question1Test : AnnotationSpec() {
 
         val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()
 
-        val explanation: ExplanationUtils.ContrastiveExplanation =
-            ExplanationUtils.ContrastiveExplanation.of(q1.plan, hPlan, q1.focus)
+        val explanation = Explanation.of(q1.plan, hPlan, q1)
 
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation.of(
+        val contrastiveExplanation = Explanation.of(
             q1.plan,
-            hPlan,
-            q1.focus
+            Plan.of(listOf(Operators.pickA)),
+            q1
         )
         explanation shouldBe contrastiveExplanation
     }

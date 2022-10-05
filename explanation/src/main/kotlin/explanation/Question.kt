@@ -24,7 +24,4 @@ interface Question {
      */
     fun buildHproblem(): Problem
 
-    /**
-     * */
-    fun isPlanValid(plan: Plan, problem: Problem): Boolean
 }

@@ -53,7 +53,4 @@ class Question3(
         initialState = newState,
         goal = newProblem.goal
     )
-
-    override fun isPlanValid(plan: Plan, problem: Problem): Boolean = planValidation(plan, problem)
-
 }

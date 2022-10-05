@@ -30,11 +30,12 @@ class Question2Test : AnnotationSpec() {
         val newAction = ExplanationUtils.createNewAction(oldAction, newFluent, true)
         val newGroundAction = Operator.of(newAction).apply(VariableAssignment.of(Values.X, Values.b))
 
-        val explanation = Explanation.of(q2.plan, hplan)
+        val explanation = Explanation.of(q2.plan, hplan, q2)
 
         val contrastiveExplanation = Explanation.of(
             q2.plan,
-            Plan.of(listOf(newGroundAction))
+            Plan.of(listOf(newGroundAction)),
+            q2
         )
         explanation shouldBe contrastiveExplanation
     }

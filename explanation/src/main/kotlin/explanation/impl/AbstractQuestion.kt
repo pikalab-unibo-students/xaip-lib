@@ -4,14 +4,11 @@ import Action
 import Domain
 import Fluent
 import FluentBasedGoal
-import NotUnifiableException
 import Operator
 import Plan
 import Predicate
 import Problem
 import State
-import explanation.Simulator
-import it.unibo.tuprolog.core.Substitution
 
 /**
  *
@@ -27,7 +24,6 @@ open class AbstractQuestion {
     open lateinit var oldAction: Action
     open lateinit var newAction: Action
     open lateinit var hDomain: Domain
-    val simulator = Simulator.of()
 
     /**
      *
@@ -113,8 +109,8 @@ open class AbstractQuestion {
             actions = mutableSetOf(newAction).also {
                 domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char ->
-                        char.isLetter()
-                    } // se il nome è diverso lo aggiungo
+                            char.isLetter()
+                        } // se il nome è diverso lo aggiungo
                     ) it.add(oldAction)
                 }
             },
@@ -148,38 +144,4 @@ open class AbstractQuestion {
                 )
             } else problem.goal
         )
-
-    private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
-        var indice = 0
-        for (fluent in goal.targets) {
-            if (!fluent.isGround) {
-                for (fluentState in currentState.fluents) {
-                    val tmp = try {
-                        fluentState.mostGeneralUnifier(fluent)
-                    } catch (_: NotUnifiableException) { null }
-                    // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
-                    if (tmp != Substitution.empty() && tmp != Substitution.empty() && tmp != null) {
-                        indice++
-                        break
-                    }
-                }
-            } else {
-                if (currentState.fluents.contains(fluent)) indice++ else indice--
-            }
-        }
-        return goal.targets.size == indice
-    }
-
-    fun planValidation(plan: Plan, problem: Problem): Boolean {
-        val states = simulator.simulate(plan, problem.initialState)
-        var flag = false
-        if(states.isNotEmpty()){
-            for(state in states) {
-                val tmp = finalStateComplaintWithGoal(problem.goal as FluentBasedGoal, state)
-                if(tmp) flag = true
-            }
-
-        }
-        return flag
-    }
 }

@@ -35,5 +35,6 @@ class Question1Test : AnnotationSpec() {
             q1
         )
         explanation shouldBe contrastiveExplanation
+        explanation.isPlanValid() shouldBe true
     }
 }

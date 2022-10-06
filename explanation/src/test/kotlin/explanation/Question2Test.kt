@@ -1,17 +1,13 @@
 package explanation
 
-import Operator
 import Plan
-import VariableAssignment
 import explanation.impl.Question2
-import explanation.oldVersion.ExplanationUtils
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Operators.pickA
 import resources.domain.BlockWorldDomain.Operators.pickB
 import resources.domain.BlockWorldDomain.Planners.stripsPlanner
 import resources.domain.BlockWorldDomain.Problems
-import resources.domain.BlockWorldDomain.Values
 class Question2Test : AnnotationSpec() {
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {

@@ -1,13 +1,11 @@
 package explanation
 
 import explanation.impl.Question1
-import explanation.oldVersion.ExplanationUtils
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import resources.domain.BlockWorldDomain.Operators
 import resources.domain.BlockWorldDomain.Planners
 import resources.domain.BlockWorldDomain.Problems
-import resources.domain.BlockWorldDomain.Values
 
 class Question1Test : AnnotationSpec() {
     @Test

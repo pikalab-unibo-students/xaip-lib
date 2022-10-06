@@ -1,5 +1,6 @@
 package explanation.impl
 
+import Action
 import FluentBasedGoal
 import NotUnifiableException
 import Operator
@@ -17,7 +18,7 @@ data class ExplanationImpl(
     override val originalPlan: Plan,
     override var novelPlan: Plan,
     override val question: Question
-    ) : Explanation {
+) : Explanation {
     override val addList: List<Operator> by lazy {
         this.novelPlan.actions.filter {
             !this.originalPlan.actions.contains(it)
@@ -33,18 +34,58 @@ data class ExplanationImpl(
             this.novelPlan.actions.contains(it)
         }
     }
-     private val simulator = Simulator.of()
+    private val simulator = Simulator.of()
 
-    init{
+    private fun retrieveOperator() = novelPlan.actions.filter { it.name.contains("^") }.getOrNull(0)
+
+    private fun retrieveAction() = novelPlan.actions.map { operator ->
+        question.problem.domain.actions.first {
+            it.name == operator.name.filter { char -> char.isLetter() } &&
+                operator.name.contains("^")
+        }
+    }.first()
+
+    private fun makeFinalOperator(action: Action, operator: Operator): Operator {
+        var newOperator = Operator.of(action)
+        for (arg in operator.args) {
+            newOperator = newOperator.apply(
+                VariableAssignment.of(
+                    operator.parameters.keys.toList()[operator.args.indexOf(arg)],
+                    arg
+                )
+            )
+        }
+        return newOperator
+    }
+
+    init {
         // aggiornamento del piano in caso si tratti di Q3
-        if(question is Question3){
+        if (question is Question3) {
             val actionToKeep = question.plan.actions.subList(
                 0,
                 question.focusOn
             ).toMutableList()
             novelPlan = Plan.of(actionToKeep.also { it.add(question.focus) }.also { it.addAll(novelPlan.actions) })
+        } else if (question is Question1 || question is Question2) {
+            val operator = retrieveOperator()
+            if (operator != null) {
+                val action = retrieveAction()
+
+                val operatorFinal = makeFinalOperator(action, operator)
+                val list = novelPlan.actions.toMutableList().subList(0, novelPlan.actions.indexOf(operator)).also {
+                    it.add(operatorFinal)
+                }.also {
+                    it.addAll(
+                        novelPlan.actions.subList(novelPlan.actions.indexOf(operator) + 1, novelPlan.actions.size)
+                    )
+                }
+                novelPlan = Plan.of(list)
+            }
         }
     }
+
+    fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
+        actionList.first { it.name == inputOperator.name }
 
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var indice = 0
@@ -72,12 +113,11 @@ data class ExplanationImpl(
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
         var flag = false
-        if(states.isNotEmpty()){
-            for(state in states) {
+        if (states.isNotEmpty()) {
+            for (state in states) {
                 val tmp = finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, state)
-                if(tmp) flag = true
+                if (tmp) flag = true
             }
-
         }
         return flag
     }

@@ -109,8 +109,8 @@ open class AbstractQuestion {
             actions = mutableSetOf(newAction).also {
                 domain.actions.map { oldAction ->
                     if (oldAction.name != newAction.name.filter { char ->
-                            char.isLetter()
-                        } // se il nome è diverso lo aggiungo
+                        char.isLetter()
+                    } // se il nome è diverso lo aggiungo
                     ) it.add(oldAction)
                 }
             },

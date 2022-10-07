@@ -36,7 +36,7 @@ data class ExplanationImpl(
     }
     private val simulator = Simulator.of()
 
-    infix fun <T> Boolean.then(param: T): T? = if (this) param else null
+    private infix fun <T> Boolean.then(param: T): T? = if (this) param else null
 
     private fun retrieveOperator() = novelPlan.actions.filter { it.name.contains("^") }.getOrNull(0)
 

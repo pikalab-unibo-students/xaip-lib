@@ -20,6 +20,5 @@ class Question4(
     override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHproblem(): Problem = throw UnsupportedOperationException()
-    override fun isPlanValid(pla: Plan, problem: Problem): Boolean = planValidation(plan, problem)
 
 }

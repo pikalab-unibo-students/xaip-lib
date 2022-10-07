@@ -8,7 +8,7 @@ import explanation.Question
 
 /**
  * Why operator used rather not being used.
- * Forbit operator's usage in the plan
+ * Forbid operator's usage in the plan
  */
 class Question2(
     override val problem: Problem,
@@ -16,7 +16,7 @@ class Question2(
     override val focus: Operator,
     override val focusOn: Int
 ) : Question, AbstractQuestion() {
-    override var newPredicate = createNewPredicate(focus, "not_done_", true)
+    override var newPredicate = createNewPredicate(focus, "not_done_")
     override var newFluent = createNewFluent(focus, newPredicate)
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
 
@@ -30,7 +30,6 @@ class Question2(
     override fun buildHdomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
     override fun buildHproblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null, true)
-    override fun isPlanValid(plan: Plan, problem: Problem): Boolean = planValidation(plan, problem)
 }
 
 /**

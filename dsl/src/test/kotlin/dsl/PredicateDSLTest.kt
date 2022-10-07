@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Domains.blockWorld
-import resources.domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Domains.blockWorld
+import domain.BlockWorldDomain.Predicates
 
 class PredicateDSLTest : AnnotationSpec() {
     @Test

@@ -1,6 +1,7 @@
 package explanation.impl
 
 import Action
+import Fluent
 import FluentBasedGoal
 import NotUnifiableException
 import Operator
@@ -69,11 +70,10 @@ data class ExplanationImpl(
             is Question1, is Question2 -> {
                 val operator = retrieveOperator()
                 if (operator != null) {
-                    val operatorFinal = makeFinalOperator(retrieveAction(), operator)
                     novelPlan = Plan.of(
                         novelPlan.operators.toMutableList()
                             .subList(0, novelPlan.operators.indexOf(operator)).also {
-                                it.add(operatorFinal)
+                                it.add(makeFinalOperator(retrieveAction(), operator))
                             }.also {
                                 it.addAll(
                                     novelPlan.operators.subList(novelPlan.operators.indexOf(operator) + 1, novelPlan.operators.size)
@@ -85,23 +85,22 @@ data class ExplanationImpl(
         }
     }
 
-
+    private fun isUnificationPossible(fluent1: Fluent, fluent2: Fluent): Boolean {
+        return when (val result = try {fluent1.mostGeneralUnifier(fluent2) } catch (_: NotUnifiableException) { null }) {
+            null-> false
+            else-> result != Substitution.empty() && result != Substitution.empty()
+        }
+    }
+    // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var indice = 0
         for (fluent in goal.targets) {
             when (fluent.isGround) {
                 true-> ((currentState.fluents.contains(fluent)) then indice++) ?: indice--
-                else-> for (fluentState in currentState.fluents) {
-                        val tmp = try {
-                            fluentState.mostGeneralUnifier(fluent)
-                        } catch (_: NotUnifiableException) {
-                            null
-                        }
-                        // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
-                        if (tmp != Substitution.empty() && tmp != Substitution.empty() && tmp != null) {
-                            indice++
-                            break
-                        }
+                else-> for (fluentState in currentState.fluents)
+                    if(isUnificationPossible(fluentState, fluent)) {
+                        indice++
+                        break
                     }
             }
         }

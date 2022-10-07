@@ -61,6 +61,16 @@ data class ExplanationImpl(
         return newOperator
     }
 
+    private fun `substitue element in a list`(list: List<Operator>, element:Operator): List<Operator> =
+        novelPlan.operators.toMutableList()
+            .subList(0, list.indexOf(element)).also {
+                it.add(makeFinalOperator(retrieveAction(), element))
+            }.also {
+                it.addAll(
+                    list.subList(list.indexOf(element) + 1, list.size)
+                )
+            }
+
     init {
         when (question){
             is Question3 -> {
@@ -69,18 +79,7 @@ data class ExplanationImpl(
             }
             is Question1, is Question2 -> {
                 val operator = retrieveOperator()
-                if (operator != null) {
-                    novelPlan = Plan.of(
-                        novelPlan.operators.toMutableList()
-                            .subList(0, novelPlan.operators.indexOf(operator)).also {
-                                it.add(makeFinalOperator(retrieveAction(), operator))
-                            }.also {
-                                it.addAll(
-                                    novelPlan.operators.subList(novelPlan.operators.indexOf(operator) + 1, novelPlan.operators.size)
-                                )
-                            }
-                    )
-                }
+                if (operator != null) novelPlan = Plan.of(`substitue element in a list`(novelPlan.operators, operator))
             }
         }
     }

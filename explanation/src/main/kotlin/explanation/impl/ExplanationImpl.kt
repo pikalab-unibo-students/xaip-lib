@@ -36,6 +36,8 @@ data class ExplanationImpl(
     }
     private val simulator = Simulator.of()
 
+    infix fun <T> Boolean.then(param: T): T? = if (this) param else null
+
     private fun retrieveOperator() = novelPlan.actions.filter { it.name.contains("^") }.getOrNull(0)
 
     private fun retrieveAction() = novelPlan.actions.map { operator ->
@@ -112,14 +114,8 @@ data class ExplanationImpl(
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
-        var flag = false
-        if (states.isNotEmpty()) {
-            for (state in states) {
-                val tmp = finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, state)
-                if (tmp) flag = true
-            }
-        }
-        return flag
+        return states.isNotEmpty() then
+        states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) } ?: false
     }
 
     override fun toString(): String =
@@ -146,6 +142,7 @@ data class ExplanationImpl(
         return true
     }
 
+    // TODO(Ma è necessario l'override dell'hascode)
     override fun hashCode(): Int {
         var result = this.originalPlan.hashCode()
         result = 31 * result + this.novelPlan.hashCode()

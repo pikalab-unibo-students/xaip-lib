@@ -3,14 +3,15 @@ package dsl
 import dsl.provider.PredicateProvider
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain
-import resources.domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Domains
+import domain.BlockWorldDomain.DomainsDSL
+import domain.BlockWorldDomain.Predicates
 
 class PredicatesProviderTest : AnnotationSpec() {
     private val predicateProvider =
         PredicateProvider.of(setOf(Predicates.on, Predicates.armEmpty, Predicates.at, Predicates.clear))
-    private val predicateProviderFramework = PredicateProvider.of(BlockWorldDomain.Domains.blockWorld)
-    private val predicateProviderDSL = PredicateProvider.of(BlockWorldDomain.DomainsDSL.blockWorldXDomainDSL)
+    private val predicateProviderFramework = PredicateProvider.of(Domains.blockWorld)
+    private val predicateProviderDSL = PredicateProvider.of(DomainsDSL.blockWorldXDomainDSL)
 
     @Test
     fun testPredicateProviderConstructor() {

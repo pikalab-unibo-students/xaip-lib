@@ -5,10 +5,10 @@ import Fluent
 import UnaryExpression
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.DomainsDSL
-import resources.domain.BlockWorldDomain.Predicates
-import resources.domain.BlockWorldDomain.Types
-import resources.domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.DomainsDSL
+import domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.Values
 
 class AxiomDSLTest : AnnotationSpec() {
     private val axioms = DomainsDSL.blockWorldXDomainDSL.axioms

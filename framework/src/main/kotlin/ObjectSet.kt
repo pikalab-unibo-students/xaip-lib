@@ -4,7 +4,7 @@ import impl.ObjectSetImpl
  */
 interface ObjectSet {
     /**
-    * @property map: variable that contains the set of [Object] and their [Type].
+     * @property map: variable that contains the set of [Object] and their [Type].
      */
     var map: Map<Type, Set<Object>>
 

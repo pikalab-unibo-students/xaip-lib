@@ -24,6 +24,30 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 
 class StripsPlannerTest : AnnotationSpec() {
+    val planPickAStackAB = Plan.of(listOf(pickA, stackAB))
+    val setPickX = setOf(
+        Plan.of(listOf(pickA)),
+        Plan.of(listOf(pickB)),
+        Plan.of(listOf(pickC)),
+        Plan.of(listOf(pickD))
+    )
+    val setPickXStackXY = setOf(
+        Plan.of(listOf(pickA, stackAB)),
+        Plan.of(listOf(pickA, stackAC)),
+        Plan.of(listOf(pickA, stackAD)),
+
+        Plan.of(listOf(pickB, stackBA)),
+        Plan.of(listOf(pickB, stackBC)),
+        Plan.of(listOf(pickB, stackBD)),
+
+        Plan.of(listOf(pickC, stackCB)),
+        Plan.of(listOf(pickC, stackCD)),
+        Plan.of(listOf(pickC, stackCA)),
+
+        Plan.of(listOf(pickD, stackDA)),
+        Plan.of(listOf(pickD, stackDC)),
+        Plan.of(listOf(pickD, stackDB))
+    )
 
     @Test
     fun testPickC() {
@@ -50,12 +74,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickX() {
         val plans = Planners.stripsPlanner.plan(Problems.pickX).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -64,12 +83,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickXPickY() {
         val plans = Planners.stripsPlanner.plan(Problems.pickXpickY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -78,12 +92,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickXFloorY() {
         val plans = Planners.stripsPlanner.plan(Problems.pickXfloorY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -92,23 +101,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackXY() {
         val plans = Planners.stripsPlanner.plan(Problems.stackXY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA, stackAB)),
-            Plan.of(listOf(pickA, stackAC)),
-            Plan.of(listOf(pickA, stackAD)),
-
-            Plan.of(listOf(pickB, stackBA)),
-            Plan.of(listOf(pickB, stackBC)),
-            Plan.of(listOf(pickB, stackBD)),
-
-            Plan.of(listOf(pickC, stackCB)),
-            Plan.of(listOf(pickC, stackCD)),
-            Plan.of(listOf(pickC, stackCA)),
-
-            Plan.of(listOf(pickD, stackDA)),
-            Plan.of(listOf(pickD, stackDC)),
-            Plan.of(listOf(pickD, stackDB))
-        )
+        val plan2check = setPickXStackXY
         plans.size shouldBe 12
         plans shouldBe plan2check
         println(plans)
@@ -126,23 +119,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackXYpickW() {
         val plans = Planners.stripsPlanner.plan(Problems.stackXYpickW).toSet() // caso sfigato
-        val plan2check = setOf(
-            Plan.of(listOf(pickA, stackAB)),
-            Plan.of(listOf(pickA, stackAC)),
-            Plan.of(listOf(pickA, stackAD)),
-
-            Plan.of(listOf(pickB, stackBA)),
-            Plan.of(listOf(pickB, stackBC)),
-            Plan.of(listOf(pickB, stackBD)),
-
-            Plan.of(listOf(pickC, stackCA)),
-            Plan.of(listOf(pickC, stackCB)),
-            Plan.of(listOf(pickC, stackCD)),
-
-            Plan.of(listOf(pickD, stackDA)),
-            Plan.of(listOf(pickD, stackDB)),
-            Plan.of(listOf(pickD, stackDC))
-        )
+        val plan2check = setPickXStackXY
         plans.size shouldBe 12
         plans shouldBe plan2check
         println(plans)

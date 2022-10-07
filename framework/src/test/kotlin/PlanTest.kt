@@ -1,11 +1,11 @@
+import domain.BlockWorldDomain.Plans
+import domain.BlockWorldDomain.operators
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
-import domain.BlockWorldDomain.Plans
-import domain.BlockWorldDomain.operators
 
 class PlanTest : AnnotationSpec() {
     @Test

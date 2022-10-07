@@ -89,21 +89,20 @@ data class ExplanationImpl(
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var indice = 0
         for (fluent in goal.targets) {
-            if (!fluent.isGround) {
-                for (fluentState in currentState.fluents) {
-                    val tmp = try {
-                        fluentState.mostGeneralUnifier(fluent)
-                    } catch (_: NotUnifiableException) {
-                        null
+            when (fluent.isGround) {
+                true-> ((currentState.fluents.contains(fluent)) then indice++) ?: indice--
+                else-> for (fluentState in currentState.fluents) {
+                        val tmp = try {
+                            fluentState.mostGeneralUnifier(fluent)
+                        } catch (_: NotUnifiableException) {
+                            null
+                        }
+                        // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
+                        if (tmp != Substitution.empty() && tmp != Substitution.empty() && tmp != null) {
+                            indice++
+                            break
+                        }
                     }
-                    // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
-                    if (tmp != Substitution.empty() && tmp != Substitution.empty() && tmp != null) {
-                        indice++
-                        break
-                    }
-                }
-            } else {
-                if (currentState.fluents.contains(fluent)) indice++ else indice--
             }
         }
         return goal.targets.size == indice

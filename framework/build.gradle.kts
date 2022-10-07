@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.qa)
 
 }
 repositories {

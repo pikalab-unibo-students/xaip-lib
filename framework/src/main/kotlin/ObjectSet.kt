@@ -1,9 +1,11 @@
 import impl.ObjectSetImpl
 /**
  * Entity that wraps a set of [Object] and their [Type].
- * @property map: variable that contains the set of [Object] and their [Type].
  */
 interface ObjectSet {
+    /**
+    * @property map: variable that contains the set of [Object] and their [Type].
+     */
     var map: Map<Type, Set<Object>>
 
     companion object {

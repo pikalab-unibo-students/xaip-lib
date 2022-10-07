@@ -5,13 +5,13 @@ import State
 import explanation.impl.Question3
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Fluents
-import resources.domain.BlockWorldDomain.Operators.pickA
-import resources.domain.BlockWorldDomain.Operators.pickC
-import resources.domain.BlockWorldDomain.Operators.pickD
-import resources.domain.BlockWorldDomain.Operators.stackAB
-import resources.domain.BlockWorldDomain.Planners.stripsPlanner
-import resources.domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Operators.pickA
+import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.pickD
+import domain.BlockWorldDomain.Operators.stackAB
+import domain.BlockWorldDomain.Planners.stripsPlanner
+import domain.BlockWorldDomain.Problems
 
 class Question3Test : AnnotationSpec() {
 

@@ -3,8 +3,8 @@ package explanation
 import explanation.impl.Question4
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Operators
-import resources.domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Problems
 
 class Question4Test : AnnotationSpec() {
     val problem = Problems.armNotEmpty

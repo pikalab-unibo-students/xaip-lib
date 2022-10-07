@@ -16,7 +16,6 @@ import State
 open class AbstractQuestion {
     // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
     // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
-    // vedi in Q3
 
     open lateinit var newPredicate: Predicate
     open lateinit var newGroundFluent: Fluent
@@ -24,41 +23,6 @@ open class AbstractQuestion {
     open lateinit var oldAction: Action
     open lateinit var newAction: Action
     open lateinit var hDomain: Domain
-
-    /**
-     *
-     */
-    fun reorderPlan(
-        plan: Plan,
-        actionsToPosticipate: List<Operator>,
-        actionsToAnticipate: List<Operator>
-    ): List<Operator> {
-        val indiceInizio = plan.actions.indexOf(actionsToPosticipate.first())
-        val indiceFine = plan.actions.indexOf(actionsToPosticipate.last())
-        val indiceInizio2 = plan.actions.indexOf(actionsToAnticipate.last())
-        val indiceFine2 = plan.actions.indexOf(actionsToAnticipate.last())
-
-        val reorderedPlan = plan.actions.subList(0, indiceInizio).toMutableList()
-            .also { it.addAll(actionsToAnticipate) }
-            .also {
-                it.addAll(
-                    plan.actions.subList(
-                        indiceFine + 1,
-                        indiceInizio2
-                    )
-                )
-            }
-            .also { it.addAll(actionsToPosticipate) }
-            .also {
-                it.addAll(
-                    plan.actions.subList(
-                        indiceFine2 + 1,
-                        plan.actions.size
-                    )
-                )
-            }
-        return reorderedPlan
-    }
 
     /**
      *

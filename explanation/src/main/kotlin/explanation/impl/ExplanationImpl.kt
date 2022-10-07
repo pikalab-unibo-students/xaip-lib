@@ -139,7 +139,7 @@ data class ExplanationImpl(
         return true
     }
 
-    // TODO(Ma è necessario l'override dell'hascode)
+    // TODO(Ma è necessario l'override dell'hashcode)
     override fun hashCode(): Int {
         var result = this.originalPlan.hashCode()
         result = 31 * result + this.novelPlan.hashCode()

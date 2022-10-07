@@ -114,8 +114,8 @@ data class ExplanationImpl(
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
-        return states.isNotEmpty() then
-        states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) } ?: false
+        return (states.isNotEmpty() then
+                states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }) ?: false
     }
 
     override fun toString(): String =

@@ -14,7 +14,7 @@ class Question5(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
-    private val alternativePlan: Plan,
+    val alternativePlan: Plan,
     override val focusOn: Int
 ) :
     Question, AbstractQuestion() {

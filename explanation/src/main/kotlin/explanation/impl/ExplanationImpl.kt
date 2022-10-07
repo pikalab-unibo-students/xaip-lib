@@ -61,7 +61,6 @@ data class ExplanationImpl(
     }
 
     init {
-        // aggiornamento del piano in caso si tratti di Q3
         if (question is Question3) {
             val actionToKeep = question.plan.actions.subList(
                 0,

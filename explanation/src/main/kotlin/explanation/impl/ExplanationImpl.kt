@@ -61,13 +61,13 @@ data class ExplanationImpl(
         return newOperator
     }
 
-    private fun `substitue element in a list`(list: List<Operator>, element:Operator): List<Operator> =
-        novelPlan.operators.toMutableList()
-            .subList(0, list.indexOf(element)).also {
+    private fun  List<Operator>.replaceElement(element: Operator): List<Operator> =
+        this.toMutableList()
+            .subList(0, this.indexOf(element)).also {
                 it.add(makeFinalOperator(retrieveAction(), element))
             }.also {
                 it.addAll(
-                    list.subList(list.indexOf(element) + 1, list.size)
+                    this.subList(this.indexOf(element) + 1, this.size)
                 )
             }
 
@@ -79,7 +79,7 @@ data class ExplanationImpl(
             }
             is Question1, is Question2 -> {
                 val operator = retrieveOperator()
-                if (operator != null) novelPlan = Plan.of(`substitue element in a list`(novelPlan.operators, operator))
+                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
             }
         }
     }
@@ -92,18 +92,18 @@ data class ExplanationImpl(
     }
     // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
-        var indice = 0
+        var count = 0
         for (fluent in goal.targets) {
             when (fluent.isGround) {
-                true-> ((currentState.fluents.contains(fluent)) then indice++) ?: indice--
+                true-> ((currentState.fluents.contains(fluent)) then count++) ?: count--
                 else-> for (fluentState in currentState.fluents)
                     if(isUnificationPossible(fluentState, fluent)) {
-                        indice++
+                        count++
                         break
                     }
             }
         }
-        return goal.targets.size == indice
+        return goal.targets.size == count
     }
 
     override fun isPlanValid(): Boolean {

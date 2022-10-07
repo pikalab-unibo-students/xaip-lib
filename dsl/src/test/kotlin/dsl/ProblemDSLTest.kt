@@ -129,10 +129,10 @@ class ProblemDSLTest : AnnotationSpec() {
     @Test
     fun testPlanner() {
         Planners.stripsPlanner.plan(problemDSL).toSet().size shouldBe 1
-        Planners.stripsPlanner.plan(problemDSL).first().actions.toSet().size shouldBe 2
-        Planners.stripsPlanner.plan(problemDSL).first().actions.first().name shouldBe
-            Planners.stripsPlanner.plan(Problems.stackAB).first().actions.first().name
-        Planners.stripsPlanner.plan(problemDSL).first().actions.last().name shouldBe
-            Planners.stripsPlanner.plan(Problems.stackAB).first().actions.last().name
+        Planners.stripsPlanner.plan(problemDSL).first().operators.toSet().size shouldBe 2
+        Planners.stripsPlanner.plan(problemDSL).first().operators.first().name shouldBe
+            Planners.stripsPlanner.plan(Problems.stackAB).first().operators.first().name
+        Planners.stripsPlanner.plan(problemDSL).first().operators.last().name shouldBe
+            Planners.stripsPlanner.plan(Problems.stackAB).first().operators.last().name
     }
 }

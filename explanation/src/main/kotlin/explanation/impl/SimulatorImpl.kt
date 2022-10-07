@@ -11,9 +11,9 @@ class SimulatorImpl : Simulator {
 
     override fun simulate(plan: Plan, state: State): List<State> {
         val fringe: MutableList<Context> = mutableListOf(Context(state))
-        while (fringe.none { it.depth > plan.actions.size -1 }) {
+        while (fringe.none { it.depth > plan.operators.size -1 }) {
             val current = fringe.pop()
-            val nextStates = current.state.apply(plan.actions[current.depth]).map { Context(it, current.depth + 1) }
+            val nextStates = current.state.apply(plan.operators[current.depth]).map { Context(it, current.depth + 1) }
             fringe.addAll(nextStates.toList())
         }
         return fringe.map { it.state }

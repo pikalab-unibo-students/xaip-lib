@@ -47,18 +47,18 @@ object ExplanationUtils {
         override val actionToAddOrRemove: Operator
     ) : ContrastiveExplanation {
         override val addList: Set<Operator> by lazy {
-            newPlan.actions.filter {
-                !originalPlan.actions.contains(it)
+            newPlan.operators.filter {
+                !originalPlan.operators.contains(it)
             }.map { it }.toSet()
         }
         override val deleteList: Set<Operator> by lazy {
-            originalPlan.actions.filter {
-                !newPlan.actions.contains(it)
+            originalPlan.operators.filter {
+                !newPlan.operators.contains(it)
             }.map { it }.toSet()
         }
         override val existingList: Set<Operator> by lazy {
-            originalPlan.actions.filter {
-                newPlan.actions.contains(it)
+            originalPlan.operators.filter {
+                newPlan.operators.contains(it)
             }.map { it }.toSet()
         }
 
@@ -162,16 +162,16 @@ object ExplanationUtils {
         actionsToPosticipate: List<Operator>,
         actionsToAnticipate: List<Operator>
     ): List<Operator> {
-        val indiceInizio = plan.actions.indexOf(actionsToPosticipate.first())
-        val indiceFine = plan.actions.indexOf(actionsToPosticipate.last())
-        val indiceInizio2 = plan.actions.indexOf(actionsToAnticipate.last())
-        val indiceFine2 = plan.actions.indexOf(actionsToAnticipate.last())
+        val indiceInizio = plan.operators.indexOf(actionsToPosticipate.first())
+        val indiceFine = plan.operators.indexOf(actionsToPosticipate.last())
+        val indiceInizio2 = plan.operators.indexOf(actionsToAnticipate.last())
+        val indiceFine2 = plan.operators.indexOf(actionsToAnticipate.last())
 
-        val reorderedPlan = plan.actions.subList(0, indiceInizio).toMutableList()
+        val reorderedPlan = plan.operators.subList(0, indiceInizio).toMutableList()
             .also { it.addAll(actionsToAnticipate) }
             .also {
                 it.addAll(
-                    plan.actions.subList(
+                    plan.operators.subList(
                         indiceFine + 1,
                         indiceInizio2
                     )
@@ -180,9 +180,9 @@ object ExplanationUtils {
             .also { it.addAll(actionsToPosticipate) }
             .also {
                 it.addAll(
-                    plan.actions.subList(
+                    plan.operators.subList(
                         indiceFine2 + 1,
-                        plan.actions.size
+                        plan.operators.size
                     )
                 )
             }

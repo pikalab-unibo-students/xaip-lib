@@ -64,7 +64,7 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
             question.originalPlan,
             Plan.of(
                 mutableListOf(pickC).also {
-                    it.addAll(hplan.first().actions)
+                    it.addAll(hplan.first().operators)
                 }
             ),
             question.actionToAdd
@@ -141,15 +141,15 @@ class ExplanationQuestion3ReplacingActionInaState : AnnotationSpec() {
                     (mancanza di gestione delle eccezioni.
 
         */
-        val actionToKeep = question.originalPlan.actions.subList(
+        val actionToKeep = question.originalPlan.operators.subList(
             0,
-            question.originalPlan.actions.indexOf(question.actionToRemove)
+            question.originalPlan.operators.indexOf(question.actionToRemove)
         ).toMutableList()
 
         // B.
         val plans = stripsPlanner.plan(hProblem).toSet()
         for (plan in plans) {
-            val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.actions) })
+            val hplan = Plan.of(actionToKeep.also { it.add(question.actionToAdd) }.also { it.addAll(plan.operators) })
             val explanation = ContrastiveExplanation.of(question.originalPlan, hplan, question.actionToAdd)
             println("explanation $explanation")
             val contrastiveExplanation = ContrastiveExplanation.of(

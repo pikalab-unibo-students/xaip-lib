@@ -65,7 +65,7 @@ class ExplanationQuestion4ReorderingActions : AnnotationSpec() {
         val fluents = mutableListOf<Fluent>()
         val newActions = mutableSetOf<Action>()
         // 1
-        for (action in question.originalPlan.actions) {
+        for (action in question.originalPlan.operators) {
             val predicate = createNewPredicate(action, "traversed_")
             predicates.add(predicate)
         }

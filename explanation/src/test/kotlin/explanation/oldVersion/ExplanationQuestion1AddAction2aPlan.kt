@@ -88,7 +88,7 @@ class ExplanationQuestion1AddAction2aPlan : AnnotationSpec() {
         val hDomain = buildHdomain(question.problem.domain, newPredicate, newAction)
         val hProblem = buildHproblem(hDomain, question.problem, newGroundFluent, null)
         val hplan = stripsPlanner.plan(hProblem).first {
-            it.actions.contains(newGroundAction)
+            it.operators.contains(newGroundAction)
         }
 
         val explanation: ContrastiveExplanation =

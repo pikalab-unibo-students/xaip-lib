@@ -20,27 +20,27 @@ data class ExplanationImpl(
     override val question: Question
 ) : Explanation {
     override val addList: List<Operator> by lazy {
-        this.novelPlan.actions.filter {
-            !this.originalPlan.actions.contains(it)
+        this.novelPlan.operators.filter {
+            !this.originalPlan.operators.contains(it)
         }
     }
     override val deleteList: List<Operator> by lazy {
-        this.originalPlan.actions.filter {
-            !this.novelPlan.actions.contains(it)
+        this.originalPlan.operators.filter {
+            !this.novelPlan.operators.contains(it)
         }
     }
     override val existingList: List<Operator> by lazy {
-        this.originalPlan.actions.filter {
-            this.novelPlan.actions.contains(it)
+        this.originalPlan.operators.filter {
+            this.novelPlan.operators.contains(it)
         }
     }
     private val simulator = Simulator.of()
 
     private infix fun <T> Boolean.then(param: T): T? = if (this) param else null
 
-    private fun retrieveOperator() = novelPlan.actions.filter { it.name.contains("^") }.getOrNull(0)
+    private fun retrieveOperator() = novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
 
-    private fun retrieveAction() = novelPlan.actions.map { operator ->
+    private fun retrieveAction() = novelPlan.operators.map { operator ->
         question.problem.domain.actions.first {
             it.name == operator.name.filter { char -> char.isLetter() } &&
                 operator.name.contains("^")
@@ -61,32 +61,30 @@ data class ExplanationImpl(
     }
 
     init {
-        if (question is Question3) {
-            val actionToKeep = question.plan.actions.subList(
-                0,
-                question.focusOn
-            ).toMutableList()
-            novelPlan = Plan.of(actionToKeep.also { it.add(question.focus) }.also { it.addAll(novelPlan.actions) })
-        } else if (question is Question1 || question is Question2) {
-            val operator = retrieveOperator()
-            if (operator != null) {
-                val action = retrieveAction()
-
-                val operatorFinal = makeFinalOperator(action, operator)
-                val list = novelPlan.actions.toMutableList().subList(0, novelPlan.actions.indexOf(operator)).also {
-                    it.add(operatorFinal)
-                }.also {
-                    it.addAll(
-                        novelPlan.actions.subList(novelPlan.actions.indexOf(operator) + 1, novelPlan.actions.size)
+        when (question){
+            is Question3 -> {
+                val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
+                novelPlan = Plan.of(operatorsToKeep.also { it.add(question.focus) }.also { it.addAll(novelPlan.operators) })
+            }
+            is Question1, is Question2 -> {
+                val operator = retrieveOperator()
+                if (operator != null) {
+                    val operatorFinal = makeFinalOperator(retrieveAction(), operator)
+                    novelPlan = Plan.of(
+                        novelPlan.operators.toMutableList()
+                            .subList(0, novelPlan.operators.indexOf(operator)).also {
+                                it.add(operatorFinal)
+                            }.also {
+                                it.addAll(
+                                    novelPlan.operators.subList(novelPlan.operators.indexOf(operator) + 1, novelPlan.operators.size)
+                                )
+                            }
                     )
                 }
-                novelPlan = Plan.of(list)
             }
         }
     }
 
-    fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
-        actionList.first { it.name == inputOperator.name }
 
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var indice = 0

@@ -2,11 +2,16 @@ import impl.EffectImpl
 
 /**
  * An [Effect] is an entity that represents the result of the application of an [Action] to a given [State].
- * @property fluent: conjunctive logical expression.
- * @property isPositive: boolean field that state is it is a positive [Effect], or a negative one.
  */
 interface Effect : Applicable<Effect> {
+    /**
+     *@property fluent: conjunctive logical expression.
+     */
     val fluent: Fluent
+
+    /**
+     *@property isPositive: boolean field that state is it is a positive [Effect], or a negative one.
+     */
     val isPositive: Boolean
 
     /**

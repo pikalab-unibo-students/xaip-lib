@@ -6,6 +6,9 @@ import impl.StateImpl
  *
  */
 interface State {
+    /**
+     *
+     */
     val fluents: Set<Fluent>
 
     /**

@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.jvm)
-
+    alias(libs.plugins.kotlin.qa)
 }
 repositories {
     mavenCentral()
@@ -16,7 +16,6 @@ dependencies {
 
     testImplementation(libs.bundles.kotlin.testing)
     testImplementation(project(":domain"))
-
 }
 
 kotlin {

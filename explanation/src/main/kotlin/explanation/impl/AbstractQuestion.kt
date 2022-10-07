@@ -45,9 +45,8 @@ open class AbstractQuestion {
     /**
      *
      */
-    fun createNewPredicate(action: Action, name: String, negated: Boolean = false): Predicate =
-        if (negated) Predicate.of(name + action.name, action.parameters.values.toList())
-        else Predicate.of(name + action.name, action.parameters.values.toList())
+    fun createNewPredicate(action: Action, name: String): Predicate =
+        Predicate.of(name + action.name, action.parameters.values.toList())
 
     /**
      *
@@ -67,7 +66,7 @@ open class AbstractQuestion {
      *
      */
     fun buildHdomain(domain: Domain, newPredicate: Predicate, newAction: Action) =
-        Domain.of( // domain extended
+        Domain.of(
             name = domain.name,
             predicates = mutableSetOf(newPredicate).also { it.addAll(domain.predicates) },
             actions = mutableSetOf(newAction).also {
@@ -91,7 +90,7 @@ open class AbstractQuestion {
         state: State?,
         updateState: Boolean = false
     ) =
-        Problem.of( // problem extended
+        Problem.of(
             domain = hDomain,
             objects = problem.objects,
             initialState =
@@ -99,7 +98,7 @@ open class AbstractQuestion {
                 mutableSetOf(newFluent!!).also {
                     it.addAll(problem.initialState.fluents)
                 }
-            ) else state ?: problem.initialState, // extended
+            ) else state ?: problem.initialState,
             goal = if (newFluent != null) {
                 FluentBasedGoal.of(
                     (problem.goal as FluentBasedGoal).targets.toMutableSet().also {

@@ -56,9 +56,10 @@ open class AbstractQuestion {
             name = action.name + "^",
             parameters = action.parameters,
             preconditions = action.preconditions,
-            effects = if (negated) mutableSetOf(Effect.negative(fluent)).also {
-                it.addAll(action.effects)
-            } else mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
+            effects = when (negated) {
+                true-> mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) }
+                else ->mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
+            }
         )
     }
 
@@ -71,10 +72,8 @@ open class AbstractQuestion {
             predicates = mutableSetOf(newPredicate).also { it.addAll(domain.predicates) },
             actions = mutableSetOf(newAction).also {
                 domain.actions.map { oldAction ->
-                    if (oldAction.name != newAction.name.filter { char ->
-                        char.isLetter()
-                    } // se il nome è diverso lo aggiungo
-                    ) it.add(oldAction)
+                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() })
+                        it.add(oldAction)  // se il nome è diverso lo aggiungo
                 }
             },
             types = domain.types
@@ -93,18 +92,14 @@ open class AbstractQuestion {
         Problem.of(
             domain = hDomain,
             objects = problem.objects,
-            initialState =
-            if (updateState) State.of(
-                mutableSetOf(newFluent!!).also {
-                    it.addAll(problem.initialState.fluents)
-                }
-            ) else state ?: problem.initialState,
-            goal = if (newFluent != null) {
-                FluentBasedGoal.of(
-                    (problem.goal as FluentBasedGoal).targets.toMutableSet().also {
-                        it.add(newFluent)
-                    }
-                )
-            } else problem.goal
+            initialState = when(updateState){
+                true-> State.of(mutableSetOf(newFluent!!).also {it.addAll(problem.initialState.fluents) })
+                else-> state ?: problem.initialState
+            },
+            goal = when (newFluent) {
+                null-> problem.goal
+                else-> FluentBasedGoal.of((problem.goal as FluentBasedGoal).targets.toMutableSet()
+                    .also { it.add(newFluent) })
+            }
         )
 }

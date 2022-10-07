@@ -19,4 +19,5 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
 
     api(project(":framework"))
+    testImplementation(project(":domain"))
 }

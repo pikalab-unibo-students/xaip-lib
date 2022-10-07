@@ -3,9 +3,9 @@ package explanation
 import explanation.impl.Question1
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Operators
-import resources.domain.BlockWorldDomain.Planners
-import resources.domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Planners
+import domain.BlockWorldDomain.Problems
 
 class Question1Test : AnnotationSpec() {
     @Test

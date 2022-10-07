@@ -3,10 +3,11 @@ package explanation
 import explanation.impl.SimulatorImpl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain
-import resources.domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.Operators
 class SimulatorTest : AnnotationSpec() {
-    val problem = BlockWorldDomain.Problems.armNotEmpty
+    val problem = Problems.armNotEmpty
 
     private val planPickB = Plan.of(listOf(Operators.pickB))
     private val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
@@ -16,25 +17,25 @@ class SimulatorTest : AnnotationSpec() {
     @Test
     fun `Test simulation correct`() {
         simulationCorrect.first() shouldBe State.of(
-            BlockWorldDomain.Fluents.atBArm,
-            BlockWorldDomain.Fluents.atDFloor,
-            BlockWorldDomain.Fluents.atCFloor,
-            BlockWorldDomain.Fluents.atAFloor,
-            BlockWorldDomain.Fluents.clearD,
-            BlockWorldDomain.Fluents.clearC,
-            BlockWorldDomain.Fluents.clearA
+            Fluents.atBArm,
+            Fluents.atDFloor,
+            Fluents.atCFloor,
+            Fluents.atAFloor,
+            Fluents.clearD,
+            Fluents.clearC,
+            Fluents.clearA
         )
     }
 
     @Test
     fun `Test simulation correct2`() {
         simulationCorrect2.first() shouldBe State.of(
-            BlockWorldDomain.Fluents.onBA,
-            BlockWorldDomain.Fluents.atDFloor,
-            BlockWorldDomain.Fluents.atCArm,
-            BlockWorldDomain.Fluents.atAFloor,
-            BlockWorldDomain.Fluents.clearD,
-            BlockWorldDomain.Fluents.clearB
+            Fluents.onBA,
+            Fluents.atDFloor,
+            Fluents.atCArm,
+            Fluents.atAFloor,
+            Fluents.clearD,
+            Fluents.clearB
         )
     }
 

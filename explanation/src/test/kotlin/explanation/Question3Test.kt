@@ -35,24 +35,13 @@ class Question3Test : AnnotationSpec() {
             pickD
         )
 
-        /* Idea:
-            fino ad una certa il piano è ok, ma da un certo punto X in avanti deve essere cambiato;
-            riflettendo cosa succederebbe se dopo X venisse applicata l'azione scelta dall'utente.
-            1. mi salvo il piano fino al punto dell'azione che devo andare
-        Problema: assenza di controlli sul fatto che un'azione si applicabile in uno stato
-                (mancanza di gestione delle eccezioni).
-        */
-
-        // Fatti dello user scegliere quale piano dare in pasto all'explanation
         val hplan = stripsPlanner.plan(q3.buildHproblem()).first()
         val explanation = Explanation.of(q3.plan, hplan, q3)
-        println("explanation $explanation")
         val contrastiveExplanation = Explanation.of(
             q3.plan,
             hplan,
             q3
         )
-        println(explanation.toString())
         explanation shouldBe contrastiveExplanation
         explanation.isPlanValid() shouldBe true
     }

@@ -7,9 +7,8 @@ import Problem
 import explanation.Question
 
 /**
- * Why not this plan instead.
- * Proposal for a new plan.
- * @property alternativePlan: [Plan] proposed by the user.
+ * Entity representing the question: "Why not this plan instead?"; * aka a proposal for a new plan.
+ * * @property alternativePlan: [Plan] proposed by the user.
  */
 class Question4(
     override val problem: Problem,

@@ -11,7 +11,7 @@ interface Action {
     val name: String
 
     /**
-     * @property parameters: is a map of variables, (and their types) on which the particular rule operates.
+     * @property parameters: is a map containing the variables and their types.
      */
     val parameters: Map<Variable, Type>
 

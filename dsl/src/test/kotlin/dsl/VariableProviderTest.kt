@@ -1,11 +1,11 @@
 package dsl
 
+import domain.BlockWorldDomain.Values
 import dsl.provider.VariableProvider
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import domain.BlockWorldDomain.Values
 
 class VariableProviderTest : AnnotationSpec() {
     private val variableProvider = VariableProvider.of()

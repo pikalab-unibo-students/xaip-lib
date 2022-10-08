@@ -9,7 +9,14 @@ import dsl.provider.TypeProvider
  *
  */
 class ObjectSetDSL(private val typeProvider: TypeProvider) {
+    /**
+     * @property objectSet: represents the objects created.
+     */
     var objectSet: ObjectSet = ObjectSet.of(emptyMap())
+
+    /**
+     * @property map: map, which associate each [Object] to the corresponding [Type].
+     */
     var map = emptyMap<Type, Set<Object>>()
 
     /**

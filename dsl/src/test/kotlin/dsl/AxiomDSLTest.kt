@@ -3,12 +3,12 @@ package dsl
 import BinaryExpression
 import Fluent
 import UnaryExpression
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.DomainsDSL
 import domain.BlockWorldDomain.Predicates
 import domain.BlockWorldDomain.Types
 import domain.BlockWorldDomain.Values
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 
 class AxiomDSLTest : AnnotationSpec() {
     private val axioms = DomainsDSL.blockWorldXDomainDSL.axioms

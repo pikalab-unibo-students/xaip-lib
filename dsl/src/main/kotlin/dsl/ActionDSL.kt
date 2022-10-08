@@ -16,8 +16,19 @@ class ActionDSL(
     private val predicateProvider: PredicateProvider,
     private val typeProvider: TypeProvider
 ) {
+    /**
+     * @property parameters: map matching each variable with the corresponding type.
+     */
     var parameters: Map<Variable, Type> = mapOf()
+
+    /**
+     * @property effects: set representing the action's effect.
+     */
     var effects: MutableSet<Effect> = mutableSetOf()
+
+    /**
+     * @property preconditions: set representing the action's preconditions.
+     */
     var preconditions: MutableSet<Fluent> = mutableSetOf()
     private val variableProvider: VariableProvider = VariableProvider.of()
 

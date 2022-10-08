@@ -9,6 +9,9 @@ import dsl.provider.PredicateProvider
 class EffectsDSL(
     predicateProvider: PredicateProvider
 ) : dsl.AbstractFluentDSL(predicateProvider) {
+    /**
+     * @property effects: set of [Effect] created.
+     */
     var effects: MutableSet<Effect> = mutableSetOf()
 
     /**

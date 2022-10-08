@@ -4,10 +4,7 @@ import Plan
 import State
 import explanation.Simulator
 
-/**
- *
- */
-class SimulatorImpl : Simulator {
+internal class SimulatorImpl : Simulator {
     private class Context(val state: State, val depth: Int = 0)
 
     private fun <T> MutableList<T>.pop(): T = removeAt(0)

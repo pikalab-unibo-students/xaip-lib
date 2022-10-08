@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)

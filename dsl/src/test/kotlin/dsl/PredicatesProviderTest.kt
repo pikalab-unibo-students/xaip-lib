@@ -1,11 +1,11 @@
 package dsl
 
-import dsl.provider.PredicateProvider
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.Domains
 import domain.BlockWorldDomain.DomainsDSL
 import domain.BlockWorldDomain.Predicates
+import dsl.provider.PredicateProvider
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 
 class PredicatesProviderTest : AnnotationSpec() {
     private val predicateProvider =

@@ -12,10 +12,29 @@ import dsl.provider.TypeProvider
  * Class representing a [Domain] in the DSL.
  */
 class DomainDSL {
-    var name: String = "" // tolto lateinit
+    /**
+     * @property name: represents the name of the [Domain].
+     */
+    var name: String = ""
+
+    /**
+     * @property predicates: set of [Predicate] of the [Domain].
+     */
     var predicates: Set<Predicate> = emptySet()
+
+    /**
+     * @property actions: set of [Action] of the [Domain].
+     */
     var actions: Set<Action> = emptySet()
+
+    /**
+     * @property types: set of [Type] of the [Domain].
+     */
     var types: Set<Type> = emptySet()
+
+    /**
+     * @property axiom: represents the [Axiom] of the domain.
+     */
     var axiom: Axiom? = null
 
     private var predicateProvider = PredicateProvider.of(this)

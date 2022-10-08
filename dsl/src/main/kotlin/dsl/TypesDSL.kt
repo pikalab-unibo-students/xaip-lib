@@ -6,6 +6,9 @@ import Type
  * Class representing a [Type] in the DSL.
  */
 class TypesDSL {
+    /**
+     * @property types: set of [Type] created.
+     */
     val types: MutableSet<Type> = mutableSetOf()
 
     /**

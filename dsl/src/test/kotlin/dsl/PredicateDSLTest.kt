@@ -1,11 +1,11 @@
 package dsl
 
+import domain.BlockWorldDomain.Domains.blockWorld
+import domain.BlockWorldDomain.Predicates
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
-import domain.BlockWorldDomain.Domains.blockWorld
-import domain.BlockWorldDomain.Predicates
 
 class PredicateDSLTest : AnnotationSpec() {
     @Test

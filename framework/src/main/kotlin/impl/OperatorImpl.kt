@@ -45,5 +45,4 @@ internal data class OperatorImpl(
     }
 
     override fun toString(): String = "$name(${args.joinToString(", ") {it.toString()}})"
-
 }

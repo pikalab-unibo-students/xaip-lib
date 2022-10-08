@@ -138,24 +138,30 @@ internal data class ExecutionContext(
         return depth > maxDepth && backtrackOrFail()
     }
 
+    private fun isUnificationPossible(fluent1: Fluent, fluent2: Fluent): Boolean {
+        return when (
+            val result = try {
+                fluent1.mostGeneralUnifier(fluent2)
+            } catch (_: NotUnifiableException) { null }
+        ) {
+            null -> false
+            else -> result != Substitution.empty() && result != Substitution.empty()
+        }
+    }
+
     fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
-        var indice = 0
+        var count = 0
         for (fluent in goal.targets) {
-            if (!fluent.isGround) {
-                for (fluentState in currentState.fluents) {
-                    val tmp = try {
-                        fluentState.mostGeneralUnifier(fluent)
-                    } catch (_: NotUnifiableException) { null }
-                    if (tmp != Substitution.empty() || tmp != Substitution.empty()) {
-                        indice++
+            when (fluent.isGround) {
+                true -> if (currentState.fluents.contains(fluent)) count++ else count--
+                else -> for (fluentState in currentState.fluents)
+                    if (isUnificationPossible(fluentState, fluent)) {
+                        count++
                         break
                     }
-                }
-            } else {
-                if (currentState.fluents.contains(fluent)) indice++ else indice--
             }
         }
-        return goal.targets.size == indice
+        return goal.targets.size == count
     }
     override fun toString(): String =
         """${ExecutionContext::class.simpleName}(

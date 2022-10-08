@@ -4,10 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.qa)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)
@@ -30,6 +26,7 @@ kotlin {
     }
 }
 
+@Suppress("SpreadOperator")
 tasks.test {
     useJUnitPlatform()
     testLogging {

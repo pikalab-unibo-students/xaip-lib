@@ -4,9 +4,6 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.qa)
 }
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation(libs.kotlin.stdlib)

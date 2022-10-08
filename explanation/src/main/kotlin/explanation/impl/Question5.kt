@@ -9,6 +9,8 @@ import explanation.Question
 /**
  * Why is plan not good (solvable).
  * Checking for a plan satisfiability.
+ *
+ * @property alternativePlan: [Plan] proposed by the user.
  */
 class Question5(
     override val problem: Problem,

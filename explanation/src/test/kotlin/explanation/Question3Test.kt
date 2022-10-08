@@ -2,9 +2,6 @@ package explanation
 
 import Plan
 import State
-import explanation.impl.Question3
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
@@ -12,6 +9,9 @@ import domain.BlockWorldDomain.Operators.pickD
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Planners.stripsPlanner
 import domain.BlockWorldDomain.Problems
+import explanation.impl.Question3
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 
 class Question3Test : AnnotationSpec() {
 

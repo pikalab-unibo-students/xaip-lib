@@ -31,17 +31,3 @@ class Question2(
 
     override fun buildHproblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null, true)
 }
-
-/**
- * dubbio: considero la posizione o no?
- * se considero lo stato posso "semplicemente" ricondurmi a Q4,
- * per cui mi creo un piano senza l'operatore prescelto e vedo se è solvable,
- * se invece lo interpretiamo come un perché ho utilizzato quest'operatore e  basta
- * facciamo tutto questo sbattimento per cercare un piano che non abbia quell'operatore.
- *
- * Ora prefenza personale non collasserei su Q4, però è anche vero che in presenza
- * di più di un operatore uguale, questo cerca piani che non abbiano mai nessuno di questi ed è un  po' tricky
- * cioé semanticamente per me ci può stare che uno dica che in un certo piano non vuole mai un certo operatore.
- * Però per me ci starebbe anche che non lo volesse solo in un determinato punto, ma quel caso può essere catturato da Q4,
- * in sintesi io lascerei il mondo come sta, tu cosa ne pensi?
- */

@@ -9,7 +9,6 @@ repositories {
 }
 
 dependencies {
-
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)
 

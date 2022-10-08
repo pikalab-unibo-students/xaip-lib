@@ -13,11 +13,10 @@ interface Simulator {
      */
     fun simulate(plan: Plan, state: State): List<State>
 
-    companion object{
+    companion object {
         /**
          * Factory method for a [Simulator] creation.
          */
-        fun of() : Simulator = SimulatorImpl()
-
+        fun of(): Simulator = SimulatorImpl()
     }
 }

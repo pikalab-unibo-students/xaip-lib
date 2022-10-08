@@ -20,6 +20,9 @@ import dsl.domain
 import dsl.problem
 
 object BlockWorldDomain {
+    /**
+     * property axioms: represents anarray of [Axiom].
+     */
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
     val operators = arrayOf(

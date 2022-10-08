@@ -9,6 +9,7 @@ import explanation.Question
 /**
  * Why not this plan instead.
  * Proposal for a new plan.
+ * @property alternativePlan: [Plan] proposed by the user.
  */
 class Question4(
     override val problem: Problem,
@@ -20,5 +21,4 @@ class Question4(
     override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHproblem(): Problem = throw UnsupportedOperationException()
-
 }

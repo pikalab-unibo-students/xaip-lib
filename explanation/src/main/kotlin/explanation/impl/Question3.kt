@@ -10,7 +10,8 @@ import explanation.Question
 /**
  * Why operator a instead of b in state C.
  * Operator substitution in a state.
- */
+ * @property focus2: operator to replace in the plan.
+ * */
 class Question3(
     override val problem: Problem,
     override val plan: Plan,

@@ -4,13 +4,29 @@ import Domain
 import Operator
 import Plan
 import Problem
-import explanation.impl.Answer
 
 /**
  *
  */
-interface Question : GeneralQuestion {
+interface Question {
+    /**
+     *
+     */
+    val problem: Problem
+
+    /**
+     *
+     */
+    val plan: Plan
+
+    /**
+     *
+     */
     val focus: Operator
+
+    /**
+     *
+     */
     val focusOn: Int
 
     /**
@@ -22,14 +38,4 @@ interface Question : GeneralQuestion {
      *
      */
     fun buildHproblem(): Problem
-}
-
-/**
- * */
-interface GeneralQuestion {
-    val problem: Problem
-    val plan: Plan
-
-    fun isValid(): Boolean
-    fun `Where is the problem`(): Answer
 }

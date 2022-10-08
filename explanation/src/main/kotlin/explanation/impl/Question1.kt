@@ -8,6 +8,7 @@ import explanation.Question
 
 /**
  * Why operator not used.
+ * Add operator to the plan.
  */
 class Question1(
     override val problem: Problem,

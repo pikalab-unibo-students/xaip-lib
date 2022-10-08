@@ -1,12 +1,11 @@
 package explanation
 
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Planners
+import domain.BlockWorldDomain.Problems
 import explanation.impl.Question1
-import explanation.oldVersion.ExplanationUtils
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Operators
-import resources.domain.BlockWorldDomain.Planners
-import resources.domain.BlockWorldDomain.Problems
 
 class Question1Test : AnnotationSpec() {
     @Test
@@ -19,15 +18,14 @@ class Question1Test : AnnotationSpec() {
         )
 
         val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()
+        val explanation = Explanation.of(q1.plan, hPlan, q1)
 
-        val explanation: ExplanationUtils.ContrastiveExplanation =
-            ExplanationUtils.ContrastiveExplanation.of(q1.plan, hPlan, q1.focus)
-
-        val contrastiveExplanation = ExplanationUtils.ContrastiveExplanation.of(
+        val contrastiveExplanation = Explanation.of(
             q1.plan,
-            hPlan,
-            q1.focus
+            Plan.of(listOf(Operators.pickA)),
+            q1
         )
         explanation shouldBe contrastiveExplanation
+        explanation.isPlanValid() shouldBe true
     }
 }

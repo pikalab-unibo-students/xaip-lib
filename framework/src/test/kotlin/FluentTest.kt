@@ -1,3 +1,8 @@
+import domain.BlockWorldDomain.Expressions
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.predicates
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
@@ -12,11 +17,6 @@ import resources.TestUtils.predicateNotEmpty
 import resources.TestUtils.size
 import resources.TestUtils.substitution
 import resources.TestUtils.variableNotEmpty
-import resources.domain.BlockWorldDomain.Expressions
-import resources.domain.BlockWorldDomain.Fluents
-import resources.domain.BlockWorldDomain.Predicates
-import resources.domain.BlockWorldDomain.Values
-import resources.domain.BlockWorldDomain.predicates
 
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

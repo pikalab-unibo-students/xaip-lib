@@ -6,11 +6,14 @@ import impl.StateImpl
  *
  */
 interface State {
+    /**
+     *
+     */
     val fluents: Set<Fluent>
 
     /**
-     * Method that compute the application of an [Action] to the current [State].
-     * @return a sequence of [State] reachable from the current one given the application of an [Action].
+     * Method that compute the application of an [Operator] to the current [State].
+     * @return a sequence of [State] reachable from the current one given the application of an [Operator].
      */
     fun apply(action: Operator): Sequence<State>
 

@@ -1,28 +1,28 @@
 package explanation
 
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Problems
 import explanation.impl.Question4
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain
 
 class Question4Test : AnnotationSpec() {
-    /**
-     * Why not this plan instead.
-     */
+    private val problem = Problems.armNotEmpty
+    private val planPickBStackBA = Plan.of(listOf(Operators.pickB, Operators.stackBA))
+    private val planPickB = Plan.of(listOf(Operators.pickB))
+    private val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
 
     @Test
-    fun `Test scemo`() {
-        val planPickDStackDCpickA = Plan.of(listOf(BlockWorldDomain.Operators.pickD, BlockWorldDomain.Operators.stackDC, BlockWorldDomain.Operators.pickA))
-        val planPickB = Plan.of(listOf(BlockWorldDomain.Operators.pickB))
-        val q4 = Question4(BlockWorldDomain.Problems.armNotEmpty, planPickB, planPickDStackDCpickA)
-        if(q4.isValid()) {
-            val explanation = Explanation.of(q4.plan, q4.alternativePlan)
+    fun `Test valid plan`() {
+        val q4 = Question4(problem, planPickBstackBApickC, planPickB, planPickB.operators.first(), 0)
+        val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
+        explanation.isPlanValid() shouldBe true
+    }
 
-            val contrastiveExplanation = Explanation.of(
-                q4.plan,
-                q4.alternativePlan
-            )
-            explanation shouldBe contrastiveExplanation
-        }
+    @Test
+    fun `Test incorrect plan`() {
+        val q4 = Question4(problem, planPickBStackBA, planPickB, planPickB.operators.first(), 0)
+        val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
+        explanation.isPlanValid() shouldBe false
     }
 }

@@ -1,29 +1,53 @@
+import domain.BlockWorldDomain.Operators.pickA
+import domain.BlockWorldDomain.Operators.pickB
+import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.pickD
+import domain.BlockWorldDomain.Operators.putdownA
+import domain.BlockWorldDomain.Operators.stackAB
+import domain.BlockWorldDomain.Operators.stackAC
+import domain.BlockWorldDomain.Operators.stackAD
+import domain.BlockWorldDomain.Operators.stackBA
+import domain.BlockWorldDomain.Operators.stackBC
+import domain.BlockWorldDomain.Operators.stackBD
+import domain.BlockWorldDomain.Operators.stackCA
+import domain.BlockWorldDomain.Operators.stackCB
+import domain.BlockWorldDomain.Operators.stackCD
+import domain.BlockWorldDomain.Operators.stackDA
+import domain.BlockWorldDomain.Operators.stackDB
+import domain.BlockWorldDomain.Operators.stackDC
+import domain.BlockWorldDomain.Operators.unstackAB
+import domain.BlockWorldDomain.Planners
+import domain.BlockWorldDomain.Problems
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.domain.BlockWorldDomain.Operators.pickA
-import resources.domain.BlockWorldDomain.Operators.pickB
-import resources.domain.BlockWorldDomain.Operators.pickC
-import resources.domain.BlockWorldDomain.Operators.pickD
-import resources.domain.BlockWorldDomain.Operators.putdownA
-import resources.domain.BlockWorldDomain.Operators.stackAB
-import resources.domain.BlockWorldDomain.Operators.stackAC
-import resources.domain.BlockWorldDomain.Operators.stackAD
-import resources.domain.BlockWorldDomain.Operators.stackBA
-import resources.domain.BlockWorldDomain.Operators.stackBC
-import resources.domain.BlockWorldDomain.Operators.stackBD
-import resources.domain.BlockWorldDomain.Operators.stackCA
-import resources.domain.BlockWorldDomain.Operators.stackCB
-import resources.domain.BlockWorldDomain.Operators.stackCD
-import resources.domain.BlockWorldDomain.Operators.stackDA
-import resources.domain.BlockWorldDomain.Operators.stackDB
-import resources.domain.BlockWorldDomain.Operators.stackDC
-import resources.domain.BlockWorldDomain.Operators.unstackAB
-import resources.domain.BlockWorldDomain.Planners
-import resources.domain.BlockWorldDomain.Problems
 
 class StripsPlannerTest : AnnotationSpec() {
+    val planPickAStackAB = Plan.of(listOf(pickA, stackAB))
+    val setPickX = setOf(
+        Plan.of(listOf(pickA)),
+        Plan.of(listOf(pickB)),
+        Plan.of(listOf(pickC)),
+        Plan.of(listOf(pickD))
+    )
+    val setPickXStackXY = setOf(
+        Plan.of(listOf(pickA, stackAB)),
+        Plan.of(listOf(pickA, stackAC)),
+        Plan.of(listOf(pickA, stackAD)),
+
+        Plan.of(listOf(pickB, stackBA)),
+        Plan.of(listOf(pickB, stackBC)),
+        Plan.of(listOf(pickB, stackBD)),
+
+        Plan.of(listOf(pickC, stackCB)),
+        Plan.of(listOf(pickC, stackCD)),
+        Plan.of(listOf(pickC, stackCA)),
+
+        Plan.of(listOf(pickD, stackDA)),
+        Plan.of(listOf(pickD, stackDC)),
+        Plan.of(listOf(pickD, stackDB))
+    )
 
     @Test
     fun testPickC() {
@@ -50,12 +74,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickX() {
         val plans = Planners.stripsPlanner.plan(Problems.pickX).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -64,12 +83,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickXPickY() {
         val plans = Planners.stripsPlanner.plan(Problems.pickXpickY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -78,12 +92,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testPickXFloorY() {
         val plans = Planners.stripsPlanner.plan(Problems.pickXfloorY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA)),
-            Plan.of(listOf(pickB)),
-            Plan.of(listOf(pickC)),
-            Plan.of(listOf(pickD))
-        )
+        val plan2check = setPickX
         plans.size shouldBe 4
         plans shouldBe plan2check
         println(plans)
@@ -92,23 +101,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackXY() {
         val plans = Planners.stripsPlanner.plan(Problems.stackXY).toSet()
-        val plan2check = setOf(
-            Plan.of(listOf(pickA, stackAB)),
-            Plan.of(listOf(pickA, stackAC)),
-            Plan.of(listOf(pickA, stackAD)),
-
-            Plan.of(listOf(pickB, stackBA)),
-            Plan.of(listOf(pickB, stackBC)),
-            Plan.of(listOf(pickB, stackBD)),
-
-            Plan.of(listOf(pickC, stackCB)),
-            Plan.of(listOf(pickC, stackCD)),
-            Plan.of(listOf(pickC, stackCA)),
-
-            Plan.of(listOf(pickD, stackDA)),
-            Plan.of(listOf(pickD, stackDC)),
-            Plan.of(listOf(pickD, stackDB))
-        )
+        val plan2check = setPickXStackXY
         plans.size shouldBe 12
         plans shouldBe plan2check
         println(plans)
@@ -126,23 +119,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackXYpickW() {
         val plans = Planners.stripsPlanner.plan(Problems.stackXYpickW).toSet() // caso sfigato
-        val plan2check = setOf(
-            Plan.of(listOf(pickA, stackAB)),
-            Plan.of(listOf(pickA, stackAC)),
-            Plan.of(listOf(pickA, stackAD)),
-
-            Plan.of(listOf(pickB, stackBA)),
-            Plan.of(listOf(pickB, stackBC)),
-            Plan.of(listOf(pickB, stackBD)),
-
-            Plan.of(listOf(pickC, stackCA)),
-            Plan.of(listOf(pickC, stackCB)),
-            Plan.of(listOf(pickC, stackCD)),
-
-            Plan.of(listOf(pickD, stackDA)),
-            Plan.of(listOf(pickD, stackDB)),
-            Plan.of(listOf(pickD, stackDC))
-        )
+        val plan2check = setPickXStackXY
         plans.size shouldBe 12
         plans shouldBe plan2check
         println(plans)

@@ -1,18 +1,20 @@
 package explanation
-
-import Goal
 import Plan
 import State
-import explanation.impl.Answer
 import explanation.impl.SimulatorImpl
 
+/**
+ * Entity able to simulate the execution of a [Plan] chosen.
+ */
 interface Simulator {
-    fun simulate(plan: Plan, state: State, goal: Goal): Boolean
-    fun simulate2(plan: Plan, state: State, goal: Goal): Answer
+    /**
+     * Method to simulate the exection of a [Plan].
+     */
+    fun simulate(plan: Plan, state: State): List<State>
 
     companion object {
         /**
-         * Factory method for an [Simulator] creation.
+         * Factory method for a [Simulator] creation.
          */
         fun of(): Simulator = SimulatorImpl()
     }

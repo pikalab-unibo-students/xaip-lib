@@ -1,3 +1,5 @@
+import domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.objects
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
@@ -5,8 +7,6 @@ import resources.TestUtils.name
 import resources.TestUtils.objEmpty
 import resources.TestUtils.objNotEmpty
 import resources.TestUtils.substitution
-import resources.domain.BlockWorldDomain.Values
-import resources.domain.BlockWorldDomain.objects
 
 class ObjectTest : AnnotationSpec() {
     @Test

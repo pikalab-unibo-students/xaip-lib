@@ -1,24 +1,36 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("jvm") version "1.7.10"
-    id("io.kotest") version "0.3.9"
-}
-
-group = "me.giuliabrugnatti"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.qa)
 }
 
 dependencies {
-
-    implementation("it.unibo.tuprolog:unify-jvm:0.20.9")
-    implementation("it.unibo.tuprolog:solve-classic-jvm:0.20.9")
-
-    testImplementation("io.kotest:kotest-framework-api-jvm:5.4.2")
-    testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
-
+    implementation(libs.kotlin.stdlib)
+    testImplementation(libs.bundles.kotlin.testing)
+    api(libs.tuprolog.unify)
+    api(libs.tuprolog.solve.classic)
     api(project(":framework"))
+    testImplementation(project(":domain"))
+}
+
+kotlin {
+    target {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = true
+                freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
+            }
+        }
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+        showCauses = true
+        showStackTraces = true
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
 }

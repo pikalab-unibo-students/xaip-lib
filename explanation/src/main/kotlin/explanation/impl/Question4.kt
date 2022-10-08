@@ -1,22 +1,24 @@
 package explanation.impl
 
+import Domain
+import Operator
 import Plan
 import Problem
-import explanation.GeneralQuestion
-import explanation.Simulator
+import explanation.Question
 
 /**
  * Why not this plan instead.
+ * Proposal for a new plan.
+ * @property alternativePlan: [Plan] proposed by the user.
  */
 class Question4(
     override val problem: Problem,
+    val alternativePlan: Plan,
     override val plan: Plan,
-    val alternativePlan: Plan
-) : GeneralQuestion {
-    private val simulator = Simulator.of()
-    override fun isValid(): Boolean =
-        simulator.simulate(alternativePlan, problem.initialState, problem.goal)
+    override val focus: Operator,
+    override val focusOn: Int
+) : Question, AbstractQuestion() {
+    override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
-    override fun `Where is the problem`(): Answer =
-        simulator.simulate2(plan, problem.initialState, problem.goal)
+    override fun buildHproblem(): Problem = throw UnsupportedOperationException()
 }

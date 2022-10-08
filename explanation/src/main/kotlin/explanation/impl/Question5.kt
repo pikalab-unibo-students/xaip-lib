@@ -1,22 +1,26 @@
 package explanation.impl
 
+import Domain
+import Operator
 import Plan
 import Problem
-import explanation.GeneralQuestion
-import explanation.Simulator
+import explanation.Question
 
 /**
  * Why is plan not good (solvable).
+ * Checking for a plan satisfiability.
+ *
+ * @property alternativePlan: [Plan] proposed by the user.
  */
 class Question5(
     override val problem: Problem,
-    override val plan: Plan
-) : GeneralQuestion {
+    override val plan: Plan,
+    override val focus: Operator,
+    val alternativePlan: Plan,
+    override val focusOn: Int
+) :
+    Question, AbstractQuestion() {
+    override fun buildHdomain(): Domain = throw UnsupportedOperationException()
 
-    private val simulator = Simulator.of()
-    override fun isValid(): Boolean =
-        simulator.simulate(plan, problem.initialState, problem.goal)
-
-    override fun `Where is the problem`(): Answer =
-        simulator.simulate2(plan, problem.initialState, problem.goal)
+    override fun buildHproblem(): Problem = throw UnsupportedOperationException()
 }

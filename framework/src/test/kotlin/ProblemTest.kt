@@ -1,10 +1,10 @@
+import domain.BlockWorldDomain.Domains
+import domain.BlockWorldDomain.Goals
+import domain.BlockWorldDomain.ObjectSets
+import domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.States
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import resources.domain.BlockWorldDomain.Domains
-import resources.domain.BlockWorldDomain.Goals
-import resources.domain.BlockWorldDomain.ObjectSets
-import resources.domain.BlockWorldDomain.Problems
-import resources.domain.BlockWorldDomain.States
 
 class ProblemTest : AnnotationSpec() {
 

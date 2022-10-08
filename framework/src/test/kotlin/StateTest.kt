@@ -1,25 +1,26 @@
+import domain.BlockWorldDomain.Actions
+import domain.BlockWorldDomain.States
+import domain.BlockWorldDomain.Types
+import domain.BlockWorldDomain.Values
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldStartWith
-import resources.domain.BlockWorldDomain
-import resources.domain.BlockWorldDomain.Actions
-import resources.domain.BlockWorldDomain.States
 
 class StateTest : AnnotationSpec() {
 
     private lateinit var state: State
-    private lateinit var applicableAction: Operator
-    private lateinit var nonApplicableAction: Operator
+    private lateinit var applicableOperator: Operator
+    private lateinit var nonApplicableOperator: Operator
     private lateinit var destinationStates: Set<State>
 
     @BeforeEach
     fun init() {
         state = States.initial
-        applicableAction = Operator.of(Actions.pick)
-        nonApplicableAction = Operator.of(Actions.stack)
+        applicableOperator = Operator.of(Actions.pick)
+        nonApplicableOperator = Operator.of(Actions.stack)
         destinationStates = setOf(States.atAArm, States.atBArm, States.atCArm, States.atDArm)
     }
 
@@ -36,13 +37,13 @@ class StateTest : AnnotationSpec() {
 
     @Test
     fun testIsApplicableWorkAsExpected() {
-        state.isApplicable(applicableAction) shouldBe true
-        state.isApplicable(nonApplicableAction) shouldBe false
+        state.isApplicable(applicableOperator) shouldBe true
+        state.isApplicable(nonApplicableOperator) shouldBe false
     }
 
     @Test
     fun testActionApplicationWorksAsExpected() {
-        val actual = state.apply(applicableAction).toSet()
+        val actual = state.apply(applicableOperator).toSet()
         actual shouldBe destinationStates
         actual.first().fluents.forEach { it shouldBeIn destinationStates.first().fluents }
     }
@@ -70,9 +71,9 @@ class StateTest : AnnotationSpec() {
         val exception = shouldThrow<IllegalArgumentException> {
             State.of(
                 Fluent.of(
-                    Predicate.of("error", BlockWorldDomain.Types.anything),
+                    Predicate.of("error", Types.anything),
                     false,
-                    BlockWorldDomain.Values.X
+                    Values.X
                 )
             )
         }

@@ -8,8 +8,10 @@ import State
 import explanation.Question
 
 /**
- * Why operator instead of.
- */
+ * Why operator a instead of b in state C.
+ * Operator substitution in a state.
+ * @property focus2: operator to replace in the plan.
+ * */
 class Question3(
     override val problem: Problem,
     override val plan: Plan,
@@ -18,6 +20,12 @@ class Question3(
     inState: State? = null,
     val focus2: Operator
 ) : Question, AbstractQuestion() {
+    // se mi passano uno stato in cui vorrebbero che rimuovessi l'azione bella,
+    // se no assumo come stato di default quello iniziale.
+    // non so quanto wquesta assunzione sia safe;
+    // l'ho tenuta più per compatibilità con il paper che altro.
+    // NB Il paper lo stato non se lo faceva dare e usava quello iniziale
+    // (se non erro).
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

@@ -1,30 +1,30 @@
+import domain.BlockWorldDomain.Plans
+import domain.BlockWorldDomain.operators
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import resources.TestUtils.actionNotEmpty
 import resources.TestUtils.planEmpty
 import resources.TestUtils.planNotEmpty
-import resources.domain.BlockWorldDomain.Plans
-import resources.domain.BlockWorldDomain.operators
 
 class PlanTest : AnnotationSpec() {
     @Test
     fun testEmptyCreation() {
-        planEmpty.actions.isEmpty() shouldBe true
+        planEmpty.operators.isEmpty() shouldBe true
     }
 
     @Test
     fun testNotEmpty() {
-        planNotEmpty.actions.isNotEmpty() shouldBe true
-        planNotEmpty.actions.size shouldBe 1
-        planNotEmpty.actions.forEach { it shouldBe Operator.of(actionNotEmpty) }
+        planNotEmpty.operators.isNotEmpty() shouldBe true
+        planNotEmpty.operators.size shouldBe 1
+        planNotEmpty.operators.forEach { it shouldBe Operator.of(actionNotEmpty) }
     }
 
     @Test
     fun testPlanObjectWorksAsExpected() {
-        Plans.emptyPlan.actions.isEmpty() shouldBe true
+        Plans.emptyPlan.operators.isEmpty() shouldBe true
 
-        Plans.basicPlan.actions.isNotEmpty() shouldBe true
-        Plans.basicPlan.actions.forEach { it shouldBeIn operators }
+        Plans.basicPlan.operators.isNotEmpty() shouldBe true
+        Plans.basicPlan.operators.forEach { it shouldBeIn operators }
     }
 }

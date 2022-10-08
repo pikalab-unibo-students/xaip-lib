@@ -7,7 +7,8 @@ import Problem
 import explanation.Question
 
 /**
- * Why operator used.
+ * Why operator used rather not being used.
+ * Forbid operator's usage in the plan
  */
 class Question2(
     override val problem: Problem,
@@ -15,7 +16,7 @@ class Question2(
     override val focus: Operator,
     override val focusOn: Int
 ) : Question, AbstractQuestion() {
-    override var newPredicate = createNewPredicate(focus, "not_done_", true)
+    override var newPredicate = createNewPredicate(focus, "not_done_")
     override var newFluent = createNewFluent(focus, newPredicate)
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
 

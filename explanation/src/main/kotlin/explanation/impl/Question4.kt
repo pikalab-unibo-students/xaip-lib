@@ -17,7 +17,7 @@ class Question4(
     override val focus: Operator,
     override val focusOn: Int
 ) : Question, AbstractQuestion() {
-    override fun buildHdomain(): Domain = throw UnsupportedOperationException()
+    override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
-    override fun buildHproblem(): Problem = throw UnsupportedOperationException()
+    override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()
 }

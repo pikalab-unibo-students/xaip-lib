@@ -17,8 +17,8 @@ class Question1Test : AnnotationSpec() {
             0
         )
 
-        val hPlan = Planners.stripsPlanner.plan(q1.buildHproblem()).first()
-        val explanation = Explanation.of(q1.plan, hPlan, q1)
+        val hypotheticalPlan = Planners.stripsPlanner.plan(q1.buildHypotheticalProblem()).first()
+        val explanation = Explanation.of(q1.plan, hypotheticalPlan, q1)
 
         val contrastiveExplanation = Explanation.of(
             q1.plan,

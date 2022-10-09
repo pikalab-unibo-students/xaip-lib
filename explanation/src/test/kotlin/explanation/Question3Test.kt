@@ -35,11 +35,11 @@ class Question3Test : AnnotationSpec() {
             pickD
         )
 
-        val hplan = stripsPlanner.plan(q3.buildHproblem()).first()
-        val explanation = Explanation.of(q3.plan, hplan, q3)
+        val hypotheticalPlan = stripsPlanner.plan(q3.buildHypotheticalProblem()).first()
+        val explanation = Explanation.of(q3.plan, hypotheticalPlan, q3)
         val contrastiveExplanation = Explanation.of(
             q3.plan,
-            hplan,
+            hypotheticalPlan,
             q3
         )
         explanation shouldBe contrastiveExplanation

@@ -32,10 +32,10 @@ interface Question {
     /**
      *
      */
-    fun buildHdomain(): Domain
+    fun buildHypotheticalDomain(): Domain
 
     /**
      *
      */
-    fun buildHproblem(): Problem
+    fun buildHypotheticalProblem(): Problem
 }

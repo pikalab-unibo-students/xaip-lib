@@ -5,11 +5,9 @@ import Applicable
 import Effect
 import Fluent
 import FluentBasedGoal
-import NotUnifiableException
 import Operator
 import State
 import VariableAssignment
-import it.unibo.tuprolog.core.Substitution
 import java.util.*
 
 internal data class ExecutionContext(
@@ -136,26 +134,6 @@ internal data class ExecutionContext(
         stack.update(effectsMatched.first(), h)
 
         return depth > maxDepth && backtrackOrFail()
-    }
-
-    fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
-        var indice = 0
-        for (fluent in goal.targets) {
-            if (!fluent.isGround) {
-                for (fluentState in currentState.fluents) {
-                    val tmp = try {
-                        fluentState.mostGeneralUnifier(fluent)
-                    } catch (_: NotUnifiableException) { null }
-                    if (tmp != Substitution.empty() || tmp != Substitution.empty()) {
-                        indice++
-                        break
-                    }
-                }
-            } else {
-                if (currentState.fluents.contains(fluent)) indice++ else indice--
-            }
-        }
-        return goal.targets.size == indice
     }
 
     override fun toString(): String =

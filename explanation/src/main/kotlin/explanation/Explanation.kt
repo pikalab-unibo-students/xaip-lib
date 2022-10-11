@@ -5,7 +5,7 @@ import Plan
 import explanation.impl.ExplanationImpl
 
 /**
- *
+ *An [Explanation] is an entity that give a contrastive explanation about a plan.
  */
 interface Explanation {
     val originalPlan: Plan
@@ -17,7 +17,7 @@ interface Explanation {
     val existingList: List<Operator>
 
     /**
-     *
+     * Method that states if a pla  is a solution for a given problem.
      */
     fun isPlanValid(): Boolean
 

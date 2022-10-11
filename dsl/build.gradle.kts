@@ -1,14 +1,10 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
-}
-
-repositories {
-    mavenCentral()
+    alias(libs.plugins.kotlin.qa)
 }
 
 dependencies {
-
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)
 
@@ -30,6 +26,7 @@ kotlin {
     }
 }
 
+@Suppress("SpreadOperator")
 tasks.test {
     useJUnitPlatform()
     testLogging {

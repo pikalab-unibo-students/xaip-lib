@@ -61,7 +61,7 @@ data class ExplanationImpl(
         return newOperator
     }
 
-    private fun  List<Operator>.replaceElement(element: Operator): List<Operator> =
+    private fun List<Operator>.replaceElement(element: Operator): List<Operator> =
         this.toMutableList()
             .subList(0, this.indexOf(element)).also {
                 it.add(makeFinalOperator(retrieveAction(), element))
@@ -72,10 +72,13 @@ data class ExplanationImpl(
             }
 
     init {
-        when (question){
+        when (question) {
             is Question3 -> {
                 val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
-                novelPlan = Plan.of(operatorsToKeep.also { it.add(question.focus2) }.also { it.addAll(novelPlan.operators) })
+                novelPlan = Plan.of(
+                    operatorsToKeep
+                        .also { it.add(question.focus) }.also { it.addAll(novelPlan.operators) }
+                )
             }
             is Question1, is Question2 -> {
                 val operator = retrieveOperator()
@@ -85,19 +88,24 @@ data class ExplanationImpl(
     }
 
     private fun isUnificationPossible(fluent1: Fluent, fluent2: Fluent): Boolean {
-        return when (val result = try {fluent1.mostGeneralUnifier(fluent2) } catch (_: NotUnifiableException) { null }) {
-            null-> false
-            else-> result != Substitution.empty() && result != Substitution.empty()
+        return when (
+            val result = try {
+                fluent1.mostGeneralUnifier(fluent2)
+            } catch (_: NotUnifiableException) { null }
+        ) {
+            null -> false
+            else -> result != Substitution.empty() && result != Substitution.empty()
         }
     }
+
     // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
     private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
         var count = 0
         for (fluent in goal.targets) {
             when (fluent.isGround) {
-                true-> ((currentState.fluents.contains(fluent)) then count++) ?: count--
-                else-> for (fluentState in currentState.fluents)
-                    if(isUnificationPossible(fluentState, fluent)) {
+                true -> ((currentState.fluents.contains(fluent)) then count++) ?: count--
+                else -> for (fluentState in currentState.fluents)
+                    if (isUnificationPossible(fluentState, fluent)) {
                         count++
                         break
                     }
@@ -108,8 +116,10 @@ data class ExplanationImpl(
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
-        return (states.isNotEmpty() then
-                states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }) ?: false
+        return (
+            states.isNotEmpty() then
+                states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }
+            ) ?: false
     }
 
     override fun toString(): String =

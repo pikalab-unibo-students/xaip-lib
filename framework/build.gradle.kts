@@ -1,11 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.jvm)
-
-}
-repositories {
-    mavenCentral()
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlin.qa)
 }
 
 dependencies {
@@ -16,7 +13,6 @@ dependencies {
 
     testImplementation(libs.bundles.kotlin.testing)
     testImplementation(project(":domain"))
-
 }
 
 kotlin {

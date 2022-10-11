@@ -2,12 +2,17 @@ import impl.UnaryExpressionImpl
 
 /**
  * Subtype of [Expression] which support operations with logic expression that apply an [Operand] to an [Expression].
- * @property expression: first expression to be used.
- * @property operand: operand to be applied to the expressions.
  */
 
 interface UnaryExpression : Expression {
+    /**
+     * @property expression: first expression to be used.
+     */
     val expression: Expression
+
+    /**
+     * @property operand: operand to be applied to the expressions.
+     */
     val operand: String
 
     companion object {

@@ -2,13 +2,21 @@ import impl.BinaryExpressionImpl
 
 /**
  * Subtype of [Expression] which support operations with logic expression that apply an [Operand] to two [Expression].
- * @property expression1: first expression to be used.
- * @property expression2: second expression to be used.
- * @property operand: operand to be applied to the expressions.
  */
 interface BinaryExpression : Expression {
+    /**
+     * @property expression1: first expression to be used.
+     */
     val expression1: Expression
+
+    /**
+     * @property expression2: second expression to be used.
+     */
     val expression2: Expression
+
+    /**
+     * @property operand: operand to be applied to the expressions.
+     */
     val operand: String
 
     companion object {

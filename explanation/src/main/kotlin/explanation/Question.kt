@@ -9,19 +9,33 @@ import Problem
  *
  */
 interface Question {
+    /**
+     *
+     */
     val problem: Problem
+
+    /**
+     *
+     */
     val plan: Plan
+
+    /**
+     *
+     */
     val focus: Operator
+
+    /**
+     *
+     */
     val focusOn: Int
 
     /**
      *
      */
-    fun buildHdomain(): Domain
+    fun buildHypotheticalDomain(): Domain
 
     /**
      *
      */
-    fun buildHproblem(): Problem
-
+    fun buildHypotheticalProblem(): Problem
 }

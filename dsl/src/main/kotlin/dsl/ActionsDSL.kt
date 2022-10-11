@@ -11,6 +11,9 @@ class ActionsDSL(
     private val predicateProvider: PredicateProvider,
     private val typeProvider: TypeProvider
 ) {
+    /**
+     * @property actions: set of actions created.
+     */
     val actions: MutableSet<Action> = mutableSetOf()
 
     /**

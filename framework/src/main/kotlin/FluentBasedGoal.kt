@@ -1,9 +1,11 @@
 import impl.FluentBasedGoalImpl
 /**
  * A [FluentBasedGoal] is the entity representing the [Goal] of a [Problem].
- *
- * @property targets: set of fluents present in the [Goal] definitions. */
+ * */
 interface FluentBasedGoal : Goal, Applicable<FluentBasedGoal> {
+    /**
+     * @property targets: set of fluents present in the [Goal] definitions.
+     */
     val targets: Set<Fluent>
 
     companion object {

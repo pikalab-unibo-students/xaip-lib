@@ -1,9 +1,9 @@
 package explanation
 
-import explanation.impl.Question5
-import io.kotest.core.spec.style.AnnotationSpec
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Problems
+import explanation.impl.Question5
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class Question5Test : AnnotationSpec() {

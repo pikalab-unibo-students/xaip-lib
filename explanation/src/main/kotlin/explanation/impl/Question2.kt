@@ -25,9 +25,9 @@ class Question2(
 
     override var newAction = createNewAction(oldAction, newFluent, true)
 
-    override var hDomain = buildHdomain()
+    override var hDomain = buildHypotheticalDomain()
 
-    override fun buildHdomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
+    override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
-    override fun buildHproblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null, true)
+    override fun buildHypotheticalProblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null, true)
 }

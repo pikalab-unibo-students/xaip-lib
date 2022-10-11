@@ -10,7 +10,8 @@ import explanation.Question
 /**
  * Why operator a instead of b in state C.
  * Operator substitution in a state.
- */
+ * @property focus2: [Operator] that must replace [focus] in the [plan].
+ * */
 class Question3(
     override val problem: Problem,
     override val plan: Plan,
@@ -32,16 +33,16 @@ class Question3(
 
     // A. TODO( estendi a considerare tutti gli stati possibili)
     private val newState = newProblem.initialState.apply(focus2).first()
-    override var hDomain = buildHdomain()
+    override var hDomain = buildHypotheticalDomain()
 
-    override fun buildHdomain(): Domain = Domain.of(
+    override fun buildHypotheticalDomain(): Domain = Domain.of(
         name = newProblem.domain.name,
         predicates = newProblem.domain.predicates,
         actions = newProblem.domain.actions,
         types = newProblem.domain.types
     )
 
-    override fun buildHproblem(): Problem = Problem.of(
+    override fun buildHypotheticalProblem(): Problem = Problem.of(
         domain = hDomain,
         objects = newProblem.objects,
         initialState = newState,

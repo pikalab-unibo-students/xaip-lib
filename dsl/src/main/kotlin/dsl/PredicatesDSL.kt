@@ -8,6 +8,9 @@ import dsl.provider.TypeProvider
  * Class representing a [Predicate] in the DSL.
  */
 class PredicatesDSL(private val typesProvider: TypeProvider) {
+    /**
+     * @property predicates: set of [Predicate] created.
+     */
     val predicates = mutableSetOf<Predicate>()
 
     /**

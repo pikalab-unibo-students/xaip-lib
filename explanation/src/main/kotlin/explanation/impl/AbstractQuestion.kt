@@ -5,7 +5,6 @@ import Domain
 import Fluent
 import FluentBasedGoal
 import Operator
-import Plan
 import Predicate
 import Problem
 import State
@@ -16,12 +15,34 @@ import State
 open class AbstractQuestion {
     // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
     // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
-
+    /**
+     *
+     */
     open lateinit var newPredicate: Predicate
+
+    /**
+     *
+     */
     open lateinit var newGroundFluent: Fluent
+
+    /**
+     *
+     */
     open lateinit var newFluent: Fluent
+
+    /**
+     *
+     */
     open lateinit var oldAction: Action
+
+    /**
+     *
+     */
     open lateinit var newAction: Action
+
+    /**
+     *
+     */
     open lateinit var hDomain: Domain
 
     /**
@@ -33,12 +54,14 @@ open class AbstractQuestion {
     /**
      *
      */
+    @Suppress("SpreadOperator")
     fun createNewGroundFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.args.toTypedArray())
 
     /**
      *
      */
+    @Suppress("SpreadOperator")
     fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
         Fluent.positive(predicate, *action.parameters.keys.toTypedArray())
 
@@ -57,8 +80,8 @@ open class AbstractQuestion {
             parameters = action.parameters,
             preconditions = action.preconditions,
             effects = when (negated) {
-                true-> mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) }
-                else ->mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
+                true -> mutableSetOf(Effect.negative(fluent)).also { it.addAll(action.effects) }
+                else -> mutableSetOf(Effect.of(fluent)).also { it.addAll(action.effects) }
             }
         )
     }
@@ -72,8 +95,9 @@ open class AbstractQuestion {
             predicates = mutableSetOf(newPredicate).also { it.addAll(domain.predicates) },
             actions = mutableSetOf(newAction).also {
                 domain.actions.map { oldAction ->
-                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() })
-                        it.add(oldAction)  // se il nome è diverso lo aggiungo
+                    if (oldAction.name != newAction.name.filter { char -> char.isLetter() }) {
+                        it.add(oldAction) // se il nome è diverso lo aggiungo
+                    }
                 }
             },
             types = domain.types
@@ -92,14 +116,16 @@ open class AbstractQuestion {
         Problem.of(
             domain = hDomain,
             objects = problem.objects,
-            initialState = when(updateState){
-                true-> State.of(mutableSetOf(newFluent!!).also {it.addAll(problem.initialState.fluents) })
-                else-> state ?: problem.initialState
+            initialState = when (updateState) {
+                true -> State.of(mutableSetOf(newFluent!!).also { it.addAll(problem.initialState.fluents) })
+                else -> state ?: problem.initialState
             },
             goal = when (newFluent) {
-                null-> problem.goal
-                else-> FluentBasedGoal.of((problem.goal as FluentBasedGoal).targets.toMutableSet()
-                    .also { it.add(newFluent) })
+                null -> problem.goal
+                else -> FluentBasedGoal.of(
+                    (problem.goal as FluentBasedGoal).targets.toMutableSet()
+                        .also { it.add(newFluent) }
+                )
             }
         )
 }

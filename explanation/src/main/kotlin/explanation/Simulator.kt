@@ -4,11 +4,11 @@ import State
 import explanation.impl.SimulatorImpl
 
 /**
- * Entity able to simulate the execution of a [Plan] chosen.
+ * A [Simulator] able to simulate the execution of a [Plan].
  */
 interface Simulator {
     /**
-     * Method to simulate the exection of a [Plan].
+     * Method used to simulate the execution of a [Plan].
      */
     fun simulate(plan: Plan, state: State): List<State>
 

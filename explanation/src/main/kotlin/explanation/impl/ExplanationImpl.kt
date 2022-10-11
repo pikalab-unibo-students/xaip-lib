@@ -1,16 +1,14 @@
 package explanation.impl
 
 import Action
-import Fluent
 import FluentBasedGoal
-import NotUnifiableException
 import Operator
 import Plan
-import State
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
-import it.unibo.tuprolog.core.Substitution
+import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
+import impl.res.FrameworkUtilities.then
 
 /**
  *
@@ -36,8 +34,6 @@ data class ExplanationImpl(
         }
     }
     private val simulator = Simulator.of()
-
-    private infix fun <T> Boolean.then(param: T): T? = if (this) param else null
 
     private fun retrieveOperator() = novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
 
@@ -85,33 +81,6 @@ data class ExplanationImpl(
                 if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
             }
         }
-    }
-
-    private fun isUnificationPossible(fluent1: Fluent, fluent2: Fluent): Boolean {
-        return when (
-            val result = try {
-                fluent1.mostGeneralUnifier(fluent2)
-            } catch (_: NotUnifiableException) { null }
-        ) {
-            null -> false
-            else -> result != Substitution.empty() && result != Substitution.empty()
-        }
-    }
-
-    // TODO(Se questa roba è sensata va fixata anche nell'altro modulo)
-    private fun finalStateComplaintWithGoal(goal: FluentBasedGoal, currentState: State): Boolean {
-        var count = 0
-        for (fluent in goal.targets) {
-            when (fluent.isGround) {
-                true -> ((currentState.fluents.contains(fluent)) then count++) ?: count--
-                else -> for (fluentState in currentState.fluents)
-                    if (isUnificationPossible(fluentState, fluent)) {
-                        count++
-                        break
-                    }
-            }
-        }
-        return goal.targets.size == count
     }
 
     override fun isPlanValid(): Boolean {

@@ -110,18 +110,14 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testStackZWpickX() {
         val plans = Planners.stripsPlanner.plan(Problems.stackZWpickX).toSet()
-
-        plans.size shouldBe 36
-
+        plans.size shouldBe 24
         println(plans)
     }
 
     @Test
     fun testStackXYpickW() {
         val plans = Planners.stripsPlanner.plan(Problems.stackXYpickW).toSet() // caso sfigato
-        val plan2check = setPickXStackXY
-        plans.size shouldBe 12
-        plans shouldBe plan2check
+        plans.size shouldBe 24
         println(plans)
     }
 

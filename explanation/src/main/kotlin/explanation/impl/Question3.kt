@@ -19,12 +19,6 @@ class Question3(
     inState: State? = null,
     val focus2: Operator
 ) : Question, AbstractQuestion() {
-    // se mi passano uno stato in cui vorrebbero che rimuovessi l'azione bella,
-    // se no assumo come stato di default quello iniziale.
-    // non so quanto wquesta assunzione sia safe;
-    // l'ho tenuta più per compatibilità con il paper che altro.
-    // NB Il paper lo stato non se lo faceva dare e usava quello iniziale
-    // (se non erro).
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,
@@ -37,7 +31,7 @@ class Question3(
     }
 
     // A. TODO( estendi a considerare tutti gli stati possibili)
-    private val newState = newProblem.initialState.apply(focus).first()
+    private val newState = newProblem.initialState.apply(focus2).first()
     override var hDomain = buildHdomain()
 
     override fun buildHdomain(): Domain = Domain.of(

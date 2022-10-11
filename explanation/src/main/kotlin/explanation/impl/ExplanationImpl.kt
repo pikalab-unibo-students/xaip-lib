@@ -75,7 +75,7 @@ data class ExplanationImpl(
         when (question){
             is Question3 -> {
                 val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
-                novelPlan = Plan.of(operatorsToKeep.also { it.add(question.focus) }.also { it.addAll(novelPlan.operators) })
+                novelPlan = Plan.of(operatorsToKeep.also { it.add(question.focus2) }.also { it.addAll(novelPlan.operators) })
             }
             is Question1, is Question2 -> {
                 val operator = retrieveOperator()

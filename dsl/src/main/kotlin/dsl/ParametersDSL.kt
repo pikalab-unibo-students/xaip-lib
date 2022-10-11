@@ -12,7 +12,9 @@ class ParametersDSL(
     private var variableProvider: VariableProvider,
     private val typeProvider: TypeProvider
 ) {
-
+    /**
+     * @property parameters: map that associate each [Variable] to the corresponding [Type].
+     */
     val parameters: MutableMap<Variable, Type> = mutableMapOf()
 
     /**

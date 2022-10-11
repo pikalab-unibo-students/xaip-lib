@@ -10,10 +10,22 @@ import dsl.provider.TypeProvider
 
 /**
  * Class representing a [Problem] in the DSL.
- */
+ * @property domain: [Domain] created.
+*/
 class ProblemDSL(val domain: Domain) {
+    /**
+     * @property objects: represents the objects created.
+     */
     var objects: ObjectSet = ObjectSet.of(emptyMap())
+
+    /**
+     * @property states: represents the inital [State] .
+     */
     var state: State = State.of(emptySet())
+
+    /**
+     * @property goal: represents the [Goal].
+     */
     var goal: Goal = FluentBasedGoal.of()
 
     private var predicateProvider = PredicateProvider.of(domain.predicates)

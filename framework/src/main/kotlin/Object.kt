@@ -8,6 +8,9 @@ import it.unibo.tuprolog.core.Scope
  * An [Object] represents the entities that can appear in the [Problem].
  */
 interface Object : Value {
+    /**
+     * @property representation: string representing the name of the object.
+     */
     val representation: String
 
     override fun apply(substitution: VariableAssignment): Object

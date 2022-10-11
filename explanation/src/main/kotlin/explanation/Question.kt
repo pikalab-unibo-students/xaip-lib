@@ -14,19 +14,33 @@ import Problem
  * @property focusOn: is the index of the [Operator] the user wants to remove from the plan.
  * */
 interface Question {
+    /**
+     *
+     */
     val problem: Problem
+
+    /**
+     *
+     */
     val plan: Plan
+
+    /**
+     *
+     */
     val focus: Operator
+
+    /**
+     *
+     */
     val focusOn: Int
 
     /**
      * Method to create a new [Domain] according to the [Question] the user is asking.
      */
-    fun buildHdomain(): Domain
+    fun buildHypotheticalDomain(): Domain
 
     /**
      * Method to create a new [Problem] according to the [Question] the user is asking.
      */
-    fun buildHproblem(): Problem
-
+    fun buildHypotheticalProblem(): Problem
 }

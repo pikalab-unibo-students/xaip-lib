@@ -2,11 +2,16 @@ import impl.TypeImpl
 
 /**
  * Generic entity for the objects' types.
- * @property name: [Type]'s name.
- * @property superType: supertype of the current [Type], if it exists.
  */
 interface Type {
+    /**
+     * @property name: [Type]'s name.
+     */
     val name: String
+
+    /**
+     * @property superType: supertype of the current [Type], if it exists.
+     */
     val superType: Type?
 
     companion object {

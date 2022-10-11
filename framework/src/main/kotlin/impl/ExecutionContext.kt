@@ -37,7 +37,7 @@ internal data class ExecutionContext(
         }
     }
 
-    private fun Iterable<Operator>.`actions whose effects match head`(head: Effect) =
+    private fun Iterable<Operator>.actionsWhoseEffectsMatchHead(head: Effect) =
         map { it.refresh() }.filter { action ->
             action.positiveEffects.any { effect ->
                 effect.match(head)
@@ -122,7 +122,7 @@ internal data class ExecutionContext(
     ): Boolean {
         val h = Effect.of(head)
         val actionsMatched = actions.map { Operator.of(it) }
-            .`actions whose effects match head`(h)
+            .actionsWhoseEffectsMatchHead(h)
             .toMutableList()
 
         if (actionsMatched.isEmpty()) return backtrackOrFail()
@@ -157,6 +157,7 @@ internal data class ExecutionContext(
         }
         return goal.targets.size == indice
     }
+
     override fun toString(): String =
         """${ExecutionContext::class.simpleName}(
             |  ${ExecutionContext::currentState.name}=$currentState,

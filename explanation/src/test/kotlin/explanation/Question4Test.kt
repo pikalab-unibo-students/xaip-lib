@@ -1,16 +1,16 @@
 package explanation
 
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Problems
 import explanation.impl.Question4
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.BlockWorldDomain.Operators
-import domain.BlockWorldDomain.Problems
 
 class Question4Test : AnnotationSpec() {
-    val problem = Problems.armNotEmpty
-    val planPickBStackBA = Plan.of(listOf(Operators.pickB, Operators.stackBA))
-    val planPickB = Plan.of(listOf(Operators.pickB))
-    val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
+    private val problem = Problems.armNotEmpty
+    private val planPickBStackBA = Plan.of(listOf(Operators.pickB, Operators.stackBA))
+    private val planPickB = Plan.of(listOf(Operators.pickB))
+    private val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
 
     @Test
     fun `Test valid plan`() {

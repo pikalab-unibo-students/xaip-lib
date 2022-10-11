@@ -14,21 +14,21 @@ interface PredicateProvider {
      */
     fun findPredicate(name: String, arity: Int): Predicate?
     companion object {
-        /***
+        /**
          * Factory method for an [PredicateProvider] creation from a [DomainDSL].
          */
         fun of(
             domain: DomainDSL
         ): PredicateProvider = PredicateProviderImpl { domain.predicates }
 
-        /***
+        /**
          * Factory method for an [PredicateProvider] creation from a [Domain].
          */
         fun of(
             domain: Domain
         ): PredicateProvider = PredicateProviderImpl { domain.predicates }
 
-        /***
+        /**
          * Factory method for an [PredicateProvider] creation from a set of [Predicate]s.
          */
         fun of(

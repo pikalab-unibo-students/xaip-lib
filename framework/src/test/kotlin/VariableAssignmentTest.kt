@@ -1,7 +1,7 @@
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.Values
 import domain.BlockWorldDomain.VariableAssignments
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 
 class VariableAssignmentTest : AnnotationSpec() {
     @Test

@@ -10,13 +10,26 @@ import dsl.provider.VariableProvider
 
 /**
  * Class representing an [Axiom] in the DSL.
+ *
+ * @property typeProvider: instance of [TypeProvider].
  */
 class AxiomDSL(
     predicateProvider: PredicateProvider,
     val typeProvider: TypeProvider
 ) : dsl.AbstractFluentDSL(predicateProvider) {
+    /**
+     * @property parameters: map that associates each [Variable] to the corresponding [Type].
+     */
     var parameters: Map<Variable, Type> = mutableMapOf()
+
+    /**
+     * @property context: set of [Expression] that express what the [Axiom] states.
+     */
     lateinit var context: Expression
+
+    /**
+     * @property implies: set of [Expression] that express the consequences of the [Axiom].
+     */
     lateinit var implies: Expression
     private val variableProvider: VariableProvider = VariableProvider.of()
 

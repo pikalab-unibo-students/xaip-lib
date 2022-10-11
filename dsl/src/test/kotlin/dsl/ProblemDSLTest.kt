@@ -1,9 +1,9 @@
-package dsl // ktlint-disable filename
+package dsl
 
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.Planners
 import domain.BlockWorldDomain.Problems
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 
 /**
  * Test for DomainDSL cereation.
@@ -126,6 +126,7 @@ class ProblemDSLTest : AnnotationSpec() {
     fun test() {
         Planners.stripsPlanner.plan(Problems.stackAB)
     }
+
     @Test
     fun testPlanner() {
         Planners.stripsPlanner.plan(problemDSL).toSet().size shouldBe 1

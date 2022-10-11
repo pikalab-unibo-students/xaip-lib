@@ -5,10 +5,29 @@ import impl.FluentImpl
  * It states its truthiness/falseness.
  */
 interface Fluent : Applicable<Fluent>, Expression {
+    /**
+     * @property name: states the name of the fluent.
+     */
     val name: String
+
+    /**
+     * @property args: list representing the list of [Value] of the fluent.
+     */
     val args: List<Value>
+
+    /**
+     * @property instanceOf: states the predicate of the fluent.
+     */
     val instanceOf: Predicate
+
+    /**
+     * @property isNegated: [Boolean] field that states if the [Fluent] is negated.
+     */
     val isNegated: Boolean
+
+    /**
+     * @property isGround: [Boolean] field that states if the [Fluent] is ground.
+     */
     val isGround: Boolean
 
     /**

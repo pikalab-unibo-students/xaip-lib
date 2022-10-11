@@ -8,9 +8,24 @@ import impl.ProblemImpl
  * @property goal: objective of the [Problem].
  */
 interface Problem {
+    /**
+     * @property domain: [Domain] of the [Problem].
+     */
     val domain: Domain
+
+    /**
+     * @property objects: entities present in the [Problem].
+     */
     val objects: ObjectSet
+
+    /**
+     * @property initialState: starting state of the [Problem].
+     */
     val initialState: State
+
+    /**
+     * @property goal: objective of the [Problem].
+     */
     val goal: Goal
 
     companion object {

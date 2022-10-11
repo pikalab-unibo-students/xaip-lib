@@ -1,13 +1,13 @@
 package explanation
 
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Problems
 import explanation.impl.SimulatorImpl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.BlockWorldDomain.Fluents
-import domain.BlockWorldDomain.Problems
-import domain.BlockWorldDomain.Operators
 class SimulatorTest : AnnotationSpec() {
-    val problem = Problems.armNotEmpty
+    private val problem = Problems.armNotEmpty
 
     private val planPickB = Plan.of(listOf(Operators.pickB))
     private val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
@@ -38,5 +38,4 @@ class SimulatorTest : AnnotationSpec() {
             Fluents.clearB
         )
     }
-
 }

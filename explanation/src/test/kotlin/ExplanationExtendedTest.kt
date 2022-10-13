@@ -35,7 +35,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
 
     @Test
     fun `Test incorrect plan`() {
-        private val problem = Problems.armNotEmpty
+        val problem = Problems.armNotEmpty
         val planPickB = Plan.of(listOf(BlockWorldDomain.Operators.pickB))
         val planPickBstackBApickC = Plan.of(listOf(BlockWorldDomain.Operators.pickB, BlockWorldDomain.Operators.stackBA, BlockWorldDomain.Operators.pickC))
 

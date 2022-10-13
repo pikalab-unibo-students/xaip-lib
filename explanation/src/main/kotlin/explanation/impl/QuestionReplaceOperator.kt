@@ -1,6 +1,7 @@
 package explanation.impl
 
 import Domain
+import Fluent
 import Operator
 import Plan
 import Predicate
@@ -21,6 +22,9 @@ class QuestionReplaceOperator(
     val focus2: Operator
 ) : BaseQuestion() {
     override val newPredicate: Predicate by lazy { Predicate.of("") }
+    override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }
+    override val newFluent: Fluent by lazy { Fluent.of(newPredicate) }
+
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

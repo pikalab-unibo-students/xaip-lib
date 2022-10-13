@@ -24,12 +24,12 @@ abstract class BaseQuestion : Question {
     /**
      *
      */
-    open lateinit var newGroundFluent: Fluent
+    protected abstract val newGroundFluent: Fluent
 
     /**
      *
      */
-    open lateinit var newFluent: Fluent
+    protected abstract val newFluent: Fluent
 
     /**
      *

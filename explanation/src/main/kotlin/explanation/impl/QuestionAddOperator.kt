@@ -16,9 +16,9 @@ class QuestionAddOperator(
     override val focus: Operator,
     override val focusOn: Int
 ) : BaseQuestion() {
-    override val newPredicate by lazy { createNewPredicate(focus, "has_done_")}
-    override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
-    override var newFluent = createNewFluent(focus, newPredicate)
+    override val newPredicate by lazy { createNewPredicate(focus, "has_done_") }
+    override val newGroundFluent by lazy { createNewGroundFluent(focus, newPredicate) }
+    override val newFluent by lazy { createNewFluent(focus, newPredicate) }
     override var oldAction =
         findAction(focus, problem.domain.actions)
     override var newAction = createNewAction(oldAction, newFluent)

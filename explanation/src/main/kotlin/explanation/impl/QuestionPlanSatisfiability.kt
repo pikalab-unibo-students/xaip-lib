@@ -1,6 +1,7 @@
 package explanation.impl
 
 import Domain
+import Fluent
 import Operator
 import Plan
 import Predicate
@@ -20,6 +21,8 @@ class QuestionPlanSatisfiability(
     override val focusOn: Int
 ) : BaseQuestion() {
     override val newPredicate: Predicate by lazy { Predicate.of("") }
+    override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }
+    override val newFluent: Fluent by lazy { Fluent.of(newPredicate) }
     override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()

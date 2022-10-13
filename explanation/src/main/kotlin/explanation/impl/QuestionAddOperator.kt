@@ -26,5 +26,6 @@ class QuestionAddOperator(
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
-    override fun buildHypotheticalProblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null)
+    override fun buildHypotheticalProblem(): Sequence<Problem> =
+        sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null))
 }

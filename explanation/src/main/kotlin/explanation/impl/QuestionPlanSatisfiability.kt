@@ -29,5 +29,5 @@ class QuestionPlanSatisfiability(
     override val hDomain: Domain by lazy { Domain.of("", emptySet(), emptySet(), emptySet()) }
     override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
-    override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()
+    override fun buildHypotheticalProblem(): Sequence<Problem> = throw UnsupportedOperationException()
 }

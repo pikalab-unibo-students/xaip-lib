@@ -12,7 +12,7 @@ import State
 /**
  *
  */
-open class BaseQuestion {
+abstract class BaseQuestion {
     // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
     // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
     /**

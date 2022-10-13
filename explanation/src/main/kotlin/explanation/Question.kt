@@ -42,5 +42,5 @@ interface Question {
     /**
      * Method to create a new [Problem] according to the [Question] the user is asking.
      */
-    fun buildHypotheticalProblem(): Problem
+    fun buildHypotheticalProblem(): Sequence<Problem>
 }

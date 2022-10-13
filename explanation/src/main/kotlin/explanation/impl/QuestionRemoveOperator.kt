@@ -4,30 +4,30 @@ import Domain
 import Operator
 import Plan
 import Problem
-import explanation.Question
 
 /**
  * Why operator used rather not being used.
  * Forbid operator's usage in the plan
  */
-class Question2(
+class QuestionRemoveOperator(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int
-) : Question, AbstractQuestion() {
-    override var newPredicate = createNewPredicate(focus, "not_done_")
-    override var newFluent = createNewFluent(focus, newPredicate)
+) : BaseQuestion() {
+    override val newPredicate by lazy { createNewPredicate(focus, "not_done_") }
+    override val newFluent by lazy { createNewFluent(focus, newPredicate) }
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
 
-    override var oldAction =
+    override val oldAction by lazy {
         findAction(focus, problem.domain.actions)
+    }
 
-    override var newAction = createNewAction(oldAction, newFluent, true)
+    override val newAction by lazy { createNewAction(oldAction, newFluent, true) }
 
-    override var hDomain = buildHypotheticalDomain()
+    override val hDomain by lazy { buildHypotheticalDomain() }
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
-    override fun buildHypotheticalProblem(): Problem = buildHproblem(hDomain, problem, newGroundFluent, null, true)
+    override fun buildHypotheticalProblem(): Sequence<Problem> = sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null, true))
 }

@@ -8,42 +8,43 @@ import Operator
 import Predicate
 import Problem
 import State
+import explanation.Question
 
 /**
  *
  */
-open class AbstractQuestion {
+abstract class BaseQuestion : Question {
     // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
     // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
     /**
      *
      */
-    open lateinit var newPredicate: Predicate
+    protected abstract val newPredicate: Predicate
 
     /**
      *
      */
-    open lateinit var newGroundFluent: Fluent
+    protected abstract val newGroundFluent: Fluent
 
     /**
      *
      */
-    open lateinit var newFluent: Fluent
+    protected abstract val newFluent: Fluent
 
     /**
      *
      */
-    open lateinit var oldAction: Action
+    protected abstract val oldAction: Action
 
     /**
      *
      */
-    open lateinit var newAction: Action
+    protected abstract val newAction: Action
 
     /**
      *
      */
-    open lateinit var hDomain: Domain
+    protected abstract val hDomain: Domain
 
     /**
      *

@@ -3,6 +3,7 @@ package explanation.impl
 import Domain
 import Operator
 import Plan
+import Predicate
 import Problem
 
 /**
@@ -16,6 +17,7 @@ class QuestionPlanProposal(
     override val focus: Operator,
     override val focusOn: Int
 ) : BaseQuestion() {
+    override val newPredicate: Predicate by lazy { Predicate.of("") }
     override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()

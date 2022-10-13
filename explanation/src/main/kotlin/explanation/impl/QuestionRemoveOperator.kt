@@ -15,7 +15,7 @@ class QuestionRemoveOperator(
     override val focus: Operator,
     override val focusOn: Int
 ) : BaseQuestion() {
-    override var newPredicate = createNewPredicate(focus, "not_done_")
+    override val newPredicate by lazy { createNewPredicate(focus, "not_done_") }
     override var newFluent = createNewFluent(focus, newPredicate)
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
 

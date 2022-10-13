@@ -3,6 +3,7 @@ package explanation.impl
 import Domain
 import Operator
 import Plan
+import Predicate
 import Problem
 import State
 
@@ -19,6 +20,7 @@ class QuestionReplaceOperator(
     inState: State? = null,
     val focus2: Operator
 ) : BaseQuestion() {
+    override val newPredicate: Predicate by lazy { Predicate.of("") }
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

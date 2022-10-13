@@ -3,6 +3,7 @@ package explanation.impl
 import Domain
 import Operator
 import Plan
+import Predicate
 import Problem
 
 /**
@@ -15,7 +16,7 @@ class QuestionAddOperator(
     override val focus: Operator,
     override val focusOn: Int
 ) : BaseQuestion() {
-    override var newPredicate = createNewPredicate(focus, "has_done_")
+    override val newPredicate by lazy { createNewPredicate(focus, "has_done_")}
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
     override var newFluent = createNewFluent(focus, newPredicate)
     override var oldAction =

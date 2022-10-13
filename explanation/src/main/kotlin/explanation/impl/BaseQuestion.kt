@@ -19,7 +19,7 @@ abstract class BaseQuestion : Question {
     /**
      *
      */
-    open lateinit var newPredicate: Predicate
+    protected abstract val newPredicate: Predicate
 
     /**
      *

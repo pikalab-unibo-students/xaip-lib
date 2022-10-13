@@ -5,13 +5,13 @@ import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Planners.stripsPlanner
 import domain.BlockWorldDomain.Problems
-import explanation.impl.Question2
+import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 class Question2Test : AnnotationSpec() {
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
-        val q2 = Question2(
+        val q2 = QuestionRemoveOperator(
             Problems.armNotEmpty,
             Plan.of(listOf(pickA)),
             pickA,

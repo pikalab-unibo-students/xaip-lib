@@ -12,14 +12,14 @@ import explanation.Question
  * Operator substitution in a state.
  * @property focus2: [Operator] that must replace [focus] in the [plan].
  * */
-class Question3(
+class QuestionReplaceOperator(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int,
     inState: State? = null,
     val focus2: Operator
-) : Question, AbstractQuestion() {
+) : Question, BaseQuestion() {
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

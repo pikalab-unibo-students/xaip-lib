@@ -10,12 +10,12 @@ import explanation.Question
  * Why operator used rather not being used.
  * Forbid operator's usage in the plan
  */
-class Question2(
+class QuestionRemoveOperator(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int
-) : Question, AbstractQuestion() {
+) : Question, BaseQuestion() {
     override var newPredicate = createNewPredicate(focus, "not_done_")
     override var newFluent = createNewFluent(focus, newPredicate)
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)

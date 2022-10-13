@@ -10,12 +10,12 @@ import explanation.Question
  * Why operator not used.
  * Add operator to the plan.
  */
-class Question1(
+class QuestionAddOperator(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int
-) : Question, AbstractQuestion() {
+) : Question, BaseQuestion() {
     override var newPredicate = createNewPredicate(focus, "has_done_")
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
     override var newFluent = createNewFluent(focus, newPredicate)

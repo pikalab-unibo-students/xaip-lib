@@ -1,7 +1,6 @@
 package explanation.impl
 
 import Action
-import Fluent
 import FluentBasedGoal
 import Operator
 import Plan

@@ -3,18 +3,19 @@ package explanation.impl
 import Effect
 import Fluent
 import Operator
+import explanation.Explanation
 import explanation.Question
 import impl.res.FrameworkUtilities.then
 
-class ExplanationExtended(private val question: Question) {
-    val minimalPlan = Planner.strips().plan(question.problem).first()
+class ExplanationExtended(val explanation: Explanation) {
+    val minimalPlan = Planner.strips().plan(explanation.question.problem).first()
     var problemSolvable = isProblemSolvable()
     var planLenghtAcceptable = (isPlanLengthAcceptable() then isPlanLengthAcceptable()) ?: false
-    var operatorsMissing = minimalPlan.operators.filter { !question.plan.operators.contains(it) }
+    var operatorsMissing = minimalPlan.operators.filter { !explanation.question.plan.operators.contains(it) }
     var idempotentActionList = mutableMapOf<Operator, IdempotentOperator>()
 
     fun isPlanLengthAcceptable(): Boolean =
-        minimalPlan.operators.size >= question.plan.operators.size
+        minimalPlan.operators.size >= explanation.question.plan.operators.size
 
     fun isProblemSolvable(): Boolean =
         minimalPlan.operators.isNotEmpty()
@@ -35,13 +36,13 @@ class ExplanationExtended(private val question: Question) {
         var occurence2 = 0
     }
 
-    fun idempotentList() {
+    fun idempotentList(): MutableMap<Operator, IdempotentOperator> {
         // inizializzola listo con gli operatori che devo avere perché il piano possa essere ritenuto valido
         for (operator in minimalPlan.operators) {
             idempotentActionList[operator] = IdempotentOperator()
         }
         // vado a controllare gli operatori nel piano che mi passa l'utonto
-        for (operatorInUserPlan in question.plan.operators) {
+        for (operatorInUserPlan in explanation.novelPlan.operators) {
             // se l'operator non c'è allora devo controllare se è idempotente rispetto a qualche operator
             // essenziale per l'accettazione del piano
             if (!idempotentActionList.contains(operatorInUserPlan)) {
@@ -53,10 +54,11 @@ class ExplanationExtended(private val question: Question) {
                     }
                 }
             } // se invece contiene l'elemento aggiorno il contatore
-            else idempotentActionList[operatorInUserPlan]?.occurence1?.inc()
+            idempotentActionList[operatorInUserPlan]?.occurence1 = idempotentActionList[operatorInUserPlan]?.occurence1!! + 1
         }
         // filtro mantenendo solo gli operatori che mi invalidano il piano
         idempotentActionList = idempotentActionList
             .filter { it.value.occurence1 <= it.value.occurence2 } as MutableMap<Operator, IdempotentOperator>
+        return idempotentActionList
     }
 }

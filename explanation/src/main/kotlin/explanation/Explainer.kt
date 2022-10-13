@@ -1,6 +1,5 @@
 package explanation
 
-import Plan
 import Planner
 
 // Problem explainer si aspetta che il planner abbia un metodo plan, devo recuperare comunque un piano (quindi nel nostro caso mi tocca chiamare la first

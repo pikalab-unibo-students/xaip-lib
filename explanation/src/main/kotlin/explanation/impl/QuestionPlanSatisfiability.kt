@@ -4,7 +4,6 @@ import Domain
 import Operator
 import Plan
 import Problem
-import explanation.Question
 
 /**
  * Why is plan not good (solvable).
@@ -18,8 +17,7 @@ class QuestionPlanSatisfiability(
     override val focus: Operator,
     val alternativePlan: Plan,
     override val focusOn: Int
-) :
-    Question, BaseQuestion() {
+) : BaseQuestion() {
     override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()

@@ -4,7 +4,6 @@ import Domain
 import Operator
 import Plan
 import Problem
-import explanation.Question
 
 /**
  * Entity representing the question: "Why not this plan instead?"; * aka a proposal for a new plan.
@@ -16,7 +15,7 @@ class QuestionPlanProposal(
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int
-) : Question, BaseQuestion() {
+) : BaseQuestion() {
     override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
 
     override fun buildHypotheticalProblem(): Problem = throw UnsupportedOperationException()

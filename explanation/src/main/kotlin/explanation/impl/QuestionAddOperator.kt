@@ -4,7 +4,6 @@ import Domain
 import Operator
 import Plan
 import Problem
-import explanation.Question
 
 /**
  * Why operator not used.
@@ -15,7 +14,7 @@ class QuestionAddOperator(
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int
-) : Question, BaseQuestion() {
+) : BaseQuestion() {
     override var newPredicate = createNewPredicate(focus, "has_done_")
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
     override var newFluent = createNewFluent(focus, newPredicate)

@@ -8,11 +8,12 @@ import Operator
 import Predicate
 import Problem
 import State
+import explanation.Question
 
 /**
  *
  */
-abstract class BaseQuestion {
+abstract class BaseQuestion : Question {
     // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
     // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
     /**

@@ -5,7 +5,6 @@ import Operator
 import Plan
 import Problem
 import State
-import explanation.Question
 
 /**
  * Why operator a instead of b in state C.
@@ -19,7 +18,7 @@ class QuestionReplaceOperator(
     override val focusOn: Int,
     inState: State? = null,
     val focus2: Operator
-) : Question, BaseQuestion() {
+) : BaseQuestion() {
     private val newProblem = if (inState != null) {
         Problem.of(
             domain = problem.domain,

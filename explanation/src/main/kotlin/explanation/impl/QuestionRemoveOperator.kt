@@ -19,12 +19,13 @@ class QuestionRemoveOperator(
     override val newFluent by lazy { createNewFluent(focus, newPredicate) }
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)
 
-    override var oldAction =
+    override val oldAction by lazy {
         findAction(focus, problem.domain.actions)
+    }
 
-    override var newAction = createNewAction(oldAction, newFluent, true)
+    override val newAction by lazy { createNewAction(oldAction, newFluent, true) }
 
-    override var hDomain = buildHypotheticalDomain()
+    override val hDomain by lazy { buildHypotheticalDomain() }
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 

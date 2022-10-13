@@ -3,7 +3,6 @@ package explanation.impl
 import Domain
 import Operator
 import Plan
-import Predicate
 import Problem
 
 /**
@@ -19,10 +18,11 @@ class QuestionAddOperator(
     override val newPredicate by lazy { createNewPredicate(focus, "has_done_") }
     override val newGroundFluent by lazy { createNewGroundFluent(focus, newPredicate) }
     override val newFluent by lazy { createNewFluent(focus, newPredicate) }
-    override var oldAction =
+    override val oldAction by lazy {
         findAction(focus, problem.domain.actions)
-    override var newAction = createNewAction(oldAction, newFluent)
-    override var hDomain = buildHypotheticalDomain()
+    }
+    override val newAction by lazy { createNewAction(oldAction, newFluent) }
+    override val hDomain by lazy { buildHypotheticalDomain() }
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 

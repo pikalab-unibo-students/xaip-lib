@@ -34,17 +34,17 @@ abstract class BaseQuestion : Question {
     /**
      *
      */
-    open lateinit var oldAction: Action
+    protected abstract val oldAction: Action
 
     /**
      *
      */
-    open lateinit var newAction: Action
+    protected abstract val newAction: Action
 
     /**
      *
      */
-    open lateinit var hDomain: Domain
+    protected abstract val hDomain: Domain
 
     /**
      *

@@ -1,5 +1,6 @@
 package explanation.impl
 
+import Action
 import Domain
 import Fluent
 import Operator
@@ -24,16 +25,20 @@ class QuestionReplaceOperator(
     override val newPredicate: Predicate by lazy { Predicate.of("") }
     override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }
     override val newFluent: Fluent by lazy { Fluent.of(newPredicate) }
+    override val oldAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
+    override val newAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
 
-    private val newProblem = if (inState != null) {
-        Problem.of(
-            domain = problem.domain,
-            objects = problem.objects,
-            initialState = inState,
-            goal = problem.goal
-        )
-    } else {
-        problem
+    private val newProblem by lazy {
+        if (inState != null) {
+            Problem.of(
+                domain = problem.domain,
+                objects = problem.objects,
+                initialState = inState,
+                goal = problem.goal
+            )
+        } else {
+            problem
+        }
     }
 
     // A. TODO( estendi a considerare tutti gli stati possibili)

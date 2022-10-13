@@ -11,7 +11,5 @@ class Explainer(val planner: Planner) {
     fun explain(question: Question) =
         Explanation.of(question.plan, planner.plan(question.problem).first(), question).toString()
 
-    fun minimalPlanSelector(f: Planner.() -> Plan) {
-
-    }
+    // fun minimalPlanSelector(f: Planner.() -> Plan) {}
 }

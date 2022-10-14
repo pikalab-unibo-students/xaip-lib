@@ -1,3 +1,6 @@
+package explanation
+
+import Plan
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
@@ -36,8 +39,9 @@ class ExplanationExtendedTest : AnnotationSpec() {
     @Test
     fun `Test incorrect plan`() {
         val problem = Problems.armNotEmpty
-        val planPickB = Plan.of(listOf(BlockWorldDomain.Operators.pickB))
-        val planPickBstackBApickC = Plan.of(listOf(BlockWorldDomain.Operators.pickB, BlockWorldDomain.Operators.stackBA, BlockWorldDomain.Operators.pickC))
+        val planPickB = Plan.of(listOf(pickB))
+        val planPickBstackBApickC =
+            Plan.of(listOf(pickB, BlockWorldDomain.Operators.stackBA, BlockWorldDomain.Operators.pickC))
 
         val q4 = QuestionPlanProposal(problem, planPickBstackBApickC, planPickB, planPickB.operators.first(), 0)
 

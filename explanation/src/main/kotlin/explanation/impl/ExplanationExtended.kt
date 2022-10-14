@@ -4,18 +4,17 @@ import Effect
 import Fluent
 import Operator
 import explanation.Explanation
-import explanation.Question
 import impl.res.FrameworkUtilities.then
 
 class ExplanationExtended(val explanation: Explanation) {
-    val minimalPlan = Planner.strips().plan(explanation.question.problem).first()
-    var problemSolvable = isProblemSolvable()
-    var planLenghtAcceptable = (isPlanLengthAcceptable() then isPlanLengthAcceptable()) ?: false
-    var operatorsMissing = minimalPlan.operators.filter { !explanation.question.plan.operators.contains(it) }
+    val minimalPlan by lazy { Planner.strips().plan(explanation.question.problem).first() }
+    val problemSolvable by lazy { isProblemSolvable() }
+    val planLenghtAcceptable by lazy { (isPlanLengthAcceptable() then isPlanLengthAcceptable()) ?: false }
+    val operatorsMissing by lazy { minimalPlan.operators.filter { !explanation.question.plan.operators.contains(it) } }
     var idempotentActionList = mutableMapOf<Operator, IdempotentOperator>()
 
     fun isPlanLengthAcceptable(): Boolean =
-        minimalPlan.operators.size >= explanation.question.plan.operators.size
+        minimalPlan.operators.size < explanation.novelPlan.operators.size
 
     fun isProblemSolvable(): Boolean =
         minimalPlan.operators.isNotEmpty()
@@ -30,11 +29,11 @@ class ExplanationExtended(val explanation: Explanation) {
         operator2.preconditions.conditionMatch(operator1.effects) &&
         operator1.args.all { operator2.args.contains(it) }
 
-    class IdempotentOperator {
-        var occurence1 = 0
-        var operator2: Operator? = null
-        var occurence2 = 0
-    }
+    class IdempotentOperator(
+        var occurence1: Int = 0,
+        var operator2: Operator? = null,
+        var occurence2: Int = 0
+    )
 
     fun idempotentList(): MutableMap<Operator, IdempotentOperator> {
         // inizializzola listo con gli operatori che devo avere perché il piano possa essere ritenuto valido

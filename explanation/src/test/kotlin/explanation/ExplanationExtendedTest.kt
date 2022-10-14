@@ -4,12 +4,14 @@ import Plan
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
+import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownB
 import domain.BlockWorldDomain.Operators.stackAB
+import domain.BlockWorldDomain.Operators.stackBA
 import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Problems
-import explanation.Explanation
 import explanation.impl.ExplanationExtended
+import explanation.impl.ExplanationExtended.IdempotentOperator
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec
@@ -39,18 +41,21 @@ class ExplanationExtendedTest : AnnotationSpec() {
     @Test
     fun `Test incorrect plan`() {
         val problem = Problems.armNotEmpty
-        val planPickB = Plan.of(listOf(pickB))
+        val planPickB = Plan.of(listOf(pickB, putdownB))
         val planPickBstackBApickC =
-            Plan.of(listOf(pickB, BlockWorldDomain.Operators.stackBA, BlockWorldDomain.Operators.pickC))
+            Plan.of(listOf(pickB, stackBA, pickC))
 
         val q4 = QuestionPlanProposal(problem, planPickBstackBApickC, planPickB, planPickB.operators.first(), 0)
 
         val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
 
         val explanationExtended = ExplanationExtended(explanation)
+        val minPlan = explanationExtended.minimalPlan
+        val nov = explanationExtended.explanation.novelPlan
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
         explanationExtended.isIdempotentActions(pickB, putdownB) shouldBe true
-        explanationExtended.idempotentList() shouldBe emptyMap()
+        explanationExtended.idempotentList() shouldBe
+            mutableMapOf(pickB to IdempotentOperator(1, putdownB, 1))
     }
 }

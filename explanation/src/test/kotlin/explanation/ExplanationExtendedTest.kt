@@ -18,6 +18,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class ExplanationExtendedTest : AnnotationSpec() {
+    @Ignore
     @Test
     fun `Test correct plan`() {
         val q1 = QuestionAddOperator(
@@ -37,7 +38,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         explanationExtended.isIdempotentActions(stackAB, unstackAB) shouldBe true
         explanationExtended.idempotentList() shouldBe emptyMap()
     }
-
+    @Ignore
     @Test
     fun `Test incorrect plan`() {
         val problem = Problems.armNotEmpty

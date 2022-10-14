@@ -7,7 +7,6 @@ import Value
 import VariableAssignment
 import impl.res.toPddl
 import impl.res.toTerm
-import it.unibo.tuprolog.core.Scope
 import it.unibo.tuprolog.unify.Unificator
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
@@ -44,7 +43,7 @@ internal data class FluentImpl(
     override fun apply(substitution: VariableAssignment): Fluent =
         copy(args = args.map { it.apply(substitution) })
 
-    override fun refresh(scope: Scope): Fluent =
+    override fun refresh(scope: Context): Fluent =
         copy(args = args.map { it.refresh(scope) })
 
     override fun toString(): String = (if (isNegated) "~" else "") + this.toTerm().toString()

@@ -1,5 +1,5 @@
+import impl.Context
 import impl.VariableImpl
-import it.unibo.tuprolog.core.Scope
 /**
  * Entity responsible for the parameterisation of an [Action].
  * Variables that stand for terms of the [Problem] instance; they are instantiated to [Object] from
@@ -14,7 +14,7 @@ interface Variable : Value {
     /**
      * Method used to generate new variables and avoid spurious substitutions.
      */
-    override fun refresh(scope: Scope): Variable
+    override fun refresh(scope: Context): Variable
 
     companion object {
         /**

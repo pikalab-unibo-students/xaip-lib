@@ -1,4 +1,5 @@
-import it.unibo.tuprolog.core.Scope
+import impl.Context
+
 /**
  * Generic type for an applicable entity.
  */
@@ -12,5 +13,5 @@ interface Applicable<Self : Applicable<Self>> {
      * Method responsible for the refreshing of variables.
      * Mainly used to avoid spurrious substitutions.
      */
-    fun refresh(scope: Scope = Scope.empty()): Self
+    fun refresh(scope: Context = Context.empty()): Self
 }

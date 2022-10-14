@@ -7,8 +7,6 @@ import Type
 import Value
 import Variable
 import VariableAssignment
-import it.unibo.tuprolog.core.Scope
-
 internal data class OperatorImpl(
     override val name: String,
     override val parameters: Map<Variable, Type>,
@@ -35,7 +33,7 @@ internal data class OperatorImpl(
      * Method responsible for the refreshing of variables.
      * Mainly used to avoid spurious substitutions.
      */
-    override fun refresh(scope: Scope): Operator {
+    override fun refresh(scope: Context): Operator {
         return copy(
             // parameters = parameters.mapKeys { (k,_)-> k.refresh(scope) },
             preconditions = preconditions.map { it.refresh(scope) }.toSet(),

@@ -6,13 +6,11 @@ import Predicate
 import Value
 import Variable
 import VariableAssignment
+import impl.*
 import impl.ObjectImpl
-import impl.VariableAssignmentImpl
 import impl.VariableImpl
-import it.unibo.tuprolog.core.Atom
-import it.unibo.tuprolog.core.Constant
-import it.unibo.tuprolog.core.Struct
-import it.unibo.tuprolog.core.Term
+import impl.res.toTerm
+import it.unibo.tuprolog.core.*
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 import it.unibo.tuprolog.core.Var as LogicVar
 
@@ -51,6 +49,10 @@ internal fun Struct.toFluent(instanceOf: Predicate): Fluent =
 
 internal fun Variable.toTerm(): LogicVar =
     (this as? VariableImpl)?.delegate ?: error("Cannot convert ${this::class} into ${LogicVar::class}")
+
+internal fun Context.toScope(): Scope =
+    (this as? ContextImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Scope::class}")
+
 
 internal fun Object.toTerm(): Constant =
     (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Constant::class}")

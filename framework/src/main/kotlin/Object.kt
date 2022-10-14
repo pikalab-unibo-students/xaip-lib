@@ -1,8 +1,8 @@
+import impl.Context
 import impl.ObjectImpl
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Integer
 import it.unibo.tuprolog.core.Real
-import it.unibo.tuprolog.core.Scope
 
 /**
  * An [Object] represents the entities that can appear in the [Problem].
@@ -15,7 +15,7 @@ interface Object : Value {
 
     override fun apply(substitution: VariableAssignment): Object
 
-    override fun refresh(scope: Scope): Object
+    override fun refresh(scope: Context): Object
 
     companion object {
         /**

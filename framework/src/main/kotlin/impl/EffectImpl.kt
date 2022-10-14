@@ -13,7 +13,7 @@ internal data class EffectImpl(
     override fun apply(substitution: VariableAssignment): Effect =
         copy(fluent = fluent.apply(substitution))
 
-    override fun refresh(scope: Scope): Effect {
+    override fun refresh(scope: Context): Effect {
         return copy(fluent = fluent.refresh(scope))
     }
 }

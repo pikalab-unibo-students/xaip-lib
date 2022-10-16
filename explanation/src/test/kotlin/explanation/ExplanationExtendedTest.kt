@@ -11,7 +11,6 @@ import domain.BlockWorldDomain.Operators.stackBA
 import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Problems
 import explanation.impl.ExplanationExtended
-import explanation.impl.ExplanationExtended.IdempotentOperator
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec

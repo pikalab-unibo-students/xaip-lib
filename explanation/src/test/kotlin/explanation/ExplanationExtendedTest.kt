@@ -13,6 +13,7 @@ import domain.BlockWorldDomain.Problems
 import explanation.impl.ExplanationExtended
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
+import explanation.utils.isIdempotentOperators
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
@@ -33,7 +34,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
-        explanationExtended.isIdempotentOperators(stackAB, unstackAB) shouldBe true
+        stackAB.isIdempotentOperators(unstackAB) shouldBe true
         explanationExtended.idempotentList().contains(pickA) shouldBe true
     }
 
@@ -51,7 +52,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
-        explanationExtended.isIdempotentOperators(pickB, putdownB) shouldBe true
+        pickB.isIdempotentOperators(putdownB) shouldBe true
         explanationExtended.idempotentList().contains(pickB)
         explanationExtended.idempotentList()[pickB]!!.occurence1 shouldBe 1
         explanationExtended.idempotentList()[pickB]!!.operator2 shouldBe putdownB

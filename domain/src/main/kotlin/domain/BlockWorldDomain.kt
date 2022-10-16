@@ -1,21 +1,10 @@
 package domain
 
-import Action
-import Axiom
-import Domain
-import Effect
-import Fluent
-import FluentBasedGoal
-import Object
-import ObjectSet
-import Plan
-import Planner
-import Predicate
-import Problem
-import State
-import Type
-import Variable
-import VariableAssignment
+import core.Fluent
+import core.Object
+import core.ObjectSet
+import core.Plan
+import core.*
 import dsl.domain
 import dsl.problem
 

@@ -1,10 +1,11 @@
 package explanation.impl
 
-import Effect
-import Fluent
-import Operator
+import core.Effect
+import core.Fluent
+import core.Operator
+import core.Planner
 import explanation.Explanation
-import impl.res.FrameworkUtilities.then
+import core.impl.res.FrameworkUtilities.then
 
 class ExplanationExtended(val explanation: Explanation) {
     val minimalPlan by lazy { Planner.strips().plan(explanation.question.problem).first() }

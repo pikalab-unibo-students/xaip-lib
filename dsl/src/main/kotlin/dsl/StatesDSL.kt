@@ -1,7 +1,7 @@
 package dsl
 
-import Fluent
-import State
+import core.Fluent
+import core.State
 import dsl.provider.PredicateProvider
 
 /**

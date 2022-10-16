@@ -1,10 +1,11 @@
 package dsl
 
-import Domain
-import Goal
-import ObjectSet
-import Problem
-import State
+import core.Domain
+import core.FluentBasedGoal
+import core.Goal
+import core.ObjectSet
+import core.Problem
+import core.State
 import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 

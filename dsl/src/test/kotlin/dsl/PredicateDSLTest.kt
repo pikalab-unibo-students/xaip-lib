@@ -1,5 +1,6 @@
 package dsl
 
+import core.Predicate
 import domain.BlockWorldDomain.Domains.blockWorld
 import domain.BlockWorldDomain.Predicates
 import io.kotest.core.spec.style.AnnotationSpec

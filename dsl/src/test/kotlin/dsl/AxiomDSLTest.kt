@@ -1,8 +1,8 @@
 package dsl
 
-import BinaryExpression
-import Fluent
-import UnaryExpression
+import core.BinaryExpression
+import core.Fluent
+import core.UnaryExpression
 import domain.BlockWorldDomain.DomainsDSL
 import domain.BlockWorldDomain.Predicates
 import domain.BlockWorldDomain.Types

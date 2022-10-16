@@ -1,17 +1,17 @@
 package explanation.impl
 
-import Action
-import Domain
-import Fluent
-import Operator
-import Plan
-import Predicate
-import Problem
-import State
+import core.Action
+import core.Domain
+import core.Fluent
+import core.Operator
+import core.Plan
+import core.Predicate
+import core.Problem
+import core.State
 
 /**
  * Why operator a instead of b in state C.
- * Operator substitution in a state.
+ * core.Operator substitution in a state.
  * @property insteadOf: [Operator] that must replace [focus] in the [plan].
  * */
 class QuestionReplaceOperator(

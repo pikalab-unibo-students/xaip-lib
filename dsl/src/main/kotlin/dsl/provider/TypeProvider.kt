@@ -1,6 +1,6 @@
 package dsl.provider
 
-import Type
+import core.Type
 import dsl.DomainDSL
 
 /**

@@ -1,12 +1,12 @@
 package explanation.impl
 
-import Action
-import Domain
-import Fluent
-import Operator
-import Plan
-import Predicate
-import Problem
+import core.Action
+import core.Domain
+import core.Fluent
+import core.Operator
+import core.Plan
+import core.Predicate
+import core.Problem
 
 /**
  * Entity representing the question: "Why not this plan instead?"; * aka a proposal for a new plan.

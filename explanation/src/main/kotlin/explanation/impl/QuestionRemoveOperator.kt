@@ -1,9 +1,9 @@
 package explanation.impl
 
-import Domain
-import Operator
-import Plan
-import Problem
+import core.Domain
+import core.Operator
+import core.Plan
+import core.Problem
 
 /**
  * Why operator used rather not being used.

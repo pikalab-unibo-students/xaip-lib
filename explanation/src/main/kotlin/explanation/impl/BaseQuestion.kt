@@ -1,13 +1,10 @@
 package explanation.impl
 
-import Action
-import Domain
-import Fluent
-import FluentBasedGoal
-import Operator
-import Predicate
-import Problem
-import State
+import core.Action
+import core.Fluent
+import core.Operator
+import core.Problem
+import core.*
 import explanation.Question
 
 /**

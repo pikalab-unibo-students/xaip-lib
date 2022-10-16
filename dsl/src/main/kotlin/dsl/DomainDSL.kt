@@ -1,10 +1,10 @@
 package dsl
 
-import Action
-import Axiom
-import Domain
-import Predicate
-import Type
+import core.Action
+import core.Axiom
+import core.Domain
+import core.Predicate
+import core.Type
 import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 

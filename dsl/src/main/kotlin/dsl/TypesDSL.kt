@@ -1,6 +1,6 @@
 package dsl
 
-import Type
+import core.Type
 
 /**
  * Class representing a [Type] in the DSL.

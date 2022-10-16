@@ -1,6 +1,8 @@
 package domain
 
-import Object
+import core.Object
+import core.*
+
 object GraphDomain {
     object Actions {
         val move = Action.of(

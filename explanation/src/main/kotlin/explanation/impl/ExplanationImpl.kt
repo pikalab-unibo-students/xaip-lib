@@ -1,14 +1,15 @@
 package explanation.impl
 
-import Action
-import FluentBasedGoal
-import Operator
-import Plan
+import core.Action
+import core.FluentBasedGoal
+import core.Operator
+import core.Plan
+import core.VariableAssignment
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
-import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
-import impl.res.FrameworkUtilities.then
+import core.impl.res.FrameworkUtilities.finalStateComplaintWithGoal
+import core.impl.res.FrameworkUtilities.then
 
 /**
  *

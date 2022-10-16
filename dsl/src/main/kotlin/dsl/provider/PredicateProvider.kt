@@ -1,7 +1,7 @@
 package dsl.provider
 
-import Domain
-import Predicate
+import core.Domain
+import core.Predicate
 import dsl.DomainDSL
 
 /**

@@ -1,7 +1,7 @@
 package explanation
 
-import Operator
-import Plan
+import core.Operator
+import core.Plan
 import explanation.impl.ExplanationImpl
 
 /**

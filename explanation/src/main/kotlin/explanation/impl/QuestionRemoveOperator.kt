@@ -4,6 +4,7 @@ import Domain
 import Operator
 import Plan
 import Problem
+import explanation.utils.findAction
 
 /**
  * Why operator used rather not being used.
@@ -29,5 +30,6 @@ class QuestionRemoveOperator(
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
-    override fun buildHypotheticalProblem(): Sequence<Problem> = sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null, true))
+    override fun buildHypotheticalProblem(): Sequence<Problem> =
+        sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null, true))
 }

@@ -35,7 +35,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
         explanationExtended.isIdempotentActions(stackAB, unstackAB) shouldBe true
-        explanationExtended.idempotentList() shouldBe emptyMap()
+        explanationExtended.idempotentList().contains(pickA) shouldBe true
     }
 
     @Test
@@ -45,17 +45,17 @@ class ExplanationExtendedTest : AnnotationSpec() {
         val planPickBstackBApickC =
             Plan.of(listOf(pickB, stackBA, pickC))
 
-        val q4 = QuestionPlanProposal(problem, planPickBstackBApickC, planPickB, planPickB.operators.first(), 0)
+        val q4 = QuestionPlanProposal(problem, planPickB, planPickBstackBApickC, planPickB.operators.first(), 0)
 
         val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
 
         val explanationExtended = ExplanationExtended(explanation)
-        val minPlan = explanationExtended.minimalPlan
-        val nov = explanationExtended.explanation.novelPlan
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
         explanationExtended.isIdempotentActions(pickB, putdownB) shouldBe true
-        explanationExtended.idempotentList() shouldBe
-            mutableMapOf(pickB to IdempotentOperator(1, putdownB, 1))
+        explanationExtended.idempotentList().contains(pickB)
+        explanationExtended.idempotentList()[pickB]!!.occurence1 shouldBe 1
+        explanationExtended.idempotentList()[pickB]!!.operator2 shouldBe putdownB
+        explanationExtended.idempotentList()[pickB]!!.occurence2 shouldBe 1
     }
 }

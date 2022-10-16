@@ -33,7 +33,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
-        explanationExtended.isIdempotentActions(stackAB, unstackAB) shouldBe true
+        explanationExtended.isIdempotentOperators(stackAB, unstackAB) shouldBe true
         explanationExtended.idempotentList().contains(pickA) shouldBe true
     }
 
@@ -51,7 +51,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true
         explanationExtended.isProblemSolvable() shouldBe true
-        explanationExtended.isIdempotentActions(pickB, putdownB) shouldBe true
+        explanationExtended.isIdempotentOperators(pickB, putdownB) shouldBe true
         explanationExtended.idempotentList().contains(pickB)
         explanationExtended.idempotentList()[pickB]!!.occurence1 shouldBe 1
         explanationExtended.idempotentList()[pickB]!!.operator2 shouldBe putdownB

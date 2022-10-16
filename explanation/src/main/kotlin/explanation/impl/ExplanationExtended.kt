@@ -1,10 +1,9 @@
 package explanation.impl
 
-import Action
-import Effect
-import Fluent
 import Operator
 import explanation.Explanation
+import explanation.utils.findAction
+import explanation.utils.isIdempotentOperators
 import impl.res.FrameworkUtilities.then
 
 /**
@@ -36,20 +35,6 @@ class ExplanationExtended(val explanation: Explanation) {
     fun isProblemSolvable(): Boolean =
         minimalPlan.operators.isNotEmpty()
 
-    private fun Set<Fluent>.conditionMatch(conditions: Set<Effect>) =
-        this.all { fluent1 ->
-            conditions.any { effect ->
-                effect.fluent.match(fluent1)
-            }
-        }
-
-    /**
-     * */
-    fun isIdempotentActions(operator1: Operator, operator2: Operator): Boolean =
-        operator1.preconditions.conditionMatch(operator2.effects) &&
-            operator2.preconditions.conditionMatch(operator1.effects) &&
-            operator1.args.all { operator2.args.contains(it) }
-
     /**
      * .
      * @property occurence1
@@ -61,12 +46,6 @@ class ExplanationExtended(val explanation: Explanation) {
         var operator2: Operator? = null,
         var occurence2: Int = 0
     )
-
-    /**
-     *
-     */
-    fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
-        actionList.first { it.name == inputOperator.name }
 
     /**
      * */
@@ -105,7 +84,7 @@ class ExplanationExtended(val explanation: Explanation) {
             // uno di quelle idempotenti rispetto a uno che lo è.
             if (!actionsRequired.contains(actionToEvaluate)) {
                 operatorsInPlanFiltered.map { operatorInList ->
-                    if (isIdempotentActions(operatorInList, operatorToEvaluate)) {
+                    if (operatorInList.isIdempotentOperators(operatorToEvaluate)) {
                         if (idempotentOperatorsOccurences.containsKey(operatorInList)) {
                             idempotentOperatorsOccurences[operatorInList]!!.occurence2++
                             // sta roba potrebbe essere migliorata evitando la sovrascrizione ad ogni giro

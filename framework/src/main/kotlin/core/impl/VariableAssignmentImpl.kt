@@ -7,7 +7,7 @@ import core.impl.res.toLogic
 import core.impl.res.toPddl
 import core.impl.res.toTerm
 import core.impl.res.toValue
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 
 /**

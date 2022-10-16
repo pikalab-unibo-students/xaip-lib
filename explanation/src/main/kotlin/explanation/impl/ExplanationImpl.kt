@@ -1,8 +1,8 @@
 package explanation.impl
 
 import core.* // ktlint-disable no-wildcard-imports
-import core.impl.res.FrameworkUtilities.finalStateComplaintWithGoal
-import core.impl.res.FrameworkUtilities.then
+import core.utility.finalStateComplaintWithGoal
+import core.utility.then
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator

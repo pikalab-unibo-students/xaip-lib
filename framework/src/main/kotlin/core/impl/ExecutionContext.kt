@@ -8,7 +8,7 @@ import core.FluentBasedGoal
 import core.Operator
 import core.State
 import core.VariableAssignment
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 internal data class ExecutionContext(
     var currentState: State,

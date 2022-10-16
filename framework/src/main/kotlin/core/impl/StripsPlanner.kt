@@ -8,7 +8,7 @@ import core.Plan
 import core.Planner
 import core.Problem
 import core.State
-import core.impl.res.FrameworkUtilities.finalStateComplaintWithGoal
+import core.utility.finalStateComplaintWithGoal
 
 internal class StripsPlanner : Planner {
 

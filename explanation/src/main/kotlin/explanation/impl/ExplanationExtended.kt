@@ -4,7 +4,7 @@ import core.Effect
 import core.Fluent
 import core.Operator
 import core.Planner
-import core.impl.res.FrameworkUtilities.then
+import core.utility.then
 import explanation.Explanation
 
 /**

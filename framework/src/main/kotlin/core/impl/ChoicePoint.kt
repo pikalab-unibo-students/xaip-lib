@@ -3,7 +3,7 @@ package core.impl
 import core.Applicable
 import core.Operator
 import core.State
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 internal data class ChoicePoint(
     val stack: Stack<Applicable<*>>,

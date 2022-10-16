@@ -1,14 +1,14 @@
 package core
 
+import core.resources.TestUtils.name
+import core.resources.TestUtils.objEmpty
+import core.resources.TestUtils.objNotEmpty
+import core.resources.TestUtils.substitution
 import domain.BlockWorldDomain.Values
 import domain.BlockWorldDomain.objects
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import core.resources.TestUtils.name
-import core.resources.TestUtils.objEmpty
-import core.resources.TestUtils.objNotEmpty
-import core.resources.TestUtils.substitution
 
 class ObjectTest : AnnotationSpec() {
     @Test

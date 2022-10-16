@@ -1,15 +1,11 @@
 package explanation.impl
 
-import core.Action
-import core.FluentBasedGoal
-import core.Operator
-import core.Plan
-import core.VariableAssignment
+import core.* // ktlint-disable no-wildcard-imports
+import core.impl.res.FrameworkUtilities.finalStateComplaintWithGoal
+import core.impl.res.FrameworkUtilities.then
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
-import core.impl.res.FrameworkUtilities.finalStateComplaintWithGoal
-import core.impl.res.FrameworkUtilities.then
 
 /**
  *
@@ -122,6 +118,4 @@ data class ExplanationImpl(
         result = 31 * result + this.novelPlan.hashCode()
         return result
     }
-
-
 }

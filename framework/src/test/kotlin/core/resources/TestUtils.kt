@@ -1,9 +1,6 @@
 package core.resources
-import core.Fluent
-import core.Object
-import core.ObjectSet
-import core.Plan
-import core.*
+
+import core.* // ktlint-disable no-wildcard-imports
 
 object TestUtils {
     const val name = "F"

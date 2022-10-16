@@ -1,5 +1,8 @@
 package core
 
+import core.resources.TestUtils.domainEmpty
+import core.resources.TestUtils.domainNotEmpty
+import core.resources.TestUtils.name
 import domain.BlockWorldDomain.Domains
 import domain.BlockWorldDomain.actions
 import domain.BlockWorldDomain.predicates
@@ -8,9 +11,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import core.resources.TestUtils.domainEmpty
-import core.resources.TestUtils.domainNotEmpty
-import core.resources.TestUtils.name
 
 class DomainTest : AnnotationSpec() {
     @Test

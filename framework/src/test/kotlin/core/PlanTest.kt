@@ -1,13 +1,13 @@
 package core
 
+import core.resources.TestUtils.actionNotEmpty
+import core.resources.TestUtils.planEmpty
+import core.resources.TestUtils.planNotEmpty
 import domain.BlockWorldDomain.Plans
 import domain.BlockWorldDomain.operators
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
-import core.resources.TestUtils.actionNotEmpty
-import core.resources.TestUtils.planEmpty
-import core.resources.TestUtils.planNotEmpty
 
 class PlanTest : AnnotationSpec() {
     @Test

@@ -1,6 +1,5 @@
 package core
 
-import core.BinaryExpression
 import domain.BlockWorldDomain.Expressions
 import domain.BlockWorldDomain.Expressions.binaryExpression1
 import domain.BlockWorldDomain.Expressions.binaryExpression2

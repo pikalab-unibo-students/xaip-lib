@@ -2,39 +2,29 @@ comments:
   EndOfSentenceFormat:
     active: true
   UndocumentedPublicClass:
-    active: true
+    active: false
   UndocumentedPublicFunction:
     active: true
   #UndocumentedPublicProperty:
   #  active: true
 complexity:
-  LongMethod:
-    active: false
   LongParameterList:
     functionThreshold: 8 #updated
-    #active: true
-  NestedBlockDepth:
-    threshold: 5
   TooManyFunctions:
     ignoreDeprecated: true
     ignorePrivate: true
     ignoreOverridden: true
-    thresholdInInterfaces: 20
-  #ComplexMethod:
-    #threshold: 17
+    thresholdInFiles: 20
+    #thresholdInClasses: 20
+    #thresholdInInterfaces: 20
+    #thresholdInObjects: 20
+    #thresholdInEnums: 20
 
-naming:
-  MemberNameEqualsClassName:
-    active: false
-  FunctionNaming:
-    active: false #updated: rompe sugli spazi
-performance:
-  SpreadOperator:
-    active: false
+
 style:
-  MagicNumber:
-    ignoreNumbers: ['-2', '-1', '0', '0.5', '1', '2', '3', '4', '10', '360.0']
   ForbiddenComment:
     allowedPatterns: 'TODO:'
+  WildcardImport:
+    active: false
   UnusedPrivateMember:
     active: false

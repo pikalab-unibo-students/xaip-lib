@@ -6,10 +6,10 @@ import core.Predicate
 import core.Value
 import core.Variable
 import core.VariableAssignment
-import core.impl.*
+import core.impl.* // ktlint-disable no-wildcard-imports
 import core.impl.ObjectImpl
 import core.impl.VariableImpl
-import it.unibo.tuprolog.core.*
+import it.unibo.tuprolog.core.* // ktlint-disable no-wildcard-imports
 import it.unibo.tuprolog.core.Substitution as LogicSubstitution
 import it.unibo.tuprolog.core.Var as LogicVar
 
@@ -51,7 +51,6 @@ internal fun Variable.toTerm(): LogicVar =
 
 internal fun Context.toScope(): Scope =
     (this as? ContextImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Scope::class}")
-
 
 internal fun Object.toTerm(): Constant =
     (this as? ObjectImpl)?.delegate ?: error("Cannot convert ${this::class} into ${Constant::class}")

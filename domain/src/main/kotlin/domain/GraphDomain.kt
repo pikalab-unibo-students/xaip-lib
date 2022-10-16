@@ -1,7 +1,6 @@
 package domain
 
-import core.Object
-import core.*
+import core.* // ktlint-disable no-wildcard-imports
 
 object GraphDomain {
     object Actions {

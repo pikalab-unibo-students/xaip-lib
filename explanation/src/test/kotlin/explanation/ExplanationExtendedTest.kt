@@ -38,6 +38,7 @@ class ExplanationExtendedTest : AnnotationSpec() {
         explanationExtended.isIdempotentActions(stackAB, unstackAB) shouldBe true
         explanationExtended.idempotentList() shouldBe emptyMap()
     }
+
     @Ignore
     @Test
     fun `Test incorrect plan`() {

@@ -1,6 +1,5 @@
 package core
 
-import core.VariableAssignment
 import domain.BlockWorldDomain.Values
 import domain.BlockWorldDomain.VariableAssignments
 import io.kotest.core.spec.style.AnnotationSpec

@@ -1,5 +1,13 @@
 package core
 
+import core.resources.TestUtils.fluentEmpty
+import core.resources.TestUtils.fluentNotEmpty
+import core.resources.TestUtils.name
+import core.resources.TestUtils.predicateEmpty
+import core.resources.TestUtils.predicateNotEmpty
+import core.resources.TestUtils.size
+import core.resources.TestUtils.substitution
+import core.resources.TestUtils.variableNotEmpty
 import domain.BlockWorldDomain.Expressions
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.Predicates
@@ -11,14 +19,6 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import it.unibo.tuprolog.core.Substitution
-import core.resources.TestUtils.fluentEmpty
-import core.resources.TestUtils.fluentNotEmpty
-import core.resources.TestUtils.name
-import core.resources.TestUtils.predicateEmpty
-import core.resources.TestUtils.predicateNotEmpty
-import core.resources.TestUtils.size
-import core.resources.TestUtils.substitution
-import core.resources.TestUtils.variableNotEmpty
 
 class FluentTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

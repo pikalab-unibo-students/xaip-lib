@@ -1,6 +1,5 @@
 package core
 
-import core.UnaryExpression
 import domain.BlockWorldDomain.Expressions
 import domain.BlockWorldDomain.Fluents
 import io.kotest.core.spec.style.AnnotationSpec

@@ -29,5 +29,6 @@ class QuestionRemoveOperator(
 
     override fun buildHypotheticalDomain(): Domain = buildHdomain(problem.domain, newPredicate, newAction)
 
-    override fun buildHypotheticalProblem(): Sequence<Problem> = sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null, true))
+    override fun buildHypotheticalProblem(): Sequence<Problem> =
+        sequenceOf(buildHproblem(hDomain, problem, newGroundFluent, null, true))
 }

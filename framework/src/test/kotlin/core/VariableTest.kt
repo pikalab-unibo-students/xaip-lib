@@ -1,12 +1,12 @@
 package core
 
+import core.resources.TestUtils.name
 import domain.BlockWorldDomain.Values
 import domain.BlockWorldDomain.variables
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import core.resources.TestUtils.name
 
 class VariableTest : AnnotationSpec() {
     private val localName = name

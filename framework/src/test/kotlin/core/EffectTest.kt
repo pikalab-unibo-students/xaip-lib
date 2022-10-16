@@ -1,13 +1,5 @@
 package core
 
-import domain.BlockWorldDomain.Effects
-import domain.BlockWorldDomain.Fluents
-import domain.BlockWorldDomain.Predicates
-import domain.BlockWorldDomain.Values
-import domain.BlockWorldDomain.VariableAssignments
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import core.resources.TestUtils.effectEmpty
 import core.resources.TestUtils.effectNotEmpty
 import core.resources.TestUtils.fluentEmpty
@@ -16,6 +8,14 @@ import core.resources.TestUtils.predicateNotEmpty
 import core.resources.TestUtils.size
 import core.resources.TestUtils.substitution
 import core.resources.TestUtils.variableNotEmpty
+import domain.BlockWorldDomain.Effects
+import domain.BlockWorldDomain.Fluents
+import domain.BlockWorldDomain.Predicates
+import domain.BlockWorldDomain.Values
+import domain.BlockWorldDomain.VariableAssignments
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class EffectTest : AnnotationSpec() {
     private val variable = Variable.of("different value")

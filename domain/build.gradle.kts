@@ -1,6 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktlint.gradle)
+    alias(libs.plugins.detekt.gradle)
 }
 
 dependencies {
@@ -12,4 +14,11 @@ dependencies {
 
     api(project(":framework"))
     api(project(":dsl"))
+}
+
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    config = files("${rootDir.path}/config/detekt.yml")
+    source = files(kotlin.sourceSets.map { it.kotlin.sourceDirectories })
 }

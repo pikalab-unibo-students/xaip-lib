@@ -1,9 +1,5 @@
 package explanation.impl
 
-import core.Action
-import core.Fluent
-import core.Operator
-import core.Problem
 import core.*
 import explanation.Question
 

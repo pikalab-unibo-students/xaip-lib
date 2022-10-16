@@ -1,5 +1,9 @@
 package core
 
+import core.resources.TestUtils.actionEmpty
+import core.resources.TestUtils.actionNotEmpty
+import core.resources.TestUtils.name
+import core.resources.TestUtils.type1
 import domain.BlockWorldDomain.Actions
 import domain.BlockWorldDomain.actions
 import domain.BlockWorldDomain.types
@@ -8,10 +12,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import core.resources.TestUtils.actionEmpty
-import core.resources.TestUtils.actionNotEmpty
-import core.resources.TestUtils.name
-import core.resources.TestUtils.type1
 
 class ActionTest : AnnotationSpec() {
 

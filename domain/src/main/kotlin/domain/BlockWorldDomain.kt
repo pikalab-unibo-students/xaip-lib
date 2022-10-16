@@ -1,10 +1,6 @@
 package domain
 
-import core.Fluent
-import core.Object
-import core.ObjectSet
-import core.Plan
-import core.*
+import core.* // ktlint-disable no-wildcard-imports
 import dsl.domain
 import dsl.problem
 

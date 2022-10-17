@@ -46,15 +46,11 @@ data class ExplanationImpl(
     private val minimalPlan by lazy {
         explainer.minimalPlanSelector { explainer.planner.plan(question.problem).first() }
     }
-    private val problemSolvable by lazy {
-        isProblemSolvable()
-    }
-    private val planLenghtAcceptable by lazy {
-        (isPlanLengthAcceptable() then isPlanLengthAcceptable()) ?: false
-    }
+
     private val operatorsMissing by lazy {
         minimalPlan.operators.filter { !question.plan.operators.contains(it) }
     }
+
     private val idempotentOperatorsWrongOccurence by lazy {
         idempotentList().filter { it.value.occurence1 <= it.value.occurence2 }
     }
@@ -73,13 +69,13 @@ data class ExplanationImpl(
                         }
                 )
             }
-
             is QuestionAddOperator, is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
                 val operator = retrieveOperator()
                 if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
+            is QuestionPlanSatisfiability -> novelPlan =question.plan
         }
     }
 
@@ -203,7 +199,7 @@ data class ExplanationImpl(
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun toString(): String {
-        if (isPlanValid() && !(question is QuestionPlanSatisfiability)) {
+        if (isPlanValid() && question !is QuestionPlanSatisfiability) {
             return """${ExplanationImpl::class.simpleName}(
             |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
             |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
@@ -216,9 +212,11 @@ data class ExplanationImpl(
             """.trimMargin()
         } else {
             return """${ExplanationImpl::class.simpleName}(
-                | the problem: ${(this.question.problem.goal as FluentBasedGoal).targets} is solvable: ${isProblemSolvable()}
+                | the problem: ${(this.question.problem.goal as FluentBasedGoal)
+                .targets} is solvable: ${isProblemSolvable()}
                 | the plan: ${this.originalPlan.operators} is valid: ${isPlanValid()}
                 | plan length acceptable: ${isPlanLengthAcceptable()}
+                | operators missing: ${this.operatorsMissing}
                 | idempotent operators causing errors: ${idempotentOperatorsWrongOccurence.entries.map {
                 it.value.operator2
             }}

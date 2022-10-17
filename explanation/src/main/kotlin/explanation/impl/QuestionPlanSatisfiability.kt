@@ -16,10 +16,10 @@ import Problem
  */
 class QuestionPlanSatisfiability(
     override val problem: Problem,
-    override val plan: Plan,
-    override val focus: Operator,
-    override val focusOn: Int
+    override val plan: Plan
 ) : BaseQuestion() {
+    override val focus: Operator by lazy { Operator.of(Action.of("", emptyMap(), emptySet(), emptySet()))}
+    override val focusOn: Int by lazy { 0 }
     override val newPredicate: Predicate by lazy { Predicate.of("") }
     override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }
     override val newFluent: Fluent by lazy { Fluent.of(newPredicate) }

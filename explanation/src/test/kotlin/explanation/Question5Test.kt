@@ -12,7 +12,7 @@ class Question5Test : AnnotationSpec() {
 
     @Test
     fun `Plan valid`() {
-        val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)), pickA, 0)
+        val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)))
         val explanation = Explanation.of(q5, explainer)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
@@ -22,9 +22,7 @@ class Question5Test : AnnotationSpec() {
     fun `Plan not valid`() {
         val q5 = QuestionPlanSatisfiability(
             Problems.pickX,
-            Plan.of(listOf(pickA, putdownA)),
-            pickA,
-            0
+            Plan.of(listOf(pickA, putdownA))
         )
         val explanation = Explanation.of(q5, explainer)
         println(explanation.toString())

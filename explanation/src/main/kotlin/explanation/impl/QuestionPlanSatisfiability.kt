@@ -12,7 +12,6 @@ import Problem
  * Why is plan not good (solvable).
  * Checking for a plan satisfiability.
  *
- * @property alternativePlan: [Plan] proposed by the user.
  */
 class QuestionPlanSatisfiability(
     override val problem: Problem,

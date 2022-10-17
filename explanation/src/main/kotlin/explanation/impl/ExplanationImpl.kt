@@ -4,6 +4,7 @@ import Action
 import FluentBasedGoal
 import Operator
 import Plan
+import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
@@ -14,10 +15,14 @@ import impl.res.FrameworkUtilities.then
  *
  */
 data class ExplanationImpl(
-    override val originalPlan: Plan,
-    override var novelPlan: Plan,
-    override val question: Question
+    override val question: Question,
+    override val explainer: Explainer
 ) : Explanation {
+    override var novelPlan: Plan = Plan.of(emptyList())
+
+    override val originalPlan: Plan by lazy {
+        this.question.plan
+    }
     override val addList: List<Operator> by lazy {
         this.novelPlan.operators.filter {
             !this.originalPlan.operators.contains(it)
@@ -35,7 +40,32 @@ data class ExplanationImpl(
     }
     private val simulator = Simulator.of()
 
-    private fun retrieveOperator() = novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
+    init {
+        when (question) {
+            is QuestionReplaceOperator -> {
+                val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
+                novelPlan = Plan.of(
+                    operatorsToKeep
+                        .also { it.add(question.insteadOf) }
+                        .also {
+                            it.addAll(
+                                explainer.planner.plan(question.buildHypotheticalProblem().first()).first().operators
+                            )
+                        }
+                )
+            }
+            is QuestionAddOperator, is QuestionRemoveOperator -> {
+                novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
+                val operator = retrieveOperator()
+                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
+            }
+            is QuestionPlanProposal -> novelPlan = question.alternativePlan
+            is QuestionPlanSatisfiability -> novelPlan = question.alternativePlan
+        }
+    }
+
+    private fun retrieveOperator() =
+        novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
 
     private fun retrieveAction() = novelPlan.operators.map { operator ->
         question.problem.domain.actions.first {
@@ -66,22 +96,6 @@ data class ExplanationImpl(
                     this.subList(this.indexOf(element) + 1, this.size)
                 )
             }
-
-    init {
-        when (question) {
-            is QuestionReplaceOperator -> {
-                val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
-                novelPlan = Plan.of(
-                    operatorsToKeep
-                        .also { it.add(question.focus) }.also { it.addAll(novelPlan.operators) }
-                )
-            }
-            is QuestionAddOperator, is QuestionRemoveOperator -> {
-                val operator = retrieveOperator()
-                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
-            }
-        }
-    }
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
@@ -121,6 +135,4 @@ data class ExplanationImpl(
         result = 31 * result + this.novelPlan.hashCode()
         return result
     }
-
-
 }

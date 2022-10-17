@@ -3,12 +3,13 @@ package explanation
 import Plan
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
-import domain.BlockWorldDomain.Planners.stripsPlanner
 import domain.BlockWorldDomain.Problems
 import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+
 class Question2Test : AnnotationSpec() {
+    private val explainer = Explainer.of(Planner.strips())
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
         val q2 = QuestionRemoveOperator(
@@ -18,15 +19,12 @@ class Question2Test : AnnotationSpec() {
             0
         )
 
-        val hypotheticalPlan = stripsPlanner.plan(q2.buildHypotheticalProblem().first()).first()
-        val explanation = Explanation.of(q2.plan, hypotheticalPlan, q2)
-
-        val contrastiveExplanation = Explanation.of(
-            q2.plan,
-            Plan.of(listOf(pickB)),
-            q2
-        )
-        explanation shouldBe contrastiveExplanation
+        val explanation = Explanation.of(q2, explainer)
+        explanation.originalPlan shouldBe q2.plan
+        explanation.novelPlan shouldBe Plan.of(listOf(pickB))
+        explanation.addList shouldBe listOf(pickB)
+        explanation.deleteList shouldBe listOf(pickA)
+        explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 }

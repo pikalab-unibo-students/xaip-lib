@@ -7,14 +7,13 @@ import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.pickD
 import domain.BlockWorldDomain.Operators.stackAB
-import domain.BlockWorldDomain.Planners.stripsPlanner
 import domain.BlockWorldDomain.Problems
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class Question3Test : AnnotationSpec() {
-
+    private val explainer = Explainer.of(Planner.strips())
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
         val q3 = QuestionReplaceOperator(
@@ -35,14 +34,13 @@ class Question3Test : AnnotationSpec() {
             pickD
         )
 
-        val hypotheticalPlan = stripsPlanner.plan(q3.buildHypotheticalProblem().first()).first()
-        val explanation = Explanation.of(q3.plan, hypotheticalPlan, q3)
-        val contrastiveExplanation = Explanation.of(
-            q3.plan,
-            hypotheticalPlan,
-            q3
-        )
-        explanation shouldBe contrastiveExplanation
+        val explanation = Explanation.of(q3, explainer)
+
+        explanation.originalPlan shouldBe q3.plan
+        explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickD))
+        explanation.addList shouldBe listOf(pickD)
+        explanation.deleteList shouldBe listOf(pickC)
+        explanation.existingList shouldBe listOf(pickA, stackAB)
         explanation.isPlanValid() shouldBe true
     }
 }

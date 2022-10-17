@@ -2,6 +2,7 @@ package explanation
 
 import Plan
 import Planner
+import explanation.impl.ExplainerImpl
 
 // Problem explainer si aspetta che il planner abbia un metodo plan, devo recuperare comunque un piano (quindi nel nostro caso mi tocca chiamare la first
 // Problema explanation ora come ora non ha metodi se non isValid() quindi explain non può restiutire un explanation m(cioé può ma per me non ha molto un  verso,
@@ -12,5 +13,9 @@ interface Explainer {
 
     fun explain(question: Question): Explanation
 
-    fun minimalPlanSelector(f: Planner.() -> Plan): Plan
+    fun minimalPlanSelector(f: () -> Plan): Plan
+
+    companion object {
+        fun of(planner: Planner): Explainer = ExplainerImpl(planner)
+    }
 }

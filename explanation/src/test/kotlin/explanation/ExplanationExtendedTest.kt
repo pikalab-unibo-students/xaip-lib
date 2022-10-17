@@ -18,6 +18,8 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class ExplanationExtendedTest : AnnotationSpec() {
+    private val explainer = Explainer.of(Planner.strips())
+
     @Test
     fun `Test correct plan`() {
         val q1 = QuestionAddOperator(
@@ -29,7 +31,9 @@ class ExplanationExtendedTest : AnnotationSpec() {
 
         val hypotheticalPlan =
             BlockWorldDomain.Planners.stripsPlanner.plan(q1.buildHypotheticalProblem().first()).first()
-        val explanation = Explanation.of(q1.plan, hypotheticalPlan, q1)
+
+        val explanation = Explanation.of(q1, explainer)
+        // Explanation.of(q1.plan, hypotheticalPlan, q1)
 
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true
@@ -47,7 +51,8 @@ class ExplanationExtendedTest : AnnotationSpec() {
 
         val q4 = QuestionPlanProposal(problem, planPickB, planPickBstackBApickC, planPickB.operators.first(), 0)
 
-        val explanation = Explanation.of(q4.plan, q4.alternativePlan, q4)
+        val explanation = Explanation.of(q4, explainer)
+        //  Explanation.of(q4.plan, q4.alternativePlan, q4)
 
         val explanationExtended = ExplanationExtended(explanation)
         explanationExtended.isPlanLengthAcceptable() shouldBe true

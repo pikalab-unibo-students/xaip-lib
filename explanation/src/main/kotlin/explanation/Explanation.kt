@@ -9,6 +9,11 @@ import explanation.impl.ExplanationImpl
  */
 interface Explanation {
     /**
+     * @property explainer: represents the explainer provided by the user.
+     */
+    val explainer: Explainer
+
+    /**
      * @property originalPlan: represents the original [Plan] the inquirer wants to challenge.
      */
     val originalPlan: Plan
@@ -51,9 +56,8 @@ interface Explanation {
          * Factory method for an [Explanation] creation.
          */
         fun of(
-            originalPlan: Plan,
-            novelPlan: Plan,
-            question: Question
-        ): Explanation = ExplanationImpl(originalPlan, novelPlan, question)
+            question: Question,
+            explainer: Explainer
+        ): Explanation = ExplanationImpl(question, explainer)
     }
 }

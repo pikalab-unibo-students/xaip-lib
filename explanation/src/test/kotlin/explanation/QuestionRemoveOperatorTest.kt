@@ -10,6 +10,7 @@ import io.kotest.matchers.shouldBe
 
 class QuestionRemoveOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
+
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
         val q2 = QuestionRemoveOperator(

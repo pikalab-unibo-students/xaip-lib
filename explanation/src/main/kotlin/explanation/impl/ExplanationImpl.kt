@@ -12,7 +12,6 @@ import explanation.utils.findAction
 import explanation.utils.isIdempotentOperators
 import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
 import impl.res.FrameworkUtilities.then
-import java.lang.Math.abs
 
 /**
  *
@@ -75,7 +74,7 @@ data class ExplanationImpl(
                 if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
-            is QuestionPlanSatisfiability -> novelPlan =question.plan
+            is QuestionPlanSatisfiability -> novelPlan = question.plan
         }
     }
 

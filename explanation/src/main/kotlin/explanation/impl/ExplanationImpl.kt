@@ -12,6 +12,7 @@ import explanation.utils.findAction
 import explanation.utils.isIdempotentOperators
 import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
 import impl.res.FrameworkUtilities.then
+import java.lang.Math.abs
 
 /**
  *
@@ -54,7 +55,9 @@ data class ExplanationImpl(
     private val operatorsMissing by lazy {
         minimalPlan.operators.filter { !question.plan.operators.contains(it) }
     }
-    private var idempotentAction = mutableMapOf<Operator, IdempotentOperator>()
+    private val idempotentOperatorsWrongOccurence by lazy {
+        idempotentList().filter { it.value.occurence1 <= it.value.occurence2 }
+    }
 
     init {
         when (question) {
@@ -70,6 +73,7 @@ data class ExplanationImpl(
                         }
                 )
             }
+
             is QuestionAddOperator, is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
                 val operator = retrieveOperator()
@@ -125,13 +129,15 @@ data class ExplanationImpl(
 
     /**
      * */
-    fun isPlanLengthAcceptable(): Boolean =
+    override fun isPlanLengthAcceptable(): Boolean =
         minimalPlan.operators.size <= novelPlan.operators.size
 
     /**
      * */
-    fun isProblemSolvable(): Boolean =
+    override fun isProblemSolvable(): Boolean =
         minimalPlan.operators.isNotEmpty()
+
+    override fun minimalSolutionLength(): Int = minimalPlan.operators.size
 
     /**
      * .
@@ -139,7 +145,7 @@ data class ExplanationImpl(
      * @property occurence2
      * @property operator2
      * */
-    class IdempotentOperator(
+    private class IdempotentOperator(
         var occurence1: Int = 0,
         var operator2: Operator? = null,
         var occurence2: Int = 0
@@ -147,7 +153,7 @@ data class ExplanationImpl(
 
     /**
      * */
-    fun idempotentList(): MutableMap<Operator, IdempotentOperator> {
+    private fun idempotentList(): MutableMap<Operator, IdempotentOperator> {
         // lista degli operatori che corrispondono ad un'azione necessaria
         val operatorsInPlanFiltered = mutableListOf<Operator>()
         // mappa che contiene gli operatori + le loro occorrenze + eventuali operatori idempotenti
@@ -197,17 +203,29 @@ data class ExplanationImpl(
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    override fun toString(): String =
-        """${ExplanationImpl::class.simpleName}(
+    override fun toString(): String {
+        if (isPlanValid() && !(question is QuestionPlanSatisfiability)) {
+            return """${ExplanationImpl::class.simpleName}(
             |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
             |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
-            |  the novel plan is valid: ${this.isPlanValid()},
+            |   It has ${kotlin.math.abs(novelPlan.operators.size - minimalPlan.operators.size)} additional operators,
             |  - Diff(original plan VS new plan):
             |  ${ExplanationImpl::addList.name}=$addList,
             |  ${ExplanationImpl::deleteList.name}=$deleteList,
             |  ${ExplanationImpl::existingList.name}=$existingList
             |)
-        """.trimMargin()
+            """.trimMargin()
+        } else {
+            return """${ExplanationImpl::class.simpleName}(
+                | the problem: ${(this.question.problem.goal as FluentBasedGoal).targets} is solvable: ${isProblemSolvable()}
+                | the plan: ${this.originalPlan.operators} is valid: ${isPlanValid()}
+                | plan length acceptable: ${isPlanLengthAcceptable()}
+                | idempotent operators causing errors: ${idempotentOperatorsWrongOccurence.entries.map {
+                it.value.operator2
+            }}
+            """.trimIndent()
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

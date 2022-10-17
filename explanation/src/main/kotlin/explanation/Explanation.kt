@@ -56,6 +56,16 @@ interface Explanation {
      */
     fun isProblemSolvable(): Boolean
 
+    /**
+     * Method that states if a [Problem] is solvable.
+     */
+    fun minimalSolutionLength(): Int
+
+    /**
+     * Method that states if the legth of the [Plan] proposed is acceptabl.
+     */
+    fun isPlanLengthAcceptable(): Boolean
+
     companion object {
         /**
          * Factory method for an [Explanation] creation.

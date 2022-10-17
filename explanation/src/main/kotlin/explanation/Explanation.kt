@@ -51,6 +51,11 @@ interface Explanation {
      */
     fun isPlanValid(): Boolean
 
+    /**
+     * Method that states if a [Problem] is solvable.
+     */
+    fun isProblemSolvable(): Boolean
+
     companion object {
         /**
          * Factory method for an [Explanation] creation.

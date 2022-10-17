@@ -8,6 +8,8 @@ import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
+import explanation.utils.findAction
+import explanation.utils.isIdempotentOperators
 import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
 import impl.res.FrameworkUtilities.then
 
@@ -39,6 +41,20 @@ data class ExplanationImpl(
         }
     }
     private val simulator = Simulator.of()
+
+    private val minimalPlan by lazy {
+        explainer.minimalPlanSelector { explainer.planner.plan(question.problem).first() }
+    }
+    private val problemSolvable by lazy {
+        isProblemSolvable()
+    }
+    private val planLenghtAcceptable by lazy {
+        (isPlanLengthAcceptable() then isPlanLengthAcceptable()) ?: false
+    }
+    private val operatorsMissing by lazy {
+        minimalPlan.operators.filter { !question.plan.operators.contains(it) }
+    }
+    private var idempotentAction = mutableMapOf<Operator, IdempotentOperator>()
 
     init {
         when (question) {
@@ -104,6 +120,82 @@ data class ExplanationImpl(
                 states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }
             ) ?: false
     }
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * */
+    fun isPlanLengthAcceptable(): Boolean =
+        minimalPlan.operators.size <= novelPlan.operators.size
+
+    /**
+     * */
+    fun isProblemSolvable(): Boolean =
+        minimalPlan.operators.isNotEmpty()
+
+    /**
+     * .
+     * @property occurence1
+     * @property occurence2
+     * @property operator2
+     * */
+    class IdempotentOperator(
+        var occurence1: Int = 0,
+        var operator2: Operator? = null,
+        var occurence2: Int = 0
+    )
+
+    /**
+     * */
+    fun idempotentList(): MutableMap<Operator, IdempotentOperator> {
+        // lista degli operatori che corrispondono ad un'azione necessaria
+        val operatorsInPlanFiltered = mutableListOf<Operator>()
+        // mappa che contiene gli operatori + le loro occorrenze + eventuali operatori idempotenti
+        val idempotentOperatorsOccurences =
+            mutableMapOf<Operator, IdempotentOperator>()
+        // trovo le azioni minime che mi servono per avere un piano che funzioni
+        val actionsRequired =
+            minimalPlan.operators.map { findAction(it, question.problem.domain.actions) }
+        // ciclo che mette gli operator necessari nella mappa.
+        novelPlan.operators.map { operatorToEvaluate ->
+            // trovo l'azione corrispondente all'operatore che sto valutando
+            val actionToEvaluate =
+                findAction(operatorToEvaluate, question.problem.domain.actions)
+            // se questa azione è tra quelle irrinunciabili per l'accettazione del piano
+            if (actionsRequired.contains(actionToEvaluate)) {
+                // se l'operatore è già nella lista di quelli necessari
+                // aggiorno il contatore corrispondente
+                if (operatorsInPlanFiltered.contains(operatorToEvaluate)) {
+                    idempotentOperatorsOccurences[operatorToEvaluate]!!.occurence1++
+                } else { // se non c'è lo aggiungo
+                    operatorsInPlanFiltered.add(operatorToEvaluate)
+                    idempotentOperatorsOccurences[operatorToEvaluate] = IdempotentOperator(1)
+                }
+            }
+        }
+        // ciclo che mette gli operator idempotenti nella mappa.
+        novelPlan.operators.map { operatorToEvaluate ->
+            // trovo l'azione corrispondente all'operatore che sto valutando
+            val actionToEvaluate =
+                findAction(operatorToEvaluate, question.problem.domain.actions)
+            // se l'operatore non è tra quelli irrinunciabili potrebbe essere
+            // uno di quelle idempotenti rispetto a uno che lo è.
+            if (!actionsRequired.contains(actionToEvaluate)) {
+                operatorsInPlanFiltered.map { operatorInList ->
+                    if (operatorInList.isIdempotentOperators(operatorToEvaluate)) {
+                        if (idempotentOperatorsOccurences.containsKey(operatorInList)) {
+                            idempotentOperatorsOccurences[operatorInList]!!.occurence2++
+                            // sta roba potrebbe essere migliorata evitando la sovrascrizione ad ogni giro
+                            idempotentOperatorsOccurences[operatorInList]!!.operator2 = operatorToEvaluate
+                        }
+                    }
+                }
+            }
+        }
+        return idempotentOperatorsOccurences
+    }
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun toString(): String =
         """${ExplanationImpl::class.simpleName}(

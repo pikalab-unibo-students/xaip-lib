@@ -6,7 +6,7 @@ import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class Question1Test : AnnotationSpec() {
+class QuestionAddOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
     @Test
     fun `Use pickA instead of pick B in armNotEmpty problem`() {

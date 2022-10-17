@@ -12,7 +12,7 @@ import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class Question3Test : AnnotationSpec() {
+class QuestionReplaceOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {

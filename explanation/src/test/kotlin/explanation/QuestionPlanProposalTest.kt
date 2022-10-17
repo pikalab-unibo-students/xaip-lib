@@ -6,7 +6,7 @@ import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class Question4Test : AnnotationSpec() {
+class QuestionPlanProposalTest : AnnotationSpec() {
     private val problem = Problems.armNotEmpty
     private val planPickBStackBA = Plan.of(listOf(Operators.pickB, Operators.stackBA))
     private val planPickB = Plan.of(listOf(Operators.pickB))

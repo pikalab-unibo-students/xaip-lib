@@ -7,7 +7,7 @@ import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class Question5Test : AnnotationSpec() {
+class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
     @Test

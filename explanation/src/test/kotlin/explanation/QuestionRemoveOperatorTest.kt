@@ -8,7 +8,7 @@ import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class Question2Test : AnnotationSpec() {
+class QuestionRemoveOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {

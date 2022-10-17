@@ -80,7 +80,6 @@ data class ExplanationImpl(
                 if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
-            is QuestionPlanSatisfiability -> novelPlan = question.alternativePlan
         }
     }
 

@@ -18,7 +18,6 @@ class QuestionPlanSatisfiability(
     override val problem: Problem,
     override val plan: Plan,
     override val focus: Operator,
-    val alternativePlan: Plan,
     override val focusOn: Int
 ) : BaseQuestion() {
     override val newPredicate: Predicate by lazy { Predicate.of("") }

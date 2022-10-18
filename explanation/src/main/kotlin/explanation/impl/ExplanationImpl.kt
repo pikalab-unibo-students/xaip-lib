@@ -71,7 +71,8 @@ data class ExplanationImpl(
             is QuestionAddOperator, is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
                 val operator = retrieveOperator()
-                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
+                // Qui
+                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement())
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
             is QuestionPlanSatisfiability -> novelPlan = question.plan
@@ -81,12 +82,10 @@ data class ExplanationImpl(
     private fun retrieveOperator() =
         novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
 
-    private fun retrieveAction() = novelPlan.operators.map { operator ->
+    private fun retrieveAction(operator: Operator) =
         question.problem.domain.actions.first {
-            it.name == operator.name.filter { char -> char.isLetter() } &&
-                operator.name.contains("^")
+            it.name == operator.name.filter { char -> char.isLetter() }
         }
-    }.first()
 
     private fun makeFinalOperator(action: Action, operator: Operator): Operator {
         var newOperator = Operator.of(action)
@@ -101,15 +100,29 @@ data class ExplanationImpl(
         return newOperator
     }
 
-    private fun List<Operator>.replaceElement(element: Operator): List<Operator> =
-        this.toMutableList()
+    private fun List<Operator>.replaceElement(): List<Operator> {
+        val newList = mutableListOf<Operator>()
+        this.toMutableList().map { operator ->
+            if ("^" in operator.name) {
+                val ret = retrieveAction(operator)
+                newList.add(makeFinalOperator(ret, operator))
+            } else newList.add(operator)
+        }
+        return newList
+    }
+
+        /*this.toMutableList()
             .subList(0, this.indexOf(element)).also {
-                it.add(makeFinalOperator(retrieveAction(), element))
+                val ret = retrieveAction(element)
+                val fo = makeFinalOperator(ret, element)
+                it.add( fo )
             }.also {
                 it.addAll(
                     this.subList(this.indexOf(element) + 1, this.size)
                 )
             }
+
+         */
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)

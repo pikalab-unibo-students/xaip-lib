@@ -341,7 +341,6 @@ object GraphDomain {
             unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
             unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
 
-
             unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
             unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
 
@@ -362,7 +361,6 @@ object GraphDomain {
 
             unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
             unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
-
 
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Z, Values.l1))
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Y, Values.c1))

@@ -104,25 +104,11 @@ data class ExplanationImpl(
         val newList = mutableListOf<Operator>()
         this.toMutableList().map { operator ->
             if ("^" in operator.name) {
-                val ret = retrieveAction(operator)
-                newList.add(makeFinalOperator(ret, operator))
+                newList.add(makeFinalOperator(retrieveAction(operator), operator))
             } else newList.add(operator)
         }
         return newList
     }
-
-        /*this.toMutableList()
-            .subList(0, this.indexOf(element)).also {
-                val ret = retrieveAction(element)
-                val fo = makeFinalOperator(ret, element)
-                it.add( fo )
-            }.also {
-                it.addAll(
-                    this.subList(this.indexOf(element) + 1, this.size)
-                )
-            }
-
-         */
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)

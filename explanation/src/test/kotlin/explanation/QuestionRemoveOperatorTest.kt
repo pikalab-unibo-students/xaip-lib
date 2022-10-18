@@ -4,6 +4,15 @@ import Plan
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.pickD
+import domain.BlockWorldDomain.Operators.stackAB
+import domain.BlockWorldDomain.Operators.stackAC
+import domain.BlockWorldDomain.Operators.stackBA
+import domain.BlockWorldDomain.Operators.stackBD
+import domain.BlockWorldDomain.Operators.stackCA
+import domain.BlockWorldDomain.Operators.stackCD
+import domain.BlockWorldDomain.Operators.stackDB
+import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Problems
 import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
@@ -30,22 +39,21 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         explanation.isPlanValid() shouldBe true
     }
 
-    @Ignore
     @Test
-    fun `Remove pickC from the plan to solve the pickC problem`() {
+    fun `Remove pick from the plan to solve the armNotEmpty problem`() {
         val q2 = QuestionRemoveOperator(
-            Problems.pickC,
-            Plan.of(listOf(pickC)),
-            pickC,
+            Problems.stackDXA,
+            Plan.of(listOf(pickB, stackBA, pickD, stackDB)),
+            pickB,
             0
         )
 
         val explanation = Explanation.of(q2, explainer)
         explanation.originalPlan shouldBe q2.plan
-        explanation.novelPlan shouldBe Plan.of(emptyList())
-        explanation.addList shouldBe emptyList()
-        explanation.deleteList shouldBe listOf(pickC)
-        explanation.existingList shouldBe emptyList()
-        explanation.isPlanValid() shouldBe false
+        explanation.novelPlan shouldBe Plan.of(listOf(pickC, stackCA, pickD, stackDC))
+        explanation.addList shouldBe listOf(pickC, stackCA, stackDC)
+        explanation.deleteList shouldBe listOf(pickB, stackBA, stackDB)
+        explanation.existingList shouldBe listOf(pickD)
+        explanation.isPlanValid() shouldBe true
     }
 }

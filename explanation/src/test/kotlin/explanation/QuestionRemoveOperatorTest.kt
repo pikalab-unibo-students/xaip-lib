@@ -5,12 +5,8 @@ import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.pickD
-import domain.BlockWorldDomain.Operators.stackAB
-import domain.BlockWorldDomain.Operators.stackAC
 import domain.BlockWorldDomain.Operators.stackBA
-import domain.BlockWorldDomain.Operators.stackBD
 import domain.BlockWorldDomain.Operators.stackCA
-import domain.BlockWorldDomain.Operators.stackCD
 import domain.BlockWorldDomain.Operators.stackDB
 import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Problems

@@ -221,7 +221,6 @@ object GraphDomain {
             Fluents.connectedL2L4,
             Fluents.connectedL3L4,
             Fluents.connectedL4L5,
-            Fluents.connectedL4L5,
             Fluents.connectedL2L6,
             Fluents.connectedL5L6,
             Fluents.connectedL5L7,
@@ -234,9 +233,7 @@ object GraphDomain {
             Fluents.connectedL6L2,
             Fluents.connectedL6L5,
             Fluents.connectedL7L5,
-            Fluents.connectedL5L1,
-
-            Fluents.connectedL3L1
+            Fluents.connectedL5L1
 
         )
     }
@@ -267,5 +264,201 @@ object GraphDomain {
         val X = Variable.of("X")
         val Y = Variable.of("Y")
         val Z = Variable.of("Z")
+    }
+
+    object Operators {
+        var moveRfromL1toL2 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL2toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL3toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL4toL5 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var moveRfromL2toL6 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL5toL6 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL5toL7 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL1toL5 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var moveRfromL2toL1 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL3toL1 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL4toL2 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL5toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL6toL2 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL6L5 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var moveRfromL7toL5 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL5toL1 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL4toL3 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var loadC1fromL1onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL2onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL3onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL4onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL5onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL6onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC1fromL7onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var loadC2fromL1onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL2onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL3onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL4onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL5onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL6onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var loadC2fromL7onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var unloadC1fromRtoL1 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL2 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL3 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL4 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL5 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL6 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL7 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var unloadC2fromRtoL1 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL2 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL3 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL4 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL5 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL6 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL7 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        init {
+            unloadC1fromRtoL1 = unloadC1fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+            unloadC1fromRtoL1 = unloadC1fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL2 = unloadC1fromRtoL2.apply(VariableAssignment.of(Values.Z, Values.l2))
+            unloadC1fromRtoL2 = unloadC1fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL3 = unloadC1fromRtoL3.apply(VariableAssignment.of(Values.Z, Values.l3))
+            unloadC1fromRtoL3 = unloadC1fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL4 = unloadC1fromRtoL4.apply(VariableAssignment.of(Values.Z, Values.l4))
+            unloadC1fromRtoL4 = unloadC1fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL5 = unloadC1fromRtoL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+            unloadC1fromRtoL5 = unloadC1fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL6 = unloadC1fromRtoL6.apply(VariableAssignment.of(Values.Z, Values.l6))
+            unloadC1fromRtoL6 = unloadC1fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
+            unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+
+            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Z, Values.l2))
+            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Z, Values.l3))
+            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Z, Values.l4))
+            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Z, Values.l6))
+            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
+            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+
+            loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Z, Values.l1))
+            loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL2onR = loadC1fromL2onR.apply(VariableAssignment.of(Values.Z, Values.l2))
+            loadC1fromL2onR = loadC1fromL2onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL3onR = loadC1fromL3onR.apply(VariableAssignment.of(Values.Z, Values.l3))
+            loadC1fromL3onR = loadC1fromL3onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL4onR = loadC1fromL4onR.apply(VariableAssignment.of(Values.Z, Values.l4))
+            loadC1fromL4onR = loadC1fromL4onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL5onR = loadC1fromL5onR.apply(VariableAssignment.of(Values.Z, Values.l5))
+            loadC1fromL5onR = loadC1fromL5onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL6onR = loadC1fromL6onR.apply(VariableAssignment.of(Values.Z, Values.l6))
+            loadC1fromL6onR = loadC1fromL6onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC1fromL7onR = loadC1fromL7onR.apply(VariableAssignment.of(Values.Z, Values.l7))
+            loadC1fromL7onR = loadC1fromL7onR.apply(VariableAssignment.of(Values.Y, Values.c1))
+
+            loadC2fromL1onR = loadC2fromL1onR.apply(VariableAssignment.of(Values.Z, Values.l1))
+            loadC2fromL1onR = loadC2fromL1onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL2onR = loadC2fromL2onR.apply(VariableAssignment.of(Values.Z, Values.l2))
+            loadC2fromL2onR = loadC2fromL2onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL3onR = loadC2fromL3onR.apply(VariableAssignment.of(Values.Z, Values.l3))
+            loadC2fromL3onR = loadC2fromL3onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL4onR = loadC2fromL4onR.apply(VariableAssignment.of(Values.Z, Values.l4))
+            loadC2fromL4onR = loadC2fromL4onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL5onR = loadC2fromL5onR.apply(VariableAssignment.of(Values.Z, Values.l5))
+            loadC2fromL5onR = loadC2fromL5onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL6onR = loadC2fromL6onR.apply(VariableAssignment.of(Values.Z, Values.l6))
+            loadC2fromL6onR = loadC2fromL6onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            loadC2fromL7onR = loadC2fromL7onR.apply(VariableAssignment.of(Values.Z, Values.l7))
+            loadC2fromL7onR = loadC2fromL7onR.apply(VariableAssignment.of(Values.Y, Values.c2))
+
+            moveRfromL1toL2 = moveRfromL1toL2.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL2 = moveRfromL1toL2.apply(VariableAssignment.of(Values.Z, Values.l2))
+
+            moveRfromL2toL4 = moveRfromL2toL4.apply(VariableAssignment.of(Values.Y, Values.l2))
+            moveRfromL2toL4 = moveRfromL2toL4.apply(VariableAssignment.of(Values.Z, Values.l4))
+
+            moveRfromL3toL4 = moveRfromL3toL4.apply(VariableAssignment.of(Values.Y, Values.l3))
+            moveRfromL3toL4 = moveRfromL3toL4.apply(VariableAssignment.of(Values.Z, Values.l4))
+
+            moveRfromL4toL5 = moveRfromL4toL5.apply(VariableAssignment.of(Values.Y, Values.l4))
+            moveRfromL4toL5 = moveRfromL4toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+
+            moveRfromL2toL6 = moveRfromL2toL6.apply(VariableAssignment.of(Values.Y, Values.l2))
+            moveRfromL2toL6 = moveRfromL2toL6.apply(VariableAssignment.of(Values.Z, Values.l6))
+
+            moveRfromL5toL6 = moveRfromL5toL6.apply(VariableAssignment.of(Values.Y, Values.l5))
+            moveRfromL5toL6 = moveRfromL5toL6.apply(VariableAssignment.of(Values.Z, Values.l6))
+
+            moveRfromL5toL7 = moveRfromL5toL7.apply(VariableAssignment.of(Values.Y, Values.l5))
+            moveRfromL5toL7 = moveRfromL5toL7.apply(VariableAssignment.of(Values.Z, Values.l7))
+
+            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+
+            moveRfromL2toL1 = moveRfromL2toL1.apply(VariableAssignment.of(Values.Y, Values.l2))
+            moveRfromL2toL1 = moveRfromL2toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+
+            moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Y, Values.l3))
+            moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+
+            moveRfromL4toL2 = moveRfromL4toL2.apply(VariableAssignment.of(Values.Y, Values.l4))
+            moveRfromL4toL2 = moveRfromL4toL2.apply(VariableAssignment.of(Values.Z, Values.l2))
+
+            moveRfromL4toL3 = moveRfromL4toL3.apply(VariableAssignment.of(Values.Y, Values.l4))
+            moveRfromL4toL3 = moveRfromL4toL3.apply(VariableAssignment.of(Values.Z, Values.l3))
+
+            moveRfromL5toL4 = moveRfromL5toL4.apply(VariableAssignment.of(Values.Y, Values.l5))
+            moveRfromL5toL4 = moveRfromL5toL4.apply(VariableAssignment.of(Values.Z, Values.l4))
+
+            moveRfromL6toL2 = moveRfromL6toL2.apply(VariableAssignment.of(Values.Y, Values.l6))
+            moveRfromL6toL2 = moveRfromL6toL2.apply(VariableAssignment.of(Values.Z, Values.l2))
+
+            moveRfromL6L5 = moveRfromL6L5.apply(VariableAssignment.of(Values.Y, Values.l6))
+            moveRfromL6L5 = moveRfromL6L5.apply(VariableAssignment.of(Values.Z, Values.l5))
+
+            moveRfromL7toL5 = moveRfromL7toL5.apply(VariableAssignment.of(Values.Y, Values.l7))
+            moveRfromL7toL5 = moveRfromL7toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+
+            moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Y, Values.l5))
+            moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+
+            moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Y, Values.l3))
+            moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+        }
     }
 }

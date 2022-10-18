@@ -72,7 +72,7 @@ data class ExplanationImpl(
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
                 val operator = retrieveOperator()
                 // Qui
-                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement())
+                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceOperator())
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
             is QuestionPlanSatisfiability -> novelPlan = question.plan
@@ -100,7 +100,7 @@ data class ExplanationImpl(
         return newOperator
     }
 
-    private fun List<Operator>.replaceElement(): List<Operator> {
+    private fun List<Operator>.replaceOperator(): List<Operator> {
         val newList = mutableListOf<Operator>()
         this.toMutableList().map { operator ->
             if ("^" in operator.name) {

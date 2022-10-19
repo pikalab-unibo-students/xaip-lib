@@ -15,6 +15,9 @@ import domain.BlockWorldDomain.Problems
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.GraphDomain.Operators.moveRfromL1toL5
+import domain.GraphDomain.Problems as GraphProblem
 
 class QuestionReplaceOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
@@ -97,6 +100,29 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
         explanation.addList shouldBe listOf(pickC, putdownC)
         explanation.deleteList shouldBe emptyList()
         explanation.existingList shouldBe listOf(pickA, stackAB)
+        explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `Replace moveRfromL1toL2 with moveRfromL1toL5 in the plan`() {
+        val planRfromL1toL2 = Plan.of(listOf(moveRfromL1toL2))
+        val graphProblemRtoX = GraphProblem.rToX
+        val q3 = QuestionReplaceOperator(
+            graphProblemRtoX,
+            planRfromL1toL2,
+            moveRfromL1toL2,
+            0,
+            null,
+            moveRfromL1toL5
+        )
+
+        val explanation = Explanation.of(q3, explainer)
+
+        explanation.originalPlan shouldBe q3.plan
+        explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL5))
+        explanation.addList shouldBe listOf(moveRfromL1toL5)
+        explanation.deleteList shouldBe listOf(moveRfromL1toL2)
+        explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 }

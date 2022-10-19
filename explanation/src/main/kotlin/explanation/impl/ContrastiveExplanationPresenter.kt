@@ -14,7 +14,7 @@ class ContrastiveExplanationPresenter(override val explanation: Explanation) : A
             |  ${ExplanationImpl::originalPlan.name}=${explanation.originalPlan},
             |  ${ExplanationImpl::novelPlan.name}=${explanation.novelPlan},
             |   It has $additionalOperators additional operators,
-            |  - Diff(original plan VS new plan):
+            |  — Diff(original plan VS new plan):
             |  ${ExplanationImpl::addList.name}=${explanation.addList},
             |  ${ExplanationImpl::deleteList.name}=${explanation.deleteList},
             |  ${ExplanationImpl::existingList.name}=${explanation.existingList}

@@ -2,9 +2,12 @@ package explanation.impl
 
 import FluentBasedGoal
 import explanation.Explanation
-import explanation.ExplanationPresenter
 
 class ContrastiveExplanationPresenter(override val explanation: Explanation) : AbstractExplanationPresenter(explanation) {
+    private val operatorsMissing by lazy {
+        explanation.explainer.minimalPlanSelector().operators
+            .filter { !explanation.question.plan.operators.contains(it) }
+    }
     fun contrastiveExplanation(): String {
         if (explanation.isPlanValid()) {
             return """${ContrastiveExplanationPresenter::class.simpleName}(
@@ -18,13 +21,13 @@ class ContrastiveExplanationPresenter(override val explanation: Explanation) : A
             |)
             """.trimMargin()
         } else {
-            return """${ExplanationImpl::explanation.simpleName}(
+            return """${ContrastiveExplanationPresenter::class.simpleName}(
                 | the problem: ${(explanation.question.problem.goal as FluentBasedGoal)
-                .targets} is solvable: ${isProblemSolvable()}
-                | the plan: ${this.originalPlan.operators} is valid: ${isPlanValid()}
-                | plan length acceptable: ${isPlanLengthAcceptable()}
-                | operators missing: ${this.operatorsMissing}
-                | idempotent operators causing errors: ${explanation.idempotentOperatorsWrongOccurrence.entries.map {
+                .targets} is solvable: ${explanation.isProblemSolvable()}
+                | the plan: ${explanation.originalPlan.operators} is valid: ${explanation.isPlanValid()}
+                | plan length acceptable: ${explanation.isPlanLengthAcceptable()}
+                | operators missing: $operatorsMissing
+                | idempotent operators causing errors: ${explanation.areIdempotentOperatorsPresent().entries.map {
                 it.value.operator2
             }}
             """.trimIndent()

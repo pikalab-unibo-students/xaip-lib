@@ -79,6 +79,7 @@ object GraphDomain {
     }
 
     object Fluents {
+        val atRlocationY = Fluent.positive(Predicates.atLocation, Values.r, Values.Y)
         val atRobotlocation1 = Fluent.positive(Predicates.atLocation, Values.r, Values.l1)
         val atRobotlocation2 = Fluent.positive(Predicates.atLocation, Values.r, Values.l2)
         val atRobotlocation3 = Fluent.positive(Predicates.atLocation, Values.r, Values.l3)
@@ -150,6 +151,7 @@ object GraphDomain {
     }
 
     object Goals {
+        val atRobotAtLocationY = FluentBasedGoal.of(Fluents.atRlocationY)
         val atRobotAtlocation3 = FluentBasedGoal.of(Fluents.atRobotlocation3)
         val inContainerLocation4 = FluentBasedGoal.of(
             Fluents.inContainer1location4
@@ -174,6 +176,13 @@ object GraphDomain {
     }
 
     object Problems {
+        val rToX = Problem.of(
+            domain = Domains.graphWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtLocationY
+        )
+
         val robotFromLoc1ToLoc2 = Problem.of(
             domain = Domains.graphWorld,
             objects = ObjectSets.all,

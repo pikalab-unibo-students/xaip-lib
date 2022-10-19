@@ -1,13 +1,13 @@
 package explanation
 
 import domain.BlockWorldDomain.Operators
-import domain.GraphDomain
+import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import domain.BlockWorldDomain.Problems as BlockWorldProblem
 import domain.GraphDomain.Problems as GraphProblem
-// import domain.GraphDomain.Operators.
 
 class QuestionPlanProposalTest : AnnotationSpec() {
     private val blockWorldproblem = BlockWorldProblem.armNotEmpty
@@ -18,12 +18,18 @@ class QuestionPlanProposalTest : AnnotationSpec() {
 
     private val graphProblemRtoX = GraphProblem.rToX
     private val graphProblemRfromLoc1Loc2 = GraphProblem.robotFromLoc1ToLoc2
-    private val planRfromL1toL2 = Plan.of(listOf(GraphDomain.Operators.moveRfromL1toL2))
-    private val planRfromL1toL5 = Plan.of(listOf(GraphDomain.Operators.moveRfromL1toL5))
+    private val planRfromL1toL2 = Plan.of(listOf(moveRfromL1toL2))
+    private val planRfromL1toL5 = Plan.of(listOf(moveRfromL1toL5))
 
     @Test
     fun `Test valid plan`() {
-        val q4 = QuestionPlanProposal(blockWorldproblem, planPickBstackBApickC, planPickB, planPickB.operators.first(), 0)
+        val q4 = QuestionPlanProposal(
+            blockWorldproblem,
+            planPickBstackBApickC,
+            planPickB,
+            planPickB.operators.first(),
+            0
+        )
         val explanation = Explanation.of(q4, explainer)
         explanation.isPlanValid() shouldBe true
     }
@@ -38,7 +44,8 @@ class QuestionPlanProposalTest : AnnotationSpec() {
     @Test
     fun `Graph domain test valid plan`() {
         val q4 = QuestionPlanProposal(
-            graphProblemRtoX, planRfromL1toL2,
+            graphProblemRtoX,
+            planRfromL1toL2,
             planRfromL1toL5,
             planRfromL1toL2.operators.first(),
             0
@@ -48,15 +55,16 @@ class QuestionPlanProposalTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Graph domain est incorrect plan`() {
+    fun `Graph domain test incorrect plan`() {
         val q4 = QuestionPlanProposal(
             graphProblemRfromLoc1Loc2,
-            planRfromL1toL2,
             planRfromL1toL5,
+            planRfromL1toL2,
             planRfromL1toL2.operators.first(),
             0
         )
         val explanation = Explanation.of(q4, explainer)
+        println(explanation.novelPlan)
         explanation.isPlanValid() shouldBe false
     }
 }

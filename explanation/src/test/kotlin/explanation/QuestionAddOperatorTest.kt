@@ -6,10 +6,14 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
+import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.GraphDomain.Operators.moveRfromL2toL1
+import domain.GraphDomain.Operators.loadC1fromL2onR
+import domain.GraphDomain.Operators.moveRfromL2toL4
+import domain.GraphDomain.Operators.unloadC1fromRtoL4
 import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-
 class QuestionAddOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
@@ -69,18 +73,18 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Add useless operator (moveRfromL2toL1) to the plan in robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4 problem`() {
+    fun `Add useless operator (moveRfromL2toL1) to the plan`() {
         val q1 = QuestionAddOperator(
             GraphDomain.Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4,
             Plan.of(
                 listOf(
-                    GraphDomain.Operators.moveRfromL1toL2,
-                    GraphDomain.Operators.loadC1fromL2onR,
-                    GraphDomain.Operators.moveRfromL2toL4,
-                    GraphDomain.Operators.unloadC1fromRtoL4
+                    moveRfromL1toL2,
+                    loadC1fromL2onR,
+                    moveRfromL2toL4,
+                    unloadC1fromRtoL4
                 )
             ),
-            GraphDomain.Operators.moveRfromL2toL1,
+            moveRfromL2toL1,
             0
         )
 
@@ -94,8 +98,12 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     fun `Add useless operator (moveRfromL2toL1) to the plan moveRfromL1toL2 in robotFromLoc1ToLoc2 problem`() {
         val q1 = QuestionAddOperator(
             GraphDomain.Problems.robotFromLoc1ToLoc2,
-            Plan.of(listOf(GraphDomain.Operators.moveRfromL1toL2)),
-            GraphDomain.Operators.moveRfromL2toL1,
+            Plan.of(
+                listOf(
+                    moveRfromL1toL2
+                )
+            ),
+            moveRfromL2toL1,
             0
         )
 

@@ -31,7 +31,7 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
 
     @Test
     fun `GraphDomain plan valid`() {
-        val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)))
+        val q5 = QuestionPlanSatisfiability(Problems., Plan.of(listOf(pickA)))
         val explanation = Explanation.of(q5, explainer)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true

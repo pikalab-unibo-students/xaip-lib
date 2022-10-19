@@ -43,7 +43,7 @@ data class ExplanationImpl(
     private val simulator = Simulator.of()
 
     private val minimalPlan by lazy {
-        explainer.minimalPlanSelector { explainer.planner.plan(question.problem).first() }
+        explainer.minimalPlanSelector()
     }
 
     private val operatorsMissing by lazy {

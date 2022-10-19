@@ -15,7 +15,6 @@ import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 class QuestionAddOperatorTest : AnnotationSpec() {
-    private val explainer = Explainer.of(Planner.strips())
 
     @Test
     fun `Execute pickA to reach the goal (pickA replace pickB in the plan to solve armNotEmptyProblem)`() {
@@ -26,7 +25,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q1, explainer)
+        val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA))
         explanation.addList shouldBe listOf(pickA)
@@ -44,7 +43,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q1, explainer)
+        val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickC))
         explanation.addList shouldBe listOf(pickC)
@@ -62,7 +61,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q1, explainer)
+        val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
 
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickC))
@@ -88,7 +87,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q1, explainer)
+        val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.isPlanLengthAcceptable() shouldBe true
         explanation.isProblemSolvable() shouldBe true
         explanation.isPlanValid() shouldBe true

@@ -10,12 +10,13 @@ import explanation.impl.ExplainerImpl
 interface Explainer {
 
     val planner: Planner
+    val question: Question
 
-    fun explain(question: Question): Explanation
+    fun explain(): Explanation
 
-    fun minimalPlanSelector(f: () -> Plan): Plan
+    fun minimalPlanSelector(): Plan
 
     companion object {
-        fun of(planner: Planner): Explainer = ExplainerImpl(planner)
+        fun of(planner: Planner, question: Question): Explainer = ExplainerImpl(planner, question)
     }
 }

@@ -12,16 +12,14 @@ import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAD
 import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Problems
+import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.GraphDomain.Operators.moveRfromL1toL2
-import domain.GraphDomain.Operators.moveRfromL1toL5
 import domain.GraphDomain.Problems as GraphProblem
 
 class QuestionReplaceOperatorTest : AnnotationSpec() {
-    private val explainer = Explainer.of(Planner.strips())
-
     @Test
     fun `Replace pickC with pickD in stackZWpickX problem`() {
         val q3 = QuestionReplaceOperator(
@@ -41,8 +39,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             ),
             pickD
         )
-
-        val explanation = Explanation.of(q3, explainer)
+        val explanation = Explainer.of(Planner.strips(), q3).explain()
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickD))
@@ -71,8 +68,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             ),
             unstackAB
         )
-
-        val explanation = Explanation.of(q3, explainer)
+        val explanation = Explainer.of(Planner.strips(), q3).explain()
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, unstackAB, stackAD, pickC))
@@ -92,8 +88,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             BlockWorldDomain.States.initial,
             pickC
         )
-
-        val explanation = Explanation.of(q3, explainer)
+        val explanation = Explainer.of(Planner.strips(), q3).explain()
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickC, putdownC, pickA, stackAB))
@@ -115,8 +110,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             null,
             moveRfromL1toL5
         )
-
-        val explanation = Explanation.of(q3, explainer)
+        val explanation = Explainer.of(Planner.strips(), q3).explain()
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL5))

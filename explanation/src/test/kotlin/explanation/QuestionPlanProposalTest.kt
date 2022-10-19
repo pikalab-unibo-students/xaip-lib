@@ -14,7 +14,6 @@ class QuestionPlanProposalTest : AnnotationSpec() {
     private val planPickBStackBA = Plan.of(listOf(Operators.pickB, Operators.stackBA))
     private val planPickB = Plan.of(listOf(Operators.pickB))
     private val planPickBstackBApickC = Plan.of(listOf(Operators.pickB, Operators.stackBA, Operators.pickC))
-    private val explainer = Explainer.of(Planner.strips())
 
     private val graphProblemRtoX = GraphProblem.rToX
     private val graphProblemRfromLoc1Loc2 = GraphProblem.robotFromLoc1ToLoc2
@@ -30,7 +29,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planPickB.operators.first(),
             0
         )
-        val explanation = Explanation.of(q4, explainer)
+        val explanation = Explainer.of(Planner.strips(), q4).explain()
         explanation.isPlanValid() shouldBe true
     }
 
@@ -43,7 +42,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planPickB.operators.first(),
             0
         )
-        val explanation = Explanation.of(q4, explainer)
+        val explanation = Explainer.of(Planner.strips(), q4).explain()
         explanation.isPlanValid() shouldBe false
     }
 
@@ -56,7 +55,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planRfromL1toL2.operators.first(),
             0
         )
-        val explanation = Explanation.of(q4, explainer)
+        val explanation = Explainer.of(Planner.strips(), q4).explain()
         explanation.isPlanValid() shouldBe true
     }
 
@@ -69,7 +68,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planRfromL1toL2.operators.first(),
             0
         )
-        val explanation = Explanation.of(q4, explainer)
+        val explanation = Explainer.of(Planner.strips(), q4).explain()
         println(explanation.novelPlan)
         explanation.isPlanValid() shouldBe false
     }

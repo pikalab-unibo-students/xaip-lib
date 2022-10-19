@@ -17,7 +17,6 @@ import io.kotest.matchers.shouldBe
 import domain.GraphDomain.Problems as GraphProblem
 
 class QuestionRemoveOperatorTest : AnnotationSpec() {
-    private val explainer = Explainer.of(Planner.strips())
 
     @Test
     fun `Remove pickA from the plan to solve the armNotEmpty problem`() {
@@ -28,7 +27,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q2, explainer)
+        val explanation = Explainer.of(Planner.strips(), q2).explain()
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickB))
         explanation.addList shouldBe listOf(pickB)
@@ -46,7 +45,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explanation.of(q2, explainer)
+        val explanation = Explainer.of(Planner.strips(), q2).explain()
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickC, stackCA, pickD, stackDC))
         explanation.addList shouldBe listOf(pickC, stackCA, stackDC)
@@ -65,7 +64,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             moveRfromL1toL2,
             1
         )
-        val explanation = Explanation.of(q2, explainer)
+        val explanation = Explainer.of(Planner.strips(), q2).explain()
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(emptyList())
         explanation.addList shouldBe emptyList()

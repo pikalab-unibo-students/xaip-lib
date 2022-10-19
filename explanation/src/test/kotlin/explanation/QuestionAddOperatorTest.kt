@@ -6,9 +6,7 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
-import explanation.impl.ExplanationExtended
 import explanation.impl.QuestionAddOperator
-import explanation.utils.isIdempotentOperators
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,7 +14,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
     @Test
-    fun `Use pickA instead of pick B in armNotEmpty problem`() {
+    fun `Execute pickA to reach the goal (pickA replace pickB in the plan to solve armNotEmptyProblem)`() {
         val q1 = QuestionAddOperator(
             Problems.armNotEmpty,
             Plan.of(listOf(pickB)),
@@ -34,7 +32,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Use pickC instead of pick B in armNotEmpty problem`() {
+    fun `Execute pickC to reach the goal (pickC replace pickB in the plan to solve armNotEmptyProblem)`() {
         val q1 = QuestionAddOperator(
             Problems.armNotEmpty,
             Plan.of(listOf(pickB)),
@@ -52,7 +50,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Use pickA instead of pickC in pickC problem`() {
+    fun `Add useless operator (pickA) to the plan pickC in pickC problem`() {
         val q1 = QuestionAddOperator(
             Problems.pickC,
             Plan.of(listOf(pickC)),
@@ -71,25 +69,29 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Graph domain test correct plan`() {
+    fun `Add useless operator (moveRfromL2toL1) to the plan in robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4 problem`() {
         val q1 = QuestionAddOperator(
-            GraphDomain.Problems.robotFromLoc1ToLoc2,
-            Plan.of(listOf(GraphDomain.Operators.moveRfromL1toL2)),
-            GraphDomain.Operators.loadC1fromL2onR,
+            GraphDomain.Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4,
+            Plan.of(
+                listOf(
+                    GraphDomain.Operators.moveRfromL1toL2,
+                    GraphDomain.Operators.loadC1fromL2onR,
+                    GraphDomain.Operators.moveRfromL2toL4,
+                    GraphDomain.Operators.unloadC1fromRtoL4
+                )
+            ),
+            GraphDomain.Operators.moveRfromL2toL1,
             0
         )
 
         val explanation = Explanation.of(q1, explainer)
-
-        val explanationExtended = ExplanationExtended(explanation)
-        explanationExtended.isPlanLengthAcceptable() shouldBe true
-        explanationExtended.isProblemSolvable() shouldBe true
-        GraphDomain.Operators.loadC1fromL2onR
-            .isIdempotentOperators(GraphDomain.Operators.unloadC1fromRtoL2) shouldBe true
+        explanation.isPlanLengthAcceptable() shouldBe true
+        explanation.isProblemSolvable() shouldBe true
+        explanation.isPlanValid() shouldBe true
     }
 
     @Test
-    fun `Graph domain test incorrect plan`() {
+    fun `Add useless operator (moveRfromL2toL1) to the plan moveRfromL1toL2 in robotFromLoc1ToLoc2 problem`() {
         val q1 = QuestionAddOperator(
             GraphDomain.Problems.robotFromLoc1ToLoc2,
             Plan.of(listOf(GraphDomain.Operators.moveRfromL1toL2)),
@@ -98,12 +100,9 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         )
 
         val explanation = Explanation.of(q1, explainer)
-
-        val explanationExtended = ExplanationExtended(explanation)
-        explanationExtended.isPlanLengthAcceptable() shouldBe true
-        explanationExtended.isProblemSolvable() shouldBe true
-        GraphDomain.Operators.loadC1fromL2onR
-            .isIdempotentOperators(GraphDomain.Operators.unloadC1fromRtoL2) shouldBe true
-        explanationExtended.idempotentList().contains(pickA) shouldBe true
+        println(explanation.novelPlan.operators)
+        explanation.isPlanLengthAcceptable() shouldBe true
+        explanation.isProblemSolvable() shouldBe true
+        explanation.isPlanValid() shouldBe false
     }
 }

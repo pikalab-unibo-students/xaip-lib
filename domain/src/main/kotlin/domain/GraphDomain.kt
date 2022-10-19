@@ -94,20 +94,24 @@ object GraphDomain {
 
         val connectedL1L2 = Fluent.positive(Predicates.connected, Values.l1, Values.l2)
         val connectedL1L3 = Fluent.positive(Predicates.connected, Values.l1, Values.l3)
-        val connectedL2L4 = Fluent.positive(Predicates.connected, Values.l2, Values.l4)
-        val connectedL3L4 = Fluent.positive(Predicates.connected, Values.l3, Values.l4)
-        val connectedL4L5 = Fluent.positive(Predicates.connected, Values.l4, Values.l5)
         val connectedL1L5 = Fluent.positive(Predicates.connected, Values.l1, Values.l5)
+
+        val connectedL2L1 = Fluent.positive(Predicates.connected, Values.l2, Values.l1)
+        val connectedL2L4 = Fluent.positive(Predicates.connected, Values.l2, Values.l4)
         val connectedL2L6 = Fluent.positive(Predicates.connected, Values.l2, Values.l6)
+
+        val connectedL3L1 = Fluent.positive(Predicates.connected, Values.l3, Values.l1)
+        val connectedL3L4 = Fluent.positive(Predicates.connected, Values.l3, Values.l4)
+
+        val connectedL4L2 = Fluent.positive(Predicates.connected, Values.l4, Values.l2)
+        val connectedL4L3 = Fluent.positive(Predicates.connected, Values.l4, Values.l3)
+        val connectedL4L5 = Fluent.positive(Predicates.connected, Values.l4, Values.l5)
+
+        val connectedL5L1 = Fluent.positive(Predicates.connected, Values.l5, Values.l1)
+        val connectedL5L4 = Fluent.positive(Predicates.connected, Values.l5, Values.l4)
         val connectedL5L6 = Fluent.positive(Predicates.connected, Values.l5, Values.l6)
         val connectedL5L7 = Fluent.positive(Predicates.connected, Values.l4, Values.l7)
 
-        val connectedL2L1 = Fluent.positive(Predicates.connected, Values.l2, Values.l1)
-        val connectedL3L1 = Fluent.positive(Predicates.connected, Values.l3, Values.l1)
-        val connectedL4L2 = Fluent.positive(Predicates.connected, Values.l4, Values.l2)
-        val connectedL4L3 = Fluent.positive(Predicates.connected, Values.l4, Values.l3)
-        val connectedL5L4 = Fluent.positive(Predicates.connected, Values.l5, Values.l4)
-        val connectedL5L1 = Fluent.positive(Predicates.connected, Values.l5, Values.l1)
         val connectedL6L2 = Fluent.positive(Predicates.connected, Values.l6, Values.l2)
         val connectedL6L5 = Fluent.positive(Predicates.connected, Values.l6, Values.l5)
         val connectedL7L5 = Fluent.positive(Predicates.connected, Values.l7, Values.l5)
@@ -151,6 +155,7 @@ object GraphDomain {
     }
 
     object Goals {
+        val atRobotAtlocation2 = FluentBasedGoal.of(Fluents.atRobotlocation2)
         val atRobotAtLocationY = FluentBasedGoal.of(Fluents.atRlocationY)
         val atRobotAtlocation3 = FluentBasedGoal.of(Fluents.atRobotlocation3)
         val inContainerLocation4 = FluentBasedGoal.of(
@@ -187,7 +192,7 @@ object GraphDomain {
             domain = Domains.graphWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.atRobotAtlocation3
+            goal = Goals.atRobotAtlocation2
         )
 
         val inContainerLocation4 = Problem.of(

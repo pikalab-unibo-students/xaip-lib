@@ -22,7 +22,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
     private val planRfromL1toL5 = Plan.of(listOf(moveRfromL1toL5))
 
     @Test
-    fun `Test valid plan`() {
+    fun `BlockWorld domain test valid plan`() {
         val q4 = QuestionPlanProposal(
             blockWorldproblem,
             planPickBstackBApickC,
@@ -35,8 +35,14 @@ class QuestionPlanProposalTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Test incorrect plan`() {
-        val q4 = QuestionPlanProposal(blockWorldproblem, planPickBStackBA, planPickB, planPickB.operators.first(), 0)
+    fun `BlockWorld domain test incorrect plan`() {
+        val q4 = QuestionPlanProposal(
+            blockWorldproblem,
+            planPickBStackBA,
+            planPickB,
+            planPickB.operators.first(),
+            0
+        )
         val explanation = Explanation.of(q4, explainer)
         explanation.isPlanValid() shouldBe false
     }

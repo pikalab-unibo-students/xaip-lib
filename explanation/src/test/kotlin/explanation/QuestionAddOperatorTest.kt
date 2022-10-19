@@ -1,6 +1,9 @@
 package explanation
 
-import domain.BlockWorldDomain.Operators
+import domain.BlockWorldDomain.Operators.pickA
+import domain.BlockWorldDomain.Operators.pickB
+import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.putdownB
 import domain.BlockWorldDomain.Problems
 import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
@@ -12,17 +15,53 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     fun `Use pickA instead of pick B in armNotEmpty problem`() {
         val q1 = QuestionAddOperator(
             Problems.armNotEmpty,
-            Plan.of(listOf(Operators.pickB)),
-            Operators.pickA,
+            Plan.of(listOf(pickB)),
+            pickA,
             0
         )
 
         val explanation = Explanation.of(q1, explainer)
         explanation.originalPlan shouldBe q1.plan
-        explanation.novelPlan shouldBe Plan.of(listOf(Operators.pickA))
-        explanation.addList shouldBe listOf(Operators.pickA)
-        explanation.deleteList shouldBe listOf(Operators.pickB)
+        explanation.novelPlan shouldBe Plan.of(listOf(pickA))
+        explanation.addList shouldBe listOf(pickA)
+        explanation.deleteList shouldBe listOf(pickB)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `Use pickC instead of pick B in armNotEmpty problem`() {
+        val q1 = QuestionAddOperator(
+            Problems.armNotEmpty,
+            Plan.of(listOf(pickB)),
+            pickC,
+            0
+        )
+
+        val explanation = Explanation.of(q1, explainer)
+        explanation.originalPlan shouldBe q1.plan
+        explanation.novelPlan shouldBe Plan.of(listOf(pickC))
+        explanation.addList shouldBe listOf(pickC)
+        explanation.deleteList shouldBe listOf(pickB)
+        explanation.existingList shouldBe emptyList()
+        explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `Test error`() {
+        val q1 = QuestionAddOperator(
+            Problems.armNotEmpty,
+            Plan.of(listOf(pickB)),
+            putdownB,
+            0
+        )
+
+        val explanation = Explanation.of(q1, explainer)
+        explanation.originalPlan shouldBe q1.plan
+        explanation.novelPlan shouldBe Plan.of(listOf(pickB, putdownB))
+        explanation.addList shouldBe listOf(pickC)
+        explanation.deleteList shouldBe listOf(pickB)
+        explanation.existingList shouldBe emptyList()
+        explanation.isPlanValid() shouldBe false
     }
 }

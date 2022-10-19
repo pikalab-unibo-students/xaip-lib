@@ -3,6 +3,7 @@ package explanation
 import Operator
 import Plan
 import explanation.impl.ExplanationImpl
+import explanation.utils.IdempotentOperator
 
 /**
  *An [Explanation] is an entity that give a contrastive explanation about a [Plan].
@@ -75,4 +76,6 @@ interface Explanation {
             explainer: Explainer
         ): Explanation = ExplanationImpl(question, explainer)
     }
+
+    fun areIdempotentOperatorsPresent(): Map<Operator, IdempotentOperator>
 }

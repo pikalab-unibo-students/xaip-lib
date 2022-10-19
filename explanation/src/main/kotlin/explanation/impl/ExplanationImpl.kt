@@ -100,6 +100,10 @@ data class ExplanationImpl(
 
     override fun minimalSolutionLength(): Int = minimalPlan.operators.size
 
+    // TODO(Sta roba fatta così fa schifo)
+    //  è logicamente sbagliata perché teoricamente filtro solo
+    // le azioni idempotenti che mi invalidano il piano quindi sto nome non ci sta)
+    override fun areIdempotentOperatorsPresent() = idempotentOperatorsWrongOccurrence
     override fun toString(): String {
         if (isPlanValid() && question !is QuestionPlanSatisfiability) {
             return """${ExplanationImpl::class.simpleName}(

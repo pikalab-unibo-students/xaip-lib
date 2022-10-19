@@ -93,24 +93,4 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.isProblemSolvable() shouldBe true
         explanation.isPlanValid() shouldBe true
     }
-
-    @Test
-    fun `Add useless operator (moveRfromL2toL1) to the plan moveRfromL1toL2 in robotFromLoc1ToLoc2 problem`() {
-        val q1 = QuestionAddOperator(
-            GraphDomain.Problems.robotFromLoc1ToLoc2,
-            Plan.of(
-                listOf(
-                    moveRfromL1toL2
-                )
-            ),
-            moveRfromL2toL1,
-            0
-        )
-
-        val explanation = Explanation.of(q1, explainer)
-        println(explanation.novelPlan.operators)
-        explanation.isPlanLengthAcceptable() shouldBe true
-        explanation.isProblemSolvable() shouldBe true
-        explanation.isPlanValid() shouldBe false
-    }
 }

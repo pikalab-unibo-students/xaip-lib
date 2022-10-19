@@ -41,16 +41,13 @@ data class ExplanationImpl(
         }
     }
     private val simulator = Simulator.of()
-
     private val minimalPlan by lazy {
         explainer.minimalPlanSelector()
     }
-
     private val operatorsMissing by lazy {
         minimalPlan.operators.filter { !question.plan.operators.contains(it) }
     }
-
-    private val idempotentOperatorsWrongOccurence by lazy {
+    private val idempotentOperatorsWrongOccurrence by lazy {
         buildIdempotendMinimalOperatorsRequiredList(
             minimalPlan.operators,
             question.problem.domain.actions,
@@ -122,7 +119,7 @@ data class ExplanationImpl(
                 | the plan: ${this.originalPlan.operators} is valid: ${isPlanValid()}
                 | plan length acceptable: ${isPlanLengthAcceptable()}
                 | operators missing: ${this.operatorsMissing}
-                | idempotent operators causing errors: ${idempotentOperatorsWrongOccurence.entries.map {
+                | idempotent operators causing errors: ${idempotentOperatorsWrongOccurrence.entries.map {
                 it.value.operator2
             }}
             """.trimIndent()

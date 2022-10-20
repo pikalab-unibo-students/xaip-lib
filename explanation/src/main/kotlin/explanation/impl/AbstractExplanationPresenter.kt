@@ -18,26 +18,27 @@ open class AbstractExplanationPresenter protected constructor(
         }
     }
     private val isPlanMinimalSolution by lazy {
-        if (isProposedPlanMinimalSolution) {
-            "The problem is not a minimal solution; you can remove:$additionalOperators operators"
+        if (!isProposedPlanMinimalSolution) {
+            "The problem is not a minimal solution; you can remove:$additionalOperators operators\n"
         } else {
-            "The proposed plan is a minimal solution."
+            "The proposed plan is a minimal solution.\n"
         }
     }
 
     private val isPlanLengthAcceptable by lazy {
         if (!explanation.isPlanLengthAcceptable()) {
-            "The length of the plan is unaccptable; $additionalOperators are missing."
+            "The length of the plan is unacceptable; $additionalOperators are missing."
         } else {
-            ""
+            "The length of the plan is acceptable;" +
+                " there are $additionalOperators operators respect the minimal solution."
         }
     }
 
     private val areRequiredOperatorsPresent by lazy {
         if (explanation.areIdempotentOperatorsPresent().isNotEmpty()) {
-            val str = ""
+            var str = ""
             explanation.areIdempotentOperatorsPresent().map {
-                str.plus(
+                str = str.plus(
                     "${it.value.operator2?.name} invalidates ${it.key.name}'s effects" +
                         "you should remove ${it.value.occurence2 - it.value.occurence1 + 1 } " +
                         "instances of ${it.value.operator2?.name}\n"
@@ -53,22 +54,20 @@ open class AbstractExplanationPresenter protected constructor(
         if (explanation.isPlanValid()) {
             "The proposed plan is valid.\n"
         } else {
-            "The proposed plan is not a valid solution for the problem"
+            "The proposed plan is not a valid solution for the problem.\n"
         }
     }
 
     override fun present(): String {
-        val finalString = problemHasSolution
+        var finalString = problemHasSolution
         if (explanation.isProblemSolvable()) {
-            finalString.plus(isPlanValid)
+            finalString = finalString.plus(isPlanValid)
             if (explanation.isPlanValid()) {
-                if (!isProposedPlanMinimalSolution) {
-                    finalString.plus(isPlanMinimalSolution)
-                }
+                finalString = finalString.plus(isPlanMinimalSolution)
             } else {
-                finalString.plus(isPlanLengthAcceptable)
+                finalString = finalString.plus(isPlanLengthAcceptable)
                 if (explanation.isPlanLengthAcceptable()) {
-                    finalString.plus(areRequiredOperatorsPresent)
+                    finalString = finalString.plus(areRequiredOperatorsPresent)
                 }
             }
         }

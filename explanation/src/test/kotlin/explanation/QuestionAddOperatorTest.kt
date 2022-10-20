@@ -6,11 +6,12 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
+import domain.GraphDomain.Operators.loadC1fromL2onR
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL2toL1
-import domain.GraphDomain.Operators.loadC1fromL2onR
 import domain.GraphDomain.Operators.moveRfromL2toL4
 import domain.GraphDomain.Operators.unloadC1fromRtoL4
+import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -32,6 +33,9 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe listOf(pickB)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
     }
 
     @Test

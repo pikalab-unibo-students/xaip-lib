@@ -3,6 +3,7 @@ package explanation
 import domain.BlockWorldDomain.Operators
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
+import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -44,6 +45,9 @@ class QuestionPlanProposalTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips(), q4).explain()
         explanation.isPlanValid() shouldBe false
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
     }
 
     @Test

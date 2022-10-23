@@ -4,7 +4,7 @@ import FluentBasedGoal
 import explanation.Explanation
 
 class ContrastiveExplanationPresenter(explanation: Explanation) :
-    AbstractExplanationPresenter(explanation) {
+    BaseExplanationPresenter(explanation) {
     private val operatorsMissing by lazy {
         explanation.explainer.minimalPlanSelector().operators
             .filter { !explanation.question.plan.operators.contains(it) }

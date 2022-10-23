@@ -4,14 +4,25 @@ import explanation.Explanation
 import explanation.ExplanationPresenter
 import impl.res.FrameworkUtilities.then
 
-/***
+/**
  * Assunzione di base i goal DEVONO essere GROUND.
  * Assunzione 2 implicitamente gestiamo la spiegazioni come
  * se il piano di lunghezza minima fosse la soluzione ottima?
  * Perché banalmente perché non abbiamo altre metriche
  * per testare l'ottimalità del piano.
+ *
+ * Note: inizialmente questa era pensata come una classe pseudo abstract
+ * non istanziabile, ma in realtà non abbiamo due tipi distinti di explanation
+ * le contrastive sono sottotipi del tipo di base.
+ * Quindi mi sa che sia più sensato rendere questa la classe base e bona.
+ *
  */
+/*
 open class AbstractExplanationPresenter protected constructor(
+    override val explanation: Explanation
+) : ExplanationPresenter {
+    */
+open class BaseExplanationPresenter(
     override val explanation: Explanation
 ) : ExplanationPresenter {
     private val minimalSolution by lazy {

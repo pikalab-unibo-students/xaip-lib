@@ -32,6 +32,10 @@ class QuestionPlanProposalTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips(), q4).explain()
         explanation.isPlanValid() shouldBe true
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
+
     }
 
     @Test

@@ -2,26 +2,43 @@ package explanation.impl
 
 import explanation.Explanation
 import explanation.ExplanationPresenter
-import kotlin.math.abs
+import impl.res.FrameworkUtilities.then
 
+/***
+ * Assunzione di base i goal DEVONO essere GROUND.
+ * Assunzione 2 implicitamente gestiamo la spiegazioni come
+ * se il piano di lunghezza minima fosse la soluzione ottima?
+ * Perché banalmente perché non abbiamo altre metriche
+ * per testare l'ottimalità del piano.
+ */
 open class AbstractExplanationPresenter protected constructor(
     override val explanation: Explanation
 ) : ExplanationPresenter {
-    val additionalOperators = abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
-    private val isProposedPlanMinimalSolution =
-        explanation.minimalSolutionLength() == explanation.novelPlan.operators.size
-    private val problemHasSolution by lazy {
+    private val minimalSolution by lazy {
+        explanation.explainer.minimalPlanSelector()
+    }
+
+    /**
+     * Numero di operatori aggiuntivi rispetto al piano di lunghezza minima
+     */
+    private val additionalOperators = explanation.novelPlan.operators.size - explanation.minimalSolutionLength()
+
+    private val isProposedPlanMinimalPlan = ((additionalOperators == 0) then true) ?: false
+
+    private val isProblemSolvable by lazy {
         if (explanation.isProblemSolvable()) {
             "The problem is solvable.\n"
         } else {
             "The problem is not solvable.\n"
         }
     }
+
     private val isPlanMinimalSolution by lazy {
-        if (!isProposedPlanMinimalSolution) {
-            "The problem is not a minimal solution; you can remove:$additionalOperators operators\n"
+        if (!isProposedPlanMinimalPlan) {
+            "The plan is not the minimal solution; you can remove: $additionalOperators operators." +
+                "The minimal solution is: $minimalSolution"
         } else {
-            "The proposed plan is a minimal solution.\n"
+            "The plan is the minimal solution.\n"
         }
     }
 
@@ -30,11 +47,11 @@ open class AbstractExplanationPresenter protected constructor(
             "The length of the plan is unacceptable; $additionalOperators are missing."
         } else {
             "The length of the plan is acceptable;" +
-                " there are $additionalOperators operators respect the minimal solution."
+                " there are $additionalOperators additional operators respect the minimal solution."
         }
     }
 
-    private val areRequiredOperatorsPresent by lazy {
+    private val `are the idempotent operators of the required operators present` by lazy {
         if (explanation.areIdempotentOperatorsPresent().isNotEmpty()) {
             var str = ""
             explanation.areIdempotentOperatorsPresent().map {
@@ -50,24 +67,33 @@ open class AbstractExplanationPresenter protected constructor(
         }
     }
 
+    private val planContainsRequiredOperators by lazy {
+        if (explanation.novelPlan.operators.containsAll(minimalSolution.operators)) {
+            "The plan contains all the necessary operators.\n"
+        } else {
+            "ERROR: the plan does not contains all the necessary operators.\n"
+        }
+    }
+
     private val isPlanValid by lazy {
         if (explanation.isPlanValid()) {
-            "The proposed plan is valid.\n"
+            "The plan is a valid solution for the problem.\n"
         } else {
-            "The proposed plan is not a valid solution for the problem.\n"
+            "The plan is not a valid solution for the problem.\n"
         }
     }
 
     override fun present(): String {
-        var finalString = problemHasSolution
+        var finalString = isProblemSolvable
         if (explanation.isProblemSolvable()) {
             finalString = finalString.plus(isPlanValid)
+            finalString = finalString.plus(planContainsRequiredOperators)
             if (explanation.isPlanValid()) {
                 finalString = finalString.plus(isPlanMinimalSolution)
             } else {
                 finalString = finalString.plus(isPlanLengthAcceptable)
                 if (explanation.isPlanLengthAcceptable()) {
-                    finalString = finalString.plus(areRequiredOperatorsPresent)
+                    finalString = finalString.plus(`are the idempotent operators of the required operators present`)
                 }
             }
         }

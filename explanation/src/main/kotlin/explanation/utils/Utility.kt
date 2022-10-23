@@ -4,7 +4,6 @@ import Action
 import Effect
 import Fluent
 import Operator
-import explanation.impl.ExplanationImpl
 
 internal fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
     actionList.first { it.name == inputOperator.name }

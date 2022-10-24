@@ -44,16 +44,19 @@ open class BaseExplanationPresenter(
 
     private val isProblemSolvable by lazy {
         if (explanation.isProblemSolvable()) {
-            "The problem is solvable.\n"
+            "The problem ${explanation.question.problem.goal} is solvable.\n"
         } else {
             "The problem is not solvable.\n"
         }
     }
 
+    private val minimalPlan by lazy {
+        "The minimal solution is: $minimalSolution\n"
+    }
+
     private val isPlanMinimalSolution by lazy {
         if (!isProposedPlanMinimalPlan) {
-            "The plan is not the minimal solution; you can remove: $additionalOperators operators." +
-                "The minimal solution is: $minimalSolution"
+            "The plan is not the minimal solution; you can remove: $additionalOperators operators."
         } else {
             "The plan is the minimal solution.\n"
         }
@@ -61,10 +64,10 @@ open class BaseExplanationPresenter(
 
     private val isPlanLengthAcceptable by lazy {
         if (!explanation.isPlanLengthAcceptable()) {
-            "The length of the plan is unacceptable; $additionalOperators operator missing: $operatorsMissing."
+            "The length of the plan is unacceptable; $additionalOperators operator missing: $operatorsMissing.\n"
         } else {
             "The length of the plan is acceptable;" +
-                " there are $additionalOperators additional operators respect the minimal solution."
+                " there are $additionalOperators additional operators respect the minimal solution.\n"
         }
     }
 
@@ -94,9 +97,9 @@ open class BaseExplanationPresenter(
 
     private val isPlanValid by lazy {
         if (explanation.isPlanValid()) {
-            "The plan is a valid solution for the problem.\n"
+            "The plan ${explanation.novelPlan} is a valid solution for the problem.\n"
         } else {
-            "The plan is not a valid solution for the problem.\n"
+            "The plan ${explanation.novelPlan} is not a valid solution for the problem.\n"
         }
     }
 
@@ -104,11 +107,13 @@ open class BaseExplanationPresenter(
         var finalString = isProblemSolvable
         if (explanation.isProblemSolvable()) {
             finalString = finalString.plus(isPlanValid)
-            finalString = finalString.plus(planContainsRequiredOperators)
+            finalString = finalString.plus(minimalPlan)
             if (explanation.isPlanValid()) {
                 finalString = finalString.plus(isPlanMinimalSolution)
+                finalString = finalString.plus(planContainsRequiredOperators)
             } else {
                 finalString = finalString.plus(isPlanLengthAcceptable)
+                finalString = finalString.plus(planContainsRequiredOperators)
                 if (explanation.isPlanLengthAcceptable()) {
                     finalString = finalString.plus(`are the idempotent operators of the required operators present`)
                 }

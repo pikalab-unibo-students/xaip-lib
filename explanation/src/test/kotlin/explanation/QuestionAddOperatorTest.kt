@@ -18,21 +18,21 @@ import io.kotest.matchers.shouldBe
 class QuestionAddOperatorTest : AnnotationSpec() {
 
     @Test
-    fun `Execute pickA to reach the goal (pickA replace pickB in the plan to solve armNotEmptyProblem)`() {
+    fun `Add pickA to stackAB plan (problem stackAB)`() {
         val q1 = QuestionAddOperator(
-            Problems.armNotEmpty,
-            Plan.of(listOf(pickB)),
+            Problems.stackAB,
+            Plan.of(listOf(stackAB)),
             pickA,
             0
         )
 
         val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
-        explanation.novelPlan shouldBe Plan.of(listOf(pickA, pickB))
+        explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
         explanation.addList shouldBe listOf(pickA)
         explanation.deleteList shouldBe emptyList()
-        explanation.existingList shouldBe listOf(pickB)
-        explanation.isPlanValid() shouldBe false
+        explanation.existingList shouldBe listOf(stackAB)
+        explanation.isPlanValid() shouldBe true
 
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")

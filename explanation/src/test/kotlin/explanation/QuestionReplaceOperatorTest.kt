@@ -19,7 +19,7 @@ import domain.GraphDomain.Problems as GraphProblem
 
 class QuestionReplaceOperatorTest : AnnotationSpec() {
     @Test
-    fun `Replace pickC with pickD in stackZWpickX problem`() {
+    fun `Replace stackAB with stackAC in stackZWpickX problem`() {
         val q3 = QuestionReplaceOperator(
             Problems.stackZWpickX,
             Plan.of(listOf(pickA, stackAB, pickD)),
@@ -48,7 +48,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Replace pickC with unstackAB in stackZWpickX problem`() {
+    fun `Replace pickC with pickD in stackZWpickX problem`() {
         val q3 = QuestionReplaceOperator(
             Problems.stackZWpickX,
             Plan.of(listOf(pickA, stackAB, pickC)),

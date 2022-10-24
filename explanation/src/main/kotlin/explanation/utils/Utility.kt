@@ -20,7 +20,7 @@ internal fun Operator.isIdempotentOperators(operator: Operator): Boolean =
         operator.preconditions.conditionMatch(this.effects) &&
         this.args.all { operator.args.contains(it) }
 
-fun List<Operator>.retrieveOperator() =
+fun List<Operator>.retrieveArtificialOperator() =
     this.filter { it.name.contains("^") }.getOrNull(0)
 
 fun Set<Action>.retrieveAction(operator: Operator) =
@@ -41,7 +41,7 @@ private fun createInitialOperator(action: Action, operator: Operator): Operator 
     return newOperator
 }
 
-fun List<Operator>.replaceOperator(actionList: Set<Action>): List<Operator> {
+fun List<Operator>.replaceArtificialOperator(actionList: Set<Action>): List<Operator> {
     val newList = mutableListOf<Operator>()
     this.toMutableList().map { operator ->
         if ("^" in operator.name) {

@@ -8,8 +8,8 @@ import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
 import explanation.utils.buildIdempotendMinimalOperatorsRequiredList
-import explanation.utils.replaceOperator
-import explanation.utils.retrieveOperator
+import explanation.utils.replaceArtificialOperator
+import explanation.utils.retrieveArtificialOperator
 import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
 import impl.res.FrameworkUtilities.then
 
@@ -70,21 +70,15 @@ data class ExplanationImpl(
                 )
             }
             is QuestionAddOperator -> {
-                var planCopy = question.plan.operators.toMutableList()
+                val planCopy = question.plan.operators.toMutableList()
                 planCopy.add(question.focusOn, question.focus)
-                println("plan copy: $planCopy")
-                val operator = planCopy.retrieveOperator()
-                println("operator: $operator")
-                if (operator != null) novelPlan =
-                    Plan.of(planCopy.replaceOperator(question.problem.domain.actions))
-                else
-                     novelPlan = Plan.of(planCopy)
+                novelPlan = (( planCopy.retrieveArtificialOperator() != null) then
+                        Plan.of(planCopy.replaceArtificialOperator(question.problem.domain.actions))) ?: Plan.of(planCopy)
             }
             is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
-                val operator = novelPlan.operators.retrieveOperator()
-                if (operator != null) novelPlan =
-                    Plan.of(novelPlan.operators.replaceOperator(question.problem.domain.actions))
+                if (novelPlan.operators.retrieveArtificialOperator() != null) novelPlan =
+                    Plan.of(novelPlan.operators.replaceArtificialOperator(question.problem.domain.actions))
             }
             is QuestionPlanProposal -> novelPlan = question.alternativePlan
             is QuestionPlanSatisfiability -> novelPlan = question.plan

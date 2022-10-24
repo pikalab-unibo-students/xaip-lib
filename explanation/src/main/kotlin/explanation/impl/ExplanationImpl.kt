@@ -104,31 +104,6 @@ data class ExplanationImpl(
     //  è logicamente sbagliata perché teoricamente filtro solo
     // le azioni idempotenti che mi invalidano il piano quindi sto nome non ci sta)
     override fun areIdempotentOperatorsPresent() = idempotentOperatorsWrongOccurrence
-    override fun toString(): String {
-        if (isPlanValid() && question !is QuestionPlanSatisfiability) {
-            return """${ExplanationImpl::class.simpleName}(
-            |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
-            |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
-            |   It has ${kotlin.math.abs(novelPlan.operators.size - minimalPlan.operators.size)} additional operators,
-            |  - Diff(original plan VS new plan):
-            |  ${ExplanationImpl::addList.name}=$addList,
-            |  ${ExplanationImpl::deleteList.name}=$deleteList,
-            |  ${ExplanationImpl::existingList.name}=$existingList
-            |)
-            """.trimMargin()
-        } else {
-            return """${ExplanationImpl::class.simpleName}(
-                | the problem: ${(this.question.problem.goal as FluentBasedGoal)
-                .targets} is solvable: ${isProblemSolvable()}
-                | the plan: ${this.originalPlan.operators} is valid: ${isPlanValid()}
-                | plan length acceptable: ${isPlanLengthAcceptable()}
-                | operators missing: ${this.operatorsMissing}
-                | idempotent operators causing errors: ${idempotentOperatorsWrongOccurrence.entries.map {
-                it.value.operator2
-            }}
-            """.trimIndent()
-        }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

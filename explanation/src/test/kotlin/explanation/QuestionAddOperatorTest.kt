@@ -33,6 +33,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe listOf(pickB)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())

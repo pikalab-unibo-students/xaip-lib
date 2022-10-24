@@ -3,6 +3,7 @@ package explanation.impl
 import explanation.Explanation
 import explanation.ExplanationPresenter
 import impl.res.FrameworkUtilities.then
+import java.lang.Math.abs
 
 /**
  * Assunzione di base i goal DEVONO essere GROUND.
@@ -23,7 +24,7 @@ open class AbstractExplanationPresenter protected constructor(
 ) : ExplanationPresenter {
     */
 open class BaseExplanationPresenter(
-    override val explanation: Explanation
+    final override val explanation: Explanation
 ) : ExplanationPresenter {
     private val minimalSolution by lazy {
         explanation.explainer.minimalPlanSelector()
@@ -32,7 +33,12 @@ open class BaseExplanationPresenter(
     /**
      * Numero di operatori aggiuntivi rispetto al piano di lunghezza minima
      */
-    private val additionalOperators = explanation.novelPlan.operators.size - explanation.minimalSolutionLength()
+    private val additionalOperators = abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
+
+    private val operatorsMissing by lazy {
+        explanation.explainer.minimalPlanSelector().operators
+            .filter { !explanation.novelPlan.operators.contains(it) }
+    }
 
     private val isProposedPlanMinimalPlan = ((additionalOperators == 0) then true) ?: false
 
@@ -55,7 +61,7 @@ open class BaseExplanationPresenter(
 
     private val isPlanLengthAcceptable by lazy {
         if (!explanation.isPlanLengthAcceptable()) {
-            "The length of the plan is unacceptable; $additionalOperators are missing."
+            "The length of the plan is unacceptable; $additionalOperators operator missing: $operatorsMissing."
         } else {
             "The length of the plan is acceptable;" +
                 " there are $additionalOperators additional operators respect the minimal solution."
@@ -67,8 +73,8 @@ open class BaseExplanationPresenter(
             var str = ""
             explanation.areIdempotentOperatorsPresent().map {
                 str = str.plus(
-                    "${it.value.operator2?.name} invalidates ${it.key.name}'s effects" +
-                        "you should remove ${it.value.occurence2 - it.value.occurence1 + 1 } " +
+                    "${it.value.operator2?.name} invalidates ${it.key.name}'s effects." +
+                        "You should remove ${it.value.occurence2 - it.value.occurence1 + 1 } " +
                         "instances of ${it.value.operator2?.name}\n"
                 )
             }

@@ -7,7 +7,7 @@ class ContrastiveExplanationPresenter(explanation: Explanation) :
     BaseExplanationPresenter(explanation) {
     private val operatorsMissing by lazy {
         explanation.explainer.minimalPlanSelector().operators
-            .filter { !explanation.question.plan.operators.contains(it) }
+            .filter { !explanation.novelPlan.operators.contains(it) }
     }
     fun presentContrastiveExplanation(): String {
         if (explanation.isPlanValid()) {

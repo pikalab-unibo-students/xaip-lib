@@ -1,5 +1,6 @@
 package explanation.impl
 
+import Action
 import Domain
 import Operator
 import Plan
@@ -13,9 +14,10 @@ import explanation.utils.findAction
 class QuestionAddOperator(
     override val problem: Problem,
     override val plan: Plan,
-    override val focus: Operator,
-    override val focusOn: Int
 ) : BaseQuestion() {
+    private val emptyAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
+    override val focus: Operator by lazy { Operator.of(emptyAction) }
+    override val focusOn: Int by lazy { 0 }
     override val newPredicate by lazy { createNewPredicate(focus, "has_done_") }
     override val newGroundFluent by lazy { createNewGroundFluent(focus, newPredicate) }
     override val newFluent by lazy { createNewFluent(focus, newPredicate) }

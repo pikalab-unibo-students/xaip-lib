@@ -8,13 +8,18 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
-import explanation.impl.* // ktlint-disable no-wildcard-imports
+import explanation.impl.ContrastiveExplanationPresenter
+import explanation.impl.QuestionAddOperator
+import explanation.impl.QuestionPlanProposal
+import explanation.impl.QuestionPlanSatisfiability
+import explanation.impl.QuestionRemoveOperator
+import explanation.impl.QuestionReplaceOperator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 
-class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
+class ContrastiveExplanationPresenterTest : AnnotationSpec() {
     // Add operator
     @Test
     fun `Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {

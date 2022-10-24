@@ -64,7 +64,9 @@ data class ExplanationImpl(
                         .also { it.add(question.focus) }
                         .also {
                             it.addAll(
-                                explainer.planner.plan(question.buildHypotheticalProblem().first()).first().operators
+                                explainer.planner.plan(
+                                    question.buildHypotheticalProblem().first()
+                                ).first().operators
                             )
                         }
                 )

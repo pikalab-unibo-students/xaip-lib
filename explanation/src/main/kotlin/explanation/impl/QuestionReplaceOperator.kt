@@ -41,18 +41,13 @@ class QuestionReplaceOperator(
     }
 
     // A. TODO( estendi a considerare tutti gli stati possibili)
-    private val newState = newProblem.initialState.apply(focus)
+    private val newStates = newProblem.initialState.apply(focus)
     override var hDomain = buildHypotheticalDomain()
 
-    override fun buildHypotheticalDomain(): Domain = Domain.of(
-        name = newProblem.domain.name,
-        predicates = newProblem.domain.predicates,
-        actions = newProblem.domain.actions,
-        types = newProblem.domain.types
-    )
+    override fun buildHypotheticalDomain(): Domain = problem.domain
 
     override fun buildHypotheticalProblem(): Sequence<Problem> = sequence {
-        for (state in newState) {
+        for (state in newStates) {
             yield(
                 Problem.of(
                     domain = hDomain,

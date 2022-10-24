@@ -95,6 +95,6 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.isPlanLengthAcceptable() shouldBe true
         explanation.isProblemSolvable() shouldBe true
-        explanation.isPlanValid() shouldBe true
+        explanation.isPlanValid() shouldBe false
     }
 }

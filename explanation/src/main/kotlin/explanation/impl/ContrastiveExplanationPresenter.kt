@@ -27,7 +27,7 @@ class ContrastiveExplanationPresenter(explanation: Explanation) :
             return """${ContrastiveExplanationPresenter::class.simpleName}(
                 | the problem: ${(explanation.question.problem.goal as FluentBasedGoal)
                 .targets} is solvable: ${explanation.isProblemSolvable()}
-                | the plan: ${explanation.originalPlan.operators} is valid: ${explanation.isPlanValid()}
+                | the plan: ${explanation.novelPlan.operators} is valid: ${explanation.isPlanValid()}
                 | plan length acceptable: ${explanation.isPlanLengthAcceptable()}
                 | operators missing: $operatorsMissing
                 | idempotent operators causing errors: ${explanation.areIdempotentOperatorsPresent().entries.map {

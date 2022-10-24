@@ -69,7 +69,18 @@ data class ExplanationImpl(
                         }
                 )
             }
-            is QuestionAddOperator, is QuestionRemoveOperator -> {
+            is QuestionAddOperator -> {
+                var planCopy = question.plan.operators.toMutableList()
+                planCopy.add(question.focusOn, question.focus)
+                println("plan copy: $planCopy")
+                val operator = planCopy.retrieveOperator()
+                println("operator: $operator")
+                if (operator != null) novelPlan =
+                    Plan.of(planCopy.replaceOperator(question.problem.domain.actions))
+                else
+                     novelPlan = Plan.of(planCopy)
+            }
+            is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
                 val operator = novelPlan.operators.retrieveOperator()
                 if (operator != null) novelPlan =

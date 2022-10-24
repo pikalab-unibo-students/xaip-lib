@@ -2,6 +2,7 @@ package explanation
 
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
@@ -13,7 +14,9 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
     fun `Add useless operator (pickA) to the plan pickC in pickC problem`() {
         val q1 = QuestionAddOperator(
             Problems.pickC,
-            Plan.of(listOf(pickC))
+            Plan.of(listOf(pickC)),
+            pickA,
+            0
         )
         val explanation = Explainer.of(Planner.strips(), q1).explain()
 
@@ -26,7 +29,9 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
     fun `Add useful operator (pickA) to the plan stackAB in stackAB problem`() {
         val q1 = QuestionAddOperator(
             Problems.stackAB,
-            Plan.of(listOf(pickA)),
+            Plan.of(listOf(stackAB)),
+            pickA,
+            0
         )
         val explanation = Explainer.of(Planner.strips(), q1).explain()
 

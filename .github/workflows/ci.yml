@@ -8,7 +8,7 @@ on:
       - develop
       #- feature/**
       - feature/explanation
-      - feature/explanation-q3
+      - feature/explanation-nonContrastiveExplanation
       #- master
 
   #pull_request:

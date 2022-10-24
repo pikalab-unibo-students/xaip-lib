@@ -28,11 +28,11 @@ class QuestionAddOperatorTest : AnnotationSpec() {
 
         val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
-        explanation.novelPlan shouldBe Plan.of(listOf(pickA))
+        explanation.novelPlan shouldBe Plan.of(listOf(pickA, pickB))
         explanation.addList shouldBe listOf(pickA)
-        explanation.deleteList shouldBe listOf(pickB)
-        explanation.existingList shouldBe emptyList()
-        explanation.isPlanValid() shouldBe true
+        explanation.deleteList shouldBe emptyList()
+        explanation.existingList shouldBe listOf(pickB)
+        explanation.isPlanValid() shouldBe false
 
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
@@ -45,16 +45,16 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             Problems.armNotEmpty,
             Plan.of(listOf(pickB)),
             pickC,
-            0
+            1
         )
 
         val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
-        explanation.novelPlan shouldBe Plan.of(listOf(pickC))
+        explanation.novelPlan shouldBe Plan.of(listOf(pickB, pickC))
         explanation.addList shouldBe listOf(pickC)
-        explanation.deleteList shouldBe listOf(pickB)
-        explanation.existingList shouldBe emptyList()
-        explanation.isPlanValid() shouldBe true
+        explanation.deleteList shouldBe emptyList()
+        explanation.existingList shouldBe listOf(pickB)
+        explanation.isPlanValid() shouldBe false
     }
 
     @Test
@@ -69,11 +69,11 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips(), q1).explain()
         explanation.originalPlan shouldBe q1.plan
 
-        explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickC))
-        explanation.addList shouldBe listOf(pickA, stackAB)
+        explanation.novelPlan shouldBe Plan.of(listOf(pickA, pickC))
+        explanation.addList shouldBe listOf(pickA)
         explanation.deleteList shouldBe emptyList()
         explanation.existingList shouldBe listOf(pickC)
-        explanation.isPlanValid() shouldBe true
+        explanation.isPlanValid() shouldBe false
     }
 
     @Test

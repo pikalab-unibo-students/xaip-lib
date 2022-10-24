@@ -1,5 +1,6 @@
 package explanation.impl
 
+import FluentBasedGoal
 import explanation.Explanation
 import explanation.ExplanationPresenter
 import impl.res.FrameworkUtilities.then
@@ -44,7 +45,7 @@ open class BaseExplanationPresenter(
 
     private val isProblemSolvable by lazy {
         if (explanation.isProblemSolvable()) {
-            "The problem ${explanation.question.problem.goal} is solvable.\n"
+            "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} is solvable.\n"
         } else {
             "The problem is not solvable.\n"
         }
@@ -97,9 +98,9 @@ open class BaseExplanationPresenter(
 
     private val isPlanValid by lazy {
         if (explanation.isPlanValid()) {
-            "The plan ${explanation.novelPlan} is a valid solution for the problem.\n"
+            "The plan ${explanation.novelPlan.operators} is a valid solution for the problem.\n"
         } else {
-            "The plan ${explanation.novelPlan} is not a valid solution for the problem.\n"
+            "The plan ${explanation.novelPlan.operators} is not a valid solution for the problem.\n"
         }
     }
 

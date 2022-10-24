@@ -11,7 +11,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
 
     @Test
-    fun `Add useless operator (pickA) to the plan pickC in pickC problem`() {
+    fun `Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {
         val q1 = QuestionAddOperator(
             Problems.pickC,
             Plan.of(listOf(pickC)),
@@ -26,7 +26,7 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Add useful operator (pickA) to the plan stackAB in stackAB problem`() {
+    fun `Add pickA to the plan stackAB in stackAB problem (correct plan)`() {
         val q1 = QuestionAddOperator(
             Problems.stackAB,
             Plan.of(listOf(stackAB)),

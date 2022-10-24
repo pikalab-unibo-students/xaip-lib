@@ -72,8 +72,10 @@ data class ExplanationImpl(
             is QuestionAddOperator -> {
                 val planCopy = question.plan.operators.toMutableList()
                 planCopy.add(question.focusOn, question.focus)
-                novelPlan = (( planCopy.retrieveArtificialOperator() != null) then
-                        Plan.of(planCopy.replaceArtificialOperator(question.problem.domain.actions))) ?: Plan.of(planCopy)
+                novelPlan = (
+                    (planCopy.retrieveArtificialOperator() != null) then
+                        Plan.of(planCopy.replaceArtificialOperator(question.problem.domain.actions))
+                    ) ?: Plan.of(planCopy)
             }
             is QuestionRemoveOperator -> {
                 novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()

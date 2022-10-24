@@ -23,7 +23,7 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
     }
 
     @Test
-    fun `Add useFUL operator (pickA) to the plan stackAB in stackAB problem`() {
+    fun `Add useful operator (pickA) to the plan stackAB in stackAB problem`() {
         val q1 = QuestionAddOperator(
             Problems.stackAB,
             Plan.of(listOf(pickA)),

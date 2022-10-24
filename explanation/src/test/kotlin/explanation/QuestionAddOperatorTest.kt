@@ -8,7 +8,6 @@ import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
 import domain.GraphDomain.Operators.loadC1fromL2onR
 import domain.GraphDomain.Operators.moveRfromL1toL2
-import domain.GraphDomain.Operators.moveRfromL2toL1
 import domain.GraphDomain.Operators.moveRfromL2toL4
 import domain.GraphDomain.Operators.unloadC1fromRtoL4
 import explanation.impl.ContrastiveExplanationPresenter

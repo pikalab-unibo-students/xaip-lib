@@ -7,8 +7,10 @@ import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import explanation.impl.*
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 
 class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
     // Add operator
@@ -113,5 +115,21 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println(ContrastiveExplanationPresenter(explanation).present())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+    }
+
+    @Test
+    fun `Test exception on not ground goal`() {
+        val q1 = QuestionAddOperator(
+            Problems.armNotEmpty,
+            Plan.of(listOf(BlockWorldDomain.Operators.pickB)),
+            pickC,
+            1
+        )
+
+        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val exception = shouldThrow<IllegalArgumentException> {
+            ContrastiveExplanationPresenter(explanation).present()
+        }
+        exception.message shouldStartWith ("Goal must contain only ground fluents")
     }
 }

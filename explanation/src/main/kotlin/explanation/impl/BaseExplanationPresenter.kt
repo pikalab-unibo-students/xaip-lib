@@ -1,5 +1,6 @@
 package explanation.impl
 
+import Fluent
 import FluentBasedGoal
 import explanation.Explanation
 import explanation.ExplanationPresenter
@@ -104,7 +105,11 @@ open class BaseExplanationPresenter(
         }
     }
 
+    private fun areAllGroundFluents(targets: Set<Fluent>) = targets.all { it.isGround }
     override fun present(): String {
+        if (!areAllGroundFluents((explanation.question.problem.goal as FluentBasedGoal).targets)) {
+            throw IllegalArgumentException("Goal must contain only ground fluents")
+        }
         var finalString = isProblemSolvable
         if (explanation.isProblemSolvable()) {
             finalString = finalString.plus(isPlanValid)

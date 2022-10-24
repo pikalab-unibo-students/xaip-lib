@@ -8,6 +8,7 @@ import domain.BlockWorldDomain.Problems
 import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionRemoveOperator
+import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
@@ -52,6 +53,22 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
             pickA
         )
         val explanation = Explainer.of(Planner.strips(), q2).explain()
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
+    }
+
+    @Test
+    fun `Replace pickA with pickC in stackAB problem`() {
+        val q3 = QuestionReplaceOperator(
+            Problems.stackAB,
+            Plan.of(listOf(pickC, stackAB)),
+            pickA,
+            0,
+            BlockWorldDomain.States.initial,
+            pickC
+        )
+        val explanation = Explainer.of(Planner.strips(), q3).explain()
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())

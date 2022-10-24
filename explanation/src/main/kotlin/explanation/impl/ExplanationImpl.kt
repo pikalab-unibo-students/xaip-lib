@@ -61,7 +61,7 @@ data class ExplanationImpl(
                 val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
                 novelPlan = Plan.of(
                     operatorsToKeep
-                        .also { it.add(question.insteadOf) }
+                        .also { it.add(question.focus) }
                         .also {
                             it.addAll(
                                 explainer.planner.plan(question.buildHypotheticalProblem().first()).first().operators

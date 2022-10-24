@@ -2,7 +2,6 @@ package explanation
 
 import Plan
 import State
-import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
@@ -12,6 +11,7 @@ import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAD
 import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Problems
+import domain.BlockWorldDomain.States
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionReplaceOperator
@@ -82,10 +82,10 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
     fun `Replace pickA with pickC in stackAB problem`() {
         val q3 = QuestionReplaceOperator(
             Problems.stackAB,
-            Plan.of(listOf(pickA, stackAB)),
+            Plan.of(listOf(pickC, stackAB)),
             pickA,
             0,
-            BlockWorldDomain.States.initial,
+            States.initial,
             pickC
         )
         val explanation = Explainer.of(Planner.strips(), q3).explain()

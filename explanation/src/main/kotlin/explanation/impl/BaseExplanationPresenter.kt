@@ -111,7 +111,7 @@ open class BaseExplanationPresenter(
             finalString = finalString.plus(minimalPlan)
             if (explanation.isPlanValid()) {
                 finalString = finalString.plus(isPlanMinimalSolution)
-                if(additionalOperators!=0) finalString = finalString.plus(planContainsRequiredOperators)
+                if (additionalOperators != 0) finalString = finalString.plus(planContainsRequiredOperators)
             } else {
                 finalString = finalString.plus(isPlanLengthAcceptable)
                 finalString = finalString.plus(planContainsRequiredOperators)

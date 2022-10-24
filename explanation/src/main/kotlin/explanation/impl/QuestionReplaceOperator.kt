@@ -10,7 +10,7 @@ import Problem
 import State
 
 /**
- * Why operator a instead of b in state C.
+ * Why not operator a in state C.
  * Operator substitution in a state.
  * @property insteadOf: [Operator] that must replace [focus] in the [plan].
  * */
@@ -19,8 +19,7 @@ class QuestionReplaceOperator(
     override val plan: Plan,
     override val focus: Operator,
     override val focusOn: Int,
-    inState: State? = null,
-    val insteadOf: Operator
+    inState: State? = null
 ) : BaseQuestion() {
     override val newPredicate: Predicate by lazy { Predicate.of("") }
     override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }
@@ -42,7 +41,7 @@ class QuestionReplaceOperator(
     }
 
     // A. TODO( estendi a considerare tutti gli stati possibili)
-    private val newState = newProblem.initialState.apply(insteadOf)
+    private val newState = newProblem.initialState.apply(focus)
     override var hDomain = buildHypotheticalDomain()
 
     override fun buildHypotheticalDomain(): Domain = Domain.of(

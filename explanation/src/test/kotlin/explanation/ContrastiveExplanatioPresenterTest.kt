@@ -5,10 +5,7 @@ import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
-import explanation.impl.ContrastiveExplanationPresenter
-import explanation.impl.QuestionAddOperator
-import explanation.impl.QuestionRemoveOperator
-import explanation.impl.QuestionReplaceOperator
+import explanation.impl.*
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
@@ -71,5 +68,40 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())
+    }
+
+    @Test
+    fun `BlockWorld domain test incorrect plan`() {
+        val q4 = QuestionPlanProposal(
+            Problems.stackAB,
+            Plan.of(listOf(pickA, stackAB)),
+            Plan.of(listOf(pickA))
+        )
+        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        explanation.isPlanValid() shouldBe false
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
+    }
+
+    @Test
+    fun `BlockWorld plan valid`() {
+        val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)))
+        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        println(explanation.toString())
+        explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `BlockWorld plan not valid`() { // idempotent operators
+        val q5 = QuestionPlanSatisfiability(
+            Problems.pickX,
+            Plan.of(listOf(pickA, BlockWorldDomain.Operators.putdownA))
+        )
+        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        explanation.isPlanValid() shouldBe false
+        println(ContrastiveExplanationPresenter(explanation).present())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
     }
 }

@@ -1,6 +1,7 @@
 package explanation
 
-import Plan
+import core.Plan
+import core.Planner
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC

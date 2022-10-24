@@ -1,9 +1,9 @@
 package explanation.impl
 
-import Domain
-import Operator
-import Plan
-import Problem
+import core.Domain
+import core.Operator
+import core.Plan
+import core.Problem
 import explanation.utils.findAction
 
 /**
@@ -15,7 +15,7 @@ class QuestionRemoveOperator(
     override val plan: Plan,
     override val focus: Operator
 ) : BaseQuestion() {
-    override val focusOn: Int by lazy  {-1 }
+    override val focusOn: Int by lazy { -1 }
     override val newPredicate by lazy { createNewPredicate(focus, "not_done_") }
     override val newFluent by lazy { createNewFluent(focus, newPredicate) }
     override var newGroundFluent = createNewGroundFluent(focus, newPredicate)

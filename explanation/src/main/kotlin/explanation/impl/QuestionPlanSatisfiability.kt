@@ -1,12 +1,12 @@
 package explanation.impl
 
-import Action
-import Domain
-import Fluent
-import Operator
-import Plan
-import Predicate
-import Problem
+import core.Action
+import core.Domain
+import core.Fluent
+import core.Operator
+import core.Plan
+import core.Predicate
+import core.Problem
 
 /**
  * Why is plan not good (solvable).
@@ -17,7 +17,7 @@ class QuestionPlanSatisfiability(
     override val problem: Problem,
     override val plan: Plan
 ) : BaseQuestion() {
-    override val focus: Operator by lazy { Operator.of(Action.of("", emptyMap(), emptySet(), emptySet()))}
+    override val focus: Operator by lazy { Operator.of(Action.of("", emptyMap(), emptySet(), emptySet())) }
     override val focusOn: Int by lazy { 0 }
     override val newPredicate: Predicate by lazy { Predicate.of("") }
     override val newGroundFluent: Fluent by lazy { Fluent.of(newPredicate) }

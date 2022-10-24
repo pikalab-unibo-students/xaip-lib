@@ -1,7 +1,8 @@
 package explanation
 
-import Plan
-import State
+import core.Plan
+import core.Planner
+import core.State
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC

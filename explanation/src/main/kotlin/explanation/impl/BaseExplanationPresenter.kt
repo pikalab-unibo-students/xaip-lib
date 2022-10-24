@@ -1,10 +1,10 @@
 package explanation.impl
 
-import Fluent
-import FluentBasedGoal
+import core.Fluent
+import core.FluentBasedGoal
+import core.utility.then
 import explanation.Explanation
 import explanation.ExplanationPresenter
-import impl.res.FrameworkUtilities.then
 import java.lang.Math.abs
 
 /**
@@ -33,7 +33,7 @@ open class BaseExplanationPresenter(
     }
 
     /**
-     * Numero di operatori aggiuntivi rispetto al piano di lunghezza minima
+     * Numero di operatori aggiuntivi rispetto al piano di lunghezza minima.
      */
     private val additionalOperators = abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
 

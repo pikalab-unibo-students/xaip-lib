@@ -1,7 +1,7 @@
 package explanation.impl
 
-import Plan
-import Planner
+import core.Plan
+import core.Planner
 import explanation.Explainer
 import explanation.Explanation
 import explanation.Question

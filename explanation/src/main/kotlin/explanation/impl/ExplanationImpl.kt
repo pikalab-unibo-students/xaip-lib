@@ -1,8 +1,8 @@
 package explanation.impl
 
-import FluentBasedGoal
-import Operator
-import Plan
+import core.* // ktlint-disable no-wildcard-imports
+import core.utility.finalStateComplaintWithGoal
+import core.utility.then
 import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
@@ -10,9 +10,6 @@ import explanation.Simulator
 import explanation.utils.buildIdempotendMinimalOperatorsRequiredList
 import explanation.utils.replaceArtificialOperator
 import explanation.utils.retrieveArtificialOperator
-import impl.res.FrameworkUtilities.finalStateComplaintWithGoal
-import impl.res.FrameworkUtilities.then
-
 /**
  *
  */

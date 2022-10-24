@@ -1,6 +1,6 @@
 package explanation.impl
 
-import FluentBasedGoal
+import core.FluentBasedGoal
 import explanation.Explanation
 
 class ContrastiveExplanationPresenter(explanation: Explanation) :
@@ -9,6 +9,10 @@ class ContrastiveExplanationPresenter(explanation: Explanation) :
         explanation.explainer.minimalPlanSelector().operators
             .filter { !explanation.novelPlan.operators.contains(it) }
     }
+
+    /**
+     *
+     */
     fun presentContrastiveExplanation(): String {
         if (explanation.isPlanValid()) {
             return """${ContrastiveExplanationPresenter::class.simpleName}(

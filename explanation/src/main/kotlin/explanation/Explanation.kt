@@ -1,7 +1,7 @@
 package explanation
 
-import Operator
-import Plan
+import core.Operator
+import core.Plan
 import explanation.impl.ExplanationImpl
 import explanation.utils.IdempotentOperator
 
@@ -77,5 +77,8 @@ interface Explanation {
         ): Explanation = ExplanationImpl(question, explainer)
     }
 
+    /**
+     *
+     */
     fun areIdempotentOperatorsPresent(): Map<Operator, IdempotentOperator>
 }

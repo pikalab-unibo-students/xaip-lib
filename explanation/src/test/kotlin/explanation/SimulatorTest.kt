@@ -1,5 +1,7 @@
 package explanation
 
+import core.Plan
+import core.State
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.Operators
 import domain.BlockWorldDomain.Problems

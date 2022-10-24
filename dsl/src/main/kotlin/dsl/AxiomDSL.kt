@@ -1,9 +1,9 @@
 package dsl
 
-import Axiom
-import Expression
-import Type
-import Variable
+import core.Axiom
+import core.Expression
+import core.Type
+import core.Variable
 import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 import dsl.provider.VariableProvider

@@ -1,12 +1,13 @@
 package explanation
 
+import core.Plan
+import core.Planner
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.putdownA
 import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
-import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe

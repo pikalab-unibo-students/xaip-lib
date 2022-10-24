@@ -1,13 +1,6 @@
 package explanation.impl
 
-import Action
-import Domain
-import Fluent
-import FluentBasedGoal
-import Operator
-import Predicate
-import Problem
-import State
+import core.* // ktlint-disable no-wildcard-imports
 import explanation.Question
 
 /**

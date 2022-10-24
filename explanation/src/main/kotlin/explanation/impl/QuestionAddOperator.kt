@@ -1,10 +1,6 @@
 package explanation.impl
 
-import Action
-import Domain
-import Operator
-import Plan
-import Problem
+import core.* // ktlint-disable no-wildcard-imports
 import explanation.utils.findAction
 
 /**

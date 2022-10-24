@@ -1,6 +1,7 @@
 package domain
 
-import Object
+import core.* // ktlint-disable no-wildcard-imports
+
 object GraphDomain {
     object Actions {
         val move = Action.of(

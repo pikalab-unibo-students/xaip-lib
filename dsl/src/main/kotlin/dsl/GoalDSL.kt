@@ -1,7 +1,7 @@
 package dsl
 
-import Fluent
-import FluentBasedGoal
+import core.Fluent
+import core.FluentBasedGoal
 import dsl.provider.PredicateProvider
 
 /**

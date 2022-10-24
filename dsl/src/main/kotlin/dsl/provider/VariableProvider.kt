@@ -1,6 +1,6 @@
 package dsl.provider
 
-import Variable
+import core.Variable
 
 /**
  * Provider of the variables created in each instance of [Action] and [Axiom].

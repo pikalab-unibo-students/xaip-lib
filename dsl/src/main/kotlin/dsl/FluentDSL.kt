@@ -1,6 +1,6 @@
 package dsl
 
-import Fluent
+import core.Fluent
 import dsl.provider.PredicateProvider
 
 /**

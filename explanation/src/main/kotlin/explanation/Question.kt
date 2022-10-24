@@ -1,9 +1,9 @@
 package explanation
 
-import Domain
-import Operator
-import Plan
-import Problem
+import core.Domain
+import core.Operator
+import core.Plan
+import core.Problem
 
 /**
  * An [Question] represents a way for a user to express question about a plan.

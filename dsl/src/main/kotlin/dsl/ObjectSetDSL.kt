@@ -1,8 +1,8 @@
 package dsl
 
-import Object
-import ObjectSet
-import Type
+import core.Object
+import core.ObjectSet
+import core.Type
 import dsl.provider.TypeProvider
 
 /**
@@ -39,7 +39,7 @@ class ObjectSetDSL(private val typeProvider: TypeProvider) {
                 }.toSet()
             )
         } else {
-            error("type not present in the Domain definition")
+            error("type not present in the core.Domain definition")
         }
     }
 }

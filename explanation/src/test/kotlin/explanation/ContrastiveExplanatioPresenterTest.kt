@@ -1,12 +1,14 @@
 package explanation
 
+import core.Plan
+import core.Planner
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
-import explanation.impl.*
+import explanation.impl.* // ktlint-disable no-wildcard-imports
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe

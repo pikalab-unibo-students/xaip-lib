@@ -1,6 +1,6 @@
 package dsl
 
-import Action
+import core.Action
 import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 

@@ -6,6 +6,7 @@ import domain.BlockWorldDomain.Problems
 import domain.GraphDomain
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
+import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -24,14 +25,15 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
     }
 
     @Test
-    fun `BlockWorld plan not valid`() {
+    fun `BlockWorld plan not valid`() { // idempotent operators
         val q5 = QuestionPlanSatisfiability(
             Problems.pickX,
             Plan.of(listOf(pickA, putdownA))
         )
         val explanation = Explainer.of(Planner.strips(), q5).explain()
-        println(explanation.toString())
         explanation.isPlanValid() shouldBe false
+        println(ContrastiveExplanationPresenter(explanation).present())
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
     }
 
     @Test

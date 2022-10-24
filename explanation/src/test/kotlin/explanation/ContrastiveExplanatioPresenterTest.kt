@@ -9,7 +9,7 @@ import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 
 class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
-
+    // Add operator
     @Test
     fun `Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {
         val q1 = QuestionAddOperator(
@@ -39,4 +39,7 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())
     }
+
+    // Remove operator
+
 }

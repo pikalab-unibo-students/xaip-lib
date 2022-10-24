@@ -23,8 +23,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val q2 = QuestionRemoveOperator(
             Problems.armNotEmpty,
             Plan.of(listOf(pickA)),
-            pickA,
-            0
+            pickA
         )
 
         val explanation = Explainer.of(Planner.strips(), q2).explain()
@@ -41,8 +40,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val q2 = QuestionRemoveOperator(
             Problems.stackDXA,
             Plan.of(listOf(pickB, stackBA, pickD, stackDB)),
-            pickB,
-            0
+            pickB
         )
 
         val explanation = Explainer.of(Planner.strips(), q2).explain()
@@ -61,8 +59,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val q2 = QuestionRemoveOperator(
             graphProblemRtoX,
             planRfromL1toL2,
-            moveRfromL1toL2,
-            1
+            moveRfromL1toL2
         )
         val explanation = Explainer.of(Planner.strips(), q2).explain()
         explanation.originalPlan shouldBe q2.plan

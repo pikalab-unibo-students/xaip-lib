@@ -3,6 +3,7 @@ package explanation
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
+import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import explanation.impl.*
@@ -55,6 +56,8 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println(ContrastiveExplanationPresenter(explanation).present())
     }
 
+    // Replace operator
+
     @Test
     fun `Replace pickA with pickC in stackAB problem`() {
         val q3 = QuestionReplaceOperator(
@@ -70,6 +73,8 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println(ContrastiveExplanationPresenter(explanation).present())
     }
 
+    // Plan proposal
+
     @Test
     fun `BlockWorld domain test incorrect plan`() {
         val q4 = QuestionPlanProposal(
@@ -84,19 +89,24 @@ class ContrastiveExplanatioPresenterTest : AnnotationSpec() {
         println(ContrastiveExplanationPresenter(explanation).present())
     }
 
+    // Plan satisfiability
+
     @Test
     fun `BlockWorld plan valid`() {
-        val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)))
+        val q5 = QuestionPlanSatisfiability(Problems.pickC, Plan.of(listOf(pickC)))
         val explanation = Explainer.of(Planner.strips(), q5).explain()
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
+        println(ContrastiveExplanationPresenter(explanation).present())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
     }
 
     @Test
     fun `BlockWorld plan not valid`() { // idempotent operators
         val q5 = QuestionPlanSatisfiability(
-            Problems.pickX,
-            Plan.of(listOf(pickA, BlockWorldDomain.Operators.putdownA))
+            Problems.pickC,
+            Plan.of(listOf(pickC, putdownC))
         )
         val explanation = Explainer.of(Planner.strips(), q5).explain()
         explanation.isPlanValid() shouldBe false

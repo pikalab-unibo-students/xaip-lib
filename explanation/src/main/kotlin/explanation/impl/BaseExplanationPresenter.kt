@@ -52,7 +52,7 @@ open class BaseExplanationPresenter(
     }
 
     private val minimalPlan by lazy {
-        "The minimal solution is: $minimalSolution\n"
+        "The minimal solution is: ${minimalSolution.operators}\n"
     }
 
     private val isPlanMinimalSolution by lazy {

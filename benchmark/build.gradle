@@ -1,0 +1,28 @@
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktlint.gradle)
+    alias(libs.plugins.detekt.gradle)
+
+    id("me.champeau.jmh") version "0.6.6"
+}
+
+dependencies {
+    api(libs.tuprolog.unify)
+    api(libs.tuprolog.solve.classic)
+
+    implementation(libs.kotlin.stdlib)
+    testImplementation(libs.bundles.kotlin.testing)
+
+
+    api(project(":framework"))
+    api(project(":explanation"))
+    api(project(":dsl"))
+    api(project(":domain"))
+}
+
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    config = files("${rootDir.path}/config/detekt.yml")
+    // source = files(kotlin.sourceSets.map { it.kotlin.sourceDirectories })
+}

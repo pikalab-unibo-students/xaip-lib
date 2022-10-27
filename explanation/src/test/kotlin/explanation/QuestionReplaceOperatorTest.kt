@@ -38,7 +38,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
                 Fluents.armEmpty
             )
         )
-        val explanation = Explainer.of(Planner.strips(), q3).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAC, pickD))
@@ -66,7 +66,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
                 Fluents.armEmpty
             )
         )
-        val explanation = Explainer.of(Planner.strips(), q3).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickD))
@@ -85,7 +85,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             0,
             States.initial
         )
-        val explanation = Explainer.of(Planner.strips(), q3).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
@@ -105,7 +105,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             moveRfromL1toL5,
             0
         )
-        val explanation = Explainer.of(Planner.strips(), q3).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL5))

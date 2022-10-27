@@ -20,7 +20,7 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
     @Test
     fun `BlockWorld plan valid`() {
         val q5 = QuestionPlanSatisfiability(Problems.pickX, Plan.of(listOf(pickA)))
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
     }
@@ -31,7 +31,7 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
             Problems.pickX,
             Plan.of(listOf(pickA, putdownA))
         )
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         explanation.isPlanValid() shouldBe false
     }
 
@@ -41,7 +41,7 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
             graphProblemRfromLoc1Loc2,
             planRfromL1toL2
         )
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
     }
@@ -52,7 +52,7 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
             graphProblemRfromLoc1Loc2,
             planRfromL1toL5
         )
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe false
     }

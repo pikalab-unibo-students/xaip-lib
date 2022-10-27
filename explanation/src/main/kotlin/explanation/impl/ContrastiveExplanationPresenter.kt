@@ -6,7 +6,7 @@ import explanation.Explanation
 class ContrastiveExplanationPresenter(explanation: Explanation) :
     BaseExplanationPresenter(explanation) {
     private val operatorsMissing by lazy {
-        explanation.explainer.minimalPlanSelector().operators
+        explanation.explainer.minimalPlanSelector(explanation.question.problem).operators
             .filter { !explanation.novelPlan.operators.contains(it) }
     }
 

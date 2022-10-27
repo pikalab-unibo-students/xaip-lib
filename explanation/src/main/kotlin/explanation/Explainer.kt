@@ -2,6 +2,7 @@ package explanation
 
 import core.Plan
 import core.Planner
+import core.Problem
 import explanation.impl.ExplainerImpl
 
 // Problem explainer si aspetta che il planner abbia un metodo plan, ì
@@ -16,22 +17,21 @@ import explanation.impl.ExplainerImpl
 interface Explainer {
 
     val planner: Planner
-    val question: Question
 
     /**
      *
      */
-    fun explain(): Explanation
+    fun explain(question: Question): Explanation
 
     /**
      *
      */
-    fun minimalPlanSelector(): Plan
+    fun minimalPlanSelector(problem: Problem): Plan
 
     companion object {
         /**
          *
          */
-        fun of(planner: Planner, question: Question): Explainer = ExplainerImpl(planner, question)
+        fun of(planner: Planner): Explainer = ExplainerImpl(planner)
     }
 }

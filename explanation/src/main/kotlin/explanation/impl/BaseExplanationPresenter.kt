@@ -29,7 +29,7 @@ open class BaseExplanationPresenter(
     final override val explanation: Explanation
 ) : ExplanationPresenter {
     private val minimalSolution by lazy {
-        explanation.explainer.minimalPlanSelector()
+        explanation.explainer.minimalPlanSelector(explanation.question.problem)
     }
 
     /**
@@ -38,7 +38,7 @@ open class BaseExplanationPresenter(
     private val additionalOperators = abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
 
     private val operatorsMissing by lazy {
-        explanation.explainer.minimalPlanSelector().operators
+        explanation.explainer.minimalPlanSelector(explanation.question.problem).operators
             .filter { !explanation.novelPlan.operators.contains(it) }
     }
 

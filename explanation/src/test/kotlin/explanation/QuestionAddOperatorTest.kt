@@ -28,7 +28,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
         explanation.addList shouldBe listOf(pickA)
@@ -50,7 +50,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             1
         )
 
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickB, pickC))
         explanation.addList shouldBe listOf(pickC)
@@ -68,7 +68,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.originalPlan shouldBe q1.plan
 
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, pickC))
@@ -94,7 +94,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
             0
         )
 
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.isPlanLengthAcceptable() shouldBe true
         explanation.isProblemSolvable() shouldBe true
         explanation.isPlanValid() shouldBe false

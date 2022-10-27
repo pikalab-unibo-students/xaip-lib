@@ -39,7 +39,7 @@ data class ExplanationImpl(
     }
     private val simulator = Simulator.of()
     private val minimalPlan by lazy {
-        explainer.minimalPlanSelector()
+        explainer.minimalPlanSelector(question.problem)
     }
     private val operatorsMissing by lazy {
         minimalPlan.operators.filter { !question.plan.operators.contains(it) }

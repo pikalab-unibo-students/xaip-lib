@@ -29,7 +29,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planPickBstackBApickC,
             planPickB
         )
-        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -40,7 +40,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planPickAStackAB,
             planPickA
         )
-        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe false
     }
 
@@ -51,7 +51,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planRfromL1toL2,
             planRfromL1toL5
         )
-        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -62,7 +62,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planRfromL1toL2,
             planRfromL1toL5
         )
-        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q4)
         println(explanation.novelPlan)
         explanation.isPlanValid() shouldBe false
     }

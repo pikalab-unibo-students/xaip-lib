@@ -27,7 +27,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             pickA
         )
 
-        val explanation = Explainer.of(Planner.strips(), q2).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickB))
         explanation.addList shouldBe listOf(pickB)
@@ -44,7 +44,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             pickB
         )
 
-        val explanation = Explainer.of(Planner.strips(), q2).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickC, stackCA, pickD, stackDC))
         explanation.addList shouldBe listOf(pickC, stackCA, stackDC)
@@ -62,7 +62,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             planRfromL1toL2,
             moveRfromL1toL2
         )
-        val explanation = Explainer.of(Planner.strips(), q2).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(emptyList())
         explanation.addList shouldBe emptyList()

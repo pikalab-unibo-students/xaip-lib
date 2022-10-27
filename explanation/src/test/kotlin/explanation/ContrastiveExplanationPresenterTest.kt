@@ -29,7 +29,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             pickA,
             0
         )
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
 
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
@@ -44,7 +44,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             pickA,
             0
         )
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
 
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
@@ -59,7 +59,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             Plan.of(listOf(pickA, pickC)),
             pickA
         )
-        val explanation = Explainer.of(Planner.strips(), q2).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q2)
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())
@@ -76,7 +76,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             0,
             BlockWorldDomain.States.initial
         )
-        val explanation = Explainer.of(Planner.strips(), q3).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q3)
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
         println(ContrastiveExplanationPresenter(explanation).present())
@@ -91,7 +91,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             Plan.of(listOf(pickA, stackAB)),
             Plan.of(listOf(pickA))
         )
-        val explanation = Explainer.of(Planner.strips(), q4).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe false
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
@@ -103,7 +103,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
     @Test
     fun `BlockWorld plan valid`() {
         val q5 = QuestionPlanSatisfiability(Problems.pickC, Plan.of(listOf(pickC)))
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
         println(ContrastiveExplanationPresenter(explanation).present())
@@ -117,7 +117,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             Problems.pickC,
             Plan.of(listOf(pickC, putdownC))
         )
-        val explanation = Explainer.of(Planner.strips(), q5).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q5)
         explanation.isPlanValid() shouldBe false
         println(ContrastiveExplanationPresenter(explanation).present())
         println("------------------------------")
@@ -133,7 +133,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             1
         )
 
-        val explanation = Explainer.of(Planner.strips(), q1).explain()
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
         val exception = shouldThrow<IllegalArgumentException> {
             ContrastiveExplanationPresenter(explanation).present()
         }

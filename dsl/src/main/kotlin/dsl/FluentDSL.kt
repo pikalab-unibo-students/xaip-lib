@@ -8,7 +8,7 @@ import dsl.provider.PredicateProvider
  */
 class FluentDSL(
     predicateProvider: PredicateProvider
-) : dsl.AbstractFluentDSL(predicateProvider) {
+) : AbstractFluentDSL(predicateProvider) {
     /**
      * @property fluents: set of [Fluent] created.
      */

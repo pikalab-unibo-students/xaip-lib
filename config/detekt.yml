@@ -28,3 +28,7 @@ style:
     active: false
   UnusedPrivateMember:
     active: false
+
+naming:
+  VariableNaming:
+    active: false

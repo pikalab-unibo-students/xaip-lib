@@ -1,14 +1,12 @@
 package explanation.impl
 
-import core.*
+import core.* // ktlint-disable no-wildcard-imports
 import explanation.Question
 
 /**
  *
  */
 abstract class BaseQuestion : Question {
-    // o li tengo così o li tengo abstract (rimettendo la classe come abstract),
-    // ma se li metto come abstract poi tocca implementarli anche dove non mi servono;
     /**
      *
      */
@@ -38,12 +36,6 @@ abstract class BaseQuestion : Question {
      *
      */
     protected abstract val hDomain: Domain
-
-    /**
-     *
-     */
-    fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
-        actionList.first { it.name == inputOperator.name }
 
     /**
      *

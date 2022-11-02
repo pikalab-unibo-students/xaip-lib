@@ -3,18 +3,25 @@ package explanation.impl
 import core.* // ktlint-disable no-wildcard-imports
 import core.utility.finalStateComplaintWithGoal
 import core.utility.then
+import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
-
+import explanation.utils.buildIdempotendMinimalOperatorsRequiredList
+import explanation.utils.replaceArtificialOperator
+import explanation.utils.retrieveArtificialOperator
 /**
  *
  */
 data class ExplanationImpl(
-    override val originalPlan: Plan,
-    override var novelPlan: Plan,
-    override val question: Question
+    override val question: Question,
+    override val explainer: Explainer
 ) : Explanation {
+    override var novelPlan: Plan = Plan.of(emptyList())
+
+    override val originalPlan: Plan by lazy {
+        this.question.plan
+    }
     override val addList: List<Operator> by lazy {
         this.novelPlan.operators.filter {
             !this.originalPlan.operators.contains(it)
@@ -31,38 +38,19 @@ data class ExplanationImpl(
         }
     }
     private val simulator = Simulator.of()
-
-    private fun retrieveOperator() = novelPlan.operators.filter { it.name.contains("^") }.getOrNull(0)
-
-    private fun retrieveAction() = novelPlan.operators.map { operator ->
-        question.problem.domain.actions.first {
-            it.name == operator.name.filter { char -> char.isLetter() } &&
-                operator.name.contains("^")
-        }
-    }.first()
-
-    private fun makeFinalOperator(action: Action, operator: Operator): Operator {
-        var newOperator = Operator.of(action)
-        for (arg in operator.args) {
-            newOperator = newOperator.apply(
-                VariableAssignment.of(
-                    operator.parameters.keys.toList()[operator.args.indexOf(arg)],
-                    arg
-                )
-            )
-        }
-        return newOperator
+    private val minimalPlan by lazy {
+        explainer.minimalPlanSelector(question.problem)
     }
-
-    private fun List<Operator>.replaceElement(element: Operator): List<Operator> =
-        this.toMutableList()
-            .subList(0, this.indexOf(element)).also {
-                it.add(makeFinalOperator(retrieveAction(), element))
-            }.also {
-                it.addAll(
-                    this.subList(this.indexOf(element) + 1, this.size)
-                )
-            }
+    private val operatorsMissing by lazy {
+        minimalPlan.operators.filter { !question.plan.operators.contains(it) }
+    }
+    private val idempotentOperatorsWrongOccurrence by lazy {
+        buildIdempotendMinimalOperatorsRequiredList(
+            minimalPlan.operators,
+            question.problem.domain.actions,
+            novelPlan.operators
+        ).filter { it.value.occurence1 <= it.value.occurence2 }
+    }
 
     init {
         when (question) {
@@ -70,13 +58,31 @@ data class ExplanationImpl(
                 val operatorsToKeep = question.plan.operators.subList(0, question.focusOn).toMutableList()
                 novelPlan = Plan.of(
                     operatorsToKeep
-                        .also { it.add(question.focus) }.also { it.addAll(novelPlan.operators) }
+                        .also { it.add(question.focus) }
+                        .also {
+                            it.addAll(
+                                explainer.planner.plan(
+                                    question.buildHypotheticalProblem().first()
+                                ).first().operators
+                            )
+                        }
                 )
             }
-            is QuestionAddOperator, is QuestionRemoveOperator -> {
-                val operator = retrieveOperator()
-                if (operator != null) novelPlan = Plan.of(novelPlan.operators.replaceElement(operator))
+            is QuestionAddOperator -> {
+                val planCopy = question.plan.operators.toMutableList()
+                planCopy.add(question.focusOn, question.focus)
+                novelPlan = (
+                    (planCopy.retrieveArtificialOperator() != null) then
+                        Plan.of(planCopy.replaceArtificialOperator(question.problem.domain.actions))
+                    ) ?: Plan.of(planCopy)
             }
+            is QuestionRemoveOperator -> {
+                novelPlan = explainer.planner.plan(question.buildHypotheticalProblem().first()).first()
+                if (novelPlan.operators.retrieveArtificialOperator() != null) novelPlan =
+                    Plan.of(novelPlan.operators.replaceArtificialOperator(question.problem.domain.actions))
+            }
+            is QuestionPlanProposal -> novelPlan = question.alternativePlan
+            is QuestionPlanSatisfiability -> novelPlan = question.plan
         }
     }
 
@@ -88,17 +94,22 @@ data class ExplanationImpl(
             ) ?: false
     }
 
-    override fun toString(): String =
-        """${ExplanationImpl::class.simpleName}(
-            |  ${ExplanationImpl::originalPlan.name}=${this.originalPlan},
-            |  ${ExplanationImpl::novelPlan.name}=${this.novelPlan},
-            |  the novel plan is valid: ${this.isPlanValid()},
-            |  - Diff(original plan VS new plan):
-            |  ${ExplanationImpl::addList.name}=$addList,
-            |  ${ExplanationImpl::deleteList.name}=$deleteList,
-            |  ${ExplanationImpl::existingList.name}=$existingList
-            |)
-        """.trimMargin()
+    /**
+     * */
+    override fun isPlanLengthAcceptable(): Boolean =
+        minimalPlan.operators.size <= novelPlan.operators.size
+
+    /**
+     * */
+    override fun isProblemSolvable(): Boolean =
+        minimalPlan.operators.isNotEmpty()
+
+    override fun minimalSolutionLength(): Int = minimalPlan.operators.size
+
+    // TODO(Sta roba fatta così fa schifo)
+    //  è logicamente sbagliata perché teoricamente filtro solo
+    // le azioni idempotenti che mi invalidano il piano quindi sto nome non ci sta)
+    override fun areIdempotentOperatorsPresent() = idempotentOperatorsWrongOccurrence
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

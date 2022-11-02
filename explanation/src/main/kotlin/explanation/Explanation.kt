@@ -3,11 +3,17 @@ package explanation
 import core.Operator
 import core.Plan
 import explanation.impl.ExplanationImpl
+import explanation.utils.IdempotentOperator
 
 /**
  *An [Explanation] is an entity that give a contrastive explanation about a [Plan].
  */
 interface Explanation {
+    /**
+     * @property explainer: represents the explainer provided by the user.
+     */
+    val explainer: Explainer
+
     /**
      * @property originalPlan: represents the original [Plan] the inquirer wants to challenge.
      */
@@ -46,14 +52,33 @@ interface Explanation {
      */
     fun isPlanValid(): Boolean
 
+    /**
+     * Method that states if a [Problem] is solvable.
+     */
+    fun isProblemSolvable(): Boolean
+
+    /**
+     * Method that states if a [Problem] is solvable.
+     */
+    fun minimalSolutionLength(): Int
+
+    /**
+     * Method that states if the legth of the [Plan] proposed is acceptabl.
+     */
+    fun isPlanLengthAcceptable(): Boolean
+
     companion object {
         /**
          * Factory method for an [Explanation] creation.
          */
         fun of(
-            originalPlan: Plan,
-            novelPlan: Plan,
-            question: Question
-        ): Explanation = ExplanationImpl(originalPlan, novelPlan, question)
+            question: Question,
+            explainer: Explainer
+        ): Explanation = ExplanationImpl(question, explainer)
     }
+
+    /**
+     *
+     */
+    fun areIdempotentOperatorsPresent(): Map<Operator, IdempotentOperator>
 }

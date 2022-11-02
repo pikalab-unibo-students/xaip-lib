@@ -16,7 +16,7 @@ import dsl.provider.VariableProvider
 class AxiomDSL(
     predicateProvider: PredicateProvider,
     val typeProvider: TypeProvider
-) : dsl.AbstractFluentDSL(predicateProvider) {
+) : AbstractFluentDSL(predicateProvider) {
     /**
      * @property parameters: map that associates each [Variable] to the corresponding [Type].
      */

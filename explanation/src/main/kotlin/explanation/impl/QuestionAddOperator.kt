@@ -1,13 +1,14 @@
 package explanation.impl
 
-import core.Domain
-import core.Operator
-import core.Plan
-import core.Problem
+import core.* // ktlint-disable no-wildcard-imports
+import explanation.utils.findAction
 
 /**
  * Why operator not used.
  * Add operator to the plan.
+ *
+ * @property focus: operator to add to the plan
+ * @property focusOn: index of operator
  */
 class QuestionAddOperator(
     override val problem: Problem,
@@ -15,6 +16,7 @@ class QuestionAddOperator(
     override val focus: Operator,
     override val focusOn: Int
 ) : BaseQuestion() {
+    private val emptyAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
     override val newPredicate by lazy { createNewPredicate(focus, "has_done_") }
     override val newGroundFluent by lazy { createNewGroundFluent(focus, newPredicate) }
     override val newFluent by lazy { createNewFluent(focus, newPredicate) }

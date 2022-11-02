@@ -1,5 +1,6 @@
 package dsl
 
+import core.Type
 import domain.BlockWorldDomain.Domains.blockWorld
 import domain.BlockWorldDomain.Types
 import domain.BlockWorldDomain.types

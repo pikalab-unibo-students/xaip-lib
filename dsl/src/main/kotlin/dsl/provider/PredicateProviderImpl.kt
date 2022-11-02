@@ -1,6 +1,6 @@
 package dsl.provider
 
-import Predicate
+import core.Predicate
 
 /**
  * Class representing an instance of [PredicateProvider].

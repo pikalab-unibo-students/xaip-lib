@@ -1,7 +1,7 @@
 package explanation.impl
 
-import Plan
-import State
+import core.Plan
+import core.State
 import explanation.Simulator
 
 internal class SimulatorImpl : Simulator {

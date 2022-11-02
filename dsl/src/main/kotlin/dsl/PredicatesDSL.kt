@@ -1,7 +1,7 @@
 package dsl
 
-import Predicate
-import Type
+import core.Predicate
+import core.Type
 import dsl.provider.TypeProvider
 
 /**
@@ -32,7 +32,7 @@ class PredicatesDSL(private val typesProvider: TypeProvider) {
      */
     private fun typeExist(types: Iterable<Type>): Boolean {
         for (type in types)
-            if (typesProvider.findType(type.name) == null) error("Type non found: ${type.name}")
+            if (typesProvider.findType(type.name) == null) error("core.Type non found: ${type.name}")
         return true
     }
 

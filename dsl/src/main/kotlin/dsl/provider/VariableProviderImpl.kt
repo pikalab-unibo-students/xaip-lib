@@ -1,6 +1,6 @@
 package dsl.provider
 
-import Variable
+import core.Variable
 
 /**
  * Class representing an instance of [VariableProvider].

@@ -1,6 +1,6 @@
 package explanation
-import Plan
-import State
+import core.Plan
+import core.State
 import explanation.impl.SimulatorImpl
 
 /**

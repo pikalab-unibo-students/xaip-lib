@@ -1,7 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.qa)
+    alias(libs.plugins.ktlint.gradle)
+    alias(libs.plugins.detekt.gradle)
 }
 
 dependencies {
@@ -17,7 +18,7 @@ kotlin {
     target {
         compilations.all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = false
                 freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }
@@ -33,4 +34,11 @@ tasks.test {
         events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
+}
+
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    config = files("${rootDir.path}/config/detekt.yml")
+    source = files(kotlin.sourceSets.map { it.kotlin.sourceDirectories })
 }

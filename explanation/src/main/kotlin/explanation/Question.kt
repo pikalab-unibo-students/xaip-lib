@@ -1,9 +1,9 @@
 package explanation
 
-import Domain
-import Operator
-import Plan
-import Problem
+import core.Domain
+import core.Operator
+import core.Plan
+import core.Problem
 
 /**
  * An [Question] represents a way for a user to express question about a plan.
@@ -42,5 +42,5 @@ interface Question {
     /**
      * Method to create a new [Problem] according to the [Question] the user is asking.
      */
-    fun buildHypotheticalProblem(): Problem
+    fun buildHypotheticalProblem(): Sequence<Problem>
 }

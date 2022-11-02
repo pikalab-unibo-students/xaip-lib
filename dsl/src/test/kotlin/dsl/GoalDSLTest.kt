@@ -1,5 +1,6 @@
 package dsl
 
+import core.FluentBasedGoal
 import domain.BlockWorldDomain.Fluents
 import domain.BlockWorldDomain.ProblemsDSL.problemOnAB
 import io.kotest.core.spec.style.AnnotationSpec

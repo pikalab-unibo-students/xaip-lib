@@ -1,7 +1,7 @@
 package dsl
 
-import Fluent
-import State
+import core.Fluent
+import core.State
 import dsl.provider.PredicateProvider
 
 /**
@@ -9,7 +9,7 @@ import dsl.provider.PredicateProvider
  */
 class StatesDSL(
     predicateProvider: PredicateProvider
-) : dsl.AbstractFluentDSL(predicateProvider) {
+) : AbstractFluentDSL(predicateProvider) {
     /**
      * @property fluents: set of [Fluent] created.
      */

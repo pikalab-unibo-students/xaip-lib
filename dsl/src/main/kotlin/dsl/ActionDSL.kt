@@ -1,10 +1,10 @@
 package dsl
 
-import Action
-import Effect
-import Fluent
-import Type
-import Variable
+import core.Action
+import core.Effect
+import core.Fluent
+import core.Type
+import core.Variable
 import dsl.provider.PredicateProvider
 import dsl.provider.TypeProvider
 import dsl.provider.VariableProvider

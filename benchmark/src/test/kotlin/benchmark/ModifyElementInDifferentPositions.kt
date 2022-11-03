@@ -1,5 +1,6 @@
 package benchmark
 import core.Plan
+import core.Planner
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownA
@@ -7,8 +8,12 @@ import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAC
 import domain.BlockWorldDomain.Problems
+import explanation.Explainer
+import explanation.Question
+import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionReplaceOperator
+import io.kotest.core.spec.style.AnnotationSpec
 
 /***
  * Comparing performance of different question (Q1-Q2( when asked to
@@ -16,39 +21,40 @@ import explanation.impl.QuestionReplaceOperator
  * different positions.
  * */
 
-class ModifyElementInDifferentPositions {
-    val problem0 = Problems.pickC
-    val problem1 = Problems.stackAB
-    val q1lenght1 = QuestionAddOperator(
-        problem0,
+class ModifyElementInDifferentPositions : AnnotationSpec() {
+    private val problemPickC = Problems.pickC
+    private val problemStackAB = Problems.stackAB
+
+    private val q1length1 = QuestionAddOperator(
+        problemPickC,
         Plan.of(emptyList()),
         pickC,
         0
     )
 
-    val q1lenght2 = QuestionAddOperator(
-        problem1,
+    private val q1length2 = QuestionAddOperator(
+        problemStackAB,
         Plan.of(listOf(pickA)),
         stackAB,
         1
     )
 
-    val q1lenght3 = QuestionAddOperator(
-        problem0,
+    private val q1length3 = QuestionAddOperator(
+        problemPickC,
         Plan.of(listOf(pickA, putdownA)),
         pickC,
         2
     )
 
-    val q1lenght4 = QuestionAddOperator(
-        problem1,
+    private val q1length4 = QuestionAddOperator(
+        problemStackAB,
         Plan.of(listOf(pickC, putdownC, pickA)),
         stackAB,
         1
     )
 
-    val q3lenght1 = QuestionReplaceOperator(
-        problem0,
+    private val q3length1 = QuestionReplaceOperator(
+        problemPickC,
         Plan.of(
             listOf(
                 pickA
@@ -58,8 +64,8 @@ class ModifyElementInDifferentPositions {
         0
     )
 
-    val q3lenght2 = QuestionReplaceOperator(
-        problem1,
+    private val q3length2 = QuestionReplaceOperator(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickA,
@@ -70,8 +76,8 @@ class ModifyElementInDifferentPositions {
         1
     )
 
-    val q3lenght3 = QuestionReplaceOperator(
-        problem0,
+    private val q3length3 = QuestionReplaceOperator(
+        problemPickC,
         Plan.of(
             listOf(
                 pickA,
@@ -83,8 +89,8 @@ class ModifyElementInDifferentPositions {
         2
     )
 
-    val q3lenght4 = QuestionReplaceOperator(
-        problem1,
+    private val q3length4 = QuestionReplaceOperator(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -96,4 +102,24 @@ class ModifyElementInDifferentPositions {
         stackAB,
         3
     )
+
+    private fun measureTimeMillis(question: Question): Long {
+        val start = System.currentTimeMillis()
+        ContrastiveExplanationPresenter(
+            Explainer.of(Planner.strips()).explain(question)
+        ).presentContrastiveExplanation()
+        return System.currentTimeMillis() - start
+    }
+
+    @Test
+    fun test() {
+        println(measureTimeMillis(q1length1))
+        println(measureTimeMillis(q1length2))
+        println(measureTimeMillis(q1length3))
+        println(measureTimeMillis(q1length4))
+        println(measureTimeMillis(q3length1))
+        println(measureTimeMillis(q3length2))
+        println(measureTimeMillis(q3length3))
+        println(measureTimeMillis(q3length4))
+    }
 }

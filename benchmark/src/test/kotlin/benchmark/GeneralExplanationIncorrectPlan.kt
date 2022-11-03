@@ -1,21 +1,24 @@
 package benchmark
 
 import core.Plan
+import core.Planner
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.pickD
 import domain.BlockWorldDomain.Operators.putdownC
-import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAC
 import domain.BlockWorldDomain.Operators.stackAD
+import explanation.Explainer
+import explanation.Question
 import explanation.impl.* // ktlint-disable no-wildcard-imports
+import io.kotest.core.spec.style.AnnotationSpec
 
-class GeneralExplanationIncorrectPlan {
-    val problem1 = BlockWorldDomain.Problems.stackAB
+class GeneralExplanationIncorrectPlan : AnnotationSpec() {
+    private val problemStackAB = BlockWorldDomain.Problems.stackAB
 
-    val q1correct = QuestionAddOperator(
-        problem1,
+    private val q1 = QuestionAddOperator(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -26,8 +29,8 @@ class GeneralExplanationIncorrectPlan {
         stackAC,
         2
     )
-    val q2correct = QuestionRemoveOperator(
-        problem1,
+    private val q2 = QuestionRemoveOperator(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -40,8 +43,8 @@ class GeneralExplanationIncorrectPlan {
         pickD
     )
 
-    val q3corret = QuestionReplaceOperator(
-        problem1,
+    private val q3 = QuestionReplaceOperator(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -54,8 +57,8 @@ class GeneralExplanationIncorrectPlan {
         3
     )
 
-    val q4correct = QuestionPlanProposal(
-        problem1,
+    private val q4 = QuestionPlanProposal(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -74,8 +77,8 @@ class GeneralExplanationIncorrectPlan {
         )
     )
 
-    val q5correct = QuestionPlanSatisfiability(
-        problem1,
+    private val q5 = QuestionPlanSatisfiability(
+        problemStackAB,
         Plan.of(
             listOf(
                 pickC,
@@ -85,4 +88,21 @@ class GeneralExplanationIncorrectPlan {
             )
         )
     )
+
+    private fun measureTimeMillis(question: Question): Long {
+        val start = System.currentTimeMillis()
+        ContrastiveExplanationPresenter(
+            Explainer.of(Planner.strips()).explain(question)
+        ).presentContrastiveExplanation()
+        return System.currentTimeMillis() - start
+    }
+
+    @Test
+    fun test() {
+        println(measureTimeMillis(q1))
+        println(measureTimeMillis(q2))
+        println(measureTimeMillis(q3))
+        println(measureTimeMillis(q4))
+        println(measureTimeMillis(q5))
+    }
 }

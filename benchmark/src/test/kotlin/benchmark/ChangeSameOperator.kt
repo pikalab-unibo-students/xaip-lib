@@ -1,6 +1,8 @@
 package benchmark
 import core.Plan
 import core.Planner
+import core.State
+import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAC
@@ -11,7 +13,7 @@ import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionRemoveOperator
 import explanation.impl.QuestionReplaceOperator
-import org.openjdk.jmh.annotations.Benchmark
+import io.kotest.core.spec.style.AnnotationSpec
 
 // ktlint-disable no-wildcard-imports
 
@@ -19,50 +21,70 @@ import org.openjdk.jmh.annotations.Benchmark
  * Comparing performance of different question when asked to
  * perform similar operations.
  * */
-open class ChangeSameOperator {
-    fun init() {
-        val problem = Problems.stackAB
+open class ChangeSameOperator : AnnotationSpec() {
+    val explainer = Explainer.of(BlockWorldDomain.Planners.stripsPlanner)
+    private val problemStackAB = Problems.stackAB
 
-        val q1 = QuestionAddOperator(
-            problem,
-            Plan.of(listOf(pickA)),
-            stackAB,
-            1
+    private val q1 = QuestionAddOperator(
+        problemStackAB,
+        Plan.of(listOf(pickA)),
+        stackAB,
+        1
+    )
+
+    private val q2 = QuestionRemoveOperator(
+        problemStackAB,
+        Plan.of(
+            listOf(
+                pickA,
+                stackAB,
+                stackAC
+            )
+        ),
+        stackAC
+    )
+
+    private val q3 = QuestionReplaceOperator(
+        problemStackAB,
+        Plan.of(
+            listOf(
+                pickA,
+                stackAC
+            )
+        ),
+        stackAB,
+        1,
+        State.of(
+            BlockWorldDomain.Fluents.atAArm,
+            BlockWorldDomain.Fluents.clearA,
+            BlockWorldDomain.Fluents.atCFloor,
+            BlockWorldDomain.Fluents.clearC,
+            BlockWorldDomain.Fluents.atDFloor,
+            BlockWorldDomain.Fluents.clearD,
+            BlockWorldDomain.Fluents.clearB,
+            BlockWorldDomain.Fluents.atBFloor,
+            BlockWorldDomain.Fluents.armEmpty
         )
+    )
 
-        val q2 = QuestionRemoveOperator(
-            problem,
-            Plan.of(
-                listOf(
-                    pickA,
-                    stackAB,
-                    stackAC
-                )
-            ),
-            stackAC
-        )
-
-        val q3 = QuestionReplaceOperator(
-            problem,
-            Plan.of(
-                listOf(
-                    pickA,
-                    stackAC
-                )
-            ),
-            stackAB,
-            1
-        )
-
-        addOperator(q1)
-        addOperator(q2)
-        addOperator(q3)
-    }
-
-    @Benchmark
     fun addOperator(question: Question) {
         ContrastiveExplanationPresenter(
-            Explainer.of(Planner.strips(), question).explain()
+            Explainer.of(Planner.strips()).explain(question)
         ).presentContrastiveExplanation()
+    }
+
+    private fun measureTimeMillis(question: Question): Long {
+        val start = System.currentTimeMillis()
+        ContrastiveExplanationPresenter(
+            Explainer.of(Planner.strips()).explain(question)
+        ).presentContrastiveExplanation()
+        return System.currentTimeMillis() - start
+    }
+
+    @Test
+    fun test() {
+        println(measureTimeMillis(q1))
+        println(measureTimeMillis(q2))
+        println(measureTimeMillis(q3))
     }
 }

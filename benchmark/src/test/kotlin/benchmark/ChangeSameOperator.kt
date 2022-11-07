@@ -14,6 +14,7 @@ import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionRemoveOperator
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
+import java.lang.management.ManagementFactory
 
 // ktlint-disable no-wildcard-imports
 
@@ -81,10 +82,28 @@ open class ChangeSameOperator : AnnotationSpec() {
         return System.currentTimeMillis() - start
     }
 
+    private fun measureMemory(question: Question): Long {
+        val mbean = ManagementFactory.getMemoryMXBean()
+        val beforeHeapMemoryUsage = mbean.heapMemoryUsage
+
+        val instance = ContrastiveExplanationPresenter(
+            Explainer.of(Planner.strips()).explain(question)
+        ).presentContrastiveExplanation()
+
+        val afterHeapMemoryUsage = mbean.heapMemoryUsage
+        return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
+    }
     @Test
     fun test() {
         println(measureTimeMillis(q1))
         println(measureTimeMillis(q2))
         println(measureTimeMillis(q3))
+    }
+    
+    @Test
+    fun testMemory() {
+        println(measureMemory(q1))
+        println(measureMemory(q2))
+        println(measureMemory(q3))
     }
 }

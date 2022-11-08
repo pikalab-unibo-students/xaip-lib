@@ -1,0 +1,26 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Explainer << interface >> {
+  + explain(Question): Explanation
+  + minimalPlanSelector(Problem): Plan
+}
+interface Explanation << interface >> {
+  + minimalSolutionLength(): Int
+  + areIdempotentOperatorsPresent(): Map<Operator, IdempotentOperator>
+}
+interface ExplanationPresenter << interface >> {
+  + present(): String
+}
+interface Question << interface >> {
+  + buildHypotheticalProblem(): Sequence<Problem>
+  + buildHypotheticalDomain(): Domain
+}
+interface Simulator << interface >> {
+  + simulate(Plan, State): List<State>
+}
+
+@enduml

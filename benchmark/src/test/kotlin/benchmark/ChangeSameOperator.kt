@@ -93,13 +93,14 @@ open class ChangeSameOperator : AnnotationSpec() {
         val afterHeapMemoryUsage = mbean.heapMemoryUsage
         return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
     }
+
     @Test
     fun test() {
         println(measureTimeMillis(q1))
         println(measureTimeMillis(q2))
         println(measureTimeMillis(q3))
     }
-    
+
     @Test
     fun testMemory() {
         println(measureMemory(q1))

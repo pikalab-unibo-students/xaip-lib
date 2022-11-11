@@ -1,107 +1,111 @@
 package benchmark
 
-import core.*
+import core.* // ktlint-disable no-wildcard-imports
+import core.utility.then
 import domain.BlockWorldDomain
-import explanation.Explainer
 import explanation.Question
-import explanation.impl.ContrastiveExplanationPresenter
-import explanation.impl.QuestionAddOperator
+import explanation.impl.* // ktlint-disable no-wildcard-imports
 import io.kotest.core.spec.style.AnnotationSpec
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.lang.management.ManagementFactory
 
 interface Benchmark {
-    fun mesureMemory() = Long
-    fun mesureTime() = Long
+    fun write(filename: String?)
 }
 
-class AbstractBenchmark(
-    private val problem: Problem,
-    private val length: Int,
-    private val flag: Int
-) : Benchmark {
-    var plan: MutableList<Operator> = MutableList(length) { Operator.of(problem.domain.actions.first()) }
-    private var q1ResultTime = mutableListOf<Long>()
-    private var q1ResultMemory = mutableListOf<Long>()
-
-    init {
-        prova()
+abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark {
+    var plan: MutableList<Operator> = MutableList(length) {
+        Operator.of(problem.domain.actions.first())
     }
-
-    private fun measureTimeMillis(question: Question): Long {
-        val start = System.currentTimeMillis()
-        ContrastiveExplanationPresenter(
-            Explainer.of(Planner.strips()).explain(question)
-        ).presentContrastiveExplanation()
-        return System.currentTimeMillis() - start
-    }
-
-    private fun measureMemory(question: Question): Long {
-        val mbean = ManagementFactory.getMemoryMXBean()
-        val beforeHeapMemoryUsage = mbean.heapMemoryUsage
-
-        val instance = ContrastiveExplanationPresenter(
-            Explainer.of(Planner.strips()).explain(question)
-        ).presentContrastiveExplanation()
-
-        val afterHeapMemoryUsage = mbean.heapMemoryUsage
-        return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
-    }
-
-    fun prova() {
-        if (flag == 2) {
-            var i: Int = 0
-            while (i < length) {
-                q1ResultTime.add(
-                    measureTimeMillis(
-                        QuestionAddOperator(
-                            problem,
-                            Plan.of(plan),
-                            Operator.of(problem.domain.actions.last()),
-                            i
-                        )
-                    )
-                )
-                q1ResultMemory.add(
+    var resultsTime = mutableListOf<Long>()
+    var resultsMemory = mutableListOf<Long>()
+    fun addResult(q: Question) {
+        resultsTime.add(measureTimeMillis(q))
+        (q is QuestionReplaceOperator)
+            .then(
+                resultsMemory.add(
                     measureMemory(
-                        QuestionAddOperator(
-                            problem,
-                            Plan.of(plan),
-                            Operator.of(problem.domain.actions.last()),
-                            i
+                        QuestionReplaceOperator(
+                            q.problem,
+                            q.plan,
+                            q.focus,
+                            q.focusOn,
+                            (q as QuestionReplaceOperator).inState
                         )
                     )
                 )
-                i++
+            ) ?: resultsMemory.add(measureMemory(q))
+    }
+}
+open class Benchmark1(problem: Problem, length: Int, private val flag: Int) : AbstractBenchmark(problem, length) {
+    lateinit var question: Question
+    init {
+        var i = 0
+        while (i < length) {
+            when (flag) {
+                1 -> question = QuestionRemoveOperator(
+                    problem,
+                    Plan.of(plan),
+                    Operator.of(problem.domain.actions.last())
+                        .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a))
+                )
+                2 -> question = QuestionAddOperator(
+                    problem,
+                    Plan.of(plan),
+                    Operator.of(problem.domain.actions.last()),
+                    i
+                )
+                3 -> question = QuestionReplaceOperator(
+                    problem,
+                    Plan.of(plan),
+                    Operator.of(problem.domain.actions.first())
+                        .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a)),
+                    i
+                )
+                4 -> question = QuestionPlanProposal(
+                    problem,
+                    Plan.of(plan),
+                    Plan.of(MutableList(i) { Operator.of(problem.domain.actions.first()) })
+                )
+                5 -> question = QuestionPlanSatisfiability(
+                    problem,
+                    Plan.of(plan)
+                )
             }
+            addResult(question)
+            i++
         }
     }
 
-    fun write() {
-        fun OutputStream.writeCsv() {
+    override fun write(filename: String?) {
+        fun OutputStream.writeCsv(resultMemory: List<Long>, resultTime: List<Long>, flag: Int) {
             val writer = bufferedWriter()
-            writer.write(""""Domain", "Plan length", "QuestionAddOperator", "position", "Time", "Memory""")
+            writer.write(""""Domain", "Plan length", "Question Type", "index", "Time", "Memory""")
             writer.newLine()
             var i = 1
-            q1ResultTime.forEach {
+            resultTime.forEach {
                 writer.write(
-                    "${problem.domain.name}, ${plan.size}, \"QuestionAddOperator\", " +
-                        "$i, $it, ${q1ResultMemory[q1ResultTime.indexOf(it)]}"
+                    "${problem.domain.name}, ${plan.size}, $flag, " +
+                        "$i, $it, ${resultMemory[resultTime.indexOf(it)]}"
                 )
                 writer.newLine()
                 i++
             }
             writer.flush()
         }
-        FileOutputStream("filename.csv").apply { writeCsv() }
+        ((filename.equals("")).then("""resultQuestion$flag.csv""") ?: filename)?.let {
+            FileOutputStream(
+                it
+            )
+                .apply { writeCsv(resultsMemory, resultsTime, flag) }
+        }
     }
 }
 
 class Test : AnnotationSpec() {
     @Test
     fun prova() {
-        val b = AbstractBenchmark(BlockWorldDomain.Problems.pickC, 100, 2).write()
+        val b = Benchmark1(BlockWorldDomain.Problems.pickC, 100, 3).write("")
         println(b)
     }
 }

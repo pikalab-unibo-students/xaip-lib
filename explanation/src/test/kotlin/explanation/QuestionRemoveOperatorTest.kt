@@ -1,7 +1,7 @@
 package explanation
 
-import core.Plan
-import core.Planner
+import core.*
+import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
@@ -69,5 +69,65 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe listOf(moveRfromL1toL2)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+    }
+
+    @Ignore
+    @Test
+    fun `testBuildDomain`() {
+        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+
+        QuestionRemoveOperator(
+            Problems.stackAB,
+            Plan.of(listOf(BlockWorldDomain.Operators.stackAB)),
+            pickA
+        ).buildHypotheticalDomain() shouldBe
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = BlockWorldDomain.Actions.pick.name + "^",
+                        parameters = BlockWorldDomain.Actions.pick.parameters,
+                        preconditions = BlockWorldDomain.Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
+                Problems.stackAB.domain.types
+            )
+    }
+
+    @Ignore
+    @Test
+    fun `testBuildProblem`() {
+        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+        val groundFluent = Fluent.positive(predicate, *pickA.args.toTypedArray())
+
+        QuestionRemoveOperator(
+            Problems.stackAB,
+            Plan.of(listOf(BlockWorldDomain.Operators.stackAB)),
+            pickA
+        ).buildHypotheticalProblem().first() shouldBe Problem.of(
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = BlockWorldDomain.Actions.pick.name + "^",
+                        parameters = BlockWorldDomain.Actions.pick.parameters,
+                        preconditions = BlockWorldDomain.Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
+                Problems.stackAB.domain.types
+            ),
+            Problems.stackAB.objects,
+            Problems.stackAB.initialState,
+            FluentBasedGoal.of(
+                (Problems.stackAB.goal as FluentBasedGoal).targets.toMutableSet()
+                    .also { it.add(groundFluent) }
+            )
+        )
     }
 }

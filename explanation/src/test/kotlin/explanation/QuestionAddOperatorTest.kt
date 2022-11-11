@@ -1,7 +1,7 @@
 package explanation
 
-import core.Plan
-import core.Planner
+import core.* // ktlint-disable no-wildcard-imports
+import domain.BlockWorldDomain.Actions
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
@@ -13,7 +13,6 @@ import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL2toL1
 import domain.GraphDomain.Operators.moveRfromL2toL4
 import domain.GraphDomain.Operators.unloadC1fromRtoL4
-import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -35,10 +34,6 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe emptyList()
         explanation.existingList shouldBe listOf(stackAB)
         explanation.isPlanValid() shouldBe true
-
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
-        println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
     }
 
     @Test
@@ -98,5 +93,65 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.isPlanLengthAcceptable() shouldBe true
         explanation.isProblemSolvable() shouldBe true
         explanation.isPlanValid() shouldBe false
+    }
+
+    @Test
+    fun `testBuildDomain`() {
+        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+
+        QuestionAddOperator(
+            Problems.stackAB,
+            Plan.of(listOf(stackAB)),
+            pickA,
+            0
+        ).buildHypotheticalDomain() shouldBe
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = Actions.pick.name + "^",
+                        parameters = Actions.pick.parameters,
+                        preconditions = Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.of(fluent)).also { it.addAll(Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(Actions.pick) },
+                Problems.stackAB.domain.types
+            )
+    }
+
+    @Test
+    fun `testBuildProblem`() {
+        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+        val groundFluent = Fluent.positive(predicate, *pickA.args.toTypedArray())
+
+        QuestionAddOperator(
+            Problems.stackAB,
+            Plan.of(listOf(stackAB)),
+            pickA,
+            0
+        ).buildHypotheticalProblem().first() shouldBe Problem.of(
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = Actions.pick.name + "^",
+                        parameters = Actions.pick.parameters,
+                        preconditions = Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.of(fluent)).also { it.addAll(Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(Actions.pick) },
+                Problems.stackAB.domain.types
+            ),
+            Problems.stackAB.objects,
+            Problems.stackAB.initialState,
+            FluentBasedGoal.of(
+                (Problems.stackAB.goal as FluentBasedGoal).targets.toMutableSet()
+                    .also { it.add(groundFluent) }
+            )
+        )
     }
 }

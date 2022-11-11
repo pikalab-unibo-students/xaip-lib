@@ -2,12 +2,10 @@ package explanation
 
 import core.Plan
 import core.Planner
-import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionPlanProposal
-import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -78,7 +76,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
                 graphProblemRfromLoc1Loc2,
                 planRfromL1toL2,
                 planRfromL1toL5
-            )
+            ).buildHypotheticalDomain()
         }
         exception.message shouldStartWith "Reconciliation"
     }
@@ -90,7 +88,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
                 graphProblemRfromLoc1Loc2,
                 planRfromL1toL2,
                 planRfromL1toL5
-            )
+            ).buildHypotheticalProblem()
         }
         exception.message shouldStartWith "Reconciliation"
     }

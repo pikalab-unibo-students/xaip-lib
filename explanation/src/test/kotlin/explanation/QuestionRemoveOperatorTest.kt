@@ -90,7 +90,8 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
                         name = BlockWorldDomain.Actions.pick.name + "^",
                         parameters = BlockWorldDomain.Actions.pick.parameters,
                         preconditions = BlockWorldDomain.Actions.pick.preconditions,
-                        effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                        effects = mutableSetOf(Effect.negative(fluent))
+                            .also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
                     )
                 ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
                 Problems.stackAB.domain.types
@@ -117,7 +118,8 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
                         name = BlockWorldDomain.Actions.pick.name + "^",
                         parameters = BlockWorldDomain.Actions.pick.parameters,
                         preconditions = BlockWorldDomain.Actions.pick.preconditions,
-                        effects = mutableSetOf(Effect.negative(fluent)).also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                        effects = mutableSetOf(Effect.negative(fluent))
+                            .also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
                     )
                 ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
                 Problems.stackAB.domain.types

@@ -14,7 +14,7 @@ fun measureTimeMillis(question: Question): Long {
     return System.currentTimeMillis() - start
 }
 
-fun measureMemory(question: Question): Long {
+fun measureMemory2(question: Question): Long {
     val mbean = ManagementFactory.getMemoryMXBean()
     val beforeHeapMemoryUsage = mbean.heapMemoryUsage
 
@@ -26,13 +26,13 @@ fun measureMemory(question: Question): Long {
     return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
 }
 
-fun measureMemory2(question: Question): Long {
-    val beforeHeapMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
+fun measureMemory(question: Question): Long {
+    val beforeMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
 
     val instance = ContrastiveExplanationPresenter(
         Explainer.of(Planner.strips()).explain(question)
     ).presentContrastiveExplanation()
 
-    val afterHeapMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
-    return afterHeapMemoryUsage - beforeHeapMemoryUsage
+    val afterMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
+    return afterMemoryUsage - beforeMemoryUsage
 }

@@ -2,12 +2,16 @@ package explanation
 
 import core.Plan
 import core.Planner
+import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionPlanProposal
+import explanation.impl.QuestionPlanSatisfiability
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import domain.BlockWorldDomain.Problems as BlockWorldProblem
 import domain.GraphDomain.Problems as GraphProblem
 
@@ -65,5 +69,29 @@ class QuestionPlanProposalTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q4)
         println(explanation.novelPlan)
         explanation.isPlanValid() shouldBe false
+    }
+
+    @Test
+    fun `Hypothetical domain exception`() {
+        val exception = shouldThrow<UnsupportedOperationException> {
+            QuestionPlanProposal(
+                graphProblemRfromLoc1Loc2,
+                planRfromL1toL2,
+                planRfromL1toL5
+            )
+        }
+        exception.message shouldStartWith "Reconciliation"
+    }
+
+    @Test
+    fun `Hypothetical problem exception`() {
+        val exception = shouldThrow<UnsupportedOperationException> {
+            QuestionPlanProposal(
+                graphProblemRfromLoc1Loc2,
+                planRfromL1toL2,
+                planRfromL1toL5
+            )
+        }
+        exception.message shouldStartWith "Reconciliation"
     }
 }

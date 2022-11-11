@@ -21,20 +21,20 @@ abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark 
     var resultsMemory = mutableListOf<Long>()
     fun addResult(q: Question) {
         resultsTime.add(measureTimeMillis(q))
-        (q is QuestionReplaceOperator)
-            .then(
-                resultsMemory.add(
-                    measureMemory(
-                        QuestionReplaceOperator(
-                            q.problem,
-                            q.plan,
-                            q.focus,
-                            q.focusOn,
-                            (q as QuestionReplaceOperator).inState
-                        )
+        when (q) {
+            is QuestionReplaceOperator -> resultsMemory.add(
+                measureMemory(
+                    QuestionReplaceOperator(
+                        q.problem,
+                        q.plan,
+                        q.focus,
+                        q.focusOn,
+                        q.inState
                     )
                 )
-            ) ?: resultsMemory.add(measureMemory(q))
+            )
+            else -> resultsMemory.add(measureMemory(q))
+        }
     }
 }
 open class Benchmark1(problem: Problem, length: Int, private val flag: Int) : AbstractBenchmark(problem, length) {
@@ -80,7 +80,7 @@ open class Benchmark1(problem: Problem, length: Int, private val flag: Int) : Ab
     override fun write(filename: String?) {
         fun OutputStream.writeCsv(resultMemory: List<Long>, resultTime: List<Long>, flag: Int) {
             val writer = bufferedWriter()
-            writer.write(""""Domain", "Plan length", "Question Type", "index", "Time", "Memory""")
+            writer.write("""Domain, PlanLength, QuestionType, Index, Time, Memory""".trimMargin())
             writer.newLine()
             var i = 1
             resultTime.forEach {
@@ -93,7 +93,7 @@ open class Benchmark1(problem: Problem, length: Int, private val flag: Int) : Ab
             }
             writer.flush()
         }
-        ((filename.equals("")).then("""resultQuestion$flag.csv""") ?: filename)?.let {
+        ((filename.equals("")).then("""res/resultQuestion$flag.csv""") ?: "res/$filename").let {
             FileOutputStream(
                 it
             )
@@ -105,7 +105,10 @@ open class Benchmark1(problem: Problem, length: Int, private val flag: Int) : Ab
 class Test : AnnotationSpec() {
     @Test
     fun prova() {
-        val b = Benchmark1(BlockWorldDomain.Problems.pickC, 100, 3).write("")
-        println(b)
+        var i = 1
+        while (i <= 5) {
+            val b = Benchmark1(BlockWorldDomain.Problems.pickC, 100, i).write("")
+            i++
+        }
     }
 }

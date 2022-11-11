@@ -14,8 +14,10 @@ import domain.BlockWorldDomain.States
 import domain.GraphDomain.Operators.moveRfromL1toL2
 import domain.GraphDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionReplaceOperator
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import domain.GraphDomain.Problems as GraphProblem
 
 class QuestionReplaceOperatorTest : AnnotationSpec() {
@@ -113,5 +115,20 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe listOf(moveRfromL1toL2)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `Test exception`() {
+        val exception = shouldThrow<NoSuchElementException> {
+            Explainer.of(Planner.strips()).explain(
+                QuestionReplaceOperator(
+                    Problems.stackZWpickX,
+                    Plan.of(listOf(pickA, stackAB, pickC)),
+                    stackAB,
+                    0
+                )
+            )
+        }
+        exception.message shouldStartWith "The operator"
     }
 }

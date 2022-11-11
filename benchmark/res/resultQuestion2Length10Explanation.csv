@@ -1,0 +1,11 @@
+Domain, PlanLength, QuestionType, Index, Time, Memory
+block_world, 10, 2, 1, 24, 1048576
+block_world, 10, 2, 2, 136, 12027936
+block_world, 10, 2, 3, 23, 2652160
+block_world, 10, 2, 4, 22, 3086392
+block_world, 10, 2, 5, 22, 3086392
+block_world, 10, 2, 6, 21, 3145736
+block_world, 10, 2, 7, 18, 3145736
+block_world, 10, 2, 8, 21, 3145736
+block_world, 10, 2, 9, 15, 2650064
+block_world, 10, 2, 10, 15, 2650064

@@ -1,6 +1,6 @@
 package explanation
 
-import core.*
+import core.* // ktlint-disable no-wildcard-imports
 import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
@@ -71,10 +71,9 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         explanation.isPlanValid() shouldBe true
     }
 
-    @Ignore
     @Test
     fun `testBuildDomain`() {
-        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val predicate = Predicate.of("not_done_" + pickA.name, pickA.parameters.values.toList())
         val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
 
         QuestionRemoveOperator(
@@ -98,10 +97,9 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
             )
     }
 
-    @Ignore
     @Test
     fun `testBuildProblem`() {
-        val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
+        val predicate = Predicate.of("not_done_" + pickA.name, pickA.parameters.values.toList())
         val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
         val groundFluent = Fluent.positive(predicate, *pickA.args.toTypedArray())
 
@@ -125,7 +123,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
                 Problems.stackAB.domain.types
             ),
             Problems.stackAB.objects,
-            Problems.stackAB.initialState,
+            State.of(mutableSetOf(groundFluent!!).also { it.addAll(Problems.stackAB.initialState.fluents) }),
             FluentBasedGoal.of(
                 (Problems.stackAB.goal as FluentBasedGoal).targets.toMutableSet()
                     .also { it.add(groundFluent) }

@@ -3,15 +3,15 @@ package explanation
 import core.Plan
 import core.Planner
 import domain.BlockWorldDomain.Operators
-import domain.GraphDomain.Operators.moveRfromL1toL2
-import domain.GraphDomain.Operators.moveRfromL1toL5
+import domain.LogisticDomain.Operators.moveRfromL1toL2
+import domain.LogisticDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionPlanProposal
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import domain.BlockWorldDomain.Problems as BlockWorldProblem
-import domain.GraphDomain.Problems as GraphProblem
+import domain.LogisticDomain.Problems as GraphProblem
 
 class QuestionPlanProposalTest : AnnotationSpec() {
     private val planPickAStackAB = Plan.of(listOf(Operators.pickA, Operators.stackAB))

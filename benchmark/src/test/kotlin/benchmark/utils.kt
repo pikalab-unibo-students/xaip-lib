@@ -20,7 +20,7 @@ fun measureTimeMillis(question: Question, explanationType: String): Long {
     return System.currentTimeMillis() - start
 }
 
-fun measureMemory2(question: Question, explanationType: String): Long {
+fun measureMemory(question: Question, explanationType: String): Long {
     val mbean = ManagementFactory.getMemoryMXBean()
     val beforeHeapMemoryUsage = mbean.heapMemoryUsage
     if (explanationType.startsWith("c") || explanationType.startsWith("C")) {
@@ -28,15 +28,13 @@ fun measureMemory2(question: Question, explanationType: String): Long {
             Explainer.of(Planner.strips()).explain(question)
         ).presentContrastiveExplanation()
     } else {
-        ContrastiveExplanationPresenter(
-            Explainer.of(Planner.strips()).explain(question)
-        ).present()
+        ContrastiveExplanationPresenter(Explainer.of(Planner.strips()).explain(question)).present()
     }
     val afterHeapMemoryUsage = mbean.heapMemoryUsage
     return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
 }
 
-fun measureMemory(question: Question, explanationType: String): Long {
+fun measureMemory2(question: Question, explanationType: String): Long {
     val beforeMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
 
     if (explanationType.startsWith("c") || explanationType.startsWith("C")) {

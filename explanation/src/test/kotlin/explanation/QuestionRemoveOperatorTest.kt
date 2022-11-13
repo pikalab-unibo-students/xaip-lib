@@ -11,11 +11,11 @@ import domain.BlockWorldDomain.Operators.stackCA
 import domain.BlockWorldDomain.Operators.stackDB
 import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Problems
-import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.LogisticDomain.Operators.moveRfromL1toL2
 import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.GraphDomain.Problems as GraphProblem
+import domain.LogisticDomain.Problems as GraphProblem
 
 class QuestionRemoveOperatorTest : AnnotationSpec() {
 
@@ -123,7 +123,7 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
                 Problems.stackAB.domain.types
             ),
             Problems.stackAB.objects,
-            State.of(mutableSetOf(groundFluent!!).also { it.addAll(Problems.stackAB.initialState.fluents) }),
+            State.of(mutableSetOf(groundFluent).also { it.addAll(Problems.stackAB.initialState.fluents) }),
             FluentBasedGoal.of(
                 (Problems.stackAB.goal as FluentBasedGoal).targets.toMutableSet()
                     .also { it.add(groundFluent) }

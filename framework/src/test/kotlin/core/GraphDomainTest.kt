@@ -1,8 +1,8 @@
 package core
 
 import domain.BlockWorldDomain.Planners
-import domain.GraphDomain.Actions
-import domain.GraphDomain.Problems
+import domain.LogisticDomain.Actions
+import domain.LogisticDomain.Problems
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 

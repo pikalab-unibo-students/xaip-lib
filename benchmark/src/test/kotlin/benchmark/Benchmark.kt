@@ -1,11 +1,13 @@
 package benchmark
-
 import core.* // ktlint-disable no-wildcard-imports
 import core.utility.then
-import domain.BlockWorldDomain
+import domain.BlockWorldDomain.Operators.pickA
+import domain.LogisticDomain
 import explanation.Question
 import explanation.impl.* // ktlint-disable no-wildcard-imports
+import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.AnnotationSpec
+import kotlinx.coroutines.withTimeoutOrNull
 import java.io.FileOutputStream
 import java.io.OutputStream
 
@@ -19,6 +21,7 @@ abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark 
     }
     var resultsTime = mutableListOf<Long>()
     var resultsMemory = mutableListOf<Long>()
+
     fun addResult(question: Question, explanationType: String) {
         resultsTime.add(measureTimeMillis(question, explanationType))
         when (question) {
@@ -38,6 +41,7 @@ abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark 
         }
     }
 }
+
 open class Benchmark1(
     problem: Problem,
     private val length: Int,
@@ -45,6 +49,11 @@ open class Benchmark1(
     private val explanationType: String = ""
 ) : AbstractBenchmark(problem, length) {
     lateinit var question: Question
+    var operator = when (problem.domain.name) {
+        "block_world" -> pickA
+        "logistic_world" -> LogisticDomain.Operators.moveRfromL2toL4
+        else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
+    }
     init {
         var i = 0
         while (i < length) {
@@ -52,8 +61,7 @@ open class Benchmark1(
                 1 -> question = QuestionRemoveOperator(
                     problem,
                     Plan.of(plan),
-                    Operator.of(problem.domain.actions.last())
-                        .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a))
+                    operator
                 )
                 2 -> question = QuestionAddOperator(
                     problem,
@@ -64,8 +72,7 @@ open class Benchmark1(
                 3 -> question = QuestionReplaceOperator(
                     problem,
                     Plan.of(plan),
-                    Operator.of(problem.domain.actions.first())
-                        .apply(VariableAssignment.of(BlockWorldDomain.Values.X, BlockWorldDomain.Values.a)),
+                    operator,
                     i
                 )
                 4 -> question = QuestionPlanProposal(
@@ -106,19 +113,45 @@ open class Benchmark1(
             ).let {
             FileOutputStream(
                 it
-            )
-                .apply { writeCsv(resultsMemory, resultsTime, flag) }
+            ).apply { writeCsv(resultsMemory, resultsTime, flag) }
         }
     }
 }
 
 class Test : AnnotationSpec() {
     @Test
+    fun main(j: Int, i: Int) = runBlocking {
+        val status = withTimeoutOrNull(15) {
+            Benchmark1(LogisticDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
+        }
+        println("The processing return status is: $status")
+    }
+    /*
+    @Test
+    fun main() = runBlocking {
+        val result = withTimeoutOrNull(Duration.ofMillis(15)) {
+            repeat(1000) { i ->
+                println("I'm sleeping $i ...")
+                delay(Duration.ofMillis(5))
+            }
+            "Done" // will get cancelled before it produces this result
+        }
+        println("Result is $result")
+    }
+    */
+
+    @Test
     fun prova() {
         var i = 1
+        var j = 50
         while (i <= 5) {
-            Benchmark1(BlockWorldDomain.Problems.pickC, 200, i).write("")
+            while (j <= 200) {
+                // Benchmark1(GraphDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
+                main(j, i)
+                j += 50
+            }
             i++
+            j = 0
         }
     }
 }

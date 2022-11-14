@@ -96,6 +96,26 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     }
 
     @Test
+    fun `Basic Add useless operator (moveRfromL2toL1) to the plan`() {
+        val q1 = QuestionAddOperator(
+            LogisticDomain.Problems.basicRobotFromLocation1ToLocation2,
+            Plan.of(
+                listOf(
+                    moveRfromL1toL2,
+                    moveRfromL2toL1
+                )
+            ),
+            moveRfromL2toL1,
+            1
+        )
+
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
+        explanation.isPlanLengthAcceptable() shouldBe true
+        explanation.isProblemSolvable() shouldBe true
+        explanation.isPlanValid() shouldBe false
+    }
+
+    @Test
     fun `testBuildDomain`() {
         val predicate = Predicate.of("has_done_" + pickA.name, pickA.parameters.values.toList())
         val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())

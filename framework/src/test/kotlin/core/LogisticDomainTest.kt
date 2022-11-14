@@ -6,7 +6,16 @@ import domain.LogisticDomain.Problems
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class GraphDomainTest : AnnotationSpec() {
+class LogisticDomainTest : AnnotationSpec() {
+
+    @Test
+    fun simpleRobotFromLoc1ToLoc2() {
+        val plans1 = Planners.stripsPlanner.plan(Problems.basicRobotFromLocation1ToLocation2)
+        plans1.toSet().size shouldBe 1
+        println(plans1.toSet())
+        plans1.toSet().first().operators.first().name shouldBe Actions.move.name
+    }
+
     @Test
     fun robotFromLoc1ToLoc2() {
         val plans1 = Planners.stripsPlanner.plan(Problems.robotFromLoc1ToLoc2)
@@ -44,7 +53,7 @@ class GraphDomainTest : AnnotationSpec() {
     }
 
     @Test
-    fun atRobotAtlocation3InContainer1Location4InContainer2Location7() {
+    fun atRobotAtLocation3InContainer1Location4InContainer2Location7() {
         val plans = Planners.stripsPlanner.plan(
             Problems.robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7
         )

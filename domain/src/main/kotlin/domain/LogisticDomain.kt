@@ -3,6 +3,26 @@ package domain
 import core.* // ktlint-disable no-wildcard-imports
 
 object LogisticDomain {
+    val fluents = setOf(
+        Fluents.connectedL1L2,
+        Fluents.connectedL1L3,
+        Fluents.connectedL2L4,
+        Fluents.connectedL3L4,
+        Fluents.connectedL4L5,
+        Fluents.connectedL2L6,
+        Fluents.connectedL5L6,
+        Fluents.connectedL5L7,
+        Fluents.connectedL1L5,
+        Fluents.connectedL2L1,
+        Fluents.connectedL3L1,
+        Fluents.connectedL4L2,
+        Fluents.connectedL4L3,
+        Fluents.connectedL5L4,
+        Fluents.connectedL6L2,
+        Fluents.connectedL6L5,
+        Fluents.connectedL7L5,
+        Fluents.connectedL5L1
+    )
     object Actions {
         val move = Action.of(
             name = "move",
@@ -182,7 +202,7 @@ object LogisticDomain {
     }
 
     object Problems {
-        val rTo2
+
         val rToX = Problem.of(
             domain = Domains.logisticWorld,
             objects = ObjectSets.all,
@@ -217,6 +237,13 @@ object LogisticDomain {
             initialState = States.initial,
             goal = Goals.atRobotAtlocation7InContainer1Location4InContainer2Location1
         )
+
+        val basicRobotFromLocation1ToLocation2 = Problem.of(
+            domain = Domains.logisticWorld,
+            objects = ObjectSets.all,
+            initialState = States.robotInLoc1,
+            goal = Goals.atRobotAtlocation2
+        )
     }
 
     object Predicates {
@@ -228,6 +255,10 @@ object LogisticDomain {
     }
 
     object States {
+        val robotInLoc1 = State.of(
+            mutableSetOf(Fluents.atRobotlocation1).also { it.addAll(fluents) }
+        )
+
         val initial = State.of(
             Fluents.atRobotlocation1,
             Fluents.inContainer1location2,
@@ -284,6 +315,7 @@ object LogisticDomain {
 
     object Operators {
         var moveRfromL1toL2 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+        var moveRfromL1toL3 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL2toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL3toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL4toL5 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
@@ -441,9 +473,6 @@ object LogisticDomain {
             moveRfromL5toL7 = moveRfromL5toL7.apply(VariableAssignment.of(Values.Y, Values.l5))
             moveRfromL5toL7 = moveRfromL5toL7.apply(VariableAssignment.of(Values.Z, Values.l7))
 
-            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
-            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
-
             moveRfromL2toL1 = moveRfromL2toL1.apply(VariableAssignment.of(Values.Y, Values.l2))
             moveRfromL2toL1 = moveRfromL2toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
 
@@ -468,8 +497,14 @@ object LogisticDomain {
             moveRfromL7toL5 = moveRfromL7toL5.apply(VariableAssignment.of(Values.Y, Values.l7))
             moveRfromL7toL5 = moveRfromL7toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
 
+            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL5 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l5))
+
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Y, Values.l5))
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+
+            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l3))
 
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Y, Values.l3))
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Z, Values.l1))

@@ -17,7 +17,8 @@ interface Benchmark {
 
 abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark {
     var plan: MutableList<Operator> = MutableList(length) {
-        Operator.of(problem.domain.actions.first())
+        // Operator.of(problem.domain.actions.first())
+        LogisticDomain.Operators.moveRfromL1toL2
     }
     var resultsTime = mutableListOf<Long>()
     var resultsMemory = mutableListOf<Long>()
@@ -49,10 +50,13 @@ open class Benchmark1(
     private val explanationType: String = ""
 ) : AbstractBenchmark(problem, length) {
     lateinit var question: Question
-    var operator = when (problem.domain.name) {
-        "block_world" -> pickA
-        "logistic_world" -> LogisticDomain.Operators.moveRfromL2toL4
-        else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
+    private val operator by lazy {
+        when (problem.domain.name) {
+            "block_world" -> pickA
+            "logistic_world" -> (flag == 1)
+                .then(LogisticDomain.Operators.moveRfromL1toL3) ?: LogisticDomain.Operators.moveRfromL1toL2
+            else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
+        }
     }
     init {
         var i = 0
@@ -78,7 +82,9 @@ open class Benchmark1(
                 4 -> question = QuestionPlanProposal(
                     problem,
                     Plan.of(plan),
-                    Plan.of(MutableList(i) { Operator.of(problem.domain.actions.first()) })
+                    Plan.of(MutableList(i) {
+                        //Operator.of(problem.domain.actions.first())
+                        operator })
                 )
                 5 -> question = QuestionPlanSatisfiability(
                     problem,
@@ -119,26 +125,6 @@ open class Benchmark1(
 }
 
 class Test : AnnotationSpec() {
-    @Test
-    fun main(j: Int, i: Int) = runBlocking {
-        val status = withTimeoutOrNull(15) {
-            Benchmark1(LogisticDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
-        }
-        println("The processing return status is: $status")
-    }
-    /*
-    @Test
-    fun main() = runBlocking {
-        val result = withTimeoutOrNull(Duration.ofMillis(15)) {
-            repeat(1000) { i ->
-                println("I'm sleeping $i ...")
-                delay(Duration.ofMillis(5))
-            }
-            "Done" // will get cancelled before it produces this result
-        }
-        println("Result is $result")
-    }
-    */
 
     @Test
     fun prova() {
@@ -146,8 +132,7 @@ class Test : AnnotationSpec() {
         var j = 50
         while (i <= 5) {
             while (j <= 200) {
-                // Benchmark1(GraphDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
-                main(j, i)
+                Benchmark1(LogisticDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
                 j += 50
             }
             i++

@@ -125,7 +125,6 @@ open class Benchmark1(
 }
 
 class Test : AnnotationSpec() {
-
     @Test
     fun prova() {
         var i = 1

@@ -2,12 +2,13 @@ package benchmark
 import core.* // ktlint-disable no-wildcard-imports
 import core.utility.then
 import domain.BlockWorldDomain.Operators.pickA
-import domain.LogisticDomain
+import domain.BlockWorldDomain.Problems.pickC
+import domain.LogisticDomain.Operators.moveRfromL1toL2
+import domain.LogisticDomain.Operators.moveRfromL1toL3
+import domain.LogisticDomain.Problems.robotFromLoc1ToLoc2
 import explanation.Question
 import explanation.impl.* // ktlint-disable no-wildcard-imports
-import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.AnnotationSpec
-import kotlinx.coroutines.withTimeoutOrNull
 import java.io.FileOutputStream
 import java.io.OutputStream
 
@@ -17,11 +18,14 @@ interface Benchmark {
 
 abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark {
     var plan: MutableList<Operator> = MutableList(length) {
-        // Operator.of(problem.domain.actions.first())
-        LogisticDomain.Operators.moveRfromL1toL2
+        when (problem.domain.name) {
+            "block_world" -> Operator.of(problem.domain.actions.first())
+            "logistic_world" -> moveRfromL1toL2
+            else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
+        }
     }
-    var resultsTime = mutableListOf<Long>()
-    var resultsMemory = mutableListOf<Long>()
+    val resultsTime by lazy { mutableListOf<Long>() }
+    val resultsMemory by lazy { mutableListOf<Long>() }
 
     fun addResult(question: Question, explanationType: String) {
         resultsTime.add(measureTimeMillis(question, explanationType))
@@ -53,8 +57,7 @@ open class Benchmark1(
     private val operator by lazy {
         when (problem.domain.name) {
             "block_world" -> pickA
-            "logistic_world" -> (flag == 1)
-                .then(LogisticDomain.Operators.moveRfromL1toL3) ?: LogisticDomain.Operators.moveRfromL1toL2
+            "logistic_world" -> (flag == 1).then(moveRfromL1toL3) ?: moveRfromL1toL2
             else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
         }
     }
@@ -82,9 +85,11 @@ open class Benchmark1(
                 4 -> question = QuestionPlanProposal(
                     problem,
                     Plan.of(plan),
-                    Plan.of(MutableList(i) {
-                        //Operator.of(problem.domain.actions.first())
-                        operator })
+                    Plan.of(
+                        MutableList(i) {
+                            operator
+                        }
+                    )
                 )
                 5 -> question = QuestionPlanSatisfiability(
                     problem,
@@ -112,9 +117,10 @@ open class Benchmark1(
             }
             writer.flush()
         }
+
         (
             (filename.equals("")).then(
-                """res/resultQuestion${flag}Length${length}Explanation$explanationType.csv"""
+                """res/${problem.domain.name}/Question${flag}Length${length}Explanation$explanationType.csv"""
             ) ?: "res/$filename"
             ).let {
             FileOutputStream(
@@ -125,17 +131,12 @@ open class Benchmark1(
 }
 
 class Test : AnnotationSpec() {
+    private val problems = listOf(pickC, robotFromLoc1ToLoc2)
     @Test
-    fun prova() {
-        var i = 1
-        var j = 50
-        while (i <= 5) {
-            while (j <= 200) {
-                Benchmark1(LogisticDomain.Problems.robotFromLoc1ToLoc2, j, i).write("")
-                j += 50
-            }
-            i++
-            j = 0
-        }
+    fun buildBenchmark() {
+        for (problem in problems)
+            for (i in 1..5)
+                for (j in 50..200 step 50)
+                    Benchmark1(problem, j, i).write("")
     }
 }

@@ -55,7 +55,7 @@ object LogisticDomain {
     }
 
     object Domains {
-        val graphWorld = Domain.of(
+        val logisticWorld = Domain.of(
             name = "logistic_world",
             predicates = setOf(
                 Predicates.connected,
@@ -182,36 +182,37 @@ object LogisticDomain {
     }
 
     object Problems {
+        val rTo2
         val rToX = Problem.of(
-            domain = Domains.graphWorld,
+            domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtLocationY
         )
 
         val robotFromLoc1ToLoc2 = Problem.of(
-            domain = Domains.graphWorld,
+            domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation2
         )
 
         val inContainerLocation4 = Problem.of(
-            domain = Domains.graphWorld,
+            domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.inContainerLocation4
         )
 
         val robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4 = Problem.of(
-            domain = Domains.graphWorld,
+            domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation3InContainer1Location4
         )
 
         val robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7 = Problem.of(
-            domain = Domains.graphWorld,
+            domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation7InContainer1Location4InContainer2Location1

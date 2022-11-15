@@ -25,7 +25,9 @@ class QuestionPlanSatisfiability(
     override val oldAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
     override val newAction: Action by lazy { Action.of("", emptyMap(), emptySet(), emptySet()) }
     override val hDomain: Domain by lazy { Domain.of("", emptySet(), emptySet(), emptySet()) }
-    override fun buildHypotheticalDomain(): Domain = throw UnsupportedOperationException()
+    override fun buildHypotheticalDomain(): Domain =
+        throw UnsupportedOperationException("Reconciliation process not required")
 
-    override fun buildHypotheticalProblem(): Sequence<Problem> = throw UnsupportedOperationException()
+    override fun buildHypotheticalProblem(): Sequence<Problem> =
+        throw UnsupportedOperationException("Reconciliation process not required")
 }

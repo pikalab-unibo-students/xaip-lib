@@ -1,7 +1,7 @@
 package explanation
 
-import core.Plan
-import core.Planner
+import core.* // ktlint-disable no-wildcard-imports
+import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
@@ -11,11 +11,11 @@ import domain.BlockWorldDomain.Operators.stackCA
 import domain.BlockWorldDomain.Operators.stackDB
 import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Problems
-import domain.GraphDomain.Operators.moveRfromL1toL2
+import domain.LogisticDomain.Operators.moveRfromL1toL2
 import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.GraphDomain.Problems as GraphProblem
+import domain.LogisticDomain.Problems as GraphProblem
 
 class QuestionRemoveOperatorTest : AnnotationSpec() {
 
@@ -69,5 +69,65 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         explanation.deleteList shouldBe listOf(moveRfromL1toL2)
         explanation.existingList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
+    }
+
+    @Test
+    fun `testBuildDomain`() {
+        val predicate = Predicate.of("not_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+
+        QuestionRemoveOperator(
+            Problems.stackAB,
+            Plan.of(listOf(BlockWorldDomain.Operators.stackAB)),
+            pickA
+        ).buildHypotheticalDomain() shouldBe
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = BlockWorldDomain.Actions.pick.name + "^",
+                        parameters = BlockWorldDomain.Actions.pick.parameters,
+                        preconditions = BlockWorldDomain.Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.negative(fluent))
+                            .also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
+                Problems.stackAB.domain.types
+            )
+    }
+
+    @Test
+    fun `testBuildProblem`() {
+        val predicate = Predicate.of("not_done_" + pickA.name, pickA.parameters.values.toList())
+        val fluent = Fluent.positive(predicate, *pickA.parameters.keys.toTypedArray())
+        val groundFluent = Fluent.positive(predicate, *pickA.args.toTypedArray())
+
+        QuestionRemoveOperator(
+            Problems.stackAB,
+            Plan.of(listOf(BlockWorldDomain.Operators.stackAB)),
+            pickA
+        ).buildHypotheticalProblem().first() shouldBe Problem.of(
+            Domain.of(
+                Problems.stackAB.domain.name,
+                mutableSetOf(predicate).also { it.addAll(Problems.stackAB.domain.predicates) },
+                mutableSetOf(
+                    Action.of(
+                        name = BlockWorldDomain.Actions.pick.name + "^",
+                        parameters = BlockWorldDomain.Actions.pick.parameters,
+                        preconditions = BlockWorldDomain.Actions.pick.preconditions,
+                        effects = mutableSetOf(Effect.negative(fluent))
+                            .also { it.addAll(BlockWorldDomain.Actions.pick.effects) }
+                    )
+                ).also { it.addAll(Problems.stackAB.domain.actions) }.also { it.remove(BlockWorldDomain.Actions.pick) },
+                Problems.stackAB.domain.types
+            ),
+            Problems.stackAB.objects,
+            State.of(mutableSetOf(groundFluent).also { it.addAll(Problems.stackAB.initialState.fluents) }),
+            FluentBasedGoal.of(
+                (Problems.stackAB.goal as FluentBasedGoal).targets.toMutableSet()
+                    .also { it.add(groundFluent) }
+            )
+        )
     }
 }

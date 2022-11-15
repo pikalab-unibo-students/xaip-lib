@@ -63,7 +63,7 @@ internal class StripsPlanner : Planner {
                             stack.addAll(head.targets)
                         }
                         (head is Operator) -> { // applicare l'azione a currentState e aggiornarlo"
-                            if (handleAction(head)) return@sequence
+                            if (handleOperator(head)) return@sequence
                         }
                         else -> {
                             error("Handle the case where $head is ${head::class}(probably via backtracking)")

@@ -20,11 +20,6 @@ import java.lang.Math.abs
  * Quindi mi sa che sia più sensato rendere questa la classe base e bona.
  *
  */
-/*
-open class AbstractExplanationPresenter protected constructor(
-    override val explanation: Explanation
-) : ExplanationPresenter {
-    */
 open class BaseExplanationPresenter(
     final override val explanation: Explanation
 ) : ExplanationPresenter {
@@ -35,7 +30,8 @@ open class BaseExplanationPresenter(
     /**
      * Numero di operatori aggiuntivi rispetto al piano di lunghezza minima.
      */
-    private val additionalOperators = abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
+    private val additionalOperators =
+        kotlin.math.abs(explanation.novelPlan.operators.size - explanation.minimalSolutionLength())
 
     private val operatorsMissing by lazy {
         explanation.explainer.minimalPlanSelector(explanation.question.problem).operators

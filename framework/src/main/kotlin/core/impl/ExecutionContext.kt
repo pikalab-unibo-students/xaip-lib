@@ -85,7 +85,7 @@ internal data class ExecutionContext(
         }
     }
 
-    fun handleAction(head: Operator): Boolean {
+    fun handleOperator(head: Operator): Boolean {
         val states = currentState.apply(head).toList()
         if (states.isNotEmpty()) {
             currentState = states.first()

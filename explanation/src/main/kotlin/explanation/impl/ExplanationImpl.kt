@@ -61,9 +61,17 @@ data class ExplanationImpl(
                         .also { it.add(question.focus) }
                         .also {
                             it.addAll(
-                                explainer.planner.plan(
-                                    question.buildHypotheticalProblem().first()
-                                ).first().operators
+                                try {
+                                    explainer.planner.plan(
+                                        question.buildHypotheticalProblem().first()
+                                    ).first().operators
+                                } catch (e: NoSuchElementException) {
+                                    throw NoSuchElementException(
+                                        "The operator ${question.focus} is not applicable to the state chosen:" +
+                                            " ${(question.inState == null)
+                                                .then(question.problem.initialState) ?: question.inState}"
+                                    )
+                                }
                             )
                         }
                 )

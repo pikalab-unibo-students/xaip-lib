@@ -41,15 +41,15 @@ abstract class BaseQuestion : Question {
      *
      */
     @Suppress("SpreadOperator")
-    fun createNewGroundFluent(action: Operator, predicate: Predicate): Fluent =
-        Fluent.positive(predicate, *action.args.toTypedArray())
+    fun createNewGroundFluent(operator: Operator, predicate: Predicate): Fluent =
+        Fluent.positive(predicate, *operator.args.toTypedArray())
 
     /**
      *
      */
     @Suppress("SpreadOperator")
-    fun createNewFluent(action: Operator, predicate: Predicate): Fluent =
-        Fluent.positive(predicate, *action.parameters.keys.toTypedArray())
+    fun createNewFluent(operator: Operator, predicate: Predicate): Fluent =
+        Fluent.positive(predicate, *operator.parameters.keys.toTypedArray())
 
     /**
      *

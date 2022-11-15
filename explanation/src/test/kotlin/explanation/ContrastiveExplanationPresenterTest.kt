@@ -8,6 +8,7 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
+import domain.LogisticDomain
 import explanation.impl.ContrastiveExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
@@ -29,6 +30,27 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             pickA,
             0
         )
+        val explanation = Explainer.of(Planner.strips()).explain(q1)
+
+        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println("------------------------------")
+        println(ContrastiveExplanationPresenter(explanation).present())
+    }
+
+    @Test
+    fun `Basic Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {
+        val q1 = QuestionAddOperator(
+            LogisticDomain.Problems.basicRobotFromLocation1ToLocation2,
+            Plan.of(
+                listOf(
+                    LogisticDomain.Operators.moveRfromL1toL2,
+                    LogisticDomain.Operators.moveRfromL2toL1
+                )
+            ),
+            LogisticDomain.Operators.moveRfromL2toL1,
+            1
+        )
+
         val explanation = Explainer.of(Planner.strips()).explain(q1)
 
         println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())

@@ -8,7 +8,7 @@ plugins {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
-
+    implementation(libs.kotlix.coroutines)
     api(libs.tuprolog.solve.classic)
     api(libs.tuprolog.unify)
 

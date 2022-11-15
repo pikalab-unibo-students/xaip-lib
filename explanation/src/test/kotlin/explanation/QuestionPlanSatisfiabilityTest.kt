@@ -5,15 +5,17 @@ import core.Planner
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.putdownA
 import domain.BlockWorldDomain.Problems
-import domain.GraphDomain
-import domain.GraphDomain.Operators.moveRfromL1toL2
-import domain.GraphDomain.Operators.moveRfromL1toL5
+import domain.LogisticDomain
+import domain.LogisticDomain.Operators.moveRfromL1toL2
+import domain.LogisticDomain.Operators.moveRfromL1toL5
 import explanation.impl.QuestionPlanSatisfiability
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 
 class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
-    private val graphProblemRfromLoc1Loc2 = GraphDomain.Problems.robotFromLoc1ToLoc2
+    private val graphProblemRfromLoc1Loc2 = LogisticDomain.Problems.robotFromLoc1ToLoc2
     private val planRfromL1toL2 = Plan.of(listOf(moveRfromL1toL2))
     private val planRfromL1toL5 = Plan.of(listOf(moveRfromL1toL5))
 
@@ -55,5 +57,27 @@ class QuestionPlanSatisfiabilityTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe false
+    }
+
+    @Test
+    fun `Hypothetical domain exception`() {
+        val exception = shouldThrow<UnsupportedOperationException> {
+            QuestionPlanSatisfiability(
+                Problems.pickX,
+                Plan.of(listOf(pickA, putdownA))
+            ).buildHypotheticalDomain()
+        }
+        exception.message shouldStartWith "Reconciliation"
+    }
+
+    @Test
+    fun `Hypothetical problem exception`() {
+        val exception = shouldThrow<UnsupportedOperationException> {
+            QuestionPlanSatisfiability(
+                Problems.pickX,
+                Plan.of(listOf(pickA, putdownA))
+            ).buildHypotheticalProblem()
+        }
+        exception.message shouldStartWith "Reconciliation"
     }
 }

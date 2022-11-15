@@ -6,12 +6,17 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib)
-    testImplementation(libs.bundles.kotlin.testing)
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)
+
+    implementation(libs.kotlin.stdlib)
+    implementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
+    implementation("junit:junit:4.13.1")
+    testImplementation(libs.bundles.kotlin.testing)
     api(project(":framework"))
-    testImplementation(project(":domain"))
+    api(project(":explanation"))
+    api(project(":dsl"))
+    api(project(":domain"))
 }
 
 kotlin {

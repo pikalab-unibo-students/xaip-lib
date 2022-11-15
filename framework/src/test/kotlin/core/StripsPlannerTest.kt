@@ -177,7 +177,7 @@ class StripsPlannerTest : AnnotationSpec() {
     @Test
     fun testUnstackABstackBCstackAD() {
         val plans = Planners.stripsPlanner.plan(Problems.unstackABstackBCstackAD).toSet()
-        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, pickB, stackBC)))
+        val plan2check = setOf(Plan.of(listOf(unstackAB, stackAD, pickB, stackBC)))
         plans.size shouldBe 1
         plans shouldBe plan2check
         println(plans)

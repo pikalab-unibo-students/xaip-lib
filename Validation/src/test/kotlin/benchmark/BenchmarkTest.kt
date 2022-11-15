@@ -1,6 +1,5 @@
 package benchmark
 
-import benchmark.BaseBenchmark
 import domain.BlockWorldDomain.Problems.pickC
 import domain.LogisticDomain.Problems.robotFromLoc1ToLoc2
 import io.kotest.core.spec.style.AnnotationSpec

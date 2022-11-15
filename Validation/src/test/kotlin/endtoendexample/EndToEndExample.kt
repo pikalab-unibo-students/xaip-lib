@@ -1,4 +1,4 @@
-package runningExample
+package endtoendexample
 import core.Plan
 import core.Planner
 import domain.BlockWorldDomain

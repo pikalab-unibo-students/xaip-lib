@@ -84,7 +84,7 @@ open class BaseBenchmark(
 
         (
             (filename.equals("")).then(
-                """res/${problem.domain.name}/Question${flag}Length${length}Explanation$explanationType.csv"""
+                """res/benchmark/${problem.domain.name}/Question${flag}Length${length}Explanation$explanationType.csv"""
             ) ?: "res/$filename"
             ).let {
             FileOutputStream(

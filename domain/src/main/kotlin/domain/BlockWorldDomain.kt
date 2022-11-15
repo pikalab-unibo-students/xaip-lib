@@ -345,14 +345,27 @@ object BlockWorldDomain {
             Fluents.atXArm,
             Fluents.onZW
         )
-        val onBAonDC = FluentBasedGoal.of(
-            Fluents.onBA,
-            Fluents.onDC,
-            Fluents.atAFloor,
-            Fluents.atCFloor,
+
+        val onBDCA = FluentBasedGoal.of(
             Fluents.clearB,
-            Fluents.clearD
+            Fluents.onBD,
+            Fluents.onDC,
+            Fluents.onCA,
+            Fluents.atAFloor
         )
+
+        val onDCAatBarm = FluentBasedGoal.of(
+            Fluents.atBArm,
+            Fluents.clearD,
+            Fluents.onDC,
+            Fluents.onCA,
+            Fluents.atAFloor
+        )
+
+        val onDCA = FluentBasedGoal.of(Fluents.onDC, Fluents.onCA, Fluents.atAFloor)
+        val onDCB = FluentBasedGoal.of(Fluents.onDC, Fluents.onCB, Fluents.atAFloor)
+
+        val onBConAD = FluentBasedGoal.of(Fluents.onBC, Fluents.onAD, Fluents.atDFloor, Fluents.atCFloor)
         val armNotEmpty = FluentBasedGoal.of(Fluents.atXArm)
         val atAfloorAtBfloorAtCfloorAtDfloor =
             FluentBasedGoal.of(
@@ -368,8 +381,8 @@ object BlockWorldDomain {
         // perché ho un apila quando faccio push per metterli sulllo stack il primo è a offset zero
         val onBC = FluentBasedGoal.of(Fluents.onBC, Fluents.atAFloor, Fluents.atDFloor, Fluents.atCFloor)
         val atXArmAndAtYFloorAndOnWZ = FluentBasedGoal.of(Fluents.atXArm, Fluents.atYFloor, Fluents.onWZ)
-        val atCarm =
-            FluentBasedGoal.of(Fluents.atCArm)
+        val atCarm = FluentBasedGoal.of(Fluents.atCArm)
+        val atBarm = FluentBasedGoal.of(Fluents.atBArm, Fluents.atAFloor)
         val onAatBandBonFloor = FluentBasedGoal.of(Fluents.atBFloor, Fluents.onAB)
         val onAX = FluentBasedGoal.of(Fluents.onAX)
         val onCAonBY = FluentBasedGoal.of(Fluents.onBX, Fluents.onCA)
@@ -502,7 +515,54 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val unstackABunstackCDstackBDCA = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onABonCD,
+            goal = Goals.onBDCA
+        )
 
+        val unstackABunstackCDstackDCApickB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onABonCD,
+            goal = Goals.onDCAatBarm
+        )
+
+        val unstackABpickB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onAB,
+            goal = Goals.atBarm
+        )
+
+        val unstackABunstackCDstackDCA = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onABonCD,
+            goal = Goals.onDCA
+        )
+
+        val unstackABstackDCB = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onAB,
+            goal = Goals.onDCB
+        )
+
+        val unstackABstackBCstackAD = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onAB,
+            goal = Goals.onBConAD
+        )
+
+        val unstackABstackBC = Problem.of(
+            domain = Domains.blockWorld,
+            objects = ObjectSets.all,
+            initialState = States.onAB,
+            goal = Goals.onBC
+        )
         val pickXpickY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
@@ -520,7 +580,7 @@ object BlockWorldDomain {
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.onBAonDC
+            goal = Goals.onBConAD
         )
 
         val armNotEmpty = Problem.of(
@@ -634,6 +694,16 @@ object BlockWorldDomain {
     }
 
     object States {
+        val onABonCD = State.of(
+            Fluents.onAB,
+            Fluents.onCD,
+            Fluents.clearC,
+            Fluents.clearA,
+            Fluents.armEmpty,
+            Fluents.atBFloor,
+            Fluents.atDFloor
+        )
+
         val onAB = State.of(
             Fluents.onAB,
             Fluents.atCFloor,
@@ -701,6 +771,16 @@ object BlockWorldDomain {
             Fluents.armEmpty,
             Fluents.atAFloor,
             Fluents.atDFloor
+        )
+
+        val onBAonDC = State.of(
+            Fluents.onBA,
+            Fluents.onDC,
+            Fluents.clearD,
+            Fluents.clearB,
+            Fluents.armEmpty,
+            Fluents.atAFloor,
+            Fluents.atCFloor
         )
 
         val onCAatBfloorDfloor = State.of(

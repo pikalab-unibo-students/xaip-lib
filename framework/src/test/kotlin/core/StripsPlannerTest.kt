@@ -18,6 +18,7 @@ import domain.BlockWorldDomain.Operators.stackDA
 import domain.BlockWorldDomain.Operators.stackDB
 import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Operators.unstackAB
+import domain.BlockWorldDomain.Operators.unstackCD
 import domain.BlockWorldDomain.Planners
 import domain.BlockWorldDomain.Problems
 import io.kotest.assertions.throwables.shouldThrow
@@ -160,6 +161,69 @@ class StripsPlannerTest : AnnotationSpec() {
             Plan.of(listOf(pickD))
         )
         plans.size shouldBe 4
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackABstackBC() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABstackBC).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, pickB, stackBC)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackABstackBCstackAD() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABstackBCstackAD).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, pickB, stackBC)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackABstackDCB() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABstackDCB).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, pickC, stackCB, pickD, stackDC)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUstackABunstackCDstackDCA() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABunstackCDstackDCA).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, unstackCD, stackCA, pickD, stackDC)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUstackABpickB() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABpickB).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, pickB)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackABStackDCApickB() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABunstackCDstackDCApickB).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, unstackCD, stackCA, pickD, stackDC, pickB)))
+        plans.size shouldBe 1
+        plans shouldBe plan2check
+        println(plans)
+    }
+
+    @Test
+    fun testUnstackABStackBDCA() {
+        val plans = Planners.stripsPlanner.plan(Problems.unstackABunstackCDstackBDCA).toSet()
+        val plan2check = setOf(Plan.of(listOf(unstackAB, putdownA, unstackCD, stackCA, pickD, stackDC, pickB, stackBD)))
+        plans.size shouldBe 1
         plans shouldBe plan2check
         println(plans)
     }

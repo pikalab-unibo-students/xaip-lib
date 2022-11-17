@@ -1,5 +1,3 @@
-package benchmark
-
 /**
  * Interface for a general benchmark.
  */

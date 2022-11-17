@@ -1,7 +1,3 @@
-package benchmark
-
-import benchmark.utils.measureMemory
-import benchmark.utils.measureTimeMillis
 import core.Operator
 import core.Problem
 import domain.LogisticDomain

@@ -1,5 +1,3 @@
-package benchmark
-
 import core.Operator
 import core.Plan
 import core.Problem

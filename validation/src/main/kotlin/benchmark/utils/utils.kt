@@ -1,6 +1,5 @@
-package benchmark.utils // ktlint-disable filename
-
 import core.Planner
+import core.utility.then
 import explanation.Explainer
 import explanation.Question
 import explanation.impl.ContrastiveExplanationPresenter
@@ -37,7 +36,8 @@ fun measureMemory(question: Question, explanationType: String): Long {
         ContrastiveExplanationPresenter(Explainer.of(Planner.strips()).explain(question)).present()
     }
     val afterHeapMemoryUsage = mbean.heapMemoryUsage
-    return afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
+    val result = afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
+    return (result > 0).then(result) ?: 0
 }
 
 /**

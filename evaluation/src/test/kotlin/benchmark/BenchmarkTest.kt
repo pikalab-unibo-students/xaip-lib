@@ -15,7 +15,7 @@ class BenchmarkTest : AnnotationSpec() {
         for (problem in problems) {
             for (i in 1..5)
                 for (j in 50..200 step 50)
-                    BaseBenchmark(problem, j, i, "c").write("")
+                    BaseBenchmark(problem, j, i).write("")
             (File("res/benchmark/${problem.domain.name}").length() > 0) shouldBe true
         }
     }

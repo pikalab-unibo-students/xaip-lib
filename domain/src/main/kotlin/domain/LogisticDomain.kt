@@ -137,10 +137,9 @@ object LogisticDomain {
         val connectedL6L5 = Fluent.positive(Predicates.connected, Values.l6, Values.l5)
         val connectedL7L5 = Fluent.positive(Predicates.connected, Values.l7, Values.l5)
 
-        /////
         val connectedL4L6 = Fluent.positive(Predicates.connected, Values.l4, Values.l6)
         val connectedL6L4 = Fluent.positive(Predicates.connected, Values.l6, Values.l4)
-        /////
+
         val connectedXY = Fluent.positive(Predicates.connected, Values.X, Values.Y)
         val connectedXZ = Fluent.positive(Predicates.connected, Values.X, Values.Z)
         val connectedXW = Fluent.positive(Predicates.connected, Values.X, Values.W)

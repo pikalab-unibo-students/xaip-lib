@@ -2,6 +2,7 @@ package core
 
 import domain.BlockWorldDomain.Planners
 import domain.LogisticDomain.Actions
+import domain.LogisticDomain.Operators
 import domain.LogisticDomain.Problems
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -55,7 +56,7 @@ class LogisticDomainTest : AnnotationSpec() {
     @Test
     fun atRobotAtLocation3InContainer1Location4InContainer2Location7() {
         val plans = Planners.stripsPlanner.plan(
-            Problems.robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7
+            Problems.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1
         )
         plans.toSet().size shouldBe 1
 
@@ -70,5 +71,24 @@ class LogisticDomainTest : AnnotationSpec() {
             Actions.unload.name,
             Actions.move.name
         )
+        println(plans.first().operators)
+    }
+
+    @Test
+    fun testRobotFromLoc1toLoc7c1fromloc2toLoc5() {
+        val plans = Planners.stripsPlanner.plan(Problems.robotFromLoc1ToLoc5C1fromLoc2toLoc4).toSet()
+        val plan2check = setOf(
+            Plan.of(
+                listOf(
+                    Operators.moveRfromL1toL2,
+                    Operators.loadC1fromL2onR,
+                    Operators.moveRfromL2toL4,
+                    Operators.unloadC1fromRtoL4,
+                    Operators.moveRfromL4toL5
+                )
+            )
+        )
+        plans.size shouldBe 1
+        plans shouldBe plan2check
     }
 }

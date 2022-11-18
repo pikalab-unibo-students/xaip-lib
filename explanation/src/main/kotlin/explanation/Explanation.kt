@@ -3,7 +3,6 @@ package explanation
 import core.Operator
 import core.Plan
 import explanation.impl.ExplanationImpl
-import explanation.utils.IdempotentOperator
 
 /**
  *An [Explanation] is an entity that give a contrastive explanation about a [Plan].
@@ -30,22 +29,22 @@ interface Explanation {
     val question: Question
 
     /**
-     * @property addList: represents the list of the actions that where not present in the [originalPlan]
+     * @property addedList: represents the list of the actions that where not present in the [originalPlan]
      * but are in the [novelPlan].
      */
-    val addList: List<Operator>
+    val addedList: List<Operator>
 
     /**
-     * @property deleteList: represents the list of the actions that where present in the [originalPlan]
+     * @property deletedList: represents the list of the actions that where present in the [originalPlan]
      * but are not in the [novelPlan]
      */
-    val deleteList: List<Operator>
+    val deletedList: List<Operator>
 
     /**
-     * @property existingList: represents the list of the actions that are present both in the [novelPlan]
+     * @property sharedList: represents the list of the actions that are present both in the [novelPlan]
      * and in the [originalPlan].
      */
-    val existingList: List<Operator>
+    val sharedList: List<Operator>
 
     /**
      * Method that states if a [Plan] is a solution for a given [Problem].
@@ -76,9 +75,4 @@ interface Explanation {
             explainer: Explainer
         ): Explanation = ExplanationImpl(question, explainer)
     }
-
-    /**
-     *
-     */
-    fun areIdempotentOperatorsPresent(): Map<Operator, IdempotentOperator>
 }

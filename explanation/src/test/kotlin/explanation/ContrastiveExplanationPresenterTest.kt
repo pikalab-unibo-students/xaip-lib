@@ -9,7 +9,7 @@ import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import domain.LogisticDomain
-import explanation.impl.ContrastiveExplanationPresenter
+import explanation.impl.BaseExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
 import explanation.impl.QuestionPlanSatisfiability
@@ -32,9 +32,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips()).explain(q1)
 
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     @Test
@@ -53,9 +53,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
 
         val explanation = Explainer.of(Planner.strips()).explain(q1)
 
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     @Test
@@ -68,9 +68,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips()).explain(q1)
 
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     // Remove operator
@@ -82,9 +82,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             pickA
         )
         val explanation = Explainer.of(Planner.strips()).explain(q2)
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     // Replace operator
@@ -99,9 +99,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             BlockWorldDomain.States.initial
         )
         val explanation = Explainer.of(Planner.strips()).explain(q3)
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     // Plan proposal
@@ -115,9 +115,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe false
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
     }
 
     // Plan satisfiability
@@ -128,9 +128,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q5)
         println(explanation.toString())
         explanation.isPlanValid() shouldBe true
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
     }
 
     @Test
@@ -141,9 +141,9 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
         )
         val explanation = Explainer.of(Planner.strips()).explain(q5)
         explanation.isPlanValid() shouldBe false
-        println(ContrastiveExplanationPresenter(explanation).present())
+        println(BaseExplanationPresenter(explanation).present())
         println("------------------------------")
-        println(ContrastiveExplanationPresenter(explanation).presentContrastiveExplanation())
+        println(BaseExplanationPresenter(explanation).presentContrastiveExplanation())
     }
 
     @Test
@@ -157,7 +157,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
 
         val explanation = Explainer.of(Planner.strips()).explain(q1)
         val exception = shouldThrow<IllegalArgumentException> {
-            ContrastiveExplanationPresenter(explanation).present()
+            BaseExplanationPresenter(explanation).present()
         }
         exception.message shouldStartWith ("Goal must contain only ground fluents")
     }

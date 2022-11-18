@@ -44,9 +44,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAC, pickD))
-        explanation.addList shouldBe listOf(stackAC)
-        explanation.deleteList shouldBe listOf(stackAB)
-        explanation.existingList shouldBe listOf(pickA, pickD)
+        explanation.addedList shouldBe listOf(stackAC)
+        explanation.deletedList shouldBe listOf(stackAB)
+        explanation.sharedList shouldBe listOf(pickA, pickD)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -72,9 +72,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickD))
-        explanation.addList shouldBe listOf(pickD)
-        explanation.deleteList shouldBe listOf(pickC)
-        explanation.existingList shouldBe listOf(pickA, stackAB)
+        explanation.addedList shouldBe listOf(pickD)
+        explanation.deletedList shouldBe listOf(pickC)
+        explanation.sharedList shouldBe listOf(pickA, stackAB)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -91,9 +91,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
-        explanation.addList shouldBe listOf(pickA)
-        explanation.deleteList shouldBe listOf(pickC)
-        explanation.existingList shouldBe listOf(stackAB)
+        explanation.addedList shouldBe listOf(pickA)
+        explanation.deletedList shouldBe listOf(pickC)
+        explanation.sharedList shouldBe listOf(stackAB)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -111,9 +111,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL5))
-        explanation.addList shouldBe listOf(moveRfromL1toL5)
-        explanation.deleteList shouldBe listOf(moveRfromL1toL2)
-        explanation.existingList shouldBe emptyList()
+        explanation.addedList shouldBe listOf(moveRfromL1toL5)
+        explanation.deletedList shouldBe listOf(moveRfromL1toL2)
+        explanation.sharedList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 

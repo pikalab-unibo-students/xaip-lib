@@ -3,8 +3,6 @@ import core.Problem
 import domain.LogisticDomain
 import explanation.Question
 import explanation.impl.QuestionReplaceOperator
-import utils.measureMemory
-import utils.measureTimeMillis
 
 abstract class AbstractBenchmark(val problem: Problem, length: Int) : Benchmark {
     var plan: MutableList<Operator> = MutableList(length) {

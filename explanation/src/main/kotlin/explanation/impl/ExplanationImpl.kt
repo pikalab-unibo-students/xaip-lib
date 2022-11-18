@@ -7,7 +7,6 @@ import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 import explanation.Simulator
-import explanation.utils.buildIdempotendMinimalOperatorsRequiredList
 import explanation.utils.replaceArtificialOperator
 import explanation.utils.retrieveArtificialOperator
 /**
@@ -22,17 +21,17 @@ data class ExplanationImpl(
     override val originalPlan: Plan by lazy {
         this.question.plan
     }
-    override val addList: List<Operator> by lazy {
+    override val addedList: List<Operator> by lazy {
         this.novelPlan.operators.filter {
             !this.originalPlan.operators.contains(it)
         }
     }
-    override val deleteList: List<Operator> by lazy {
+    override val deletedList: List<Operator> by lazy {
         this.originalPlan.operators.filter {
             !this.novelPlan.operators.contains(it)
         }
     }
-    override val existingList: List<Operator> by lazy {
+    override val sharedList: List<Operator> by lazy {
         this.originalPlan.operators.filter {
             this.novelPlan.operators.contains(it)
         }
@@ -43,13 +42,6 @@ data class ExplanationImpl(
     }
     private val operatorsMissing by lazy {
         minimalPlan.operators.filter { !question.plan.operators.contains(it) }
-    }
-    private val idempotentOperatorsWrongOccurrence by lazy {
-        buildIdempotendMinimalOperatorsRequiredList(
-            minimalPlan.operators,
-            question.problem.domain.actions,
-            novelPlan.operators
-        ).filter { it.value.occurence1 <= it.value.occurence2 }
     }
 
     init {
@@ -113,11 +105,6 @@ data class ExplanationImpl(
         minimalPlan.operators.isNotEmpty()
 
     override fun minimalSolutionLength(): Int = minimalPlan.operators.size
-
-    // TODO(Sta roba fatta così fa schifo)
-    //  è logicamente sbagliata perché teoricamente filtro solo
-    // le azioni idempotenti che mi invalidano il piano quindi sto nome non ci sta)
-    override fun areIdempotentOperatorsPresent() = idempotentOperatorsWrongOccurrence
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

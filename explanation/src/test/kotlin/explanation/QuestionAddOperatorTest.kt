@@ -30,9 +30,9 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
-        explanation.addList shouldBe listOf(pickA)
-        explanation.deleteList shouldBe emptyList()
-        explanation.existingList shouldBe listOf(stackAB)
+        explanation.addedList shouldBe listOf(pickA)
+        explanation.deletedList shouldBe emptyList()
+        explanation.sharedList shouldBe listOf(stackAB)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -48,9 +48,9 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q1)
         explanation.originalPlan shouldBe q1.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickB, pickC))
-        explanation.addList shouldBe listOf(pickC)
-        explanation.deleteList shouldBe emptyList()
-        explanation.existingList shouldBe listOf(pickB)
+        explanation.addedList shouldBe listOf(pickC)
+        explanation.deletedList shouldBe emptyList()
+        explanation.sharedList shouldBe listOf(pickB)
         explanation.isPlanValid() shouldBe false
     }
 
@@ -67,9 +67,9 @@ class QuestionAddOperatorTest : AnnotationSpec() {
         explanation.originalPlan shouldBe q1.plan
 
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, pickC))
-        explanation.addList shouldBe listOf(pickA)
-        explanation.deleteList shouldBe emptyList()
-        explanation.existingList shouldBe listOf(pickC)
+        explanation.addedList shouldBe listOf(pickA)
+        explanation.deletedList shouldBe emptyList()
+        explanation.sharedList shouldBe listOf(pickC)
         explanation.isPlanValid() shouldBe false
     }
 

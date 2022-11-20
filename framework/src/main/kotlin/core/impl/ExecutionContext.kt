@@ -24,7 +24,7 @@ internal data class ExecutionContext(
         maxDepth: Int
     ) : this(currentState, Stack<Applicable<*>>().also { it.add(goal) }, maxDepth)
 
-    val depth: Int
+    private val depth: Int
         get() = stack.filterIsInstance<Action>().count()
 
     private fun Stack<Applicable<*>>.apply(substitution: VariableAssignment) {

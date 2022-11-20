@@ -10,9 +10,6 @@ internal data class ChoicePoint(
     val state: State,
     val plan: MutableList<Operator>
 ) {
-    val depth: Int
-        get() = stack.filterIsInstance<Operator>().count()
-
     override fun toString(): String =
         """${ChoicePoint::class.simpleName}(
             |  ${ChoicePoint::state.name}=$state,

@@ -40,9 +40,6 @@ data class ExplanationImpl(
     private val minimalPlan by lazy {
         explainer.minimalPlanSelector(question.problem)
     }
-    private val operatorsMissing by lazy {
-        minimalPlan.operators.filter { !question.plan.operators.contains(it) }
-    }
 
     init {
         when (question) {
@@ -116,12 +113,5 @@ data class ExplanationImpl(
         if (this.novelPlan != other.novelPlan) return false
 
         return true
-    }
-
-    // TODO(Ma è necessario l'override dell'hashcode)
-    override fun hashCode(): Int {
-        var result = this.originalPlan.hashCode()
-        result = 31 * result + this.novelPlan.hashCode()
-        return result
     }
 }

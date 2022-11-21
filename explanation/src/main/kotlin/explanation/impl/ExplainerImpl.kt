@@ -7,7 +7,7 @@ import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 
-class ExplainerImpl(override val planner: Planner) : Explainer {
+internal data class ExplainerImpl(override val planner: Planner) : Explainer {
 
     override fun explain(question: Question): Explanation = Explanation.of(question, this)
     override fun minimalPlanSelector(problem: Problem): Plan = planner.plan(problem).first()

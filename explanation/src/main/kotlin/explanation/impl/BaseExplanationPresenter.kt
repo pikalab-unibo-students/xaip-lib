@@ -19,8 +19,8 @@ import explanation.ExplanationPresenter
  * Quindi mi sa che sia più sensato rendere questa la classe base e bona.
  *
  */
-open class ExplanationPresenterImpl(
-    final override val explanation: Explanation
+internal open class BaseExplanationPresenter(
+    override val explanation: Explanation
 ) : ExplanationPresenter {
     private val minimalSolution by lazy { explanation.explainer.minimalPlanSelector(explanation.question.problem) }
 
@@ -44,7 +44,7 @@ open class ExplanationPresenterImpl(
 
     private val isProposedPlanMinimalPlan = ((additionalOperators.isEmpty()) then true) ?: false
 
-    private val isProblemSolvable by lazy {
+    internal val isProblemSolvable by lazy {
         "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} is ${isSolvable}solvable."
     }
 
@@ -92,7 +92,7 @@ open class ExplanationPresenterImpl(
     /**
      *
      */
-    fun presentMinimalExplanation(): String {
+    override fun presentMinimalExplanation(): String {
         return """Minimal explanation:
             | $isProblemSolvable
             | the original plan was: ${explanation.originalPlan.operators},
@@ -100,24 +100,8 @@ open class ExplanationPresenterImpl(
             | plan length acceptable: ${explanation.isPlanLengthAcceptable()}
             | operators missing: $operatorsMissing
             | additional missing: $additionalOperators
-        }}
             |
             
-        """.trimMargin()
-    }
-
-    /**
-     *
-     */
-    fun presentContrastiveExplanation(): String {
-        return """Contrastive explanation:
-            |  $isProblemSolvable
-            |  the original plan was: ${explanation.originalPlan.operators},
-            |  the new plan is: ${explanation.novelPlan.operators} is valid: ${explanation.isPlanValid()},
-            |  ${ExplanationImpl::addedList.name}=${explanation.addedList},
-            |  ${ExplanationImpl::deletedList.name}=${explanation.deletedList},
-            |  ${ExplanationImpl::sharedList.name}=${explanation.sharedList}
-            |  
         """.trimMargin()
     }
 }

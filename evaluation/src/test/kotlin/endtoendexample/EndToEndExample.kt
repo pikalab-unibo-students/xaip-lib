@@ -14,9 +14,8 @@ import domain.LogisticDomain.Operators.moveRfromL4toL6
 import domain.LogisticDomain.Operators.unloadC1fromRtoL4
 import domain.LogisticDomain.Operators.unloadC2fromRtoL1
 import domain.LogisticDomain.States.alternativeState
+import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
-import explanation.ExplanationPresenter
-import explanation.impl.ExplanationPresenterImpl
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanSatisfiability
 import explanation.impl.QuestionReplaceOperator
@@ -46,9 +45,9 @@ class EndToEndExample : AnnotationSpec() {
             Operators.putdownC,
             3
         )
-        println(ExplanationPresenter.of(explainer.explain(question)).present())
-        // println(ExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
-        // println(ExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
     }
 
     @Test
@@ -68,9 +67,9 @@ class EndToEndExample : AnnotationSpec() {
             )
         )
         val question = QuestionPlanSatisfiability(Problems.unstackABunstackCDstackBDCA, initialPlan)
-        println(ExplanationPresenterImpl(explainer.explain(question)).present())
-        println(ExplanationPresenterImpl(explainer.explain(question)).presentMinimalExplanation())
-        println(ExplanationPresenterImpl(explainer.explain(question)).presentContrastiveExplanation())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
     }
 
     @Test
@@ -96,8 +95,8 @@ class EndToEndExample : AnnotationSpec() {
             8,
             alternativeState
         )
-        println(ExplanationPresenterImpl(explainer.explain(question)).present())
-        // println(BaseExplanationPresenter(explainer.explain(question)).presentMinimalExplanation())
-        // println(BaseExplanationPresenter(explainer.explain(question)).presentContrastiveExplanation())
+        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
+        // println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
+        // println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
     }
 }

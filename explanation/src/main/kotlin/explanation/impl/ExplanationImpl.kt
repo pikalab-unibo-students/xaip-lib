@@ -12,7 +12,7 @@ import explanation.utils.retrieveArtificialOperator
 /**
  *
  */
-data class ExplanationImpl(
+internal data class ExplanationImpl(
     override val question: Question,
     override val explainer: Explainer
 ) : Explanation {

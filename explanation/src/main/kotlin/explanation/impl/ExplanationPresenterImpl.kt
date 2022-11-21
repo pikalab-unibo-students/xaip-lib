@@ -19,7 +19,7 @@ import explanation.ExplanationPresenter
  * Quindi mi sa che sia più sensato rendere questa la classe base e bona.
  *
  */
-open class BaseExplanationPresenter(
+open class ExplanationPresenterImpl(
     final override val explanation: Explanation
 ) : ExplanationPresenter {
     private val minimalSolution by lazy { explanation.explainer.minimalPlanSelector(explanation.question.problem) }

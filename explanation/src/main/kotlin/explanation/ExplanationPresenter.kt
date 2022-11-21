@@ -1,5 +1,7 @@
 package explanation
 
+import explanation.impl.ExplanationPresenterImpl
+
 /**
  *
  */
@@ -10,4 +12,13 @@ interface ExplanationPresenter {
      *
      */
     fun present(): String
+
+    companion object {
+        /**
+         * Factory method for an [Explanation] creation.
+         */
+        fun of(
+            explanation: Explanation
+        ): ExplanationPresenter = ExplanationPresenterImpl(explanation)
+    }
 }

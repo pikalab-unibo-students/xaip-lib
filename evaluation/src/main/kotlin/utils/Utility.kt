@@ -2,7 +2,7 @@ import core.Planner
 import core.utility.then
 import explanation.Explainer
 import explanation.Question
-import explanation.impl.BaseExplanationPresenter
+import explanation.impl.ExplanationPresenterImpl
 import java.lang.management.ManagementFactory
 
 /**
@@ -11,11 +11,11 @@ import java.lang.management.ManagementFactory
 fun measureTimeMillis(question: Question, explanationType: String): Long {
     val start = System.currentTimeMillis()
     if (explanationType.startsWith("c") || explanationType.startsWith("C")) {
-        BaseExplanationPresenter(
+        ExplanationPresenterImpl(
             Explainer.of(Planner.strips()).explain(question)
         ).presentContrastiveExplanation()
     } else {
-        BaseExplanationPresenter(
+        ExplanationPresenterImpl(
             Explainer.of(Planner.strips()).explain(question)
         ).present()
     }
@@ -29,11 +29,11 @@ fun measureMemory(question: Question, explanationType: String): Long {
     val mbean = ManagementFactory.getMemoryMXBean()
     val beforeHeapMemoryUsage = mbean.heapMemoryUsage
     if (explanationType.startsWith("c") || explanationType.startsWith("C")) {
-        val instance = BaseExplanationPresenter(
+        val instance = ExplanationPresenterImpl(
             Explainer.of(Planner.strips()).explain(question)
         ).presentContrastiveExplanation()
     } else {
-        BaseExplanationPresenter(Explainer.of(Planner.strips()).explain(question)).present()
+        ExplanationPresenterImpl(Explainer.of(Planner.strips()).explain(question)).present()
     }
     val afterHeapMemoryUsage = mbean.heapMemoryUsage
     val result = afterHeapMemoryUsage.used - beforeHeapMemoryUsage.used
@@ -47,11 +47,11 @@ fun measureMemory2(question: Question, explanationType: String): Long {
     val beforeMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
 
     if (explanationType.startsWith("c") || explanationType.startsWith("C")) {
-        val instance = BaseExplanationPresenter(
+        val instance = ExplanationPresenterImpl(
             Explainer.of(Planner.strips()).explain(question)
         ).presentContrastiveExplanation()
     } else {
-        BaseExplanationPresenter(
+        ExplanationPresenterImpl(
             Explainer.of(Planner.strips()).explain(question)
         ).present()
     }

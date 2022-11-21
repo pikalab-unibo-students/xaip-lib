@@ -19,6 +19,8 @@ internal open class BaseExplanationPresenter(
 
     private val operator by lazy { (additionalOperators.size > 1).then("operators") ?: "operator" }
 
+    private fun not(validCondition: Boolean) = (!validCondition).then("not") ?: ""
+
     private val isValid by lazy { explanation.isPlanValid().then("not") ?: "" }
 
     private val isSolvable by lazy { explanation.isProblemSolvable().then(" ") ?: "not" }
@@ -36,7 +38,8 @@ internal open class BaseExplanationPresenter(
     private val isProposedPlanMinimalPlan = ((additionalOperators.isEmpty()) then true) ?: false
 
     internal val isProblemSolvable by lazy {
-        "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} is ${isSolvable}solvable."
+        "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} " +
+            "is ${not(!explanation.isProblemSolvable())}solvable."
     }
 
     internal val originalPlan by lazy {
@@ -45,7 +48,7 @@ internal open class BaseExplanationPresenter(
 
     private val minimalPlan by lazy { "The minimal solution is: ${minimalSolution.operators}\n" }
 
-    private val isPlanMinimalSolution by lazy { "The plan is ${isMinimal}the minimal solution" }
+    private val isPlanMinimalSolution by lazy { "The plan is ${not(!isProposedPlanMinimalPlan)}the minimal solution" }
 
     private val areThereAdditionalOperators by lazy {
         (additionalOperators.isNotEmpty()).then(
@@ -64,7 +67,7 @@ internal open class BaseExplanationPresenter(
 
     private val isPlanValid by lazy {
         "\nThe novel plan is: ${explanation.novelPlan.operators}." +
-            "\nThe novel plan is ${isValid}a valid solution for the problem.\n"
+            "\nThe novel plan is ${not(explanation.isPlanValid())}a valid solution for the problem.\n"
     }
 
     private fun areAllGroundFluents(targets: Set<Fluent>) = targets.all { it.isGround }

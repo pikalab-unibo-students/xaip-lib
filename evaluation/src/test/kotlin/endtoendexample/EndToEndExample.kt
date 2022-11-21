@@ -17,7 +17,7 @@ import domain.LogisticDomain.States.alternativeState
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
 import explanation.impl.QuestionAddOperator
-import explanation.impl.QuestionPlanSatisfiability
+import explanation.impl.QuestionPlanProposal
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import domain.LogisticDomain.Problems as LogisticProblem
@@ -25,34 +25,36 @@ import domain.LogisticDomain.Problems as LogisticProblem
 class EndToEndExample : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
+    private val formerPlan = Plan.of(
+        listOf(
+            Operators.unstackAB,
+            Operators.putdownA,
+            Operators.unstackCD,
+            Operators.stackCA,
+            Operators.pickD,
+            Operators.stackDC,
+            Operators.pickB,
+            Operators.stackBD
+        )
+    )
+
     @Test
     fun addOperatorBlockWorld() {
-        val initialPlan = Plan.of(
-            listOf(
-                Operators.unstackAB,
-                Operators.putdownA,
-                Operators.unstackCD,
-                Operators.stackCA,
-                Operators.pickD,
-                Operators.stackDC,
-                Operators.pickB,
-                Operators.stackBD
-            )
-        )
         val question = QuestionAddOperator(
             Problems.unstackABunstackCDstackBDCA,
-            initialPlan,
+            formerPlan,
             Operators.putdownC,
             3
         )
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
+        val explanation = explainer.explain(question)
+        println(ContrastiveExplanationPresenter.of(explanation).present())
+        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
     }
 
     @Test
-    fun planSatisfiabilityBlockWorld() {
-        val initialPlan = Plan.of(
+    fun planProposalBlockWorld() {
+        val planProposal = Plan.of(
             listOf(
                 Operators.unstackAB,
                 Operators.putdownA,
@@ -66,15 +68,17 @@ class EndToEndExample : AnnotationSpec() {
                 Operators.stackBD
             )
         )
-        val question = QuestionPlanSatisfiability(Problems.unstackABunstackCDstackBDCA, initialPlan)
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
+        val question = QuestionPlanProposal(Problems.unstackABunstackCDstackBDCA, formerPlan, planProposal)
+        val explanation = explainer.explain(question)
+
+        println(ContrastiveExplanationPresenter.of(explanation).present())
+        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
     }
 
     @Test
     fun replaceActionInStateLogisticDomain() {
-        val plan = Plan.of(
+        val formerPlan = Plan.of(
             listOf(
                 moveRfromL1toL3,
                 loadC2fromL3onR,
@@ -90,13 +94,14 @@ class EndToEndExample : AnnotationSpec() {
 
         val question = QuestionReplaceOperator(
             LogisticProblem.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1AlternativeInitialState,
-            plan,
+            formerPlan,
             moveRfromL4toL6,
             8,
             alternativeState
         )
-        println(ContrastiveExplanationPresenter.of(explainer.explain(question)).present())
-        // println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentMinimalExplanation())
-        // println(ContrastiveExplanationPresenter.of(explainer.explain(question)).presentContrastiveExplanation())
+        val explanation = explainer.explain(question)
+        println(ContrastiveExplanationPresenter.of(explanation).present())
+        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
     }
 }

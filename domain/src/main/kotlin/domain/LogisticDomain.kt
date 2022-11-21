@@ -459,25 +459,25 @@ object LogisticDomain {
             unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
 
             unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
-            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Z, Values.l2))
-            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Z, Values.l3))
-            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Z, Values.l4))
-            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Z, Values.l5))
-            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Z, Values.l6))
-            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
-            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Z, Values.l1))
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Y, Values.c1))
@@ -572,8 +572,8 @@ object LogisticDomain {
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Y, Values.l5))
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
 
-            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
-            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l3))
+            moveRfromL1toL3 = moveRfromL1toL3.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL3 = moveRfromL1toL3.apply(VariableAssignment.of(Values.Z, Values.l3))
 
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Y, Values.l3))
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Z, Values.l1))

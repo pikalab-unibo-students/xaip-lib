@@ -2,6 +2,7 @@ package explanation.impl
 
 import core.Fluent
 import core.FluentBasedGoal
+import core.Operator
 import core.utility.then
 import explanation.Explanation
 import explanation.ExplanationPresenter
@@ -14,13 +15,13 @@ internal open class BaseExplanationPresenter(
 ) : ExplanationPresenter {
     private val minimalSolution by lazy { explanation.explainer.minimalPlanSelector(explanation.question.problem) }
 
-    private val beVerb by lazy { (additionalOperators.size > 1).then("are") ?: "is" }
+    private fun beVerb(operators: List<Operator>) = (operators.size > 1).then("are") ?: "is"
 
     private val operator by lazy { (additionalOperators.size > 1).then("operators") ?: "operator" }
 
     private val isValid by lazy { explanation.isPlanValid().then("not") ?: "" }
 
-    private val isSolvable by lazy { explanation.isProblemSolvable().then("not ") ?: "" }
+    private val isSolvable by lazy { explanation.isProblemSolvable().then(" ") ?: "not" }
 
     private val isMinimal by lazy { (!isProposedPlanMinimalPlan).then("not ") ?: "" }
 
@@ -38,26 +39,32 @@ internal open class BaseExplanationPresenter(
         "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} is ${isSolvable}solvable."
     }
 
+    internal val originalPlan by lazy {
+        "\nThe former plan was: ${explanation.originalPlan.operators}"
+    }
+
     private val minimalPlan by lazy { "The minimal solution is: ${minimalSolution.operators}\n" }
 
     private val isPlanMinimalSolution by lazy { "The plan is ${isMinimal}the minimal solution" }
 
     private val areThereAdditionalOperators by lazy {
         (additionalOperators.isNotEmpty()).then(
-            "\nThere $beVerb ${additionalOperators.size} additional $operator " +
+            " There ${beVerb(additionalOperators)} ${additionalOperators.size} additional $operator " +
                 "respect the minimal solution: $additionalOperators.\n"
         ) ?: ""
     }
 
     private val planContainsRequiredOperators by lazy {
         (!explanation.novelPlan.operators.containsAll(minimalSolution.operators)).then(
-            ", the plan does not contains all the necessary operators.\n" +
-                "There $beVerb ${additionalOperators.size} $operator missing: $operatorsMissing.\n"
+            " and it does not contains all the necessary operators.\n" +
+                "There ${beVerb(operatorsMissing)} ${operatorsMissing.size} " +
+                "$operator missing: $operatorsMissing.\n"
         ) ?: "."
     }
 
     private val isPlanValid by lazy {
-        "The plan ${explanation.novelPlan.operators} is ${isValid}a valid solution for the problem.\n"
+        "\nThe novel plan is: ${explanation.novelPlan.operators}." +
+            "\nThe novel plan is ${isValid}a valid solution for the problem.\n"
     }
 
     private fun areAllGroundFluents(targets: Set<Fluent>) = targets.all { it.isGround }
@@ -67,8 +74,8 @@ internal open class BaseExplanationPresenter(
             throw IllegalArgumentException("Goal must contain only ground fluents")
         }
         var finalString = isProblemSolvable
-        finalString.plus("\n")
         if (explanation.isProblemSolvable()) {
+            finalString = finalString.plus(originalPlan)
             finalString = finalString.plus(isPlanValid)
             finalString = finalString.plus(minimalPlan)
 
@@ -84,12 +91,10 @@ internal open class BaseExplanationPresenter(
      */
     override fun presentMinimalExplanation(): String {
         return """Minimal explanation:
-            | $isProblemSolvable
-            | the original plan was: ${explanation.originalPlan.operators},
-            | the plan: ${explanation.novelPlan.operators} is valid: ${explanation.isPlanValid()}
-            | plan length acceptable: ${explanation.isPlanLengthAcceptable()}
-            | operators missing: $operatorsMissing
-            | additional missing: $additionalOperators
+            | The plan: ${explanation.novelPlan.operators}, is valid: ${explanation.isPlanValid()}
+            | The length is acceptable: ${explanation.isPlanLengthAcceptable()}
+            | Operators missing: $operatorsMissing
+            | Additional operators: $additionalOperators
             |
             
         """.trimMargin()

@@ -10,6 +10,8 @@ import java.io.File
 class BenchmarkTest : AnnotationSpec() {
     private val problems = listOf(pickC, robotFromLoc1ToLoc2)
 
+    // 1. generate plan
+    // 2. perform operation on plan
     @Test
     fun buildBenchmark() {
         for (problem in problems) {

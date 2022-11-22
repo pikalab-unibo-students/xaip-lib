@@ -8,6 +8,9 @@ import domain.LogisticDomain
 import explanation.Explainer
 import explanation.impl.QuestionPlanSatisfiability
 
+/**
+ * Utility method to build the benchmarks.
+ */
 fun main() {
     val problems = listOf(BlockWorldDomain.Problems.stackAB, LogisticDomain.Problems.robotFromLoc1ToLoc2)
     val maxLength = 10

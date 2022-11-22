@@ -8,7 +8,7 @@ on:
       - develop
       #- feature/**
       - feature/explanation
-    #- feature/end_to_end_example
+      - feature/end_to_end_example
 
   #pull_request:
   #  branches:

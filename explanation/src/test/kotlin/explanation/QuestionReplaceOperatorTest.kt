@@ -85,7 +85,7 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             Plan.of(listOf(pickC, stackAB)),
             pickA,
             0,
-            States.initial
+            States.allBlocksAtFloor
         )
         val explanation = Explainer.of(Planner.strips()).explain(q3)
 

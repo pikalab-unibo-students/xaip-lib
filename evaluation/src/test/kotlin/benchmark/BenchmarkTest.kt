@@ -1,24 +1,50 @@
 package benchmark
 
 import BaseBenchmark
-import domain.BlockWorldDomain.Problems.pickC
+import cleanDirectory
+import core.Planner
+import createPlansList
+import domain.BlockWorldDomain.Problems.stackAB
 import domain.LogisticDomain.Problems.robotFromLoc1ToLoc2
+import explanation.Explainer
+import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import java.io.File
 
 class BenchmarkTest : AnnotationSpec() {
-    private val problems = listOf(pickC, robotFromLoc1ToLoc2)
+    private val problems = listOf(stackAB, robotFromLoc1ToLoc2)
+    private val maxLength = 2
+    private val explanationTypes = listOf("C", "")
 
-    // 1. generate plan
-    // 2. perform operation on plan
     @Test
-    fun buildBenchmark() {
+    fun createOnlyValidPlansBlockWorldDomainTest() {
+        val plans = createPlansList(problems.first(), maxLength)
+        plans.all {
+            !Explainer.of(Planner.strips()).explain(QuestionPlanSatisfiability(problems.first(), it)).isPlanValid()
+        } shouldBe false
+    }
+
+    @Test
+    fun createOnlyValidLogisticDomainTest() {
+        val plans = createPlansList(problems.last(), maxLength)
+        plans.all {
+            !Explainer.of(Planner.strips()).explain(QuestionPlanSatisfiability(problems.first(), it)).isPlanValid()
+        } shouldBe false
+    }
+
+    @Test
+    fun buildBenchmarkTest() {
+        val benchmark = BaseBenchmark()
         for (problem in problems) {
-            for (i in 1..5)
-                for (j in 50..200 step 50)
-                    BaseBenchmark(problem, j, i).write("")
-            (File("res/benchmark/${problem.domain.name}").length() > 0) shouldBe true
+            val plans = createPlansList(problem, maxLength)
+            for (j in explanationTypes)
+                for (i in 1..5) {
+                    benchmark.writeBenchmark("Prova$i$j", problem, j, i, plans)
+                    val file = File("res/Prova$i$j")
+                    file.exists() shouldBe true
+                }
         }
+        cleanDirectory("res")
     }
 }

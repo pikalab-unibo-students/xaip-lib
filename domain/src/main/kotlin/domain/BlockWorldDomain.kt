@@ -6,7 +6,7 @@ import dsl.problem
 
 object BlockWorldDomain {
     /**
-     * property axioms: represents anarray of [Axiom].
+     * property axioms: represents an array of [Axiom].
      */
     val axioms = arrayOf(Axioms.axiom1, Axioms.axiom2)
     val actions = arrayOf(Actions.pick, Actions.stack, Actions.unstack, Actions.putdown)
@@ -566,27 +566,27 @@ object BlockWorldDomain {
         val pickXpickY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.atXatYarm
         )
         val stackZWpickX = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onZWatXarm
         )
 
         val stackBAstackDC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onBConAD
         )
 
         val armNotEmpty = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.armNotEmpty
         )
         val unstackAB = Problem.of(
@@ -605,7 +605,7 @@ object BlockWorldDomain {
         val stackCAstackBY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onCAonBY
         )
         val stackBC = Problem.of(
@@ -618,77 +618,77 @@ object BlockWorldDomain {
         val stackAny = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.atXArmAndAtYFloorAndOnWZ
         )
 
         val pickC = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.atCarm
         )
 
         val stackAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.objects,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onAatBandBonFloor
         )
 
         val stackAX = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.objects,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onAX
         )
 
         val pickX = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.pickX
         )
 
         val pickXfloorY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.pickXfloorY
         )
 
         val stackXY = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onXY
         )
 
         val stackCAB = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onABC
         )
 
         val stackXYpickW = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onXYatW
         )
 
         val axiomException = Problem.of(
             domain = Domains.blockWorldAxiomException,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onXYatW
         )
 
         val stackDXA = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,
-            initialState = States.initial,
+            initialState = States.allBlocksAtFloor,
             goal = Goals.onDXonXA
         )
     }
@@ -714,7 +714,8 @@ object BlockWorldDomain {
             Fluents.clearD,
             Fluents.armEmpty
         )
-        val initial = State.of(
+
+        val allBlocksAtFloor = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,
             Fluents.atCFloor,
@@ -735,6 +736,7 @@ object BlockWorldDomain {
             Fluents.clearC,
             Fluents.clearD
         )
+
         val atBArm = State.of(
             Fluents.atAFloor,
             Fluents.atBArm,
@@ -744,6 +746,7 @@ object BlockWorldDomain {
             Fluents.clearC,
             Fluents.clearD
         )
+
         val atCArm = State.of(
             Fluents.atAFloor,
             Fluents.atBFloor,
@@ -753,6 +756,7 @@ object BlockWorldDomain {
             Fluents.clearB,
             Fluents.clearD
         )
+
         val atDArm = State.of(
             Fluents.atAFloor,
             Fluents.atCFloor,

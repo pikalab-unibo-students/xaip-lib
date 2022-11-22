@@ -1,130 +1,56 @@
-import core.Operator
 import core.Plan
+import core.Planner
 import core.Problem
 import core.utility.then
-import domain.BlockWorldDomain
+import domain.BlockWorldDomain.Actions
 import domain.BlockWorldDomain.Operators.pickA
-import domain.BlockWorldDomain.Operators.pickB
-import domain.BlockWorldDomain.Operators.pickC
-import domain.BlockWorldDomain.Operators.pickD
-import domain.BlockWorldDomain.Operators.putdownA
-import domain.BlockWorldDomain.Operators.putdownB
-import domain.BlockWorldDomain.Operators.putdownC
-import domain.BlockWorldDomain.Operators.putdownD
-import domain.BlockWorldDomain.Operators.stackAB
-import domain.BlockWorldDomain.Operators.stackAC
-import domain.BlockWorldDomain.Operators.stackAD
-import domain.BlockWorldDomain.Operators.stackBA
-import domain.BlockWorldDomain.Operators.stackBC
-import domain.BlockWorldDomain.Operators.stackBD
-import domain.BlockWorldDomain.Operators.stackCA
-import domain.BlockWorldDomain.Operators.stackCB
-import domain.BlockWorldDomain.Operators.stackCD
-import domain.BlockWorldDomain.Operators.stackDA
-import domain.BlockWorldDomain.Operators.stackDB
-import domain.BlockWorldDomain.Operators.stackDC
-import domain.BlockWorldDomain.Operators.unstackAB
-import domain.BlockWorldDomain.Operators.unstackAC
-import domain.BlockWorldDomain.Operators.unstackAD
-import domain.BlockWorldDomain.Operators.unstackBA
-import domain.BlockWorldDomain.Operators.unstackBC
-import domain.BlockWorldDomain.Operators.unstackBD
-import domain.BlockWorldDomain.Operators.unstackCA
-import domain.BlockWorldDomain.Operators.unstackCB
-import domain.BlockWorldDomain.Operators.unstackCD
-import domain.BlockWorldDomain.Operators.unstackDA
-import domain.BlockWorldDomain.Operators.unstackDB
+import domain.LogisticDomain.Operators.moveRfromL1toL2
+import explanation.Explainer
 import explanation.Question
 import explanation.impl.* // ktlint-disable no-wildcard-imports
+import explanation.utils.retrieveAction
 import java.io.FileOutputStream
 import java.io.OutputStream
-import domain.BlockWorldDomain.Operators as bwOperators
-import domain.LogisticDomain.Operators as lOperators
+import kotlin.random.Random
+import domain.LogisticDomain.Actions as Lactions
 
-open class BaseBenchmark(
-    problem: Problem,
-    private val length: Int,
-    private val flag: Int,
-    private val explanationType: String = ""
-) : AbstractBenchmark(problem, length) {
-    lateinit var question: Question
-    val idempotentActionSetBlockWorld by lazy {
-        listOf(
-            listOf(pickA, putdownA),
-            listOf(pickB, putdownB),
-            listOf(pickC, putdownC),
-            listOf(pickD, putdownD),
-            listOf(pickA, stackAB, unstackAB),
-            listOf(pickA, stackAC, unstackAC),
-            listOf(pickA, stackAD, unstackAD),
-            listOf(pickB, stackBA, unstackBA),
-            listOf(pickB, stackBC, unstackBC),
-            listOf(pickB, stackBD, unstackBD),
-            listOf(pickC, stackCA, unstackCA),
-            listOf(pickC, stackCB, unstackCB),
-            listOf(pickC, stackCD, unstackCD),
-            listOf(pickD, stackDA, unstackDA),
-            listOf(pickD, stackDB, unstackDB),
-            listOf(pickD, stackDC, bwOperators.unstackDC)
-        )
-    }
-    private val operator by lazy {
-        when (problem.domain.name) {
-            "block_world" -> BlockWorldDomain.Operators.pickA
-            "logistic_world" -> (flag == 1).then(lOperators.moveRfromL1toL3) ?: lOperators.moveRfromL1toL2
-            else -> throw NoSuchElementException("Domain ${problem.domain.name} is not supported")
-        }
-    }
-    init {
-        var i = 0
-        while (i < length) {
-            when (flag) {
-                1 -> question = QuestionRemoveOperator(
-                    problem,
-                    Plan.of(plan),
-                    operator
-                )
-                2 -> question = QuestionAddOperator(
-                    problem,
-                    Plan.of(plan),
-                    Operator.of(problem.domain.actions.last()),
-                    i
-                )
-                3 -> question = QuestionReplaceOperator(
-                    problem,
-                    Plan.of(plan),
-                    operator,
-                    i
-                )
-                4 -> question = QuestionPlanProposal(
-                    problem,
-                    Plan.of(plan),
-                    Plan.of(
-                        MutableList(i) {
-                            operator
-                        }
-                    )
-                )
-                5 -> question = QuestionPlanSatisfiability(
-                    problem,
-                    Plan.of(plan)
-                )
-            }
-            addResult(question, explanationType)
-            i++
-        }
-    }
+open class BaseBenchmark {
+    private val explainer by lazy { Explainer.of(Planner.strips()) }
 
-    override fun write(filename: String?) {
-        fun OutputStream.writeCsv(resultMemory: List<Long>, resultTime: List<Long>, flag: Int) {
+    private val blockWorldName by lazy { "block_world" }
+    private val logisticName by lazy { "logistic_world" }
+
+    private val resultsTime by lazy { mutableMapOf<Plan, Long>() }
+    private val resultsMemory by lazy { mutableMapOf<Plan, Long>() }
+    private fun problemFolder(name: String) = (name == blockWorldName).then(blockWorldName) ?: logisticName
+    private fun explanationFolder(name: String) = (name.startsWith("c", true))
+        .then("contrastiveExplanation") ?: "generalExplanation"
+
+    private fun osFolder(name: String) = (name.startsWith("l", true)).then("linux") ?: "windows"
+
+    /**
+     * Method responsible for writing the benchmarks.
+     */
+    fun writeBenchmark(
+        filename: String,
+        problem: Problem,
+        explanationType: String,
+        questionType: Int,
+        plans: List<Plan>
+    ) {
+        init(plans.toMutableList(), questionType, problem, explanationType)
+        write(filename, problem, explanationType, questionType)
+    }
+    private fun write(filename: String, problem: Problem, explanationType: String, questionType: Int) {
+        fun OutputStream.writeCsv() {
             val writer = bufferedWriter()
-            writer.write("""Domain, PlanLength, QuestionType, Index, Time, Memory""".trimMargin())
+            writer.write("""Domain, PlanLength, QuestionType, Time, Memory""".trimMargin())
             writer.newLine()
             var i = 1
-            resultTime.forEach {
+            resultsTime.forEach {
                 writer.write(
-                    "${problem.domain.name}, ${plan.size}, $flag, " +
-                        "$i, $it, ${resultMemory[resultTime.indexOf(it)]}"
+                    "${problem.domain.name}, ${it.key.operators.size}, $questionType, " +
+                        "${it.value}, ${resultsMemory[it.key]}"
                 )
                 writer.newLine()
                 i++
@@ -133,28 +59,83 @@ open class BaseBenchmark(
         }
 
         (
-            (filename.equals("")).then(
-                """res/benchmark/${problem.domain.name}/Question${flag}Length${length}Explanation$explanationType.csv"""
+            (filename == "").then(
+                """evaluation/res/benchmark/${problemFolder(problem.domain.name)}/
+                    ${osFolder(System.getProperty("os.name"))}
+                    /${explanationFolder(explanationType)}/Question${questionType}Explanation$explanationType.csv
+                """.replace("\\s".toRegex(), "")
             ) ?: "res/$filename"
             ).let {
             FileOutputStream(
                 it
-            ).apply { writeCsv(resultsMemory, resultsTime, flag) }
+            ).apply { writeCsv() }
         }
     }
 
-    fun createPlan(problem: Problem, maxLength: Int): MutableList<MutableList<Operator>> {
-        val plans = mutableListOf(mutableListOf(pickA, putdownA))
-        for (plan in plans) {
-            if (problem.domain.name == "bockWorld_domain") {
-                for (seq in idempotentActionSetBlockWorld) {
-                    val list = mutableListOf<Operator>()
-                    for (elem in seq) { list.add(elem) }
-                    plans.add(list)
-                }
-                if (plans.last().size > maxLength) break
-            } else { } // Logistic domain
+    private fun addResult(question: Question, explanationType: String) {
+        resultsTime[question.plan] = measureTimeMillis(question, explanationType)
+        when (question) {
+            is QuestionReplaceOperator -> resultsMemory[question.plan] = measureMemory(
+                QuestionReplaceOperator(
+                    question.problem,
+                    question.plan,
+                    question.focus,
+                    question.focusOn,
+                    question.inState
+                ),
+                explanationType
+            )
+            else -> resultsMemory[question.plan] = measureMemory(question, explanationType)
         }
-        return plans
+    }
+    private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, type: String = "") {
+        for (plan in plans) {
+            when (question) {
+                1 -> explainQuestion1(plan, problem, type)
+                2 -> explainQuestion2(plan, problem, type)
+                3 -> explainQuestion3(plan, problem, type)
+                4 -> explainQuestion4(plan, problem, type)
+                5 -> explainQuestion5(plan, problem, type)
+                else -> error("Question not supported")
+            }
+        }
+    }
+
+    private fun explainQuestion1(plan: Plan, problem: Problem, type: String) {
+        for (operator in plan.operators)
+            if (operator !in explainer.minimalPlanSelector(problem).operators) {
+                addResult(QuestionRemoveOperator(problem, plan, operator), type)
+            }
+    }
+
+    private fun explainQuestion2(plan: Plan, problem: Problem, type: String) {
+        for (i in 1..plan.operators.size)
+            addResult(QuestionAddOperator(problem, plan, plan.operators.shuffled(Random(i)).first(), i), type)
+    }
+    private fun explainQuestion3(plan: Plan, problem: Problem, type: String) {
+        val actions = setOf(Actions.putdown, Actions.unstack, Lactions.unload)
+        val op = (problem.domain.name == "block_world").then(pickA) ?: moveRfromL1toL2
+        val iterator = plan.operators.iterator()
+        var i = 0
+        for (operator in iterator) {
+            if (problem.domain.actions.retrieveAction(operator) in actions && plan.operators.last() != operator) {
+                addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
+            }
+            i++
+        }
+    }
+
+    private fun explainQuestion4(plan: Plan, problem: Problem, type: String) {
+        val plans = mutableSetOf<Plan>()
+        for (i in 1..plan.operators.size / 2) {
+            plans.add(Plan.of(plan.operators.shuffled(Random(i))))
+        }
+        for (p in plans) {
+            addResult(QuestionPlanProposal(problem, plan, p), type)
+        }
+    }
+
+    private fun explainQuestion5(plan: Plan, problem: Problem, type: String) {
+        addResult(QuestionPlanSatisfiability(problem, plan), type)
     }
 }

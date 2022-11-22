@@ -14,7 +14,7 @@ class ProblemTest : AnnotationSpec() {
     fun testProblemObjectWorksAsExpected() {
         Problems.stackAny.domain shouldBe Domains.blockWorld
         Problems.stackAny.objects shouldBe ObjectSets.all
-        Problems.stackAny.initialState shouldBe States.initial
+        Problems.stackAny.initialState shouldBe States.allBlocksAtFloor
         Problems.stackAny.goal shouldBe Goals.atXArmAndAtYFloorAndOnWZ
     }
 }

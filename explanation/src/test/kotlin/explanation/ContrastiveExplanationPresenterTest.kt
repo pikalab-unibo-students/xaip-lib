@@ -96,7 +96,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
             Plan.of(listOf(pickC, stackAB)),
             pickA,
             0,
-            BlockWorldDomain.States.initial
+            BlockWorldDomain.States.allBlocksAtFloor
         )
         val explanation = Explainer.of(Planner.strips()).explain(q3)
         println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())

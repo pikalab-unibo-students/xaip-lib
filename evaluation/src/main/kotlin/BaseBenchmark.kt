@@ -73,19 +73,23 @@ open class BaseBenchmark {
     }
 
     private fun addResult(question: Question, explanationType: String) {
-        resultsTime[question.plan] = measureTimeMillis(question, explanationType)
-        when (question) {
-            is QuestionReplaceOperator -> resultsMemory[question.plan] = measureMemory(
-                QuestionReplaceOperator(
-                    question.problem,
-                    question.plan,
-                    question.focus,
-                    question.focusOn,
-                    question.inState
-                ),
-                explanationType
-            )
-            else -> resultsMemory[question.plan] = measureMemory(question, explanationType)
+        val memoryOccupation = measureMemory2(question, explanationType)
+        if(memoryOccupation> 0L) {
+            resultsMemory[question.plan] = memoryOccupation
+            when (question) {
+                is QuestionReplaceOperator -> resultsTime[question.plan] = measureTimeMillis(
+                    QuestionReplaceOperator(
+                        question.problem,
+                        question.plan,
+                        question.focus,
+                        question.focusOn,
+                        question.inState
+                    ),
+                    explanationType
+                )
+
+                else -> resultsTime[question.plan] = measureTimeMillis(question, explanationType)
+            }
         }
     }
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, type: String = "") {

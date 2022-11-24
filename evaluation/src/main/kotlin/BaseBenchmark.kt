@@ -74,7 +74,7 @@ open class BaseBenchmark {
 
     private fun addResult(question: Question, explanationType: String) {
         val memoryOccupation = measureMemory2(question, explanationType)
-        if(memoryOccupation> 0L) {
+        if (memoryOccupation> 0L) {
             resultsMemory[question.plan] = memoryOccupation
             when (question) {
                 is QuestionReplaceOperator -> resultsTime[question.plan] = measureTimeMillis(

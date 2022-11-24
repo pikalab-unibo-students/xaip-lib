@@ -83,6 +83,7 @@ object BlockWorldDomain {
                         -"clear"("Y")
                     }
                 }
+
                 "unstack" {
                     parameters {
                         "X" ofType "blocks"
@@ -94,11 +95,11 @@ object BlockWorldDomain {
                         +"arm_empty"
                     }
                     effects {
+                        -"on"("X", "Y")
+                        -"clear"("X")
+                        -"arm_empty"
                         +"at"("X", "arm")
                         +"clear"("Y")
-                        -"arm_empty"
-                        -"clear"("X")
-                        -"on"("X", "Y")
                     }
                 }
                 "putdown" {
@@ -107,6 +108,7 @@ object BlockWorldDomain {
                     }
                     preconditions {
                         +"at"("X", "arm")
+                        +"clear"("Y")
                     }
                     effects {
                         -"at"("X", "arm")
@@ -515,6 +517,95 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val prova = Problem.of(
+            domain = domain {
+                name = "block_world"
+                types {
+                    +"anything"
+                    +"strings"("anything")
+                    +"blocks"("strings")
+                    +"locations"("strings")
+                }
+                predicates {
+                    +"at"("blocks", "locations")
+                    +"on"("blocks", "blocks")
+                    +"arm_empty"
+                    +"clear"("blocks")
+                }
+                actions {
+                    "pick" {
+                        parameters {
+                            "X" ofType "blocks"
+                        }
+                        preconditions {
+                            +"arm_empty"()
+                            +"clear"("X")
+                            +"at"("X", "floor")
+                        }
+                        effects {
+                            +"at"("X", "arm")
+                            -"arm_empty"
+                            -"at"("X", "floor")
+                            -"clear"("X")
+                        }
+                    }
+                    "stack" {
+                        parameters {
+                            "X" ofType "blocks"
+                            "Y" ofType "locations"
+                        }
+                        preconditions {
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                        effects {
+                            +"on"("X", "Y")
+                            +"clear"("X")
+                            +"arm_empty"
+                            -"at"("X", "arm")
+                            -"clear"("Y")
+                        }
+                    }
+
+                    "unstack" {
+                        parameters {
+                            "X" ofType "blocks"
+                            "Y" ofType "locations"
+                        }
+                        preconditions {
+                            +"on"("X", "Y")
+                            +"clear"("X")
+                            +"arm_empty"
+                        }
+                        effects {
+                            -"on"("X", "Y")
+                            -"clear"("X")
+                            -"arm_empty"
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                    }
+                    "putdown" {
+                        parameters {
+                            "X" ofType "blocks"
+                        }
+                        preconditions {
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                        effects {
+                            -"at"("X", "arm")
+                            +"clear"("X")
+                            +"arm_empty"
+                            +"at"("X", "floor")
+                        }
+                    }
+                }
+            },
+            objects = ObjectSets.all,
+            initialState = States.onABonCD,
+            goal = Goals.onBDCA
+        )
         val unstackABunstackCDstackBDCA = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

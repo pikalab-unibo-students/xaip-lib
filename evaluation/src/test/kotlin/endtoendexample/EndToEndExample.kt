@@ -14,6 +14,8 @@ import domain.LogisticDomain.Operators.moveRfromL4toL6
 import domain.LogisticDomain.Operators.unloadC1fromRtoL4
 import domain.LogisticDomain.Operators.unloadC2fromRtoL1
 import domain.LogisticDomain.States.alternativeState
+import dsl.domain
+import dsl.problem
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
 import explanation.impl.QuestionAddOperator
@@ -38,10 +40,118 @@ class EndToEndExample : AnnotationSpec() {
         )
     )
 
+    private val domainDSL = domain {
+        name = "block_world"
+        types {
+            +"anything"
+            +"strings"("anything")
+            +"blocks"("strings")
+            +"locations"("strings")
+        }
+        predicates {
+            +"at"("blocks", "locations")
+            +"on"("blocks", "blocks")
+            +"arm_empty"
+            +"clear"("blocks")
+        }
+        actions {
+            "pick" {
+                parameters {
+                    "X" ofType "blocks"
+                }
+                preconditions {
+                    +"arm_empty"()
+                    +"clear"("X")
+                    +"at"("X", "floor")
+                }
+                effects {
+                    +"at"("X", "arm")
+                    -"arm_empty"
+                    -"at"("X", "floor")
+                    -"clear"("X")
+                }
+            }
+            "stack" {
+                parameters {
+                    "X" ofType "blocks"
+                    "Y" ofType "locations"
+                }
+                preconditions {
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+                effects {
+                    +"on"("X", "Y")
+                    +"clear"("X")
+                    +"arm_empty"
+                    -"at"("X", "arm")
+                    -"clear"("Y")
+                }
+            }
+
+            "unstack" {
+                parameters {
+                    "X" ofType "blocks"
+                    "Y" ofType "locations"
+                }
+                preconditions {
+                    +"on"("X", "Y")
+                    +"clear"("X")
+                    +"arm_empty"
+                }
+                effects {
+                    -"on"("X", "Y")
+                    -"clear"("X")
+                    -"arm_empty"
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+            }
+            "putdown" {
+                parameters {
+                    "X" ofType "blocks"
+                }
+                preconditions {
+                    +"at"("X", "arm")
+                    +"clear"("Y")
+                }
+                effects {
+                    -"at"("X", "arm")
+                    +"clear"("X")
+                    +"arm_empty"
+                    +"at"("X", "floor")
+                }
+            }
+        }
+    }
+
+    private val problemDSL = problem(domainDSL) {
+        objects {
+            +"blocks"("a", "b", "c", "d")
+            +"locations"("floor", "arm")
+        }
+        initialState {
+            +"on"("a", "b")
+            +"on"("c", "d")
+            +"arm_empty"
+            +"clear"("a")
+            +"clear"("c")
+            +"at"("b", "floor")
+            +"at"("d", "floor")
+        }
+        goals {
+            +"clear"("b")
+            +"on"("b", "d")
+            +"on"("d", "c")
+            +"on"("c", "a")
+            +"at"("a", "floor")
+        }
+    }
+
     @Test
     fun addOperatorBlockWorld() {
         val question = QuestionAddOperator(
-            Problems.unstackABunstackCDstackBDCA,
+            problemDSL,
             formerPlan,
             Operators.putdownC,
             3

@@ -31,6 +31,7 @@ class ProblemDSLTest : AnnotationSpec() {
                 preconditions {
                     +"arm_empty"()
                     +"clear"("X")
+                    +"at"("X", "floor")
                 }
                 effects {
                     +"at"("X", "arm")

@@ -178,7 +178,7 @@ class EndToEndExample : AnnotationSpec() {
                 Operators.stackBD
             )
         )
-        val question = QuestionPlanProposal(Problems.unstackABunstackCDstackBDCA, formerPlan, planProposal)
+        val question = QuestionPlanProposal(problemDSL, formerPlan, planProposal)
         val explanation = explainer.explain(question)
 
         println(ContrastiveExplanationPresenter.of(explanation).present())

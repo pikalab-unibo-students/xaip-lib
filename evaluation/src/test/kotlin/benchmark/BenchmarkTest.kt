@@ -30,7 +30,7 @@ class BenchmarkTest : AnnotationSpec() {
         val plans = createPlansList(problems.last(), maxLength)
         plans.all {
             !Explainer.of(Planner.strips()).explain(QuestionPlanSatisfiability(problems.first(), it)).isPlanValid()
-        } shouldBe false
+        } shouldBe true
     }
 
     @Test

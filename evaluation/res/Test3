@@ -1,0 +1,3 @@
+Domain, PlanLength, QuestionType, Time, Memory
+logistic_world, 2, 3, 10, 1947832
+logistic_world, 1, 3, 6, 2097128

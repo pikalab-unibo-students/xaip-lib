@@ -24,7 +24,7 @@ jobs:
         os: [ windows-latest, ubuntu-latest ] #, macos-latest ]
     runs-on: ${{ matrix.os }}
     name: generate data on ${{ matrix.os }}
-    timeout-minutes: ${{ github.event.inputs.timeout }}
+    timeout-minutes: 60 # ${{ github.event.inputs.timeout }}
     steps:
       - uses: actions/checkout@v3
 

@@ -9,7 +9,7 @@ import explanation.Explainer
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec.Test
 
-class endToEndExampleLogistic {
+class EndToEndExampleLogistic {
     private val explainer = Explainer.of(Planner.strips())
 
     val domain = domain {
@@ -93,7 +93,7 @@ class endToEndExampleLogistic {
         )
 
         val question = QuestionReplaceOperator(
-            LogisticDomain.Problems.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1AlternativeInitialState,
+            LogisticDomain.Problems.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1,
             formerPlan,
             LogisticDomain.Operators.moveRfromL4toL6,
             8,

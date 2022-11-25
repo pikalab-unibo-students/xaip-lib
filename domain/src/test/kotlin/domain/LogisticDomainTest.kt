@@ -102,7 +102,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun testProblemDSL() {
-        val problem = LogisticDomain.ProblemsDSL.rToX
+        val problem = LogisticDomain.ProblemsDSL.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1
         val plans = planner.plan(problem).toSet()
         plans.size shouldBe 1
     }

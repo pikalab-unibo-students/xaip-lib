@@ -127,6 +127,41 @@ object LogisticDomain {
                 +"atLocation"("r", "Y")
             }
         }
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = problem(DomainsDSL.logistic) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
+            }
+            goals {
+                +"atLocation"("r", "l5")
+                +"inContainerLocation"("c1", "l4")
+                +"inContainerLocation"("c2", "l1")
+            }
+        }
     }
 
     object Actions {
@@ -332,13 +367,6 @@ object LogisticDomain {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation2
-        )
-
-        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1AlternativeInitialState = Problem.of(
-            domain = Domains.logisticWorld,
-            objects = ObjectSets.all,
-            initialState = States.initial,
-            goal = Goals.atRobotAtlocation5inContainer1Location4InContainer2Location1
         )
 
         val robotFromLoc1ToLoc5C1fromLoc2toLoc4 = Problem.of(

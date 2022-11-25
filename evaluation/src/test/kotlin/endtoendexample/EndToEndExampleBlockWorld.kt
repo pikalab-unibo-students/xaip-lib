@@ -2,26 +2,13 @@ package endtoendexample
 import core.Plan
 import core.Planner
 import domain.BlockWorldDomain.Operators
-import domain.LogisticDomain.Operators.loadC1fromL2onR
-import domain.LogisticDomain.Operators.loadC2fromL3onR
-import domain.LogisticDomain.Operators.moveRfromL1toL2
-import domain.LogisticDomain.Operators.moveRfromL1toL3
-import domain.LogisticDomain.Operators.moveRfromL2toL4
-import domain.LogisticDomain.Operators.moveRfromL3toL1
-import domain.LogisticDomain.Operators.moveRfromL4toL5
-import domain.LogisticDomain.Operators.moveRfromL4toL6
-import domain.LogisticDomain.Operators.unloadC1fromRtoL4
-import domain.LogisticDomain.Operators.unloadC2fromRtoL1
-import domain.LogisticDomain.States.alternativeState
 import dsl.domain
 import dsl.problem
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
-import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
-import domain.LogisticDomain.Problems as LogisticProblem
 
 class EndToEndExampleBlockWorld : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())

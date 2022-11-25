@@ -60,7 +60,7 @@ open class BaseBenchmark {
 
         (
             (filename == "").then(
-                """evaluation/res/benchmark/${problemFolder(problem.domain.name)}/
+                """res/benchmark/${problemFolder(problem.domain.name)}/
                     ${osFolder(System.getProperty("os.name"))}
                     /${explanationFolder(explanationType)}/Question${questionType}Explanation$explanationType.csv
                 """.replace("\\s".toRegex(), "")

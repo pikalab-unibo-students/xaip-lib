@@ -3,7 +3,82 @@ package domain
 import core.* // ktlint-disable no-wildcard-imports
 import dsl.domain
 import dsl.problem
-
+/*
+    object Actions {
+        val move = Action.of(
+            name = "move",
+            parameters = mapOf(
+                Values.X to Types.robots,
+                Values.Y to Types.locations,
+                Values.Z to Types.locations
+            ),
+            preconditions = setOf(
+                Fluents.connectedYZ,
+                Fluents.atRobotXlocationY
+            ),
+            effects = setOf(
+                Effect.of(Fluents.atRobotXlocationZ),
+                Effect.negative(Fluents.atRobotXlocationY)
+            )
+        )
+        val load = Action.of(
+            name = "load",
+            parameters = mapOf(
+                Values.Z to Types.locations,
+                Values.Y to Types.containers,
+                Values.X to Types.robots
+            ),
+            preconditions = setOf(
+                Fluents.atRobotXlocationZ,
+                Fluents.inContainerYlocationZ
+            ),
+            effects = setOf(
+                Effect.of(Fluents.loadedXY),
+                Effect.negative(Fluents.inContainerYlocationZ)
+            )
+        )
+        val unload = Action.of(
+            name = "unload",
+            parameters = mapOf(
+                Values.Z to Types.locations,
+                Values.Y to Types.containers,
+                Values.X to Types.robots
+            ),
+            preconditions = setOf(
+                Fluents.atRobotXlocationZ,
+                Fluents.loadedXY
+            ),
+            effects = setOf(
+                Effect.of(Fluents.inContainerYlocationZ),
+                Effect.negative(Fluents.loadedXY)
+            )
+        )
+    }
+    object Domains {
+        val logisticWorld = Domain.of(
+            name = "logistic_world",
+            predicates = setOf(
+                Predicates.connected,
+                Predicates.atLocation,
+                Predicates.loaded,
+                Predicates.unloaded,
+                Predicates.inContainerLocation
+            ),
+            actions = setOf(
+                Actions.move,
+                Actions.load,
+                Actions.unload
+            ),
+            types = setOf(
+                Types.anything,
+                Types.strings,
+                Types.locations,
+                Types.robots,
+                Types.containers
+            )
+        )
+    }
+ */
 object BlockWorldDomain {
     /**
      * property axioms: represents an array of [Axiom].
@@ -35,7 +110,7 @@ object BlockWorldDomain {
         Object.of(2)
     )
     object DomainsDSL {
-        val blockWorldXDomainDSL = domain {
+        val blockWorld = domain {
             name = "block_world"
             types {
                 +"anything"
@@ -83,6 +158,7 @@ object BlockWorldDomain {
                         -"clear"("Y")
                     }
                 }
+
                 "unstack" {
                     parameters {
                         "X" ofType "blocks"
@@ -94,11 +170,11 @@ object BlockWorldDomain {
                         +"arm_empty"
                     }
                     effects {
+                        -"on"("X", "Y")
+                        -"clear"("X")
+                        -"arm_empty"
                         +"at"("X", "arm")
                         +"clear"("Y")
-                        -"arm_empty"
-                        -"clear"("X")
-                        -"on"("X", "Y")
                     }
                 }
                 "putdown" {
@@ -107,6 +183,7 @@ object BlockWorldDomain {
                     }
                     preconditions {
                         +"at"("X", "arm")
+                        +"clear"("Y")
                     }
                     effects {
                         -"at"("X", "arm")
@@ -132,7 +209,7 @@ object BlockWorldDomain {
     }
 
     object ProblemsDSL {
-        val problemOnAB = problem(Domains.blockWorld) {
+        val problemOnAB = problem(DomainsDSL.blockWorld) {
             objects {
                 +"blocks"("a", "b", "c", "d")
             }
@@ -515,6 +592,95 @@ object BlockWorldDomain {
     }
 
     object Problems {
+        val prova = Problem.of(
+            domain = domain {
+                name = "block_world"
+                types {
+                    +"anything"
+                    +"strings"("anything")
+                    +"blocks"("strings")
+                    +"locations"("strings")
+                }
+                predicates {
+                    +"at"("blocks", "locations")
+                    +"on"("blocks", "blocks")
+                    +"arm_empty"
+                    +"clear"("blocks")
+                }
+                actions {
+                    "pick" {
+                        parameters {
+                            "X" ofType "blocks"
+                        }
+                        preconditions {
+                            +"arm_empty"()
+                            +"clear"("X")
+                            +"at"("X", "floor")
+                        }
+                        effects {
+                            +"at"("X", "arm")
+                            -"arm_empty"
+                            -"at"("X", "floor")
+                            -"clear"("X")
+                        }
+                    }
+                    "stack" {
+                        parameters {
+                            "X" ofType "blocks"
+                            "Y" ofType "locations"
+                        }
+                        preconditions {
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                        effects {
+                            +"on"("X", "Y")
+                            +"clear"("X")
+                            +"arm_empty"
+                            -"at"("X", "arm")
+                            -"clear"("Y")
+                        }
+                    }
+
+                    "unstack" {
+                        parameters {
+                            "X" ofType "blocks"
+                            "Y" ofType "locations"
+                        }
+                        preconditions {
+                            +"on"("X", "Y")
+                            +"clear"("X")
+                            +"arm_empty"
+                        }
+                        effects {
+                            -"on"("X", "Y")
+                            -"clear"("X")
+                            -"arm_empty"
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                    }
+                    "putdown" {
+                        parameters {
+                            "X" ofType "blocks"
+                        }
+                        preconditions {
+                            +"at"("X", "arm")
+                            +"clear"("Y")
+                        }
+                        effects {
+                            -"at"("X", "arm")
+                            +"clear"("X")
+                            +"arm_empty"
+                            +"at"("X", "floor")
+                        }
+                    }
+                }
+            },
+            objects = ObjectSets.all,
+            initialState = States.onABonCD,
+            goal = Goals.onBDCA
+        )
         val unstackABunstackCDstackBDCA = Problem.of(
             domain = Domains.blockWorld,
             objects = ObjectSets.all,

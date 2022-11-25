@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
+    application
 }
 
 dependencies {
@@ -17,6 +18,10 @@ dependencies {
     api(project(":explanation"))
     api(project(":dsl"))
     api(project(":domain"))
+}
+
+application {
+    mainClass.set("utils.MainKt")
 }
 
 kotlin {

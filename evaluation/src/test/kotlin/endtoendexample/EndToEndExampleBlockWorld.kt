@@ -1,15 +1,32 @@
-package dsl
-
-import domain.BlockWorldDomain.Planners
-import domain.BlockWorldDomain.Problems
+package endtoendexample
+import core.Plan
+import core.Planner
+import domain.BlockWorldDomain.Operators
+import dsl.domain
+import dsl.problem
+import explanation.ContrastiveExplanationPresenter
+import explanation.Explainer
+import explanation.impl.QuestionAddOperator
+import explanation.impl.QuestionPlanProposal
 import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.shouldBe
 
-/**
- * Test for DomainDSL cereation.
- */
-class ProblemDSLTest : AnnotationSpec() {
-    private val domainDSL = domain {
+class EndToEndExampleBlockWorld : AnnotationSpec() {
+    private val explainer = Explainer.of(Planner.strips())
+
+    private val formerPlan = Plan.of(
+        listOf(
+            Operators.unstackAB,
+            Operators.putdownA,
+            Operators.unstackCD,
+            Operators.stackCA,
+            Operators.pickD,
+            Operators.stackDC,
+            Operators.pickB,
+            Operators.stackBD
+        )
+    )
+
+    private val domain = domain {
         name = "block_world"
         types {
             +"anything"
@@ -94,47 +111,64 @@ class ProblemDSLTest : AnnotationSpec() {
         }
     }
 
-    private val problemDSL = problem(domainDSL) {
+    private val problem = problem(domain) {
         objects {
             +"blocks"("a", "b", "c", "d")
             +"locations"("floor", "arm")
         }
         initialState {
-            +"at"("a", "floor")
-            +"at"("b", "floor")
-            +"at"("c", "floor")
-            +"at"("d", "floor")
+            +"on"("a", "b")
+            +"on"("c", "d")
             +"arm_empty"
             +"clear"("a")
-            +"clear"("b")
             +"clear"("c")
-            +"clear"("d")
+            +"at"("b", "floor")
+            +"at"("d", "floor")
         }
         goals {
-            +"at"("b", "floor")
-            +"on"("a", "b")
+            +"clear"("b")
+            +"on"("b", "d")
+            +"on"("d", "c")
+            +"on"("c", "a")
+            +"at"("a", "floor")
         }
     }
 
     @Test
-    fun testProblem() {
-        problemDSL.domain.name shouldBe Problems.stackAB.domain.name
-        problemDSL.goal shouldBe Problems.stackAB.goal
-        problemDSL.objects shouldBe Problems.stackAB.objects
+    fun addOperatorBlockWorld() {
+        val question = QuestionAddOperator(
+            problem,
+            formerPlan,
+            Operators.putdownC,
+            3
+        )
+        val explanation = explainer.explain(question)
+        println(ContrastiveExplanationPresenter.of(explanation).present())
+        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
     }
 
     @Test
-    fun test() {
-        Planners.stripsPlanner.plan(Problems.stackAB)
-    }
+    fun planProposalBlockWorld() {
+        val planProposal = Plan.of(
+            listOf(
+                Operators.unstackAB,
+                Operators.putdownA,
+                Operators.unstackCD,
+                Operators.putdownC,
+                Operators.pickC,
+                Operators.stackCA,
+                Operators.pickD,
+                Operators.stackDC,
+                Operators.pickB,
+                Operators.stackBD
+            )
+        )
+        val question = QuestionPlanProposal(problem, formerPlan, planProposal)
+        val explanation = explainer.explain(question)
 
-    @Test
-    fun testPlanner() {
-        Planners.stripsPlanner.plan(problemDSL).toSet().size shouldBe 1
-        Planners.stripsPlanner.plan(problemDSL).first().operators.toSet().size shouldBe 2
-        Planners.stripsPlanner.plan(problemDSL).first().operators.first().name shouldBe
-            Planners.stripsPlanner.plan(Problems.stackAB).first().operators.first().name
-        Planners.stripsPlanner.plan(problemDSL).first().operators.last().name shouldBe
-            Planners.stripsPlanner.plan(Problems.stackAB).first().operators.last().name
+        println(ContrastiveExplanationPresenter.of(explanation).present())
+        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
+        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
     }
 }

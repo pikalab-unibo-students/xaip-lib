@@ -1,5 +1,6 @@
-package core
+package domain
 
+import core.Plan
 import domain.BlockWorldDomain.Planners
 import domain.LogisticDomain.Actions
 import domain.LogisticDomain.Operators
@@ -8,10 +9,10 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class LogisticDomainTest : AnnotationSpec() {
-
+    private val planner = Planners.stripsPlanner
     @Test
     fun simpleRobotFromLoc1ToLoc2() {
-        val plans1 = Planners.stripsPlanner.plan(Problems.basicRobotFromLocation1ToLocation2)
+        val plans1 = planner.plan(Problems.basicRobotFromLocation1ToLocation2)
         plans1.toSet().size shouldBe 1
         println(plans1.toSet())
         plans1.toSet().first().operators.first().name shouldBe Actions.move.name
@@ -19,7 +20,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun robotFromLoc1ToLoc2() {
-        val plans1 = Planners.stripsPlanner.plan(Problems.robotFromLoc1ToLoc2)
+        val plans1 = planner.plan(Problems.robotFromLoc1ToLoc2)
         plans1.toSet().size shouldBe 1
         println(plans1.toSet())
         plans1.toSet().first().operators.first().name shouldBe Actions.move.name
@@ -27,7 +28,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun inContainerLocation4() {
-        val plans = Planners.stripsPlanner.plan(
+        val plans = planner.plan(
             Problems.inContainerLocation4
         )
         plans.toSet().size shouldBe 1
@@ -41,7 +42,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4() {
-        val plans = Planners.stripsPlanner.plan(
+        val plans = planner.plan(
             Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4
         )
         plans.toSet().size shouldBe 1
@@ -55,7 +56,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun atRobotAtLocation3InContainer1Location4InContainer2Location7() {
-        val plans = Planners.stripsPlanner.plan(
+        val plans = planner.plan(
             Problems.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1
         )
         plans.toSet().size shouldBe 1
@@ -76,7 +77,7 @@ class LogisticDomainTest : AnnotationSpec() {
 
     @Test
     fun testRobotFromLoc1toLoc7c1fromloc2toLoc5() {
-        val plans = Planners.stripsPlanner.plan(Problems.robotFromLoc1ToLoc5C1fromLoc2toLoc4).toSet()
+        val plans = planner.plan(Problems.robotFromLoc1ToLoc5C1fromLoc2toLoc4).toSet()
         val plan2check = setOf(
             Plan.of(
                 listOf(
@@ -90,5 +91,19 @@ class LogisticDomainTest : AnnotationSpec() {
         )
         plans.size shouldBe 1
         plans shouldBe plan2check
+    }
+
+    @Test
+    fun testDomainDSL() {
+        val problem = Problems.rToXdslDomain
+        val plans = planner.plan(problem).toSet()
+        plans.size shouldBe 1
+    }
+
+    @Test
+    fun testProblemDSL() {
+        val problem = LogisticDomain.ProblemsDSL.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1
+        val plans = planner.plan(problem).toSet()
+        plans.size shouldBe 1
     }
 }

@@ -23,7 +23,7 @@ import explanation.impl.QuestionReplaceOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import domain.LogisticDomain.Problems as LogisticProblem
 
-class EndToEndExample : AnnotationSpec() {
+class EndToEndExampleBlockWorld : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
     private val formerPlan = Plan.of(
@@ -39,7 +39,7 @@ class EndToEndExample : AnnotationSpec() {
         )
     )
 
-    private val domainDSL = domain {
+    private val domain = domain {
         name = "block_world"
         types {
             +"anything"
@@ -124,7 +124,7 @@ class EndToEndExample : AnnotationSpec() {
         }
     }
 
-    private val problemDSL = problem(domainDSL) {
+    private val problem = problem(domain) {
         objects {
             +"blocks"("a", "b", "c", "d")
             +"locations"("floor", "arm")
@@ -150,7 +150,7 @@ class EndToEndExample : AnnotationSpec() {
     @Test
     fun addOperatorBlockWorld() {
         val question = QuestionAddOperator(
-            problemDSL,
+            problem,
             formerPlan,
             Operators.putdownC,
             3
@@ -177,38 +177,9 @@ class EndToEndExample : AnnotationSpec() {
                 Operators.stackBD
             )
         )
-        val question = QuestionPlanProposal(problemDSL, formerPlan, planProposal)
+        val question = QuestionPlanProposal(problem, formerPlan, planProposal)
         val explanation = explainer.explain(question)
 
-        println(ContrastiveExplanationPresenter.of(explanation).present())
-        println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
-        println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())
-    }
-
-    @Test
-    fun replaceActionInStateLogisticDomain() {
-        val formerPlan = Plan.of(
-            listOf(
-                moveRfromL1toL3,
-                loadC2fromL3onR,
-                moveRfromL3toL1,
-                unloadC2fromRtoL1,
-                moveRfromL1toL2,
-                loadC1fromL2onR,
-                moveRfromL2toL4,
-                unloadC1fromRtoL4,
-                moveRfromL4toL5
-            )
-        )
-
-        val question = QuestionReplaceOperator(
-            LogisticProblem.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1AlternativeInitialState,
-            formerPlan,
-            moveRfromL4toL6,
-            8,
-            alternativeState
-        )
-        val explanation = explainer.explain(question)
         println(ContrastiveExplanationPresenter.of(explanation).present())
         println(ContrastiveExplanationPresenter.of(explanation).presentMinimalExplanation())
         println(ContrastiveExplanationPresenter.of(explanation).presentContrastiveExplanation())

@@ -1,0 +1,57 @@
+name: Benchmark
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  workflow_dispatch:
+    inputs:
+      maxPlanLength:
+        required: true
+        default: '10'
+      timeout:
+        required: true
+        default: 30
+
+  #pull_request:
+  #  branches:
+  #    - master
+jobs:
+  generate-data:
+    #    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest ] #, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    name: generate data on ${{ matrix.os }}
+    timeout-minutes: ${{ github.event.inputs.timeout }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Shown env on Windows
+        if: runner.os == 'Windows'
+        run: systeminfo || true
+
+      - name: Shown env
+        if: runner.os != 'Windows'
+        run: |
+          uname -a
+          lscpu
+
+      - name: Run gradle
+        run: ./gradlew evaluation:run --args=${{ github.event.inputs.maxPlanLength }}
+
+      - name: Archive generated data
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchmark-results
+          path: evaluation/res/benchmark/*

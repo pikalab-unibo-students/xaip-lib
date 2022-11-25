@@ -42,7 +42,13 @@ open class BaseBenchmark {
         init(plans.toMutableList(), questionType, problem, explanationType)
         write(filename, problem, explanationType, questionType, isWorkFlow)
     }
-    private fun write(filename: String, problem: Problem, explanationType: String, questionType: Int, isWorkFlow: Boolean = false) {
+    private fun write(
+        filename: String,
+        problem: Problem,
+        explanationType: String,
+        questionType: Int,
+        isWorkFlow: Boolean = false
+    ) {
         fun OutputStream.writeCsv() {
             val writer = bufferedWriter()
             writer.write("""Domain, PlanLength, QuestionType, Time, Memory""".trimMargin())

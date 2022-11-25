@@ -2,7 +2,6 @@ package endtoendexample
 import core.Plan
 import core.Planner
 import domain.BlockWorldDomain.Operators
-import domain.BlockWorldDomain.Problems
 import domain.LogisticDomain.Operators.loadC1fromL2onR
 import domain.LogisticDomain.Operators.loadC2fromL3onR
 import domain.LogisticDomain.Operators.moveRfromL1toL2

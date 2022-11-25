@@ -94,14 +94,14 @@ class LogisticDomainTest : AnnotationSpec() {
     }
 
     @Test
-    fun testDomainDSL(){
+    fun testDomainDSL() {
         val problem = Problems.rToXdslDomain
         val plans = planner.plan(problem).toSet()
         plans.size shouldBe 1
     }
 
     @Test
-    fun testProblemDSL(){
+    fun testProblemDSL() {
         val problem = LogisticDomain.ProblemsDSL.rToX
         val plans = planner.plan(problem).toSet()
         plans.size shouldBe 1

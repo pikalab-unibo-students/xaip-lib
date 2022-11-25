@@ -122,23 +122,12 @@ object LogisticDomain {
                 +"atLocation"("l6", "l5")
                 +"atLocation"("l7", "l5")
                 +"atLocation"("l5", "l1")
-
             }
             goals {
                 +"atLocation"("r", "Y")
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     object Actions {
         val move = Action.of(

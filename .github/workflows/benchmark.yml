@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest, ubuntu-latest ] #, macos-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest #${{ matrix.os }}
     name: generate data on ${{ matrix.os }}
     timeout-minutes: 60 # ${{ github.event.inputs.timeout }}
     steps:

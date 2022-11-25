@@ -36,12 +36,19 @@ open class BaseBenchmark {
         problem: Problem,
         explanationType: String,
         questionType: Int,
-        plans: List<Plan>
+        plans: List<Plan>,
+        isWorkFlow: Boolean = false
     ) {
         init(plans.toMutableList(), questionType, problem, explanationType)
-        write(filename, problem, explanationType, questionType)
+        write(filename, problem, explanationType, questionType, isWorkFlow)
     }
-    private fun write(filename: String, problem: Problem, explanationType: String, questionType: Int) {
+    private fun write(
+        filename: String,
+        problem: Problem,
+        explanationType: String,
+        questionType: Int,
+        isWorkFlow: Boolean = false
+    ) {
         fun OutputStream.writeCsv() {
             val writer = bufferedWriter()
             writer.write("""Domain, PlanLength, QuestionType, Time, Memory""".trimMargin())
@@ -57,10 +64,10 @@ open class BaseBenchmark {
             }
             writer.flush()
         }
-
+        val prefix = isWorkFlow.then("") ?: "evaluation/"
         (
             (filename == "").then(
-                """res/benchmark/${problemFolder(problem.domain.name)}/
+                """${prefix}res/benchmark/${problemFolder(problem.domain.name)}/
                     ${osFolder(System.getProperty("os.name"))}
                     /${explanationFolder(explanationType)}/Question${questionType}Explanation$explanationType.csv
                 """.replace("\\s".toRegex(), "")
@@ -74,7 +81,7 @@ open class BaseBenchmark {
 
     private fun addResult(question: Question, explanationType: String) {
         val memoryOccupation = measureMemory2(question, explanationType)
-        if (memoryOccupation> 0L) {
+        if (memoryOccupation > 0L) {
             resultsMemory[question.plan] = memoryOccupation
             when (question) {
                 is QuestionReplaceOperator -> resultsTime[question.plan] = measureTimeMillis(

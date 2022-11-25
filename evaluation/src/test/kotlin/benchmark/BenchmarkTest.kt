@@ -40,8 +40,8 @@ class BenchmarkTest : AnnotationSpec() {
             val plans = createPlansList(problem, maxLength)
             for (j in explanationTypes)
                 for (i in 1..5) {
-                    benchmark.writeBenchmark("Prova$i$j", problem, j, i, plans)
-                    val file = File("res/Prova$i$j")
+                    benchmark.writeBenchmark("Test$i$j", problem, j, i, plans)
+                    val file = File("res/Test$i$j")
                     file.exists() shouldBe true
                 }
         }

@@ -4,22 +4,23 @@ import core.Plan
 import core.Planner
 import domain.LogisticDomain
 import dsl.domain
+import dsl.problem
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
 import explanation.impl.QuestionReplaceOperator
-import io.kotest.core.spec.style.AnnotationSpec.Test
+import io.kotest.core.spec.style.AnnotationSpec
 
-class EndToEndExampleLogistic {
+class EndToEndExampleLogistic : AnnotationSpec() {
     private val explainer = Explainer.of(Planner.strips())
 
-    val domain = domain {
+    private val domain = domain {
         name = "logistic_world"
         types {
             +"anything"
-            +"string"("anything")
-            +"locations"("string")
-            +"robots"("string")
-            +"containers"("string")
+            +"strings"("anything")
+            +"locations"("strings")
+            +"robots"("strings")
+            +"containers"("strings")
         }
         predicates {
             +"connected"("locations", "locations")
@@ -46,9 +47,9 @@ class EndToEndExampleLogistic {
             }
             "load" {
                 parameters {
-                    "X" ofType "robots"
-                    "Y" ofType "containers"
                     "Z" ofType "locations"
+                    "Y" ofType "containers"
+                    "X" ofType "robots"
                 }
                 preconditions {
                     +"atLocation"("X", "Z")
@@ -61,9 +62,9 @@ class EndToEndExampleLogistic {
             }
             "unload" {
                 parameters {
-                    "X" ofType "robots"
                     "Z" ofType "locations"
                     "Y" ofType "containers"
+                    "X" ofType "robots"
                 }
                 preconditions {
                     +"atLocation"("X", "Z")
@@ -71,11 +72,48 @@ class EndToEndExampleLogistic {
                 }
                 effects {
                     +"inContainerLocation"("Y", "Z")
-                    -"loaded"("X", "y")
+                    -"loaded"("X", "Y")
                 }
             }
         }
     }
+
+    private val problem = problem(domain) {
+        objects {
+            +"robots"("r")
+            +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+            +"containers"("c1", "c2")
+        }
+        initialState {
+            +"atLocation"("r", "l1")
+            +"inContainerLocation"("c1", "l2")
+            +"inContainerLocation"("c2", "l3")
+            +"connected"("l1", "l2")
+            +"connected"("l1", "l3")
+            +"connected"("l2", "l4")
+            +"connected"("l3", "l4")
+            +"connected"("l4", "l5")
+            +"connected"("l1", "l6")
+            +"connected"("l5", "l6")
+            +"connected"("l5", "l7")
+            +"connected"("l1", "l5")
+            +"connected"("l2", "l1")
+            +"connected"("l3", "l1")
+            +"connected"("l4", "l2")
+            +"connected"("l4", "l3")
+            +"connected"("l5", "l4")
+            +"connected"("l6", "l2")
+            +"connected"("l6", "l5")
+            +"connected"("l7", "l5")
+            +"connected"("l5", "l1")
+        }
+        goals {
+            +"atLocation"("r", "l5")
+            +"inContainerLocation"("c1", "l4")
+            +"inContainerLocation"("c2", "l1")
+        }
+    }
+
     @Test
     fun replaceActionInStateLogisticDomain() {
         val formerPlan = Plan.of(
@@ -93,7 +131,7 @@ class EndToEndExampleLogistic {
         )
 
         val question = QuestionReplaceOperator(
-            LogisticDomain.Problems.robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1,
+            problem,
             formerPlan,
             LogisticDomain.Operators.moveRfromL4toL6,
             8,

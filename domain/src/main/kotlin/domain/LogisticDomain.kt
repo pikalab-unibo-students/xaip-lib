@@ -31,10 +31,10 @@ object LogisticDomain {
             name = "logistic_world"
             types {
                 +"anything"
-                +"string"("anything")
-                +"locations"("string")
-                +"robots"("string")
-                +"containers"("string")
+                +"strings"("anything")
+                +"locations"("strings")
+                +"robots"("strings")
+                +"containers"("strings")
             }
             predicates {
                 +"connected"("locations", "locations")
@@ -61,9 +61,9 @@ object LogisticDomain {
                 }
                 "load" {
                     parameters {
-                        "X" ofType "robots"
-                        "Y" ofType "containers"
                         "Z" ofType "locations"
+                        "Y" ofType "containers"
+                        "X" ofType "robots"
                     }
                     preconditions {
                         +"atLocation"("X", "Z")
@@ -76,9 +76,9 @@ object LogisticDomain {
                 }
                 "unload" {
                     parameters {
-                        "X" ofType "robots"
                         "Z" ofType "locations"
                         "Y" ofType "containers"
+                        "X" ofType "robots"
                     }
                     preconditions {
                         +"atLocation"("X", "Z")
@@ -86,7 +86,7 @@ object LogisticDomain {
                     }
                     effects {
                         +"inContainerLocation"("Y", "Z")
-                        -"loaded"("X", "y")
+                        -"loaded"("X", "Y")
                     }
                 }
             }
@@ -104,30 +104,67 @@ object LogisticDomain {
                 +"atLocation"("r", "l1")
                 +"inContainerLocation"("c1", "l2")
                 +"inContainerLocation"("c2", "l3")
-                +"connected"("c", "floor")
-                +"atLocation"("l1", "l2")
-                +"atLocation"("l1", "l3")
-                +"atLocation"("l2", "l4")
-                +"atLocation"("l3", "l4")
-                +"atLocation"("l4", "l5")
-                +"atLocation"("l5", "l6")
-                +"atLocation"("l5", "l7")
-                +"atLocation"("l1", "l5")
-                +"atLocation"("l2", "l1")
-                +"atLocation"("l3", "l1")
-                +"atLocation"("l4", "l2")
-                +"atLocation"("l4", "l3")
-                +"atLocation"("l5", "l4")
-                +"atLocation"("l6", "l2")
-                +"atLocation"("l6", "l5")
-                +"atLocation"("l7", "l5")
-                +"atLocation"("l5", "l1")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
             }
             goals {
                 +"atLocation"("r", "Y")
             }
         }
+
         val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = problem(DomainsDSL.logistic) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
+            }
+            goals {
+                +"atLocation"("r", "l5")
+                +"inContainerLocation"("c1", "l4")
+                +"inContainerLocation"("c2", "l1")
+            }
+        }
+
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1notDSL = problem(Domains.logisticWorld) {
             objects {
                 +"robots"("r")
                 +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
@@ -353,6 +390,12 @@ object LogisticDomain {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtLocationY
+        )
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1dslDomain = Problem.of(
+            domain = DomainsDSL.logistic,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtlocation5inContainer1Location4InContainer2Location1
         )
 
         val rToX = Problem.of(

@@ -13,7 +13,8 @@ import explanation.impl.QuestionPlanSatisfiability
  */
 fun main(args: Array<String>) {
     val problems = listOf(BlockWorldDomain.Problems.stackAB, LogisticDomain.Problems.robotFromLoc1ToLoc2)
-    val maxLength = if (args.isNotEmpty()) args[0].toInt() else 10
+    val maxLength = if (args.isNotEmpty()) args[0].toInt() else 100
+    val isWorkflow = args.isNotEmpty()
     val explanationTypes = listOf("C", "")
     fun buildBenchmark() {
         val b = BaseBenchmark()
@@ -25,7 +26,7 @@ fun main(args: Array<String>) {
             if (notValid) error("Plan not valid")
             for (j in explanationTypes)
                 for (i in 1..5)
-                    b.writeBenchmark("", problem, j, i, plans)
+                    b.writeBenchmark("", problem, j, i, plans, isWorkflow)
         }
     }
 

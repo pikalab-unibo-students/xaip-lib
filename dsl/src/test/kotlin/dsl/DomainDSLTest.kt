@@ -12,17 +12,17 @@ import io.kotest.matchers.shouldNotBe
 class DomainDSLTest : AnnotationSpec() {
     @Test
     fun test() {
-        DomainsDSL.blockWorldXDomainDSL.name shouldBe Domains.blockWorld.name
-        DomainsDSL.blockWorldXDomainDSL.axioms shouldNotBe null
-        DomainsDSL.blockWorldXDomainDSL.types shouldBe Domains.blockWorld.types
-        DomainsDSL.blockWorldXDomainDSL.actions.first().name shouldBe Domains.blockWorld.actions.first().name
-        DomainsDSL.blockWorldXDomainDSL.actions.first().effects.size shouldBe
+        DomainsDSL.blockWorld.name shouldBe Domains.blockWorld.name
+        DomainsDSL.blockWorld.axioms shouldNotBe null
+        DomainsDSL.blockWorld.types shouldBe Domains.blockWorld.types
+        DomainsDSL.blockWorld.actions.first().name shouldBe Domains.blockWorld.actions.first().name
+        DomainsDSL.blockWorld.actions.first().effects.size shouldBe
             Domains.blockWorld.actions.first().effects.size
-        DomainsDSL.blockWorldXDomainDSL.actions.first().parameters.size shouldBe
+        DomainsDSL.blockWorld.actions.first().parameters.size shouldBe
             Domains.blockWorld.actions.first().parameters.size
-        DomainsDSL.blockWorldXDomainDSL.actions.first().preconditions.size shouldBe
+        DomainsDSL.blockWorld.actions.first().preconditions.size shouldBe
             Domains.blockWorld.actions.first().preconditions.size
-        DomainsDSL.blockWorldXDomainDSL.actions.last().name shouldBe Domains.blockWorld.actions.toList().last().name
-        DomainsDSL.blockWorldXDomainDSL.predicates.size shouldBe 4
+        DomainsDSL.blockWorld.actions.last().name shouldBe Domains.blockWorld.actions.toList().last().name
+        DomainsDSL.blockWorld.predicates.size shouldBe 4
     }
 }

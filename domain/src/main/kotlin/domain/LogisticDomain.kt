@@ -1,6 +1,8 @@
 package domain
 
 import core.* // ktlint-disable no-wildcard-imports
+import dsl.domain
+import dsl.problem
 
 object LogisticDomain {
     val fluents = setOf(
@@ -23,6 +25,121 @@ object LogisticDomain {
         Fluents.connectedL7L5,
         Fluents.connectedL5L1
     )
+
+    object DomainsDSL {
+        val logistic = domain {
+            name = "logistic_world"
+            types {
+                +"anything"
+                +"string"("anything")
+                +"locations"("string")
+                +"robots"("string")
+                +"containers"("string")
+            }
+            predicates {
+                +"connected"("locations", "locations")
+                +"atLocation"("robots", "locations")
+                +"loaded"("robots", "containers")
+                +"unloaded"("robots")
+                +"inContainerLocation"("containers", "robots")
+            }
+            actions {
+                "move" {
+                    parameters {
+                        "X" ofType "robots"
+                        "Y" ofType "locations"
+                        "Z" ofType "locations"
+                    }
+                    preconditions {
+                        +"connected"("Y", "Z")
+                        +"atLocation"("X", "Y")
+                    }
+                    effects {
+                        +"atLocation"("X", "Z")
+                        -"atLocation"("X", "Y")
+                    }
+                }
+                "load" {
+                    parameters {
+                        "X" ofType "robots"
+                        "Y" ofType "containers"
+                        "Z" ofType "locations"
+                    }
+                    preconditions {
+                        +"atLocation"("X", "Z")
+                        +"inContainerLocation"("Y", "Z")
+                    }
+                    effects {
+                        +"loaded"("X", "Y")
+                        -"inContainerLocation"("Y", "Z")
+                    }
+                }
+                "unload" {
+                    parameters {
+                        "X" ofType "robots"
+                        "Z" ofType "locations"
+                        "Y" ofType "containers"
+                    }
+                    preconditions {
+                        +"atLocation"("X", "Z")
+                        +"loaded"("X", "Y")
+                    }
+                    effects {
+                        +"inContainerLocation"("Y", "Z")
+                        -"loaded"("X", "y")
+                    }
+                }
+            }
+        }
+    }
+
+    object ProblemsDSL {
+        val rToX = problem(DomainsDSL.logistic) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("c", "floor")
+                +"atLocation"("l1", "l2")
+                +"atLocation"("l1", "l3")
+                +"atLocation"("l2", "l4")
+                +"atLocation"("l3", "l4")
+                +"atLocation"("l4", "l5")
+                +"atLocation"("l5", "l6")
+                +"atLocation"("l5", "l7")
+                +"atLocation"("l1", "l5")
+                +"atLocation"("l2", "l1")
+                +"atLocation"("l3", "l1")
+                +"atLocation"("l4", "l2")
+                +"atLocation"("l4", "l3")
+                +"atLocation"("l5", "l4")
+                +"atLocation"("l6", "l2")
+                +"atLocation"("l6", "l5")
+                +"atLocation"("l7", "l5")
+                +"atLocation"("l5", "l1")
+
+            }
+            goals {
+                +"atLocation"("r", "Y")
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
     object Actions {
         val move = Action.of(
             name = "move",
@@ -207,6 +324,13 @@ object LogisticDomain {
     }
 
     object Problems {
+        val rToXdslDomain = Problem.of(
+            domain = DomainsDSL.logistic,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtLocationY
+        )
+
         val rToX = Problem.of(
             domain = Domains.logisticWorld,
             objects = ObjectSets.all,

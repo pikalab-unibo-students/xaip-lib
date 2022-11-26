@@ -9,6 +9,7 @@ import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
 import domain.LogisticDomain
+import explanation.impl.BaseExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
 import explanation.impl.QuestionPlanSatisfiability
@@ -18,16 +19,14 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.string.shouldStartWith
 
-class ContrastiveExplanationPresenterTest : AnnotationSpec() {
+class BaseExplanationPresenter : AnnotationSpec() {
 
     private fun testExplanation(question: Question) {
         val explanation = Explainer.of(Planner.strips()).explain(question)
-        val explanationPresenter = ContrastiveExplanationPresenter.of(explanation)
+        val explanationPresenter = BaseExplanationPresenter(explanation)
         explanationPresenter.present() shouldStartWith ("The")
         explanationPresenter.presentMinimalExplanation() shouldStartWith ("Minimal")
-        explanationPresenter.presentContrastiveExplanation() shouldStartWith ("Contrastive")
     }
-
     // Add operator
     @Test
     fun `Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {
@@ -132,7 +131,7 @@ class ContrastiveExplanationPresenterTest : AnnotationSpec() {
 
         val explanation = Explainer.of(Planner.strips()).explain(q1)
         val exception = shouldThrow<IllegalArgumentException> {
-            ContrastiveExplanationPresenter.of(explanation).present()
+            ExplanationPresenter.of(explanation).present()
         }
         exception.message shouldStartWith ("Goal must contain only ground fluents")
     }

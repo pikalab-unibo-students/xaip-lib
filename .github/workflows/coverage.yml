@@ -6,7 +6,13 @@ on:
 
 jobs:
   build:
+    #strategy:
+    #  fail-fast: false
+    #  matrix:
+    #    os: [ windows-latest, ubuntu-latest, macos-latest ]
+    #runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -23,3 +29,8 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: build/reports/kover/report.xml
+      - name: Archive test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test report
+          path: build/reports/**

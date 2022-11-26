@@ -18,14 +18,7 @@ internal open class BaseExplanationPresenter(
     private fun beVerb(operators: List<Operator>) = (operators.size > 1).then("are") ?: "is"
 
     private val operator by lazy { (additionalOperators.size > 1).then("operators") ?: "operator" }
-
-    private fun not(validCondition: Boolean) = (!validCondition).then("not") ?: ""
-
-    private val isValid by lazy { explanation.isPlanValid().then("not") ?: "" }
-
-    private val isSolvable by lazy { explanation.isProblemSolvable().then(" ") ?: "not" }
-
-    private val isMinimal by lazy { (!isProposedPlanMinimalPlan).then("not ") ?: "" }
+    private fun not(validCondition: Boolean) = (!validCondition).then("not ") ?: ""
 
     private val additionalOperators by lazy {
         explanation.novelPlan.operators.filter { !minimalSolution.operators.contains(it) }
@@ -37,12 +30,12 @@ internal open class BaseExplanationPresenter(
 
     private val isProposedPlanMinimalPlan = ((additionalOperators.isEmpty()) then true) ?: false
 
-    internal val isProblemSolvable by lazy {
+    private val isProblemSolvable by lazy {
         "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} " +
             "is ${not(!explanation.isProblemSolvable())}solvable."
     }
 
-    internal val originalPlan by lazy {
+    private val originalPlan by lazy {
         "\nThe former plan was: ${explanation.originalPlan.operators}"
     }
 

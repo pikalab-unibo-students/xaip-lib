@@ -1,5 +1,6 @@
 package core
 
+import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
@@ -21,6 +22,7 @@ import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Operators.unstackCD
 import domain.BlockWorldDomain.Planners
 import domain.BlockWorldDomain.Problems
+import domain.LogisticDomain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -28,13 +30,13 @@ import io.kotest.matchers.string.shouldStartWith
 
 class StripsPlannerTest : AnnotationSpec() {
     val planPickAStackAB = Plan.of(listOf(pickA, stackAB))
-    val setPickX = setOf(
+    private val setPickX = setOf(
         Plan.of(listOf(pickA)),
         Plan.of(listOf(pickB)),
         Plan.of(listOf(pickC)),
         Plan.of(listOf(pickD))
     )
-    val setPickXStackXY = setOf(
+    private val setPickXStackXY = setOf(
         Plan.of(listOf(pickA, stackAB)),
         Plan.of(listOf(pickA, stackAC)),
         Plan.of(listOf(pickA, stackAD)),

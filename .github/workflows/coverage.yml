@@ -1,4 +1,4 @@
-name: Checking coverage with Gradle
+name: Check coverage Kover
 
 on:
   push:
@@ -26,28 +26,34 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build -x koverVerify  # skipping koverVerify to not fail if the coverage has lowered
+        run: ../gradlew build -x koverVerify -x koverReport    # skipping koverVerify to not fail if the coverage has lowered
 
       - name: Archive framework test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportFramework
-          path: framework/build/kover/
+          path: framework/build/reports/
 
       - name: Archive domain test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportDomain
-          path: domain/build/kover/
+          path: domain/build/reports/
 
       - name: Archive dsl test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportDsl
-          path: dsl/build/kover/
+          path: dsl/build/reports/
 
       - name: Archive explanation test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportExplanation
-          path: explanation/build/kover/
+          path: explanation/build/reports/
+
+      - name: Archive explanation test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportEvaluation
+          path: evaluation/build/reports/

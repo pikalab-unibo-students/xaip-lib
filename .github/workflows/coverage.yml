@@ -28,6 +28,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x koverVerify -x koverReport    # skipping koverVerify to not fail if the coverage has lowered
 
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v2
+        with:
+          files: build/reports/kover/report.xml
+
       - name: Archive framework test report
         uses: actions/upload-artifact@v3
         with:

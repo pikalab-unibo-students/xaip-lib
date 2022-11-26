@@ -26,33 +26,28 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build koverReport # skipping koverVerify to not fail if the coverage has lowered
-
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v2
-        with:
-          files: build/reports/kover/report.xml
+        run: ./gradlew build -x koverVerify  # skipping koverVerify to not fail if the coverage has lowered
 
       - name: Archive framework test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportFramework
-          path: framework/build/reports/
+          path: framework/build/kover/
 
       - name: Archive domain test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportDomain
-          path: domain/build/reports/
+          path: domain/build/kover/
 
       - name: Archive dsl test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportDsl
-          path: dsl/build/reports/kover/
+          path: dsl/build/kover/
 
       - name: Archive explanation test report
         uses: actions/upload-artifact@v3
         with:
           name: ReportExplanation
-          path: explanation/build/reports/
+          path: explanation/build/kover/

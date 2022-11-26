@@ -1,6 +1,5 @@
 package core
 
-import domain.BlockWorldDomain
 import domain.BlockWorldDomain.Operators.pickA
 import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
@@ -22,7 +21,6 @@ import domain.BlockWorldDomain.Operators.unstackAB
 import domain.BlockWorldDomain.Operators.unstackCD
 import domain.BlockWorldDomain.Planners
 import domain.BlockWorldDomain.Problems
-import domain.LogisticDomain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe

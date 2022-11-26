@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
-    id("org.jetbrains.kotlinx.kover") version "0.4.2"
+    alias(libs.plugins.kover.gradle)
 }
 
 dependencies {

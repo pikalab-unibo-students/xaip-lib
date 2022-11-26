@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
+    alias(libs.plugins.kover.gradle)
 }
 
 dependencies {

@@ -11,9 +11,9 @@ import explanation.impl.QuestionPlanSatisfiability
 /**
  * Utility method to build the benchmarks.
  */
-private fun main(args: Array<String>) {
+fun main(args: Array<String>) {
     val problems = listOf(BlockWorldDomain.Problems.stackAB, LogisticDomain.Problems.robotFromLoc1ToLoc2)
-    val maxLength = if (args.isNotEmpty()) args[0].toInt() else 100
+    val maxLength = if (args.isNotEmpty()) args[0].toInt() else 30
     val isWorkflow = args.isNotEmpty()
     val explanationTypes = listOf("C", "")
     fun buildBenchmark() {

@@ -1,16 +1,9 @@
 name: Check coverage Kover
 
-on:
-  push:
-    branches: [ feature/end_to_end_example ]
+on: [workflow_dispatch]
 
 jobs:
   build:
-    #strategy:
-    #  fail-fast: false
-    #  matrix:
-    #    os: [ windows-latest, ubuntu-latest, macos-latest ]
-    #runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -26,7 +19,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build -x koverVerify -x koverReport    # skipping koverVerify to not fail if the coverage has lowered
+        run: ./gradlew build koverReport
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2

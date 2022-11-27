@@ -136,7 +136,9 @@ open class BaseBenchmark {
         val iterator = plan.operators.iterator()
         var i = 0
         for (operator in iterator) {
-            if (problem.domain.actions.retrieveAction(operator) in actions && plan.operators.last() != operator) {
+            if (problem.domain.actions.retrieveAction(operator) in actions &&
+                plan.operators.last() != operator) {
+                println("1 $plan \n $operator")
                 addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
             }
             i++

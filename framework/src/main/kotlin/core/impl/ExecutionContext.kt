@@ -8,6 +8,7 @@ import core.FluentBasedGoal
 import core.Operator
 import core.State
 import core.VariableAssignment
+import java.lang.Exception
 import java.util.* // ktlint-disable no-wildcard-imports
 
 internal data class ExecutionContext(
@@ -98,6 +99,7 @@ internal data class ExecutionContext(
     fun handleFluentInCurrentState(head: Fluent) {
         val substitutions = currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
         choicePoints.update(substitutions, stack, currentState, plan)
+        if(choicePoints.toSet().size >30) throw IllegalArgumentException("errore")
         stack.update(substitutions.first())
     }
 

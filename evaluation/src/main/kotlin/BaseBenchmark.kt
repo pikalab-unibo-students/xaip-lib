@@ -99,29 +99,36 @@ open class BaseBenchmark {
             }
         }
     }
-    private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, type: String = "") {
+    private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
         for (plan in plans) {
             when (question) {
-                1 -> explainQuestion1(plan, problem, type)
-                2 -> explainQuestion2(plan, problem, type)
-                3 -> explainQuestion3(plan, problem, type)
-                4 -> explainQuestion4(plan, problem, type)
-                5 -> explainQuestion5(plan, problem, type)
+                1 -> explainQuestion1(plan, problem, explanationType)
+                2 -> explainQuestion2(plan, problem, explanationType)
+                3 -> explainQuestion3(plan, problem, explanationType)
+                4 -> explainQuestion4(plan, problem, explanationType)
+                5 -> explainQuestion5(plan, problem, explanationType)
                 else -> error("Question not supported")
             }
         }
     }
 
     private fun explainQuestion1(plan: Plan, problem: Problem, type: String) {
+        val actions = setOf(Actions.pick, Actions.stack, Lactions.move)
         for (operator in plan.operators)
-            if (operator !in explainer.minimalPlanSelector(problem).operators) {
+            if (operator !in explainer.minimalPlanSelector(problem).operators
+                && problem.domain.actions.retrieveAction(operator) in actions
+            ) {
+                println("1 $plan \n $operator")
                 addResult(QuestionRemoveOperator(problem, plan, operator), type)
             }
     }
 
     private fun explainQuestion2(plan: Plan, problem: Problem, type: String) {
-        for (i in 1..plan.operators.size)
-            addResult(QuestionAddOperator(problem, plan, plan.operators.shuffled(Random(i)).first(), i), type)
+        for (i in 1..plan.operators.size) {
+            val operator = plan.operators.shuffled(Random(i)).first()
+            println("1 $plan \n $operator")
+            addResult(QuestionAddOperator(problem, plan, operator, i), type)
+        }
     }
     private fun explainQuestion3(plan: Plan, problem: Problem, type: String) {
         val actions = setOf(Actions.putdown, Actions.unstack, Lactions.unload)

@@ -10,9 +10,8 @@ import core.Problem
 import core.State
 
 /**
- * Why operator a instead of b in state C.
+ * Why operator an instead of b in state C.
  * core.Operator substitution in a state.
- * @property insteadOf: [Operator] that must replace [focus] in the [plan].
  * */
 class QuestionReplaceOperator(
     override val problem: Problem,
@@ -40,13 +39,13 @@ class QuestionReplaceOperator(
         }
     }
 
-    // A. TODO( estendi a considerare tutti gli stati possibili)
     private val newStates = newProblem.initialState.apply(focus)
     override var hDomain = buildHypotheticalDomain()
 
     override fun buildHypotheticalDomain(): Domain = problem.domain
 
     override fun buildHypotheticalProblem(): Sequence<Problem> = sequence {
+        require(newStates.toSet().isEmpty()) {"Error $focus not applicable!"}
         for (state in newStates) {
             yield(
                 Problem.of(

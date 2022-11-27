@@ -7,6 +7,7 @@ import domain.BlockWorldDomain
 import domain.LogisticDomain
 import explanation.Explainer
 import explanation.impl.QuestionPlanSatisfiability
+import java.lang.Exception
 
 /**
  * Utility method to build the benchmarks.
@@ -19,15 +20,24 @@ fun main(args: Array<String>) {
     fun buildBenchmark() {
         val b = BaseBenchmark()
         for (problem in problems) {
+            println("start elaborating plans ${problems.indexOf(problem)}")
             val plans = createPlansList(problem, maxLength)
-            val notValid = plans.all {
-                !Explainer.of(Planner.strips()).explain(QuestionPlanSatisfiability(problem, it)).isPlanValid()
+            println("end elaboration plans ${problems.indexOf(problem)}")
+            for (j in explanationTypes){
+                for (i in 1..5) {
+                    try {
+                        b.writeBenchmark("", problem, j, i, plans, isWorkflow)
+                    } catch (_: Exception) {
+                        println("handle exception")
+                    }
+                    println("passing to question $i")
+                }
+                println("end explanation $j")
             }
-            if (notValid) error("Plan not valid")
-            for (j in explanationTypes)
-                for (i in 1..5)
-                    b.writeBenchmark("", problem, j, i, plans, isWorkflow)
+            println("end explanations for ${problems.indexOf(problem)}")
+            if(problems.indexOf(problem) == 1) break
         }
+        println("out")
     }
 
     buildBenchmark()

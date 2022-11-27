@@ -1,0 +1,57 @@
+name: Check coverage Kover
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build koverReport
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v2
+        with:
+          files: build/reports/kover/report.xml
+
+      - name: Archive framework test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportFramework
+          path: framework/build/reports/
+
+      - name: Archive domain test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportDomain
+          path: domain/build/reports/
+
+      - name: Archive dsl test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportDsl
+          path: dsl/build/reports/
+
+      - name: Archive explanation test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportExplanation
+          path: explanation/build/reports/
+
+      - name: Archive explanation test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ReportEvaluation
+          path: evaluation/build/reports/

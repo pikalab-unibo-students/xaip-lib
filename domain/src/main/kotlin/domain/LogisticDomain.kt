@@ -385,13 +385,8 @@ object LogisticDomain {
     }
 
     object Problems {
+
         val rToXdslDomain = Problem.of(
-            domain = DomainsDSL.logistic,
-            objects = ObjectSets.all,
-            initialState = States.initial,
-            goal = Goals.atRobotAtLocationY
-        )
-        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1dslDomain = Problem.of(
             domain = DomainsDSL.logistic,
             objects = ObjectSets.all,
             initialState = States.initial,

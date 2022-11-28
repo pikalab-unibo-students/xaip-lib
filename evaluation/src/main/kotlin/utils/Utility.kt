@@ -154,7 +154,7 @@ private fun create(
         for (j in 1..10000000) {
             val elem = plans.random()
             val tmp = mutableListOf<List<Operator>>()
-            for (i in 1..5) {
+            for (i in 1..2) {
                 val seq = idempotentActionSetBlockWorld.random()
                 val list = mutableListOf<Operator>()
                 list.addAll(seq)

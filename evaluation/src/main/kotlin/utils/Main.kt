@@ -21,25 +21,15 @@ fun main(args: Array<String>) {
     fun buildBenchmark() {
         val b = BaseBenchmark()
         for (problem in problems) {
-            println("start elaborating plans ${problems.indexOf(problem)}")
             val plans = createPlansList(problem, maxLength)
-            println("end elaboration plans ${problems.indexOf(problem)}")
             for (j in explanationTypes){
                 for (i in 1..5) {
                     try {
                         b.writeBenchmark("", problem, j, i, plans, isWorkflow)
-                    } catch (_: Exception) {
-                        println("handle exception")
-                    }
-                    println("passing to question $i")
+                    } catch (_: Exception) { }
                 }
-                println("end explanation $j")
-
             }
-            println("end explanations for ${problems.indexOf(problem)}")
-            if(problems.indexOf(problem) == 1) break
         }
-        println("out")
     }
 
     buildBenchmark()

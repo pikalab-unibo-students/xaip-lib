@@ -81,10 +81,9 @@ open class BaseBenchmark {
 
     private fun addResult(question: Question, explanationType: String) {
         val memoryOccupation = measureMemory2(question, explanationType)
-        if (memoryOccupation > 0L) {
-            resultsMemory[question.plan] = memoryOccupation
-            when (question) {
-                is QuestionReplaceOperator -> resultsTime[question.plan] = measureTimeMillis(
+        val time = when (question) {
+            is QuestionReplaceOperator ->
+                measureTimeMillis(
                     QuestionReplaceOperator(
                         question.problem,
                         question.plan,
@@ -94,9 +93,13 @@ open class BaseBenchmark {
                     ),
                     explanationType
                 )
+            else ->
+                measureTimeMillis(question, explanationType)
+        }
 
-                else -> resultsTime[question.plan] = measureTimeMillis(question, explanationType)
-            }
+        if (memoryOccupation > 0L && time > 0) {
+            resultsMemory[question.plan] = memoryOccupation
+            resultsTime[question.plan] = time
         }
     }
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
@@ -107,7 +110,7 @@ open class BaseBenchmark {
                 3 -> explainQuestion3(plan, problem, explanationType)
                 4 -> explainQuestion4(plan, problem, explanationType)
                 5 -> explainQuestion5(plan, problem, explanationType)
-                else -> error("Question not supported")
+                else -> error("Question $question is not supported")
             }
         }
     }
@@ -115,10 +118,9 @@ open class BaseBenchmark {
     private fun explainQuestion1(plan: Plan, problem: Problem, type: String) {
         val actions = setOf(Actions.pick, Actions.stack, Lactions.move)
         for (operator in plan.operators)
-            if (operator !in explainer.minimalPlanSelector(problem).operators
-                && problem.domain.actions.retrieveAction(operator) in actions
+            if (operator !in explainer.minimalPlanSelector(problem).operators &&
+                problem.domain.actions.retrieveAction(operator) in actions
             ) {
-                println("1 $plan \n $operator")
                 addResult(QuestionRemoveOperator(problem, plan, operator), type)
             }
     }
@@ -126,7 +128,6 @@ open class BaseBenchmark {
     private fun explainQuestion2(plan: Plan, problem: Problem, type: String) {
         for (i in 1..plan.operators.size) {
             val operator = plan.operators.shuffled(Random(i)).first()
-            println("2 $plan \n $operator")
             addResult(QuestionAddOperator(problem, plan, operator, i), type)
         }
     }
@@ -137,11 +138,11 @@ open class BaseBenchmark {
         var i = 0
         for (operator in iterator) {
             if (problem.domain.actions.retrieveAction(operator) in actions &&
-                plan.operators.last() != operator) {
-                println("3 $plan \n $operator")
+                plan.operators.last() != operator
+            ) {
                 try {
                     addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
-                }catch (_: Exception){}
+                } catch (_: Exception) {}
             }
             i++
         }

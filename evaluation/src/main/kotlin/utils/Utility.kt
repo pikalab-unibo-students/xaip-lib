@@ -149,9 +149,9 @@ private fun create(
     plans: MutableList<Plan>,
     idempotentActionSetBlockWorld: List<List<Operator>>
 ): List<Plan> {
-    while (true) {
+    // while (true) {
         val iterator = plans.listIterator()
-        for (j in 1..10000000) {
+        while(true){
             val elem = plans.random()
             val tmp = mutableListOf<List<Operator>>()
             for (i in 1..2) {
@@ -164,7 +164,7 @@ private fun create(
             }
             for (l in tmp) iterator.add(Plan.of(l))
         }
-    }
+    // }
 }
 
 /**

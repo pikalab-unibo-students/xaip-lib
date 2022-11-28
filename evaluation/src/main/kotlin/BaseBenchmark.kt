@@ -104,6 +104,7 @@ open class BaseBenchmark {
     }
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
         for (plan in plans) {
+            println("plan: $plan, question $question")
             when (question) {
                 1 -> explainQuestion1(plan, problem, explanationType)
                 2 -> explainQuestion2(plan, problem, explanationType)

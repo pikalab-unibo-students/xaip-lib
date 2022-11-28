@@ -21,14 +21,19 @@ fun main(args: Array<String>) {
     fun buildBenchmark() {
         val b = BaseBenchmark()
         for (problem in problems) {
+            println("start elab ${problem.domain}")
             val plans = createPlansList(problem, maxLength)
+            println("finish elab ${problem.domain}")
             for (j in explanationTypes){
                 for (i in 1..5) {
                     try {
                         b.writeBenchmark("", problem, j, i, plans, isWorkflow)
                     } catch (_: Exception) { }
+                    println("finish question $i")
                 }
+                println("X $j question $j")
             }
+            println("finish $problem")
         }
     }
 

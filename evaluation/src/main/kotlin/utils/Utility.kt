@@ -111,11 +111,11 @@ fun measureMemory2(question: Question, explanationType: String): Long {
 fun createPlansList(problem: Problem, maxLength: Int): List<Plan> {
     if (problem.domain.name == "block_world") {
         val idempotentActionSetBlockWorld = listOf(
-            //listOf(pickA, putdownA),
+            listOf(pickA, putdownA),
             listOf(pickB, putdownB),
             listOf(pickC, putdownC),
             listOf(pickD, putdownD),
-            /*listOf(pickA, stackAB, unstackAB),
+            listOf(pickA, stackAB, unstackAB),
             listOf(pickA, stackAC, unstackAC),
             listOf(pickA, stackAD, unstackAD),
             listOf(pickB, stackBA, unstackBA),
@@ -127,7 +127,6 @@ fun createPlansList(problem: Problem, maxLength: Int): List<Plan> {
             listOf(pickD, stackDA, unstackDA),
             listOf(pickD, stackDB, unstackDB),
             listOf(pickD, stackDC, unstackDC)
-             */
         )
         val plans = mutableListOf(Plan.of(listOf(pickA, stackAB)))
         return create(maxLength, plans, idempotentActionSetBlockWorld)
@@ -152,9 +151,11 @@ private fun create(
 ): List<Plan> {
     while (true) {
         val iterator = plans.listIterator()
-        for (elem in iterator) {
+        for (j in 1..10000000) {
+            val elem = plans.random()
             val tmp = mutableListOf<List<Operator>>()
-            for (seq in idempotentActionSetBlockWorld) {
+            for (i in 1..5) {
+                val seq = idempotentActionSetBlockWorld.random()
                 val list = mutableListOf<Operator>()
                 list.addAll(seq)
                 list.addAll(elem.operators)

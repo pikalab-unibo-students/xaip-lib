@@ -8,7 +8,6 @@ import core.FluentBasedGoal
 import core.Operator
 import core.State
 import core.VariableAssignment
-import java.lang.Exception
 import java.util.* // ktlint-disable no-wildcard-imports
 
 internal data class ExecutionContext(
@@ -18,7 +17,7 @@ internal data class ExecutionContext(
     var choicePoints: Deque<ChoicePoint> = LinkedList(),
     var plan: MutableList<Operator> = mutableListOf()
 ) {
-
+    var counter = 0
     constructor(
         currentState: State,
         goal: FluentBasedGoal,
@@ -97,9 +96,16 @@ internal data class ExecutionContext(
     }
 
     fun handleFluentInCurrentState(head: Fluent) {
+        val max = 50000
         val substitutions = currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
         choicePoints.update(substitutions, stack, currentState, plan)
-        if(choicePoints.toSet().size >30) throw IllegalArgumentException("errore")
+        require(counter < max) {
+            IllegalStateException(
+                "Error, reach the maximum number of choice points. " +
+                    "Choice points created were: ${ choicePoints.toSet().size}"
+            )
+        }
+        counter ++
         stack.update(substitutions.first())
     }
 

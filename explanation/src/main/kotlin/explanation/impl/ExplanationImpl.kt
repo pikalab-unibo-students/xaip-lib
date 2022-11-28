@@ -54,9 +54,9 @@ internal data class ExplanationImpl(
                                     explainer.planner.plan(
                                         question.buildHypotheticalProblem().first()
                                     ).first().operators
-                                } catch (e: NoSuchElementException) {
-                                    throw NoSuchElementException(
-                                        "The operator ${question.focus} is not applicable to the state chosen:" +
+                                } catch (_: Exception) {
+                                    throw IllegalArgumentException(
+                                        "Error: the operator ${question.focus} is not applicable to the state chosen:" +
                                             " ${(question.inState == null)
                                                 .then(question.problem.initialState) ?: question.inState}"
                                     )

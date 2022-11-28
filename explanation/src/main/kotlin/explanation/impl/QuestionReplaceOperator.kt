@@ -45,7 +45,6 @@ class QuestionReplaceOperator(
     override fun buildHypotheticalDomain(): Domain = problem.domain
 
     override fun buildHypotheticalProblem(): Sequence<Problem> = sequence {
-        require(newStates.toSet().isEmpty()) {"Error $focus not applicable!"}
         for (state in newStates) {
             yield(
                 Problem.of(

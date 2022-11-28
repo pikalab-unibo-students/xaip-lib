@@ -126,7 +126,7 @@ open class BaseBenchmark {
     private fun explainQuestion2(plan: Plan, problem: Problem, type: String) {
         for (i in 1..plan.operators.size) {
             val operator = plan.operators.shuffled(Random(i)).first()
-            println("1 $plan \n $operator")
+            println("2 $plan \n $operator")
             addResult(QuestionAddOperator(problem, plan, operator, i), type)
         }
     }
@@ -138,8 +138,10 @@ open class BaseBenchmark {
         for (operator in iterator) {
             if (problem.domain.actions.retrieveAction(operator) in actions &&
                 plan.operators.last() != operator) {
-                println("1 $plan \n $operator")
-                addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
+                println("3 $plan \n $operator")
+                try {
+                    addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
+                }catch (_: Exception){}
             }
             i++
         }

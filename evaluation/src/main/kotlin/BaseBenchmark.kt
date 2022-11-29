@@ -28,6 +28,7 @@ open class BaseBenchmark {
 
     private fun osFolder(name: String) = (name.startsWith("l", true)).then("linux") ?: "windows"
 
+
     /**
      * Method responsible for writing the benchmarks.
      */
@@ -104,7 +105,6 @@ open class BaseBenchmark {
     }
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
         for (plan in plans) {
-            println("plan: $plan, question $question")
             when (question) {
                 1 -> explainQuestion1(plan, problem, explanationType)
                 2 -> explainQuestion2(plan, problem, explanationType)
@@ -122,6 +122,7 @@ open class BaseBenchmark {
             if (operator !in explainer.minimalPlanSelector(problem).operators &&
                 problem.domain.actions.retrieveAction(operator) in actions
             ) {
+                log{ "question: $type plan: $plan operator: $operator"}
                 addResult(QuestionRemoveOperator(problem, plan, operator), type)
             }
     }
@@ -129,6 +130,7 @@ open class BaseBenchmark {
     private fun explainQuestion2(plan: Plan, problem: Problem, type: String) {
         for (i in 1..plan.operators.size) {
             val operator = plan.operators.shuffled(Random(i)).first()
+            log{ "question: $type plan: $plan operator: $operator"}
             addResult(QuestionAddOperator(problem, plan, operator, i), type)
         }
     }
@@ -142,8 +144,9 @@ open class BaseBenchmark {
                 plan.operators.last() != operator
             ) {
                 try {
+                    log{ "question: $type plan: $plan operator: $op"}
                     addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
-                } catch (_: Exception) {}
+                } catch (_: Exception) {log{"handling exception"}}
             }
             i++
         }
@@ -151,6 +154,7 @@ open class BaseBenchmark {
 
     private fun explainQuestion4(plan: Plan, problem: Problem, type: String) {
         val plans = mutableSetOf<Plan>()
+        log{ "question: $type plan: $plan"}
         for (i in 1..plan.operators.size / 2) {
             plans.add(Plan.of(plan.operators.shuffled(Random(i))))
         }
@@ -160,6 +164,18 @@ open class BaseBenchmark {
     }
 
     private fun explainQuestion5(plan: Plan, problem: Problem, type: String) {
+        log{ "question: $type plan: $plan"}
         addResult(QuestionPlanSatisfiability(problem, plan), type)
+    }
+
+    companion object {
+        private const val DEBUG = false
+
+        private fun log(msg: () -> String) {
+            if (DEBUG) {
+                println(msg())
+                System.out.flush()
+            }
+        }
     }
 }

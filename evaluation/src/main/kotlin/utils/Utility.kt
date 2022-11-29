@@ -149,22 +149,21 @@ private fun create(
     plans: MutableList<Plan>,
     idempotentActionSetBlockWorld: List<List<Operator>>
 ): List<Plan> {
-    // while (true) {
-        val iterator = plans.listIterator()
-        while(true){
-            val elem = plans.random()
-            val tmp = mutableListOf<List<Operator>>()
-            for (i in 1..2) {
-                val seq = idempotentActionSetBlockWorld.random()
-                val list = mutableListOf<Operator>()
-                list.addAll(seq)
-                list.addAll(elem.operators)
-                tmp.add(list)
-                if (list.size > maxLength) return plans.toList().distinct()
-            }
-            for (l in tmp) iterator.add(Plan.of(l))
+    val iterator = plans.listIterator()
+    val concatenationForPlan = 2
+    while (true) {
+        val elem = plans.random()
+        val tmp = mutableListOf<List<Operator>>()
+        for (i in 1..concatenationForPlan) {
+            val seq = idempotentActionSetBlockWorld.random()
+            val list = mutableListOf<Operator>()
+            list.addAll(seq)
+            list.addAll(elem.operators)
+            tmp.add(list)
+            if (list.size > maxLength) return plans.toList().distinct()
         }
-    // }
+        for (l in tmp) iterator.add(Plan.of(l))
+    }
 }
 
 /**

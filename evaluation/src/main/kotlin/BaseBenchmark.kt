@@ -68,9 +68,11 @@ open class BaseBenchmark {
         val prefix = isWorkFlow.then("") ?: "evaluation/"
         (
             (filename == "").then(
-                """${prefix}res/benchmark/${problemFolder(problem.domain.name)}/
+                """${prefix}res/benchmark/
+                    ${problemFolder(problem.domain.name)}
                     ${osFolder(System.getProperty("os.name"))}
-                    /${explanationFolder(explanationType)}/Question${questionType}Explanation$explanationType.csv
+                    ${explanationFolder(explanationType)}
+                    Question${questionType}Explanation$explanationType.csv
                 """.replace("\\s".toRegex(), "")
             ) ?: "res/$filename"
             ).let {

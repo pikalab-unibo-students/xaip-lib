@@ -17,8 +17,8 @@ import domain.LogisticDomain.Actions as Lactions
 open class BaseBenchmark {
     private val explainer by lazy { Explainer.of(Planner.strips()) }
 
-    private val blockWorldName by lazy { "block_world" }
-    private val logisticName by lazy { "logistic_world" }
+    private val blockWorldName by lazy { "blockWorld" }
+    private val logisticName by lazy { "logistic" }
 
     private val resultsTime by lazy { mutableMapOf<Plan, Long>() }
     private val resultsMemory by lazy { mutableMapOf<Plan, Long>() }
@@ -68,10 +68,11 @@ open class BaseBenchmark {
         (
             (filename == "").then(
                 """${prefix}res/benchmark/
-                    ${domainName(problem.domain.name)}
-                    ${osName(System.getProperty("os.name"))}
-                    ${explanationType(explanationType)}
-                    Question${questionType}Explanation$explanationType.csv
+                    ${osName(System.getProperty("os.name"))}_
+                    ${domainName(problem.domain.name)}_
+                    ${explanationType(explanationType)}_
+                    Question${questionType}_
+                    Explanation$explanationType.csv
                 """.replace("\\s".toRegex(), "")
             ) ?: "res/$filename"
             ).let {

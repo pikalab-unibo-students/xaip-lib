@@ -13,3 +13,4 @@ outTmp/
 kotlin-ide/
 Test*
 res/benchmark/
+*csv

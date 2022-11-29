@@ -8,7 +8,7 @@ import explanation.Explanation
 import explanation.ExplanationPresenter
 
 /**
- *
+ * Reification of the [Explanation] interface.
  */
 internal open class BaseExplanationPresenter(
     override val explanation: Explanation

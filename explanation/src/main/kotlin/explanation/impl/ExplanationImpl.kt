@@ -10,7 +10,7 @@ import explanation.Simulator
 import explanation.utils.replaceArtificialOperator
 import explanation.utils.retrieveArtificialOperator
 /**
- *
+ * Reification of the [Explanation] interface.
  */
 internal data class ExplanationImpl(
     override val question: Question,

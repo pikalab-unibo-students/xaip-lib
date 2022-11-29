@@ -3,6 +3,9 @@ package explanation.impl
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explanation
 
+/**
+ * Reification of the [ContrastiveExplanationPresenter] interface.
+ */
 internal class ContrastiveExplanationPresenterImpl(explanation: Explanation) :
     ContrastiveExplanationPresenter,
     BaseExplanationPresenter(explanation) {

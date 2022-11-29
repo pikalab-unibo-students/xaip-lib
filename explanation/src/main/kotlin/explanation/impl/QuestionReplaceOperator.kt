@@ -10,8 +10,8 @@ import core.Problem
 import core.State
 
 /**
- * Why operator an instead of b in state C.
- * core.Operator substitution in a state.
+ * Class representing a request from a user to replace an operator ([focus]) in a given position([focusOn]) of the plan,
+ * at a given state ([inState]) of the computation.
  * */
 class QuestionReplaceOperator(
     override val problem: Problem,

@@ -105,6 +105,7 @@ open class BaseBenchmark {
             resultsTime[question.plan] = time
         }
     }
+
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
         for (plan in plans) {
             when (question) {

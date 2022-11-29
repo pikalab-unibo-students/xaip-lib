@@ -2,16 +2,9 @@ package explanation.utils
 
 import core.* // ktlint-disable no-wildcard-imports
 
-/**
- *
- */
-
 internal fun findAction(inputOperator: Operator, actionList: Iterable<Action>): Action =
     actionList.first { it.name == inputOperator.name }
 
-/**
- *
- */
 private fun Set<Fluent>.conditionMatch(conditions: Set<Effect>) =
     this.all { fluent1 ->
         conditions.any { effect ->
@@ -19,9 +12,6 @@ private fun Set<Fluent>.conditionMatch(conditions: Set<Effect>) =
         }
     }
 
-/**
- *
- */
 internal fun Operator.isIdempotentOperators(operator: Operator): Boolean =
     this.preconditions.conditionMatch(operator.effects) &&
         operator.preconditions.conditionMatch(this.effects) &&
@@ -34,16 +24,13 @@ fun List<Operator>.retrieveArtificialOperator() =
     this.filter { it.name.contains("^") }.getOrNull(0)
 
 /**
- *
+ * returns the actions corresponding to the given [operator].
  */
 fun Set<Action>.retrieveAction(operator: Operator) =
     this.first {
         it.name == operator.name.filter { char -> char.isLetter() }
     }
 
-/**
- *
- */
 private fun createInitialOperator(action: Action, operator: Operator): Operator {
     var newOperator = Operator.of(action)
     for (arg in operator.args) {
@@ -58,7 +45,7 @@ private fun createInitialOperator(action: Action, operator: Operator): Operator 
 }
 
 /**
- *
+ * replace the operator created during the compilation process with the respective one in the original domain.
  */
 fun List<Operator>.replaceArtificialOperator(actionList: Set<Action>): List<Operator> {
     val newList = mutableListOf<Operator>()

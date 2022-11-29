@@ -7,6 +7,9 @@ import explanation.Explainer
 import explanation.Explanation
 import explanation.Question
 
+/**
+ * Reification of the [Explainer] interface.
+ */
 internal data class ExplainerImpl(override val planner: Planner) : Explainer {
 
     override fun explain(question: Question): Explanation = Explanation.of(question, this)

@@ -22,11 +22,11 @@ open class BaseBenchmark {
 
     private val resultsTime by lazy { mutableMapOf<Plan, Long>() }
     private val resultsMemory by lazy { mutableMapOf<Plan, Long>() }
-    private fun problemFolder(name: String) = (name == blockWorldName).then(blockWorldName) ?: logisticName
-    private fun explanationFolder(name: String) = (name.startsWith("c", true))
+    private fun domainName(name: String) = (name == blockWorldName).then(blockWorldName) ?: logisticName
+    private fun explanationType(name: String) = (name.startsWith("c", true))
         .then("contrastiveExplanation") ?: "generalExplanation"
 
-    private fun osFolder(name: String) = (name.startsWith("l", true)).then("linux") ?: "windows"
+    private fun osName(name: String) = (name.startsWith("l", true)).then("linux") ?: "windows"
 
     /**
      * Method responsible for writing the benchmarks.
@@ -68,9 +68,9 @@ open class BaseBenchmark {
         (
             (filename == "").then(
                 """${prefix}res/benchmark/
-                    ${problemFolder(problem.domain.name)}
-                    ${osFolder(System.getProperty("os.name"))}
-                    ${explanationFolder(explanationType)}
+                    ${domainName(problem.domain.name)}
+                    ${osName(System.getProperty("os.name"))}
+                    ${explanationType(explanationType)}
                     Question${questionType}Explanation$explanationType.csv
                 """.replace("\\s".toRegex(), "")
             ) ?: "res/$filename"

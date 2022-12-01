@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
+    alias(libs.plugins.kover.gradle)
 }
 
 dependencies {
     implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlix.coroutines)
     testImplementation(libs.bundles.kotlin.testing)
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)

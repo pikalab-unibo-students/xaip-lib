@@ -9,8 +9,7 @@ import core.Predicate
 import core.Problem
 
 /**
- * Why is plan not good (solvable).
- * Checking for a plan satisfiability.
+ *  Class representing a request from a user to have an insight on a solution.
  *
  */
 class QuestionPlanSatisfiability(

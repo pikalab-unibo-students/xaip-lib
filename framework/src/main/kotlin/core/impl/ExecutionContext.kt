@@ -17,14 +17,14 @@ internal data class ExecutionContext(
     var choicePoints: Deque<ChoicePoint> = LinkedList(),
     var plan: MutableList<Operator> = mutableListOf()
 ) {
-
+    var counter = 0
     constructor(
         currentState: State,
         goal: FluentBasedGoal,
         maxDepth: Int
     ) : this(currentState, Stack<Applicable<*>>().also { it.add(goal) }, maxDepth)
 
-    val depth: Int
+    private val depth: Int
         get() = stack.filterIsInstance<Action>().count()
 
     private fun Stack<Applicable<*>>.apply(substitution: VariableAssignment) {
@@ -96,8 +96,16 @@ internal data class ExecutionContext(
     }
 
     fun handleFluentInCurrentState(head: Fluent) {
+        val max = 50000
         val substitutions = currentState.fluents.filter { it.match(head) }.map { it.mostGeneralUnifier(head) }
         choicePoints.update(substitutions, stack, currentState, plan)
+        require(counter < max) {
+            IllegalStateException(
+                "Error, reach the maximum number of choice points. " +
+                    "Choice points created were: ${ choicePoints.toSet().size}"
+            )
+        }
+        counter ++
         stack.update(substitutions.first())
     }
 

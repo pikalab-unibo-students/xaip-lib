@@ -7,8 +7,7 @@ import core.Problem
 import explanation.utils.findAction
 
 /**
- * Why operator used rather not being used.
- * Forbid operator's usage in the plan
+ *  Class representing a request from a user not to use an operator in a plan.
  */
 class QuestionRemoveOperator(
     override val problem: Problem,

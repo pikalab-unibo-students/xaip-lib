@@ -31,6 +31,7 @@ class QuestionPlanProposalTest : AnnotationSpec() {
             planPickBstackBApickC,
             planPickB
         )
+
         val explanation = Explainer.of(Planner.strips()).explain(q4)
         explanation.isPlanValid() shouldBe true
     }

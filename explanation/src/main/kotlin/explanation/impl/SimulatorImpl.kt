@@ -4,6 +4,9 @@ import core.Plan
 import core.State
 import explanation.Simulator
 
+/**
+ * Reification of the [Simulator] interface.
+ */
 internal class SimulatorImpl : Simulator {
     private class Context(val state: State, val depth: Int = 0)
 

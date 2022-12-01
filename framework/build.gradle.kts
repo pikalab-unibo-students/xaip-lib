@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
+    alias(libs.plugins.kover.gradle)
 }
 
 dependencies {

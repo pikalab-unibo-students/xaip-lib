@@ -17,11 +17,8 @@ import domain.LogisticDomain.Actions as Lactions
 open class BaseBenchmark {
     private val explainer by lazy { Explainer.of(Planner.strips()) }
 
-<<<<<<< HEAD
     private val blockWorldName by lazy { "block_world" }
-=======
-    private val blockWorldName by lazy { "blockWorld" }
->>>>>>> 0947c76d123032d6c2b70011db60b400a6745e20
+
     private val logisticName by lazy { "logistic" }
 
     private val resultsTime by lazy { mutableMapOf<Plan, Long>() }
@@ -72,18 +69,10 @@ open class BaseBenchmark {
         (
             (filename == "").then(
                 """${prefix}res/benchmark/
-<<<<<<< HEAD
                     ${domainName(problem.domain.name)}_
                     ${osName(System.getProperty("os.name"))}_
                     ${explanationType(explanationType)}_
-                    Question${questionType}.csv
-=======
-                    ${osName(System.getProperty("os.name"))}_
-                    ${domainName(problem.domain.name)}_
-                    ${explanationType(explanationType)}_
-                    Question${questionType}_
-                    Explanation$explanationType.csv
->>>>>>> 0947c76d123032d6c2b70011db60b400a6745e20
+                    Question$questionType.csv
                 """.replace("\\s".toRegex(), "")
             ) ?: "res/$filename"
             ).let {
@@ -116,10 +105,7 @@ open class BaseBenchmark {
             resultsTime[question.plan] = time
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 0947c76d123032d6c2b70011db60b400a6745e20
     private fun init(plans: MutableList<Plan>, question: Int, problem: Problem, explanationType: String = "") {
         for (plan in plans) {
             when (question) {

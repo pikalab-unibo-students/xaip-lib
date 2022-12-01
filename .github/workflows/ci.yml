@@ -8,7 +8,7 @@ on:
       - develop
       #- feature/**
       - feature/explanation
-      - feature/benchmark
+      #- feature/benchmark
 
   #pull_request:
   #  branches:

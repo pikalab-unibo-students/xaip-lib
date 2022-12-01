@@ -30,9 +30,9 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickB))
-        explanation.addList shouldBe listOf(pickB)
-        explanation.deleteList shouldBe listOf(pickA)
-        explanation.existingList shouldBe emptyList()
+        explanation.addedList shouldBe listOf(pickB)
+        explanation.deletedList shouldBe listOf(pickA)
+        explanation.sharedList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 
@@ -47,9 +47,9 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickC, stackCA, pickD, stackDC))
-        explanation.addList shouldBe listOf(pickC, stackCA, stackDC)
-        explanation.deleteList shouldBe listOf(pickB, stackBA, stackDB)
-        explanation.existingList shouldBe listOf(pickD)
+        explanation.addedList shouldBe listOf(pickC, stackCA, stackDC)
+        explanation.deletedList shouldBe listOf(pickB, stackBA, stackDB)
+        explanation.sharedList shouldBe listOf(pickD)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -65,9 +65,9 @@ class QuestionRemoveOperatorTest : AnnotationSpec() {
         val explanation = Explainer.of(Planner.strips()).explain(q2)
         explanation.originalPlan shouldBe q2.plan
         explanation.novelPlan shouldBe Plan.of(emptyList())
-        explanation.addList shouldBe emptyList()
-        explanation.deleteList shouldBe listOf(moveRfromL1toL2)
-        explanation.existingList shouldBe emptyList()
+        explanation.addedList shouldBe emptyList()
+        explanation.deletedList shouldBe listOf(moveRfromL1toL2)
+        explanation.sharedList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 

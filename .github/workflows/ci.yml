@@ -8,7 +8,6 @@ on:
       - develop
       #- feature/**
       - feature/explanation
-      #- feature/benchmark
 
   #pull_request:
   #  branches:
@@ -35,6 +34,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
@@ -43,8 +43,3 @@ jobs:
       - name: Run build
         run: |
           ./gradlew clean build
-      - name: Archive test report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Test report
-          path: build/reports/tests/test

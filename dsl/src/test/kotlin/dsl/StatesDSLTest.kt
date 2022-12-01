@@ -8,6 +8,6 @@ import io.kotest.matchers.shouldBe
 class StatesDSLTest : AnnotationSpec() {
     @Test
     fun statesDSLworksAsExpected() {
-        problemOnAB.initialState shouldBe States.initial
+        problemOnAB.initialState shouldBe States.allBlocksAtFloor
     }
 }

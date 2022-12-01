@@ -12,7 +12,7 @@ import domain.BlockWorldDomain.Operators.stackAC
 import domain.BlockWorldDomain.Problems
 import domain.BlockWorldDomain.States
 import domain.LogisticDomain.Operators.moveRfromL1toL2
-import domain.LogisticDomain.Operators.moveRfromL1toL5
+import domain.LogisticDomain.Operators.moveRfromL1toL3
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
@@ -44,9 +44,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAC, pickD))
-        explanation.addList shouldBe listOf(stackAC)
-        explanation.deleteList shouldBe listOf(stackAB)
-        explanation.existingList shouldBe listOf(pickA, pickD)
+        explanation.addedList shouldBe listOf(stackAC)
+        explanation.deletedList shouldBe listOf(stackAB)
+        explanation.sharedList shouldBe listOf(pickA, pickD)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -72,9 +72,9 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB, pickD))
-        explanation.addList shouldBe listOf(pickD)
-        explanation.deleteList shouldBe listOf(pickC)
-        explanation.existingList shouldBe listOf(pickA, stackAB)
+        explanation.addedList shouldBe listOf(pickD)
+        explanation.deletedList shouldBe listOf(pickC)
+        explanation.sharedList shouldBe listOf(pickA, stackAB)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -85,15 +85,15 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
             Plan.of(listOf(pickC, stackAB)),
             pickA,
             0,
-            States.initial
+            States.allBlocksAtFloor
         )
         val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
         explanation.novelPlan shouldBe Plan.of(listOf(pickA, stackAB))
-        explanation.addList shouldBe listOf(pickA)
-        explanation.deleteList shouldBe listOf(pickC)
-        explanation.existingList shouldBe listOf(stackAB)
+        explanation.addedList shouldBe listOf(pickA)
+        explanation.deletedList shouldBe listOf(pickC)
+        explanation.sharedList shouldBe listOf(stackAB)
         explanation.isPlanValid() shouldBe true
     }
 
@@ -104,22 +104,22 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
         val q3 = QuestionReplaceOperator(
             graphProblemRtoX,
             planRfromL1toL2,
-            moveRfromL1toL5,
+            moveRfromL1toL3,
             0
         )
         val explanation = Explainer.of(Planner.strips()).explain(q3)
 
         explanation.originalPlan shouldBe q3.plan
-        explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL5))
-        explanation.addList shouldBe listOf(moveRfromL1toL5)
-        explanation.deleteList shouldBe listOf(moveRfromL1toL2)
-        explanation.existingList shouldBe emptyList()
+        explanation.novelPlan shouldBe Plan.of(listOf(moveRfromL1toL3))
+        explanation.addedList shouldBe listOf(moveRfromL1toL3)
+        explanation.deletedList shouldBe listOf(moveRfromL1toL2)
+        explanation.sharedList shouldBe emptyList()
         explanation.isPlanValid() shouldBe true
     }
 
     @Test
     fun `Test exception`() {
-        val exception = shouldThrow<NoSuchElementException> {
+        val exception = shouldThrow<IllegalArgumentException> {
             Explainer.of(Planner.strips()).explain(
                 QuestionReplaceOperator(
                     Problems.stackZWpickX,
@@ -129,6 +129,6 @@ class QuestionReplaceOperatorTest : AnnotationSpec() {
                 )
             )
         }
-        exception.message shouldStartWith "The operator"
+        exception.message shouldStartWith "Error"
     }
 }

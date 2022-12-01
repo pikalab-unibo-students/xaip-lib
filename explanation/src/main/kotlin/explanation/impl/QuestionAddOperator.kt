@@ -4,8 +4,7 @@ import core.* // ktlint-disable no-wildcard-imports
 import explanation.utils.findAction
 
 /**
- * Why operator not used.
- * Add operator to the plan.
+ * Class representing a request from a user to add an operator to the plan.
  *
  * @property focus: operator to add to the plan
  * @property focusOn: index of operator

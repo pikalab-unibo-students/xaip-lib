@@ -1,6 +1,8 @@
 package domain
 
 import core.* // ktlint-disable no-wildcard-imports
+import dsl.domain
+import dsl.problem
 
 object LogisticDomain {
     val fluents = setOf(
@@ -23,6 +25,182 @@ object LogisticDomain {
         Fluents.connectedL7L5,
         Fluents.connectedL5L1
     )
+
+    object DomainsDSL {
+        val logistic = domain {
+            name = "logistic_world"
+            types {
+                +"anything"
+                +"strings"("anything")
+                +"locations"("strings")
+                +"robots"("strings")
+                +"containers"("strings")
+            }
+            predicates {
+                +"connected"("locations", "locations")
+                +"atLocation"("robots", "locations")
+                +"loaded"("robots", "containers")
+                +"unloaded"("robots")
+                +"inContainerLocation"("containers", "robots")
+            }
+            actions {
+                "move" {
+                    parameters {
+                        "X" ofType "robots"
+                        "Y" ofType "locations"
+                        "Z" ofType "locations"
+                    }
+                    preconditions {
+                        +"connected"("Y", "Z")
+                        +"atLocation"("X", "Y")
+                    }
+                    effects {
+                        +"atLocation"("X", "Z")
+                        -"atLocation"("X", "Y")
+                    }
+                }
+                "load" {
+                    parameters {
+                        "Z" ofType "locations"
+                        "Y" ofType "containers"
+                        "X" ofType "robots"
+                    }
+                    preconditions {
+                        +"atLocation"("X", "Z")
+                        +"inContainerLocation"("Y", "Z")
+                    }
+                    effects {
+                        +"loaded"("X", "Y")
+                        -"inContainerLocation"("Y", "Z")
+                    }
+                }
+                "unload" {
+                    parameters {
+                        "Z" ofType "locations"
+                        "Y" ofType "containers"
+                        "X" ofType "robots"
+                    }
+                    preconditions {
+                        +"atLocation"("X", "Z")
+                        +"loaded"("X", "Y")
+                    }
+                    effects {
+                        +"inContainerLocation"("Y", "Z")
+                        -"loaded"("X", "Y")
+                    }
+                }
+            }
+        }
+    }
+
+    object ProblemsDSL {
+        val rToX = problem(DomainsDSL.logistic) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
+            }
+            goals {
+                +"atLocation"("r", "Y")
+            }
+        }
+
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = problem(DomainsDSL.logistic) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
+            }
+            goals {
+                +"atLocation"("r", "l5")
+                +"inContainerLocation"("c1", "l4")
+                +"inContainerLocation"("c2", "l1")
+            }
+        }
+
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1notDSL = problem(Domains.logisticWorld) {
+            objects {
+                +"robots"("r")
+                +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
+                +"containers"("c1", "c2")
+            }
+            initialState {
+                +"atLocation"("r", "l1")
+                +"inContainerLocation"("c1", "l2")
+                +"inContainerLocation"("c2", "l3")
+                +"connected"("l1", "l2")
+                +"connected"("l1", "l3")
+                +"connected"("l2", "l4")
+                +"connected"("l3", "l4")
+                +"connected"("l4", "l5")
+                +"connected"("l1", "l6")
+                +"connected"("l5", "l6")
+                +"connected"("l5", "l7")
+                +"connected"("l1", "l5")
+                +"connected"("l2", "l1")
+                +"connected"("l3", "l1")
+                +"connected"("l4", "l2")
+                +"connected"("l4", "l3")
+                +"connected"("l5", "l4")
+                +"connected"("l6", "l2")
+                +"connected"("l6", "l5")
+                +"connected"("l7", "l5")
+                +"connected"("l5", "l1")
+            }
+            goals {
+                +"atLocation"("r", "l5")
+                +"inContainerLocation"("c1", "l4")
+                +"inContainerLocation"("c2", "l1")
+            }
+        }
+    }
+
     object Actions {
         val move = Action.of(
             name = "move",
@@ -131,11 +309,14 @@ object LogisticDomain {
         val connectedL5L1 = Fluent.positive(Predicates.connected, Values.l5, Values.l1)
         val connectedL5L4 = Fluent.positive(Predicates.connected, Values.l5, Values.l4)
         val connectedL5L6 = Fluent.positive(Predicates.connected, Values.l5, Values.l6)
-        val connectedL5L7 = Fluent.positive(Predicates.connected, Values.l4, Values.l7)
+        val connectedL5L7 = Fluent.positive(Predicates.connected, Values.l5, Values.l7)
 
         val connectedL6L2 = Fluent.positive(Predicates.connected, Values.l6, Values.l2)
         val connectedL6L5 = Fluent.positive(Predicates.connected, Values.l6, Values.l5)
         val connectedL7L5 = Fluent.positive(Predicates.connected, Values.l7, Values.l5)
+
+        val connectedL4L6 = Fluent.positive(Predicates.connected, Values.l4, Values.l6)
+        val connectedL6L4 = Fluent.positive(Predicates.connected, Values.l6, Values.l4)
 
         val connectedXY = Fluent.positive(Predicates.connected, Values.X, Values.Y)
         val connectedXZ = Fluent.positive(Predicates.connected, Values.X, Values.Z)
@@ -176,6 +357,7 @@ object LogisticDomain {
     }
 
     object Goals {
+        val atRobotAtlocation5atC1loc4 = FluentBasedGoal.of(Fluents.atRobotlocation5, Fluents.inContainer1location4)
         val atRobotAtlocation2 = FluentBasedGoal.of(Fluents.atRobotlocation2)
         val atRobotAtLocationY = FluentBasedGoal.of(Fluents.atRlocationY)
         val atRobotAtlocation3 = FluentBasedGoal.of(Fluents.atRobotlocation3)
@@ -186,8 +368,9 @@ object LogisticDomain {
             Fluents.atRobotlocation4,
             Fluents.inContainer1location4
         )
-        val atRobotAtlocation7InContainer1Location4InContainer2Location1 = FluentBasedGoal.of(
-            Fluents.atRobotlocation7,
+
+        val atRobotAtlocation5inContainer1Location4InContainer2Location1 = FluentBasedGoal.of(
+            Fluents.atRobotlocation5,
             Fluents.inContainer1location4,
             Fluents.inContainer2location1
         )
@@ -203,6 +386,13 @@ object LogisticDomain {
 
     object Problems {
 
+        val rToXdslDomain = Problem.of(
+            domain = DomainsDSL.logistic,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtlocation5inContainer1Location4InContainer2Location1
+        )
+
         val rToX = Problem.of(
             domain = Domains.logisticWorld,
             objects = ObjectSets.all,
@@ -215,6 +405,13 @@ object LogisticDomain {
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation2
+        )
+
+        val robotFromLoc1ToLoc5C1fromLoc2toLoc4 = Problem.of(
+            domain = Domains.logisticWorld,
+            objects = ObjectSets.all,
+            initialState = States.initial,
+            goal = Goals.atRobotAtlocation5atC1loc4
         )
 
         val inContainerLocation4 = Problem.of(
@@ -231,11 +428,11 @@ object LogisticDomain {
             goal = Goals.atRobotAtlocation3InContainer1Location4
         )
 
-        val robotFromLoc1ToLoc3Container1FromLoc2ToLoc4Container2FromLoc4ToLoc7 = Problem.of(
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = Problem.of(
             domain = Domains.logisticWorld,
             objects = ObjectSets.all,
             initialState = States.initial,
-            goal = Goals.atRobotAtlocation7InContainer1Location4InContainer2Location1
+            goal = Goals.atRobotAtlocation5inContainer1Location4InContainer2Location1
         )
 
         val basicRobotFromLocation1ToLocation2 = Problem.of(
@@ -281,7 +478,55 @@ object LogisticDomain {
             Fluents.connectedL6L5,
             Fluents.connectedL7L5,
             Fluents.connectedL5L1
+        )
 
+        val alternativeInitialState = State.of(
+            Fluents.connectedL1L2,
+            Fluents.connectedL1L3,
+            Fluents.connectedL2L4,
+            Fluents.connectedL3L4,
+            Fluents.connectedL4L5,
+            Fluents.connectedL2L6,
+            Fluents.connectedL5L6,
+            Fluents.connectedL5L7,
+            Fluents.connectedL1L5,
+            Fluents.connectedL2L1,
+            Fluents.connectedL3L1,
+            Fluents.connectedL4L2,
+            Fluents.connectedL4L3,
+            Fluents.connectedL5L4,
+            Fluents.connectedL6L2,
+            Fluents.connectedL6L5,
+            Fluents.connectedL7L5,
+            Fluents.connectedL5L1,
+            Fluents.connectedL6L4,
+            Fluents.connectedL4L6
+        )
+
+        val alternativeState = State.of(
+            Fluents.connectedL1L2,
+            Fluents.connectedL1L3,
+            Fluents.connectedL2L4,
+            Fluents.connectedL3L4,
+            Fluents.connectedL4L5,
+            Fluents.connectedL2L6,
+            Fluents.connectedL5L6,
+            Fluents.connectedL5L7,
+            Fluents.connectedL1L5,
+            Fluents.connectedL2L1,
+            Fluents.connectedL3L1,
+            Fluents.connectedL4L2,
+            Fluents.connectedL4L3,
+            Fluents.connectedL5L4,
+            Fluents.connectedL6L2,
+            Fluents.connectedL6L5,
+            Fluents.connectedL7L5,
+            Fluents.connectedL5L1,
+            Fluents.connectedL6L4,
+            Fluents.connectedL4L6,
+            Fluents.atRobotlocation4,
+            Fluents.inContainer1location4,
+            Fluents.inContainer2location1
         )
     }
 
@@ -314,6 +559,9 @@ object LogisticDomain {
     }
 
     object Operators {
+        var moveRfromL4toL6 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
+
+        var moveRfromL4toL7 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL1toL2 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL1toL3 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
         var moveRfromL2toL4 = Operator.of(Actions.move).apply(VariableAssignment.of(Values.X, Values.r))
@@ -352,21 +600,21 @@ object LogisticDomain {
         var loadC2fromL6onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
         var loadC2fromL7onR = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
 
-        var unloadC1fromRtoL1 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL2 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL3 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL4 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL5 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL6 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC1fromRtoL7 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL1 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL2 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL3 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL4 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL5 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL6 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC1fromRtoL7 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
 
-        var unloadC2fromRtoL1 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL2 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL3 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL4 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL5 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL6 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
-        var unloadC2fromRtoL7 = Operator.of(Actions.load).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL1 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL2 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL3 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL4 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL5 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL6 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
+        var unloadC2fromRtoL7 = Operator.of(Actions.unload).apply(VariableAssignment.of(Values.X, Values.r))
         init {
             unloadC1fromRtoL1 = unloadC1fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
             unloadC1fromRtoL1 = unloadC1fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
@@ -390,25 +638,25 @@ object LogisticDomain {
             unloadC1fromRtoL7 = unloadC1fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
 
             unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Z, Values.l1))
-            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL1 = unloadC2fromRtoL1.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Z, Values.l2))
-            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL2 = unloadC2fromRtoL2.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Z, Values.l3))
-            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL3 = unloadC2fromRtoL3.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Z, Values.l4))
-            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL4 = unloadC2fromRtoL4.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Z, Values.l5))
-            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL5 = unloadC2fromRtoL5.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Z, Values.l6))
-            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL6 = unloadC2fromRtoL6.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Z, Values.l7))
-            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c1))
+            unloadC2fromRtoL7 = unloadC2fromRtoL7.apply(VariableAssignment.of(Values.Y, Values.c2))
 
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Z, Values.l1))
             loadC1fromL1onR = loadC1fromL1onR.apply(VariableAssignment.of(Values.Y, Values.c1))
@@ -503,11 +751,17 @@ object LogisticDomain {
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Y, Values.l5))
             moveRfromL5toL1 = moveRfromL5toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
 
-            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Y, Values.l1))
-            moveRfromL1toL3 = moveRfromL1toL5.apply(VariableAssignment.of(Values.Z, Values.l3))
+            moveRfromL1toL3 = moveRfromL1toL3.apply(VariableAssignment.of(Values.Y, Values.l1))
+            moveRfromL1toL3 = moveRfromL1toL3.apply(VariableAssignment.of(Values.Z, Values.l3))
 
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Y, Values.l3))
             moveRfromL3toL1 = moveRfromL3toL1.apply(VariableAssignment.of(Values.Z, Values.l1))
+
+            moveRfromL4toL7 = moveRfromL4toL7.apply(VariableAssignment.of(Values.Y, Values.l4))
+            moveRfromL4toL7 = moveRfromL4toL7.apply(VariableAssignment.of(Values.Z, Values.l7))
+
+            moveRfromL4toL6 = moveRfromL4toL6.apply(VariableAssignment.of(Values.Y, Values.l4))
+            moveRfromL4toL6 = moveRfromL4toL6.apply(VariableAssignment.of(Values.Z, Values.l6))
         }
     }
 }

@@ -35,13 +35,10 @@ internal class StripsPlanner : Planner {
                     set.add(p)
                 }
             }
-            if (originalSize > 0 && set.size == originalSize) {
-                break
-            }
+            if (originalSize > 0 && set.size == originalSize) break
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun plan(
         initialState: State,
         actions: Set<Action>,

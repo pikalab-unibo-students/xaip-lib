@@ -9,8 +9,9 @@ import core.Predicate
 import core.Problem
 
 /**
- * Entity representing the question: "Why not this plan instead?"; * aka a proposal for a new plan.
- * * @property alternativePlan: [Plan] proposed by the user.
+ * Entity representing a proposal for a new plan.
+ *
+ * @property alternativePlan: [Plan] proposed by the user.
  */
 class QuestionPlanProposal(
     override val problem: Problem,

@@ -11,7 +11,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
 class AxiomDSLTest : AnnotationSpec() {
-    private val axioms = DomainsDSL.blockWorldXDomainDSL.axioms
+    private val axioms = DomainsDSL.blockWorld.axioms
 
     @Test
     fun axiomDSLworksAsExpected() {

@@ -137,6 +137,7 @@ open class BaseBenchmark {
             addResult(QuestionAddOperator(problem, plan, operator, i), type)
         }
     }
+
     private fun explainQuestion3(plan: Plan, problem: Problem, type: String) {
         val actions = setOf(Actions.putdown, Actions.unstack, Lactions.unload)
         val op = (problem.domain.name == "block_world").then(pickA) ?: moveRfromL1toL2

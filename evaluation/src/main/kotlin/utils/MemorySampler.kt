@@ -12,6 +12,9 @@ class MemorySampler(period: Long) : Thread() {
         val avg: Double
             get() = sum.toDouble() / size.toDouble()
 
+        /**
+         * adds the new sample to the statistic.
+         */
         operator fun plus(sample: Long) = Stats(max(max, sample), sum + sample, size + 1)
     }
 
@@ -39,13 +42,16 @@ class MemorySampler(period: Long) : Thread() {
         result.complete(computeStats(samples))
     }
 
+    /**
+     * termines the execution of the operations performed by the thread.
+     */
     fun terminate(): Stats {
         shouldStop = true
         val result = result.get() + sampleNow()
         if (result.size > 1) {
             return result
         } else {
-            throw IllegalStateException("You should decrease the period")
+            error("You should decrease the period")
         }
     }
 

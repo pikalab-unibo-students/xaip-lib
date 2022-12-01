@@ -38,3 +38,7 @@ naming:
 exceptions:
   SwallowedException:
     active: false
+  PrintStackTrace:
+    active: false
+  TooGenericExceptionCaught:
+    active: false

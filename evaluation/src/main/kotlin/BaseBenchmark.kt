@@ -149,7 +149,9 @@ open class BaseBenchmark {
                 try {
                     log { "question: $type plan: $plan operator: $op" }
                     addResult(QuestionReplaceOperator(problem, plan, op, i + 1), type)
-                } catch (_: Exception) { log { "handling exception" } }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             i++
         }

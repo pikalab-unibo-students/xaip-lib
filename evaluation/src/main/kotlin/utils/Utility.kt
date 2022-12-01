@@ -48,6 +48,7 @@ import domain.LogisticDomain.Operators.unloadC2fromRtoL1
 import explanation.ContrastiveExplanationPresenter
 import explanation.Explainer
 import explanation.Question
+import utils.MemorySampler
 import java.io.File
 import java.lang.management.ManagementFactory
 
@@ -90,7 +91,9 @@ fun measureMemory(question: Question, explanationType: String): Long {
  * Method responsible for measuring the memory required to calculate an [Explanation] for a [Question].
 */
 fun measureMemory2(question: Question, explanationType: String): Long {
-    val beforeMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
+    val sampler = MemorySampler(0)
+
+    sampler.start()
 
     if (explanationType.startsWith("c", true)) {
         val instance = ContrastiveExplanationPresenter.of(
@@ -101,8 +104,10 @@ fun measureMemory2(question: Question, explanationType: String): Long {
             Explainer.of(Planner.strips()).explain(question)
         ).present()
     }
-    val afterMemoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
-    return afterMemoryUsage - beforeMemoryUsage
+
+    return sampler.terminate()
+//        .also { println("Memory benchmark: $it") }
+        .max
 }
 
 /**

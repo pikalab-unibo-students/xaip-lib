@@ -11,10 +11,3 @@ buildSrcTmp/
 distTmp/
 outTmp/
 kotlin-ide/
-<<<<<<< HEAD
-*.csv
-=======
-Test*
-res/benchmark/
-*csv
->>>>>>> 0947c76d123032d6c2b70011db60b400a6745e20

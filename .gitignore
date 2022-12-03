@@ -11,4 +11,4 @@ buildSrcTmp/
 distTmp/
 outTmp/
 kotlin-ide/
-Test*.csv
+*.csv

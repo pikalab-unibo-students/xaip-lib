@@ -1,4 +1,4 @@
-rootProject.name = "XAIP"
+rootProject.name = "XAIP-library"
 include("explanation")
 include("planning")
 include("dsl")

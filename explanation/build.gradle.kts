@@ -11,7 +11,7 @@ dependencies {
     testImplementation(libs.bundles.kotlin.testing)
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)
-    api(project(":framework"))
+    api(project(":planning"))
     testImplementation(project(":domain"))
 }
 

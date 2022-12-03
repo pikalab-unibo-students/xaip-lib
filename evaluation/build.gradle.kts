@@ -15,7 +15,7 @@ dependencies {
     implementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
     implementation("junit:junit:4.13.1")
     testImplementation(libs.bundles.kotlin.testing)
-    api(project(":framework"))
+    api(project(":planning"))
     api(project(":explanation"))
     api(project(":dsl"))
     api(project(":domain"))

@@ -12,7 +12,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.bundles.kotlin.testing)
 
-    api(project(":framework"))
+    api(project(":planning"))
     testImplementation(project(":domain"))
 }
 

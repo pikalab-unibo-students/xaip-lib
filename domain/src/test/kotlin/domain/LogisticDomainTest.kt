@@ -10,6 +10,7 @@ import io.kotest.matchers.shouldBe
 
 class LogisticDomainTest : AnnotationSpec() {
     private val planner = Planners.stripsPlanner
+
     @Test
     fun simpleRobotFromLoc1ToLoc2() {
         val plans1 = planner.plan(Problems.basicRobotFromLocation1ToLocation2)

@@ -12,3 +12,4 @@ distTmp/
 outTmp/
 kotlin-ide/
 *.csv
+Test*

@@ -34,6 +34,7 @@ object BlockWorldDomain {
         Object.of(1),
         Object.of(2)
     )
+
     object DomainsDSL {
         val blockWorld = domain {
             name = "block_world"

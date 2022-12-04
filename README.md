@@ -1,4 +1,4 @@
-# XAIP-library
+# XAIP-lib
 
 *Authors:
 [Giulia Brugnatti](https://github.com/giuliab97)*

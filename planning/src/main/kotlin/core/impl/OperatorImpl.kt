@@ -43,4 +43,26 @@ internal data class OperatorImpl(
     }
 
     override fun toString(): String = "$name(${args.joinToString(", ") {it.toString()}})"
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as OperatorImpl
+
+        if (name != other.name) return false
+        if (preconditions != other.preconditions) return false
+        if (effects != other.effects) return false
+        if (args != other.args) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + parameters.hashCode()
+        result = 31 * result + preconditions.hashCode()
+        result = 31 * result + effects.hashCode()
+        result = 31 * result + args.hashCode()
+        return result
+    }
 }

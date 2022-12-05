@@ -8,7 +8,7 @@ import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.putdownC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
-import domain.LogisticDomain
+import domain.LogisticsDomain
 import explanation.impl.BaseExplanationPresenter
 import explanation.impl.QuestionAddOperator
 import explanation.impl.QuestionPlanProposal
@@ -42,14 +42,14 @@ class BaseExplanationPresenter : AnnotationSpec() {
     @Test
     fun `Basic Add useless operator (pickA) to the plan pickC in pickC problem (incorrect plan)`() {
         val question = QuestionAddOperator(
-            LogisticDomain.Problems.basicRobotFromLocation1ToLocation2,
+            LogisticsDomain.Problems.basicRobotFromLocation1ToLocation2,
             Plan.of(
                 listOf(
-                    LogisticDomain.Operators.moveRfromL1toL2,
-                    LogisticDomain.Operators.moveRfromL2toL1
+                    LogisticsDomain.Operators.moveRfromL1toL2,
+                    LogisticsDomain.Operators.moveRfromL2toL1
                 )
             ),
-            LogisticDomain.Operators.moveRfromL2toL1,
+            LogisticsDomain.Operators.moveRfromL2toL1,
             1
         )
         testExplanation(question)

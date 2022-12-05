@@ -32,7 +32,7 @@ internal open class BaseExplanationPresenter(
 
     private val isProblemSolvable by lazy {
         "The problem ${(explanation.question.problem.goal as FluentBasedGoal).targets} " +
-            "is ${not(!explanation.isProblemSolvable())}solvable."
+            "is ${not(explanation.isProblemSolvable())}solvable."
     }
 
     private val originalPlan by lazy {
@@ -41,12 +41,12 @@ internal open class BaseExplanationPresenter(
 
     private val minimalPlan by lazy { "The minimal solution is: ${minimalSolution.operators}\n" }
 
-    private val isPlanMinimalSolution by lazy { "The plan is ${not(!isProposedPlanMinimalPlan)}the minimal solution" }
+    private val isPlanMinimalSolution by lazy { "The plan is ${not(isProposedPlanMinimalPlan)}the minimal solution" }
 
     private val areThereAdditionalOperators by lazy {
         (additionalOperators.isNotEmpty()).then(
             " There ${beVerb(additionalOperators)} ${additionalOperators.size} additional $operator " +
-                "respect the minimal solution: $additionalOperators.\n"
+                "with respect to the minimal solution: $additionalOperators.\n"
         ) ?: ""
     }
 
@@ -60,7 +60,7 @@ internal open class BaseExplanationPresenter(
 
     private val isPlanValid by lazy {
         "\nThe novel plan is: ${explanation.novelPlan.operators}." +
-            "\nThe novel plan is ${not(explanation.isPlanValid())}a valid solution for the problem.\n"
+            "\nThe novel plan is ${not(!explanation.isPlanValid())}a valid solution for the problem.\n"
     }
 
     private fun areAllGroundFluents(targets: Set<Fluent>) = targets.all { it.isGround }
@@ -87,7 +87,7 @@ internal open class BaseExplanationPresenter(
      */
     override fun presentMinimalExplanation(): String {
         return """Minimal explanation:
-            | The plan: ${explanation.novelPlan.operators}, is valid: ${explanation.isPlanValid()}
+            | The plan: ${explanation.novelPlan.operators}, is valid: ${!explanation.isPlanValid()}
             | The length is acceptable: ${explanation.isPlanLengthAcceptable()}
             | Operators missing: $operatorsMissing
             | Additional operators: $additionalOperators

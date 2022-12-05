@@ -11,11 +11,11 @@ import domain.BlockWorldDomain.Operators.stackCA
 import domain.BlockWorldDomain.Operators.stackDB
 import domain.BlockWorldDomain.Operators.stackDC
 import domain.BlockWorldDomain.Problems
-import domain.LogisticDomain.Operators.moveRfromL1toL2
+import domain.LogisticsDomain.Operators.moveRfromL1toL2
 import explanation.impl.QuestionRemoveOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import domain.LogisticDomain.Problems as GraphProblem
+import domain.LogisticsDomain.Problems as GraphProblem
 
 class QuestionRemoveOperatorTest : AnnotationSpec() {
 

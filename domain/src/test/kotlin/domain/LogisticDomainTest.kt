@@ -2,9 +2,9 @@ package domain
 
 import core.Plan
 import domain.BlockWorldDomain.Planners
-import domain.LogisticDomain.Actions
-import domain.LogisticDomain.Operators
-import domain.LogisticDomain.Problems
+import domain.LogisticsDomain.Actions
+import domain.LogisticsDomain.Operators
+import domain.LogisticsDomain.Problems
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 

@@ -4,7 +4,7 @@ import core.Problem
 import core.utility.then
 import domain.BlockWorldDomain.Actions
 import domain.BlockWorldDomain.Operators.pickA
-import domain.LogisticDomain.Operators.moveRfromL1toL2
+import domain.LogisticsDomain.Operators.moveRfromL1toL2
 import explanation.Explainer
 import explanation.Question
 import explanation.impl.* // ktlint-disable no-wildcard-imports
@@ -12,7 +12,7 @@ import explanation.utils.retrieveAction
 import java.io.FileOutputStream
 import java.io.OutputStream
 import kotlin.random.Random
-import domain.LogisticDomain.Actions as Lactions
+import domain.LogisticsDomain.Actions as Lactions
 
 open class BaseBenchmark {
     private val explainer by lazy { Explainer.of(Planner.strips()) }

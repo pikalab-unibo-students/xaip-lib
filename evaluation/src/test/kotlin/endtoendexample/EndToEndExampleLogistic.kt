@@ -2,7 +2,7 @@ package endtoendexample
 
 import core.Plan
 import core.Planner
-import domain.LogisticDomain
+import domain.LogisticsDomain
 import dsl.domain
 import dsl.problem
 import explanation.ContrastiveExplanationPresenter
@@ -118,24 +118,24 @@ class EndToEndExampleLogistic : AnnotationSpec() {
     fun replaceActionInStateLogisticDomain() {
         val formerPlan = Plan.of(
             listOf(
-                LogisticDomain.Operators.moveRfromL1toL3,
-                LogisticDomain.Operators.loadC2fromL3onR,
-                LogisticDomain.Operators.moveRfromL3toL1,
-                LogisticDomain.Operators.unloadC2fromRtoL1,
-                LogisticDomain.Operators.moveRfromL1toL2,
-                LogisticDomain.Operators.loadC1fromL2onR,
-                LogisticDomain.Operators.moveRfromL2toL4,
-                LogisticDomain.Operators.unloadC1fromRtoL4,
-                LogisticDomain.Operators.moveRfromL4toL5
+                LogisticsDomain.Operators.moveRfromL1toL3,
+                LogisticsDomain.Operators.loadC2fromL3onR,
+                LogisticsDomain.Operators.moveRfromL3toL1,
+                LogisticsDomain.Operators.unloadC2fromRtoL1,
+                LogisticsDomain.Operators.moveRfromL1toL2,
+                LogisticsDomain.Operators.loadC1fromL2onR,
+                LogisticsDomain.Operators.moveRfromL2toL4,
+                LogisticsDomain.Operators.unloadC1fromRtoL4,
+                LogisticsDomain.Operators.moveRfromL4toL5
             )
         )
 
         val question = QuestionReplaceOperator(
             problem,
             formerPlan,
-            LogisticDomain.Operators.moveRfromL4toL6,
+            LogisticsDomain.Operators.moveRfromL4toL6,
             8,
-            LogisticDomain.States.alternativeState
+            LogisticsDomain.States.alternativeState
         )
         val explanation = explainer.explain(question)
         println(ContrastiveExplanationPresenter.of(explanation).present())

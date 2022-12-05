@@ -4,7 +4,7 @@ import core.* // ktlint-disable no-wildcard-imports
 import dsl.domain
 import dsl.problem
 
-object LogisticDomain {
+object LogisticsDomain {
     val fluents = setOf(
         Fluents.connectedL1L2,
         Fluents.connectedL1L3,
@@ -27,8 +27,8 @@ object LogisticDomain {
     )
 
     object DomainsDSL {
-        val logistic = domain {
-            name = "logistic_world"
+        val logistics = domain {
+            name = "logistics"
             types {
                 +"anything"
                 +"strings"("anything")
@@ -94,7 +94,7 @@ object LogisticDomain {
     }
 
     object ProblemsDSL {
-        val rToX = problem(DomainsDSL.logistic) {
+        val rToX = problem(DomainsDSL.logistics) {
             objects {
                 +"robots"("r")
                 +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
@@ -128,7 +128,7 @@ object LogisticDomain {
             }
         }
 
-        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = problem(DomainsDSL.logistic) {
+        val robotFromLoc1ToLoc5Container1FromLoc2ToLoc4Container2FromLoc3ToLoc1 = problem(DomainsDSL.logistics) {
             objects {
                 +"robots"("r")
                 +"locations"("l1", "l2", "l3", "l4", "l5", "l6", "l7")
@@ -254,7 +254,7 @@ object LogisticDomain {
 
     object Domains {
         val logisticWorld = Domain.of(
-            name = "logistic_world",
+            name = "logistics",
             predicates = setOf(
                 Predicates.connected,
                 Predicates.atLocation,
@@ -387,7 +387,7 @@ object LogisticDomain {
     object Problems {
 
         val rToXdslDomain = Problem.of(
-            domain = DomainsDSL.logistic,
+            domain = DomainsDSL.logistics,
             objects = ObjectSets.all,
             initialState = States.initial,
             goal = Goals.atRobotAtlocation5inContainer1Location4InContainer2Location1

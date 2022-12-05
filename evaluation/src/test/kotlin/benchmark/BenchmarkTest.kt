@@ -5,7 +5,7 @@ import cleanDirectory
 import core.Planner
 import createPlansList
 import domain.BlockWorldDomain.Problems.stackAB
-import domain.LogisticDomain.Problems.robotFromLoc1ToLoc2
+import domain.LogisticsDomain.Problems.robotFromLoc1ToLoc2
 import explanation.Explainer
 import explanation.impl.QuestionPlanSatisfiability
 import io.kotest.core.spec.style.AnnotationSpec

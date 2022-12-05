@@ -7,12 +7,12 @@ import domain.BlockWorldDomain.Operators.pickB
 import domain.BlockWorldDomain.Operators.pickC
 import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Problems
-import domain.LogisticDomain
-import domain.LogisticDomain.Operators.loadC1fromL2onR
-import domain.LogisticDomain.Operators.moveRfromL1toL2
-import domain.LogisticDomain.Operators.moveRfromL2toL1
-import domain.LogisticDomain.Operators.moveRfromL2toL4
-import domain.LogisticDomain.Operators.unloadC1fromRtoL4
+import domain.LogisticsDomain
+import domain.LogisticsDomain.Operators.loadC1fromL2onR
+import domain.LogisticsDomain.Operators.moveRfromL1toL2
+import domain.LogisticsDomain.Operators.moveRfromL2toL1
+import domain.LogisticsDomain.Operators.moveRfromL2toL4
+import domain.LogisticsDomain.Operators.unloadC1fromRtoL4
 import explanation.impl.QuestionAddOperator
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -76,7 +76,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     @Test
     fun `Add useless operator (moveRfromL2toL1) to the plan`() {
         val q1 = QuestionAddOperator(
-            LogisticDomain.Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4,
+            LogisticsDomain.Problems.robotFromLoc1ToLoc2ContainerFromLocation2ToLocation4,
             Plan.of(
                 listOf(
                     moveRfromL1toL2,
@@ -98,7 +98,7 @@ class QuestionAddOperatorTest : AnnotationSpec() {
     @Test
     fun `Basic Add useless operator (moveRfromL2toL1) to the plan`() {
         val q1 = QuestionAddOperator(
-            LogisticDomain.Problems.basicRobotFromLocation1ToLocation2,
+            LogisticsDomain.Problems.basicRobotFromLocation1ToLocation2,
             Plan.of(
                 listOf(
                     moveRfromL1toL2,

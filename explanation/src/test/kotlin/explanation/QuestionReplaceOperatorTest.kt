@@ -11,14 +11,14 @@ import domain.BlockWorldDomain.Operators.stackAB
 import domain.BlockWorldDomain.Operators.stackAC
 import domain.BlockWorldDomain.Problems
 import domain.BlockWorldDomain.States
-import domain.LogisticDomain.Operators.moveRfromL1toL2
-import domain.LogisticDomain.Operators.moveRfromL1toL3
+import domain.LogisticsDomain.Operators.moveRfromL1toL2
+import domain.LogisticsDomain.Operators.moveRfromL1toL3
 import explanation.impl.QuestionReplaceOperator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import domain.LogisticDomain.Problems as GraphProblem
+import domain.LogisticsDomain.Problems as GraphProblem
 
 class QuestionReplaceOperatorTest : AnnotationSpec() {
     @Test

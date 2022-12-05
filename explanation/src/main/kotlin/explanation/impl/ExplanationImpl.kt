@@ -85,11 +85,9 @@ internal data class ExplanationImpl(
 
     override fun isPlanValid(): Boolean {
         val states = simulator.simulate(novelPlan, question.problem.initialState)
-        return (
-            if (states.isNotEmpty()) {
-                states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }
-            } else false
-        )
+        return if (states.isNotEmpty()) {
+            states.all { finalStateComplaintWithGoal(question.problem.goal as FluentBasedGoal, it) }
+        } else false
     }
 
     /**

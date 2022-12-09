@@ -1,0 +1,44 @@
+[versions]
+kotest = "5.4.2"
+kotlin = "1.7.10"
+mockito = "4.7.0"
+java-toolchain = "11"
+tuprolog = "0.20.9"
+ktlint-plugin = "11.0.0"
+detekt = "1.21.0"
+kotlinx = "1.5.0"
+kover = "0.4.2"
+
+[libraries]
+kotlix-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-stdlib-reflect", version.ref = "kotlin" }
+kotest-junit5-jvm = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+tuprolog-full = { module = "it.unibo.tuprolog:2p-jvm", version.ref = "tuprolog" }
+tuprolog-ide = { module = "it.unibo.tuprolog:ide", version.ref = "tuprolog" }
+tuprolog-repl = { module = "it.unibo.tuprolog:repl-jvm", version.ref = "tuprolog" }
+tuprolog-core = { module = "it.unibo.tuprolog:core-jvm", version.ref = "tuprolog" }
+tuprolog-unify = { module = "it.unibo.tuprolog:unify-jvm", version.ref = "tuprolog" }
+tuprolog-theory = { module = "it.unibo.tuprolog:theory-jvm", version.ref = "tuprolog" }
+tuprolog-solve-classic = { module = "it.unibo.tuprolog:solve-classic-jvm", version.ref = "tuprolog" }
+tuprolog-parser-core = { module = "it.unibo.tuprolog:parser-core-jvm", version.ref = "tuprolog" }
+tuprolog-parser-theory = { module = "it.unibo.tuprolog:parser-theory-jvm", version.ref = "tuprolog" }
+tuprolog-dsl-core = { module = "it.unibo.tuprolog:dsl-core-jvm", version.ref = "tuprolog" }
+tuprolog-dsl-unify = { module = "it.unibo.tuprolog:dsl-unify-jvm", version.ref = "tuprolog" }
+tuprolog-dsl-theory = { module = "it.unibo.tuprolog:dsl-theory-jvm", version.ref = "tuprolog" }
+tuprolog-dsl-solve = { module = "it.unibo.tuprolog:dsl-solve-jvm", version.ref = "tuprolog" }
+
+[bundles]
+kotlin-testing = [ "kotest-junit5-jvm", "kotest-assertions-core-jvm", "mockito-core" ]
+
+[plugins]
+kover-gradle = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+dokka = "org.jetbrains.dokka:1.7.10"
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.25.0" }
+
+ktlint-gradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
+detekt-gradle = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

@@ -9,19 +9,20 @@ on:
       #- feature/**
       - feature/explanation
 
-  #pull_request:
-  #  branches:
-  #    - master
+  pull_request:
+    branches:
+      - master
+      - develop
 
 jobs:
   build:
     name: build
-    runs-on: ubuntu-latest
-    #strategy:
-    #  fail-fast: false
-    #  matrix:
-    #    os: [ windows-latest, ubuntu-latest, macos-latest ]
-    #runs-on: ${{ matrix.os }}
+    #runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3

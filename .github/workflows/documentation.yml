@@ -12,5 +12,4 @@ jobs:
       - run: ./gradlew dokkaHtml
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.token }}
           publish_dir: planning/build

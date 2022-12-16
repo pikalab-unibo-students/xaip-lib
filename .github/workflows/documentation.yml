@@ -14,3 +14,4 @@ jobs:
         with:
           dir: planning/build
           branch: gh-pages
+          token: ${{ secrets.token }}

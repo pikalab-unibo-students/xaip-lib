@@ -19,7 +19,7 @@ kotlin {
     target {
         compilations.all {
             kotlinOptions {
-                allWarningsAsErrors = false
+                allWarningsAsErrors = true
                 freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }

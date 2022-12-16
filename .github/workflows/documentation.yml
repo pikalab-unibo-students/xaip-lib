@@ -12,4 +12,4 @@ jobs:
       - run: ./gradlew dokkaHtml
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: planning/build
+          publish_dir: planning/build/dokka

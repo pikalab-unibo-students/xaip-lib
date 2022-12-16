@@ -1,10 +1,27 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.dokka)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
     alias(libs.plugins.kover.gradle)
+
+    id("org.jetbrains.dokka")
+}
+
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("Module.md")
+        }
+    }
+}
+
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("Module.md")
+        }
+    }
 }
 
 dependencies {
@@ -21,7 +38,7 @@ kotlin {
     target {
         compilations.all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = false
                 freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }

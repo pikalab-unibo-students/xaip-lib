@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - run: ./gradlew dokkaHtml
+      - run: ./gradlew dokkaHtml dokkaHtmlMultiModule
       - uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           folder: build/dokkaHtmlMultiModule

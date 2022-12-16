@@ -16,14 +16,6 @@ tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
     }
 }
 
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
-    dokkaSourceSets {
-        configureEach {
-            includes.from("Module.md")
-        }
-    }
-}
-
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlix.coroutines)

@@ -6,11 +6,3 @@ allprojects {
         mavenCentral()
     }
 }
-/*
-subprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
- */

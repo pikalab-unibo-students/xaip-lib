@@ -1,15 +1,20 @@
-name: Documentation
-on:
-  push:
-    branches:
-      - feature/documentation_pages
-
+name: Build and Deploy
+on: [push]
+permissions:
+  contents: write
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: ./gradlew dokkaHtml
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          ./gradlew dokkaHtml
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          publish_dir: planning/build/dokka
+          folder: planning/build/dokka # The folder the action should deploy.

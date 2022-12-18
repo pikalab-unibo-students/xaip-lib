@@ -16,4 +16,6 @@ jobs:
       - name: Deploy Planning🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./*/build/dokka # The folder the action should deploy.
+          folder: |
+            ./planning/build/dokka # The folder the action should deploy.
+            ./explanation/build/dokka # The folder the action should deploy.

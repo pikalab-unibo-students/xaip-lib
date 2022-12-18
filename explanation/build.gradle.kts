@@ -4,8 +4,20 @@ plugins {
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
     alias(libs.plugins.kover.gradle)
+    id("org.jetbrains.dokka")
 }
 
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("dokka"))
+}
+
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("Module.md")
+        }
+    }
+}
 dependencies {
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.bundles.kotlin.testing)

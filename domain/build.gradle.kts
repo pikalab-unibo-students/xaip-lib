@@ -8,7 +8,7 @@ plugins {
 }
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(parent?.buildDir?.resolve("explanation/dokka"))
+    outputDirectory.set(parent?.buildDir?.resolve("dokka/domain"))
 }
 
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {

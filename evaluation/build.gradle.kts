@@ -9,7 +9,7 @@ plugins {
 }
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(parent?.buildDir?.resolve("dokka/evaluation"))
+    outputDirectory.set(rootDir.resolve("gh_pages/evaluation"))
 }
 
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {

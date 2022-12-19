@@ -7,7 +7,7 @@ plugins {
 }
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(parent?.buildDir?.resolve("dokka/dsl"))
+    outputDirectory.set(rootDir.resolve("gh_pages/dsl"))
 }
 
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {

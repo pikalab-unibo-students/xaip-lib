@@ -13,3 +13,7 @@ outTmp/
 kotlin-ide/
 *.csv
 Test*
+#gh_pages/domain/
+#gh_pages/dsl/
+#gh_pages/evaluation/
+#gh_pages/explanation/

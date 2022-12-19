@@ -4,20 +4,8 @@ plugins {
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.detekt.gradle)
     alias(libs.plugins.kover.gradle)
-    id("org.jetbrains.dokka")
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(rootDir.resolve("gh_pages/explanation"))
-}
-
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
-    dokkaSourceSets {
-        configureEach {
-            includes.from("Module.md")
-        }
-    }
-}
 dependencies {
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.bundles.kotlin.testing)
@@ -31,7 +19,7 @@ kotlin {
     target {
         compilations.all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = false
                 freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }

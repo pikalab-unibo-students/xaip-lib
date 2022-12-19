@@ -3,20 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.qa)
     alias(libs.plugins.kover.gradle)
-    id("org.jetbrains.dokka")
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(rootDir.resolve("gh_pages/dsl"))
-}
-
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
-    dokkaSourceSets {
-        configureEach {
-            includes.from("Module.md")
-        }
-    }
-}
 dependencies {
     api(libs.tuprolog.unify)
     api(libs.tuprolog.solve.classic)

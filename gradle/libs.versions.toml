@@ -7,7 +7,7 @@ tuprolog = "0.31.1"
 ktlint-plugin = "11.0.0"
 detekt = "1.21.0"
 kotlinx = "1.6.4"
-kover = "0.4.4"
+kover = "0.6.1"
 
 [libraries]
 kotlix-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }

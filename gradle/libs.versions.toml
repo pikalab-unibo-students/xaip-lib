@@ -36,7 +36,7 @@ kotlin-testing = [ "kotest-junit5-jvm", "kotest-assertions-core-jvm", "mockito-c
 
 [plugins]
 kover-gradle = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
-dokka = "org.jetbrains.dokka:1.7.20"
+dokka = "org.jetbrains.dokka:1.8.10"
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.25.1" }
 

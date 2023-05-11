@@ -19,11 +19,11 @@ open class BaseBenchmark {
 
     private val blockWorldName by lazy { "block_world" }
 
-    private val logisticName by lazy { "logistic" }
+    private val logisticsName by lazy { "logistics" }
 
     private val resultsTime by lazy { mutableMapOf<Plan, Long>() }
     private val resultsMemory by lazy { mutableMapOf<Plan, Long>() }
-    private fun domainName(name: String) = (name == blockWorldName).then(blockWorldName) ?: logisticName
+    private fun domainName(name: String) = (name == blockWorldName).then(blockWorldName) ?: logisticsName
     private fun explanationType(name: String) = (name.startsWith("c", true))
         .then("contrastiveExplanation") ?: "generalExplanation"
 
@@ -38,17 +38,15 @@ open class BaseBenchmark {
         explanationType: String,
         questionType: Int,
         plans: List<Plan>,
-        isWorkFlow: Boolean = false
     ) {
         init(plans.toMutableList(), questionType, problem, explanationType)
-        write(filename, problem, explanationType, questionType, isWorkFlow)
+        write(filename, problem, explanationType, questionType)
     }
     private fun write(
         filename: String,
         problem: Problem,
         explanationType: String,
-        questionType: Int,
-        isWorkFlow: Boolean = false
+        questionType: Int
     ) {
         fun OutputStream.writeCsv() {
             val writer = bufferedWriter()
@@ -58,14 +56,14 @@ open class BaseBenchmark {
             resultsTime.forEach {
                 writer.write(
                     "${problem.domain.name}, ${it.key.operators.size}, $questionType, " +
-                        "${it.value}, ${resultsMemory[it.key]}"
+                        "${it.value}, ${resultsMemory[it.key]}",
                 )
                 writer.newLine()
                 i++
             }
             writer.flush()
         }
-        val prefix = isWorkFlow.then("") ?: "evaluation/"
+        val prefix = "" // You run it from the ide you need to add this prefix: "evaluation/"
         (
             (filename == "").then(
                 """${prefix}res/benchmark/
@@ -73,11 +71,11 @@ open class BaseBenchmark {
                     ${osName(System.getProperty("os.name"))}_
                     ${explanationType(explanationType)}_
                     Question$questionType.csv
-                """.replace("\\s".toRegex(), "")
+                """.replace("\\s".toRegex(), ""),
             ) ?: "res/$filename"
             ).let {
             FileOutputStream(
-                it
+                it,
             ).apply { writeCsv() }
         }
     }
@@ -92,9 +90,9 @@ open class BaseBenchmark {
                         question.plan,
                         question.focus,
                         question.focusOn,
-                        question.inState
+                        question.inState,
                     ),
-                    explanationType
+                    explanationType,
                 )
             else ->
                 measureTimeMillis(question, explanationType)

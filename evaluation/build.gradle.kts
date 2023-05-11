@@ -13,7 +13,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
-    implementation("junit:junit:4.13.1")
+    implementation("junit:junit:4.13.2")
     testImplementation(libs.bundles.kotlin.testing)
     api(project(":planning"))
     api(project(":explanation"))
@@ -52,4 +52,16 @@ detekt {
     buildUponDefaultConfig = true
     config = files("${rootDir.path}/config/detekt.yml")
     source = files(kotlin.sourceSets.map { it.kotlin.sourceDirectories })
+}
+
+tasks.register<Exec>("generateCharts") {
+    workingDir("src/main/python")
+    commandLine("python", "createplots.py")
+    dependsOn("installPythonDependencies")
+    dependsOn("run")
+}
+
+tasks.register<Exec>("installPythonDependencies") {
+    workingDir(rootDir.path) // directory containing the requirements.txt file
+    commandLine("python", "-m", "pip", "install", "-r", "requirements.txt")
 }

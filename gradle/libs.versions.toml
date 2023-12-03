@@ -1,7 +1,7 @@
 [versions]
 kotest = "5.8.0"
 kotlin = "1.9.21"
-mockito = "4.7.0"
+mockito = "5.8.0"
 java-toolchain = "11"
 tuprolog = "0.31.18"
 ktlint-plugin = "12.0.2"
